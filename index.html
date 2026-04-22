@@ -6,7 +6,7 @@
 <title>Jesús Juárez · Barbería · Pachuca</title>
 
 <!-- PWA Meta -->
-<meta name="description" content="Barbería de precisión en Pachuca, Hgo. Corte, barba, diseño y experiencia VIP.">
+<meta name="description" content="Barbería de precisión en Pachuca, Hgo. Corte, barba, diseño y experiencia VIP. Frente al Mercado Miguel Hidalgo.">
 <meta name="theme-color" content="#E8FF00">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,35 +18,11 @@
 <meta property="og:description" content="Corte, barba y diseño. Julián Villagrán 202, Centro, Pachuca.">
 <meta property="og:type" content="website">
 
-<!-- Firebase SDK -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, get, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  
-  const firebaseConfig = {
-    databaseURL: "https://bdfirebase-62a1b-default-rtdb.firebaseio.com/",
-  };
-  
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-  const auth = getAuth(app);
-  
-  window.firebaseDB = database;
-  window.firebaseAuth = auth;
-  window.firebaseRef = ref;
-  window.firebaseSet = set;
-  window.firebaseGet = get;
-  window.firebaseUpdate = update;
-  window.firebaseRemove = remove;
-  window.firebaseOnValue = onValue;
-</script>
-
-<!-- Fonts -->
+<!-- Fonts: Tipografía más humana -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- jsPDF -->
+<!-- jsPDF para generar cupones -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -73,272 +49,7 @@ body{
 a,button{cursor:pointer;}
 img{max-width:100%;display:block;}
 
-/* LOGIN SCREEN - PANTALLA INICIAL */
-#loginScreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--negro);
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s;
-}
-#loginScreen.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.login-container {
-  width: 90%;
-  max-width: 450px;
-  padding: 2.5rem;
-  background: var(--gris);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--lima);
-  text-align: center;
-}
-.login-logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 4rem;
-  color: var(--lima);
-  margin-bottom: 1rem;
-}
-.login-subtitle {
-  color: var(--humo);
-  margin-bottom: 2rem;
-  font-size: 0.9rem;
-}
-.login-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--gris3);
-}
-.login-tab {
-  flex: 1;
-  padding: 0.8rem;
-  background: transparent;
-  border: none;
-  color: var(--humo);
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.3s;
-}
-.login-tab.active {
-  color: var(--lima);
-  border-bottom-color: var(--lima);
-}
-.login-form {
-  display: none;
-}
-.login-form.active {
-  display: block;
-}
-.login-input {
-  width: 100%;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background: var(--negro);
-  border: 1px solid var(--gris3);
-  color: var(--blanco);
-  border-radius: var(--radius-md);
-  font-family: 'Poppins', sans-serif;
-}
-.login-input:focus {
-  outline: none;
-  border-color: var(--lima);
-}
-.login-btn {
-  width: 100%;
-  padding: 1rem;
-  background: var(--lima);
-  color: var(--negro);
-  border: none;
-  border-radius: 40px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  transition: all 0.2s;
-}
-.login-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-.login-btn.secondary {
-  background: transparent;
-  border: 1px solid var(--lima);
-  color: var(--lima);
-}
-.login-error {
-  color: #ff4444;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  min-height: 20px;
-}
-.guest-info {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--gris3);
-  color: var(--humo);
-  font-size: 0.8rem;
-}
-
-/* MAIN CONTENT - OCULTO HASTA LOGIN */
-#mainContent {
-  display: none;
-}
-#mainContent.visible {
-  display: block;
-}
-
-/* ADMIN PANEL */
-#adminPanel {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--gris);
-  z-index: 900;
-  overflow-y: auto;
-  padding: 2rem;
-}
-#adminPanel.show {
-  display: block;
-}
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--lima);
-}
-.admin-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
-  color: var(--lima);
-}
-.admin-section {
-  background: var(--negro);
-  padding: 1.5rem;
-  border-radius: var(--radius-lg);
-  margin-bottom: 2rem;
-}
-.admin-section h3 {
-  color: var(--blanco);
-  margin-bottom: 1.5rem;
-  font-family: 'Montserrat', sans-serif;
-}
-.cupon-admin-item {
-  background: var(--gris);
-  padding: 1.5rem;
-  border-radius: var(--radius-md);
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-}
-.cupon-admin-fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-}
-.admin-input {
-  padding: 0.5rem;
-  background: var(--negro);
-  border: 1px solid var(--gris3);
-  color: var(--blanco);
-  border-radius: 8px;
-}
-.admin-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  margin: 0 0.2rem;
-}
-.admin-btn.save {
-  background: var(--lima);
-  color: var(--negro);
-}
-.admin-btn.delete {
-  background: #ff4444;
-  color: white;
-}
-.admin-btn.add {
-  background: var(--lima);
-  color: var(--negro);
-  padding: 1rem 2rem;
-  margin-top: 1rem;
-}
-.registros-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.registros-table th,
-.registros-table td {
-  padding: 0.8rem;
-  text-align: left;
-  border-bottom: 1px solid var(--gris3);
-}
-.registros-table th {
-  color: var(--lima);
-  font-family: 'Montserrat', sans-serif;
-}
-.logout-btn {
-  background: transparent;
-  border: 1px solid var(--lima);
-  color: var(--lima);
-  padding: 0.5rem 1.5rem;
-  border-radius: 30px;
-  cursor: pointer;
-}
-.close-admin-btn {
-  background: var(--lima);
-  color: var(--negro);
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 30px;
-  cursor: pointer;
-  margin-left: 1rem;
-}
-
-/* User info en navbar */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.user-badge {
-  color: var(--lima);
-  font-size: 0.7rem;
-  font-family: 'Montserrat', sans-serif;
-}
-.admin-panel-btn {
-  background: transparent;
-  border: 1px solid var(--lima);
-  color: var(--lima);
-  padding: 0.5rem 1rem;
-  border-radius: 30px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  cursor: pointer;
-}
-
-/* INSTALL BANNER */
+/* ─── INSTALL BANNER ───────────────────────────── */
 #install-banner{
   display:none; position:fixed; bottom:1.2rem; left:50%;
   transform:translateX(-50%); z-index:999;
@@ -362,7 +73,7 @@ img{max-width:100%;display:block;}
   font-size:1.2rem; padding:.2rem .4rem; line-height:1;
 }
 
-/* NAVBAR */
+/* ─── NAVBAR ───────────────────────────────────── */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:200;
   display:flex; align-items:center; justify-content:space-between;
@@ -389,7 +100,7 @@ nav{
 }
 .nav-cta:hover{opacity:.85;}
 
-/* HERO */
+/* ─── HERO ─────────────────────────────────────── */
 .hero{
   min-height:100vh;
   display:grid; grid-template-columns:1fr 1fr;
@@ -450,7 +161,7 @@ nav{
   line-height:1; user-select:none; pointer-events:none;
 }
 
-/* BOTONES */
+/* ─── BOTONES ───────────────────────────────────── */
 .btn{
   display:inline-flex; align-items:center; gap:.5rem;
   font-family:'Montserrat', sans-serif; font-size:.78rem;
@@ -463,7 +174,7 @@ nav{
 .btn-borde{background:transparent;color:var(--blanco);border:1px solid rgba(240,240,237,.18);}
 .btn-borde:hover{border-color:var(--lima);color:var(--lima);}
 
-/* TICKER */
+/* ─── TICKER ────────────────────────────────────── */
 .ticker{
   overflow:hidden; border-top:1px solid var(--gris2);
   border-bottom:1px solid var(--gris2);
@@ -480,7 +191,7 @@ nav{
 .ticker-item b{color:var(--lima);}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* SERVICIOS */
+/* ─── SERVICIOS (Tarjetas profesionales) ───────────────── */
 #servicios{padding:5.5rem 2.5rem; background:var(--negro);}
 .sec-row{
   display:flex; align-items:baseline;
@@ -494,6 +205,7 @@ nav{
 }
 .sec-note{font-size:.72rem;letter-spacing:.18em;color:var(--lima);text-transform:uppercase; font-weight:500;}
 
+/* Grid de tarjetas de servicios */
 .servicios-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
@@ -593,7 +305,7 @@ nav{
 .card.vip .card-price{color:var(--lima);}
 .card.vip .card-badge{background:var(--blanco);}
 
-/* CUPONES */
+/* ─── CARRUSEL DE CUPONES ───────────────────────── */
 #cupones{
   padding:5rem 2.5rem;
   background:var(--gris);
@@ -724,6 +436,11 @@ nav{
   text-align:center;
   text-decoration:none;
 }
+.btn-cupon.outline{
+  background:transparent;
+  color:var(--lima);
+  border:1px solid var(--lima);
+}
 .btn-cupon:hover{
   opacity:.8;
   transform:translateY(-2px);
@@ -774,7 +491,7 @@ nav{
   color:var(--lima);
 }
 
-/* CONTACTO */
+/* ─── CONTACTO ──────────────────────────────────── */
 #contacto{
   padding:5.5rem 2.5rem; background:var(--negro);
   display:grid; grid-template-columns:1fr 1fr;
@@ -828,7 +545,7 @@ nav{
 .hr-dia{color:var(--humo); font-weight:400;}
 .hr-h{font-family:'Montserrat', sans-serif; font-size:.87rem; letter-spacing:.05em; font-weight:600;}
 
-/* FOOTER */
+/* ─── FOOTER ─────────────────────────────────────── */
 footer{
   background:var(--gris); padding:2.8rem 2.5rem 1.8rem;
   display:grid; grid-template-columns:1fr 1fr 1fr; gap:2.8rem;
@@ -860,7 +577,7 @@ footer{
   to{opacity:1;transform:translateY(0);}
 }
 
-/* RESPONSIVE */
+/* ─── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr; min-height:auto;}
   .hero-left{padding:120px 1.5rem 3rem;}
@@ -881,587 +598,541 @@ footer{
 </head>
 <body>
 
-<!-- LOGIN SCREEN - PANTALLA INICIAL -->
-<div id="loginScreen">
-  <div class="login-container">
-    <div class="login-logo">JJ✂</div>
-    <p class="login-subtitle">Jesús Juárez · Barbería · Pachuca</p>
-    
-    <div class="login-tabs">
-      <button class="login-tab active" data-tab="guest">Cliente</button>
-      <button class="login-tab" data-tab="admin">Administrador</button>
-    </div>
-    
-    <!-- Formulario Cliente/Invitado -->
-    <div id="guestForm" class="login-form active">
-      <p style="color: var(--humo); margin-bottom: 1.5rem; font-size: 0.9rem;">
-        Ingresa como invitado para ver servicios y cupones
-      </p>
-      <input type="email" id="guestEmail" class="login-input" placeholder="Tu correo (opcional)" value="">
-      <button class="login-btn" onclick="loginAsGuest()">Continuar como Cliente</button>
-      <div class="guest-info">
-        Al continuar, aceptas recibir ofertas exclusivas en tu correo.
-      </div>
-    </div>
-    
-    <!-- Formulario Administrador -->
-    <div id="adminForm" class="login-form">
-      <input type="email" id="adminEmail" class="login-input" placeholder="Email de administrador">
-      <input type="password" id="adminPassword" class="login-input" placeholder="Contraseña">
-      <button class="login-btn" onclick="loginAsAdmin()">Acceder como Admin</button>
-      <div id="loginError" class="login-error"></div>
-    </div>
-  </div>
+<!-- INSTALL BANNER PWA -->
+<div id="install-banner">
+  <span>📲 Instala la app en tu teléfono</span>
+  <button id="install-btn">Instalar</button>
+  <button class="dismiss" id="dismiss-btn" aria-label="Cerrar">×</button>
 </div>
 
-<!-- MAIN CONTENT -->
-<div id="mainContent">
-  <!-- ADMIN PANEL -->
-  <div id="adminPanel">
-    <div class="admin-header">
-      <h2 class="admin-title">Panel de Administración</h2>
-      <div>
-        <button class="close-admin-btn" onclick="closeAdminPanel()">Volver al Sitio</button>
-        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-      </div>
-    </div>
-    
-    <div class="admin-section">
-      <h3>Gestión de Cupones</h3>
-      <div id="cuponesAdminList"></div>
-      <button class="admin-btn add" onclick="addNewCupon()">+ Agregar Nuevo Cupón</button>
-    </div>
-    
-    <div class="admin-section">
-      <h3>Correos de Clientes Registrados</h3>
-      <table class="registros-table">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Fecha de Registro</th>
-            <th>Último Cupón Descargado</th>
-          </tr>
-        </thead>
-        <tbody id="registrosTableBody"></tbody>
-      </table>
-    </div>
-  </div>
+<!-- NAVBAR -->
+<nav>
+  <a href="#inicio" class="nav-logo">JJ✂</a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#cupones">Cupones</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+     target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar →</a>
+</nav>
 
-  <!-- INSTALL BANNER -->
-  <div id="install-banner">
-    <span>📲 Instala la app en tu teléfono</span>
-    <button id="install-btn">Instalar</button>
-    <button class="dismiss" id="dismiss-btn" aria-label="Cerrar">×</button>
-  </div>
-
-  <!-- NAVBAR -->
-  <nav>
-    <a href="#inicio" class="nav-logo">JJ✂</a>
-    <ul class="nav-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#cupones">Cupones</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <div class="user-info">
-      <span class="user-badge" id="userBadge"></span>
-      <button class="admin-panel-btn" id="adminPanelBtn" onclick="openAdminPanel()" style="display: none;">Panel Admin</button>
+<!-- HERO (CON ILUSTRACIÓN COMPLETA RESTAURADA) -->
+<section id="inicio" class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Barbería · Pachuca, Hgo.</div>
+    <h1 class="hero-h1">
+      Jesús<br>
+      <span class="acento">Juárez</span>
+    </h1>
+    <p class="hero-sub">Corte, barba y diseño con precisión. En el corazón del Centro de Pachuca.</p>
+    <p class="hero-addr">
+      <svg width="10" height="13" viewBox="0 0 10 13" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4Zm0 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z" fill="#D6FF00"/></svg>
+      Julián Villagrán 202, Centro — Pachuca
+    </p>
+    <div class="hero-btns">
       <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-         target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar →</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <div class="hero-left">
-      <div class="hero-tag">Barbería · Pachuca, Hgo.</div>
-      <h1 class="hero-h1">
-        Jesús<br>
-        <span class="acento">Juárez</span>
-      </h1>
-      <p class="hero-sub">Corte, barba y diseño con precisión. En el corazón del Centro de Pachuca.</p>
-      <p class="hero-addr">
-        <svg width="10" height="13" viewBox="0 0 10 13" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4Zm0 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z" fill="#D6FF00"/></svg>
-        Julián Villagrán 202, Centro — Pachuca
-      </p>
-      <div class="hero-btns">
-        <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-           target="_blank" rel="noopener noreferrer" class="btn btn-lima">✂ Agendar Cita</a>
-        <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="btn btn-borde">Ver Trabajos</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <svg class="hero-illustration" viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#0e0e0e"/>
-            <stop offset="100%" style="stop-color:#1a1a1a"/>
-          </linearGradient>
-          <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#8B5E3C"/>
-            <stop offset="100%" style="stop-color:#6B4226"/>
-          </linearGradient>
-          <linearGradient id="shirGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#1C1C1C"/>
-            <stop offset="100%" style="stop-color:#0A0A0A"/>
-          </linearGradient>
-          <linearGradient id="limaLine" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#D6FF00;stop-opacity:0"/>
-            <stop offset="50%" style="stop-color:#D6FF00;stop-opacity:1"/>
-            <stop offset="100%" style="stop-color:#D6FF00;stop-opacity:0"/>
-          </linearGradient>
-        </defs>
-        <rect width="700" height="900" fill="url(#bgGrad)"/>
-        <rect x="220" y="680" width="260" height="20" rx="4" fill="#1E1E1E"/>
-        <rect x="240" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
-        <rect x="448" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
-        <rect x="300" y="700" width="100" height="200" rx="4" fill="#151515"/>
-        <ellipse cx="350" cy="510" rx="68" ry="72" fill="url(#skinGrad)"/>
-        <ellipse cx="350" cy="435" rx="76" ry="82" fill="#8B5E3C"/>
-        <rect x="0" y="870" width="700" height="2" fill="url(#limaLine)" opacity=".5"/>
-      </svg>
-      <div class="hero-ghost" aria-hidden="true">JJ</div>
-    </div>
-  </section>
-
-  <!-- TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner">
-      <span class="ticker-item"><b>✂</b> Corte $130</span>
-      <span class="ticker-item"><b>🪒</b> Corte + Barba $200</span>
-      <span class="ticker-item"><b>✨</b> Ceja $50</span>
-      <span class="ticker-item"><b>👑</b> VIP $300</span>
-      <span class="ticker-item"><b>🧼</b> Afeitado Navaja $150</span>
-      <span class="ticker-item"><b>🧒</b> Infantil $110</span>
-      <span class="ticker-item"><b>🎨</b> Greca $250</span>
-      <span class="ticker-item"><b>✂</b> Corte $130</span>
-      <span class="ticker-item"><b>🪒</b> Corte + Barba $200</span>
-      <span class="ticker-item"><b>✨</b> Ceja $50</span>
-      <span class="ticker-item"><b>👑</b> VIP $300</span>
-      <span class="ticker-item"><b>🧼</b> Afeitado Navaja $150</span>
-      <span class="ticker-item"><b>🧒</b> Infantil $110</span>
-      <span class="ticker-item"><b>🎨</b> Greca $250</span>
+         target="_blank" rel="noopener noreferrer" class="btn btn-lima">✂ Agendar Cita</a>
+      <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="btn btn-borde">Ver Trabajos</a>
     </div>
   </div>
 
-  <!-- SERVICIOS -->
-  <section id="servicios">
-    <div class="sec-row">
-      <h2 class="sec-tit">Servicios</h2>
-      <span class="sec-note">07 opciones</span>
-    </div>
-    <div class="servicios-grid">
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">✂️</span><span class="card-num">01</span></div><h3 class="card-title">Corte Normal</h3><p class="card-desc">Máquina o tijera · lavado incluido · acabado preciso</p><div class="card-footer"><span class="card-price">$130</span></div></div>
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">🪒</span><span class="card-num">02</span></div><h3 class="card-title">Corte + Barba</h3><p class="card-desc">Combo completo · perfilado con navaja · toalla caliente</p><div class="card-footer"><span class="card-price">$200</span></div></div>
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">✨</span><span class="card-num">03</span></div><h3 class="card-title">Ceja</h3><p class="card-desc">Diseño y depilación con pinza y navaja · simetría perfecta</p><div class="card-footer"><span class="card-price">$50</span></div></div>
-      <div class="servicio-card vip"><div class="card-header"><span class="card-icon">👑</span><span class="card-num">04</span></div><h3 class="card-title">Experiencia VIP</h3><p class="card-desc">Corte + barba + ceja + tratamiento premium + bebida</p><div class="card-footer"><span class="card-price">$300</span><span class="card-badge">TOP</span></div></div>
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">🧼</span><span class="card-num">05</span></div><h3 class="card-title">Afeitado Clásico</h3><p class="card-desc">Navaja de acero · toalla caliente · aceites esenciales</p><div class="card-footer"><span class="card-price">$150</span></div></div>
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">🧒</span><span class="card-num">06</span></div><h3 class="card-title">Corte Infantil</h3><p class="card-desc">Paciencia y estilo para pequeños (hasta 12 años)</p><div class="card-footer"><span class="card-price">$110</span></div></div>
-      <div class="servicio-card"><div class="card-header"><span class="card-icon">🎨</span><span class="card-num">07</span></div><h3 class="card-title">Greca y Diseño</h3><p class="card-desc">Arte a máquina · líneas y patrones personalizados</p><div class="card-footer"><span class="card-price">$250</span></div></div>
-    </div>
-  </section>
+  <!-- ILUSTRACIÓN HÉROE COMPLETA RESTAURADA (Barbero + Cliente + Máquina) -->
+  <div class="hero-right">
+    <svg class="hero-illustration" viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0e0e0e"/>
+          <stop offset="100%" style="stop-color:#1a1a1a"/>
+        </linearGradient>
+        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#8B5E3C"/>
+          <stop offset="100%" style="stop-color:#6B4226"/>
+        </linearGradient>
+        <linearGradient id="shirGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#1C1C1C"/>
+          <stop offset="100%" style="stop-color:#0A0A0A"/>
+        </linearGradient>
+        <linearGradient id="limaLine" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#D6FF00;stop-opacity:0"/>
+          <stop offset="50%" style="stop-color:#D6FF00;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#D6FF00;stop-opacity:0"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softglow">
+          <feGaussianBlur stdDeviation="12" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="bgRadial" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#1a1a14;stop-opacity:.8"/>
+          <stop offset="100%" style="stop-color:#080808;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#D6FF00;stop-opacity:.07"/>
+          <stop offset="100%" style="stop-color:#D6FF00;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+      <rect width="700" height="900" fill="url(#bgGrad)"/>
+      <ellipse cx="350" cy="420" rx="320" ry="380" fill="url(#auraGrad)"/>
+      <g opacity="0.04" stroke="#D6FF00" stroke-width=".5">
+        <line x1="0" y1="0" x2="700" y2="900"/>
+        <line x1="100" y1="0" x2="800" y2="900"/>
+        <line x1="-100" y1="0" x2="600" y2="900"/>
+        <line x1="200" y1="0" x2="900" y2="900"/>
+        <line x1="-200" y1="0" x2="500" y2="900"/>
+        <line x1="300" y1="0" x2="1000" y2="900"/>
+      </g>
+      <!-- Silla de barbería -->
+      <rect x="220" y="680" width="260" height="20" rx="4" fill="#1E1E1E" stroke="#333" stroke-width="1"/>
+      <rect x="240" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
+      <rect x="448" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
+      <rect x="230" y="850" width="240" height="12" rx="3" fill="#222"/>
+      <rect x="300" y="700" width="100" height="200" rx="4" fill="#151515"/>
+      <rect x="295" y="680" width="110" height="28" rx="5" fill="#242424"/>
+      <rect x="200" y="710" width="55" height="12" rx="4" fill="#222"/>
+      <rect x="445" y="710" width="55" height="12" rx="4" fill="#222"/>
+      <!-- Cliente sentado -->
+      <rect x="290" y="760" width="50" height="110" rx="8" fill="#1A1A1A"/>
+      <rect x="365" y="760" width="50" height="110" rx="8" fill="#1A1A1A"/>
+      <ellipse cx="315" cy="875" rx="28" ry="10" fill="#111"/>
+      <ellipse cx="390" cy="875" rx="28" ry="10" fill="#111"/>
+      <path d="M225 620 Q225 590 350 590 Q475 590 475 620 L490 760 Q350 780 210 760 Z" fill="#0F0F0F" stroke="#222" stroke-width="1"/>
+      <path d="M225 630 Q180 660 185 720" stroke="#0F0F0F" stroke-width="38" stroke-linecap="round" fill="none"/>
+      <path d="M475 630 Q520 660 515 720" stroke="#0F0F0F" stroke-width="38" stroke-linecap="round" fill="none"/>
+      <rect x="322" y="555" width="56" height="45" rx="12" fill="url(#skinGrad)"/>
+      <ellipse cx="350" cy="510" rx="68" ry="72" fill="url(#skinGrad)"/>
+      <path d="M285 490 Q290 430 350 425 Q410 430 415 490" fill="#1A0E00" stroke="#1A0E00" stroke-width="1"/>
+      <path d="M288 488 Q292 448 350 442 Q408 448 412 488" fill="#1A0E00"/>
+      <ellipse cx="283" cy="510" rx="12" ry="16" fill="url(#skinGrad)"/>
+      <ellipse cx="417" cy="510" rx="12" ry="16" fill="url(#skinGrad)"/>
+      <ellipse cx="325" cy="505" rx="8" ry="6" fill="#1A1A1A"/>
+      <ellipse cx="375" cy="505" rx="8" ry="6" fill="#1A1A1A"/>
+      <ellipse cx="325" cy="505" rx="4" ry="4" fill="#2A1800"/>
+      <ellipse cx="375" cy="505" rx="4" ry="4" fill="#2A1800"/>
+      <ellipse cx="327" cy="503" rx="1.5" ry="1.5" fill="white" opacity=".7"/>
+      <ellipse cx="377" cy="503" rx="1.5" ry="1.5" fill="white" opacity=".7"/>
+      <path d="M345 520 Q350 528 355 520" stroke="#6B4226" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M335 535 Q350 540 365 535" stroke="#5A3518" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M300 545 Q300 565 350 570 Q400 565 400 545 Q400 555 350 558 Q300 555 300 545Z" fill="#140A00"/>
+      <!-- Barbero de pie -->
+      <rect x="156" y="730" width="42" height="150" rx="8" fill="#1C1C1C"/>
+      <rect x="520" y="730" width="42" height="150" rx="8" fill="#1C1C1C"/>
+      <ellipse cx="177" cy="885" rx="24" ry="9" fill="#0A0A0A"/>
+      <ellipse cx="541" cy="885" rx="24" ry="9" fill="#0A0A0A"/>
+      <path d="M140 560 Q140 530 350 520 Q560 530 560 560 L570 740 Q350 760 130 740 Z" fill="url(#shirGrad)" stroke="#2A2A2A" stroke-width="1"/>
+      <rect x="300" y="560" width="100" height="185" rx="4" fill="#0A0A0A" opacity=".8"/>
+      <rect x="300" y="560" width="100" height="3" rx="1" fill="var(--lima)" opacity=".6"/>
+      <rect x="310" y="620" width="38" height="28" rx="3" stroke="#D6FF00" stroke-width="1" fill="none" opacity=".4"/>
+      <rect x="318" y="484" width="64" height="50" rx="14" fill="#8B5E3C"/>
+      <ellipse cx="350" cy="435" rx="76" ry="82" fill="#8B5E3C"/>
+      <path d="M278 415 Q278 350 350 345 Q422 350 422 415" fill="#1A0A00"/>
+      <path d="M280 413 Q282 360 350 355 Q418 360 420 413" fill="#160800"/>
+      <path d="M278 420 Q274 440 276 460 Q282 450 285 435Z" fill="#1A0A00"/>
+      <path d="M422 420 Q426 440 424 460 Q418 450 415 435Z" fill="#1A0A00"/>
+      <ellipse cx="276" cy="435" rx="13" ry="17" fill="#8B5E3C"/>
+      <ellipse cx="424" cy="435" rx="13" ry="17" fill="#8B5E3C"/>
+      <circle cx="424" cy="438" r="4" fill="#D6FF00" opacity=".8"/>
+      <path d="M310 407 Q325 400 340 405" stroke="#1A0A00" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M360 405 Q375 400 390 407" stroke="#1A0A00" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="325" cy="425" rx="9" ry="7" fill="#0A0A0A"/>
+      <ellipse cx="375" cy="425" rx="9" ry="7" fill="#0A0A0A"/>
+      <ellipse cx="326" cy="422" rx="3" ry="3" fill="white" opacity=".6"/>
+      <ellipse cx="376" cy="422" rx="3" ry="3" fill="white" opacity=".6"/>
+      <path d="M344 446 Q350 456 356 446" stroke="#6B3C1E" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M334 462 Q350 470 366 462" stroke="#5A2E10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M298 460 Q298 478 350 482 Q402 478 402 460 Q395 472 350 474 Q305 472 298 460Z" fill="#1A0A00" opacity=".8"/>
+      <!-- Brazo con máquina -->
+      <path d="M520 580 Q560 600 570 640 Q575 660 555 680" stroke="#8B5E3C" stroke-width="36" stroke-linecap="round" fill="none"/>
+      <ellipse cx="552" cy="685" rx="22" ry="18" fill="#7A4F2E"/>
+      <rect x="535" y="685" width="55" height="30" rx="8" fill="#1A1A1A" stroke="#333" stroke-width="1"/>
+      <rect x="535" y="685" width="55" height="12" rx="4" fill="#222"/>
+      <rect x="533" y="714" width="59" height="5" rx="2" fill="#888"/>
+      <rect x="543" y="689" width="30" height="3" rx="1" fill="#D6FF00" opacity=".7"/>
+      <line x1="596" y1="688" x2="608" y2="682" stroke="#D6FF00" stroke-width="1" opacity=".5" filter="url(#glow)"/>
+      <line x1="596" y1="695" x2="610" y2="693" stroke="#D6FF00" stroke-width="1" opacity=".4" filter="url(#glow)"/>
+      <line x1="596" y1="702" x2="608" y2="706" stroke="#D6FF00" stroke-width="1" opacity=".3" filter="url(#glow)"/>
+      <path d="M140 590 Q105 620 108 670" stroke="#8B5E3C" stroke-width="34" stroke-linecap="round" fill="none"/>
+      <rect x="0" y="870" width="700" height="2" fill="url(#limaLine)" opacity=".5"/>
+      <text x="50" y="190" font-family="'Montserrat', Impact, sans-serif" font-size="130" fill="none" stroke="#D6FF00" stroke-width="1" opacity=".06" letter-spacing="2">CORTE</text>
+      <text x="80" y="310" font-family="'Montserrat', Impact, sans-serif" font-size="80" fill="none" stroke="#D6FF00" stroke-width="1" opacity=".04" letter-spacing="3">ESTILO</text>
+      <circle cx="573" cy="691" r="3" fill="#D6FF00" filter="url(#softglow)" opacity=".9"/>
+      <g opacity=".25" fill="#8B5E3C">
+        <ellipse cx="460" cy="475" rx="2" ry="1" transform="rotate(-30 460 475)"/>
+        <ellipse cx="472" cy="462" rx="1.5" ry="1" transform="rotate(20 472 462)"/>
+        <ellipse cx="452" cy="485" rx="2" ry="1" transform="rotate(-50 452 485)"/>
+        <ellipse cx="465" cy="450" rx="1" ry="2" transform="rotate(10 465 450)"/>
+        <ellipse cx="480" cy="470" rx="1.5" ry="1" transform="rotate(-70 480 470)"/>
+        <ellipse cx="455" cy="465" rx="2" ry="1" transform="rotate(45 455 465)"/>
+      </g>
+      <rect x="0" y="0" width="700" height="6" fill="url(#limaLine)" opacity=".3"/>
+    </svg>
+    <div class="hero-ghost" aria-hidden="true">JJ</div>
+  </div>
+</section>
 
-  <!-- CUPONES -->
-  <section id="cupones">
-    <div class="cupones-header">
-      <div><h2 class="cupones-titulo">Cupones<br>Exclusivos</h2></div>
-      <span class="cupones-subt">Descarga y presenta en barbería</span>
-    </div>
-    <div class="carrusel-container">
-      <div class="carrusel-track" id="carruselTrack"></div>
-    </div>
-    <div class="carrusel-nav" id="carruselDots"></div>
-    <div class="carrusel-arrows">
-      <button class="carrusel-arrow" id="prevCupon">←</button>
-      <button class="carrusel-arrow" id="nextCupon">→</button>
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <div>
-      <h2 class="ctc-h">Agenda<br>tu<br><em>Cita</em></h2>
-      <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
-      <div class="proto-list">
-        <a href="https://wa.me/527716682637" target="_blank" class="proto wa"><span class="proto-ico">💬</span><div class="proto-txt"><strong>WhatsApp</strong><small>+52 771 668 2637</small></div></a>
-        <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" class="proto ig"><span class="proto-ico">📸</span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01</small></div></a>
-        <a href="#" target="_blank" class="proto maps"><span class="proto-ico">📍</span><div class="proto-txt"><strong>Ubicación</strong><small>Julián Villagrán 202, Centro</small></div></a>
-      </div>
-    </div>
-    <div class="ctc-info">
-      <div class="info-b">
-        <p class="info-lbl">Horario</p>
-        <div><div class="hr-row"><span class="hr-dia">Lun – Vie</span><span class="hr-h">9:00 – 20:00</span></div>
-        <div class="hr-row"><span class="hr-dia">Sábado</span><span class="hr-h">9:00 – 18:00</span></div>
-        <div class="hr-row"><span class="hr-dia">Domingo</span><span class="hr-h">10:00 – 15:00</span></div></div>
-      </div>
-      <div class="info-b">
-        <p class="info-lbl">Dirección</p>
-        <p class="info-val">Julián Villagrán 202<br>Centro, 42000<br>Pachuca de Soto, Hgo.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div><div class="ft-marca">Jesús<br>Juárez</div><p class="ft-sub">Barbería de precisión.<br>Pachuca de Soto, Hgo.</p></div>
-    <div><p class="ft-col-h">Contacto</p><a href="https://wa.me/527716682637" class="ft-lnk">💬 +52 771 668 2637</a><a href="https://www.instagram.com/jesus_juarez_perez_01" class="ft-lnk">📸 @jesus_juarez_perez_01</a></div>
-    <div><p class="ft-col-h">Servicios</p><span class="ft-lnk">Corte Normal — $130</span><span class="ft-lnk">Corte + Barba — $200</span><span class="ft-lnk">VIP — $300</span></div>
-    <div class="ft-copy"><span>© 2026 Jesús Juárez · Barbería</span><span>PWA · J3W Method</span></div>
-  </footer>
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item"><b>✂</b> Corte $130</span>
+    <span class="ticker-item"><b>🪒</b> Corte + Barba $200</span>
+    <span class="ticker-item"><b>✨</b> Ceja $50</span>
+    <span class="ticker-item"><b>👑</b> VIP $300</span>
+    <span class="ticker-item"><b>🧼</b> Afeitado Navaja $150</span>
+    <span class="ticker-item"><b>🧒</b> Infantil $110</span>
+    <span class="ticker-item"><b>🎨</b> Greca $250</span>
+    <span class="ticker-item"><b>📍</b> Frente al Mercado Miguel Hidalgo</span>
+    <span class="ticker-item"><b>✂</b> Corte $130</span>
+    <span class="ticker-item"><b>🪒</b> Corte + Barba $200</span>
+    <span class="ticker-item"><b>✨</b> Ceja $50</span>
+    <span class="ticker-item"><b>👑</b> VIP $300</span>
+    <span class="ticker-item"><b>🧼</b> Afeitado Navaja $150</span>
+    <span class="ticker-item"><b>🧒</b> Infantil $110</span>
+    <span class="ticker-item"><b>🎨</b> Greca $250</span>
+    <span class="ticker-item"><b>📍</b> Frente al Mercado Miguel Hidalgo</span>
+  </div>
 </div>
+
+<!-- SERVICIOS EN TARJETAS PROFESIONALES -->
+<section id="servicios">
+  <div class="sec-row">
+    <h2 class="sec-tit">Servicios</h2>
+    <span class="sec-note">07 opciones</span>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">✂️</span><span class="card-num">01</span></div>
+      <h3 class="card-title">Corte Normal</h3>
+      <p class="card-desc">Máquina o tijera · lavado incluido · acabado preciso con texturizado</p>
+      <div class="card-footer"><span class="card-price">$130</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">🪒</span><span class="card-num">02</span></div>
+      <h3 class="card-title">Corte + Barba</h3>
+      <p class="card-desc">Combo completo · perfilado con navaja · toalla caliente</p>
+      <div class="card-footer"><span class="card-price">$200</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">✨</span><span class="card-num">03</span></div>
+      <h3 class="card-title">Ceja</h3>
+      <p class="card-desc">Diseño y depilación con pinza y navaja · simetría perfecta</p>
+      <div class="card-footer"><span class="card-price">$50</span></div>
+    </div>
+    <div class="servicio-card vip">
+      <div class="card-header"><span class="card-icon">👑</span><span class="card-num">04</span></div>
+      <h3 class="card-title">Experiencia VIP</h3>
+      <p class="card-desc">Corte + barba + ceja + tratamiento premium + bebida</p>
+      <div class="card-footer"><span class="card-price">$300</span><span class="card-badge">TOP</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">🧼</span><span class="card-num">05</span></div>
+      <h3 class="card-title">Afeitado Clásico</h3>
+      <p class="card-desc">Navaja de acero · toalla caliente · aceites esenciales</p>
+      <div class="card-footer"><span class="card-price">$150</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">🧒</span><span class="card-num">06</span></div>
+      <h3 class="card-title">Corte Infantil</h3>
+      <p class="card-desc">Paciencia y estilo para pequeños (hasta 12 años)</p>
+      <div class="card-footer"><span class="card-price">$110</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="card-header"><span class="card-icon">🎨</span><span class="card-num">07</span></div>
+      <h3 class="card-title">Greca y Diseño</h3>
+      <p class="card-desc">Arte a máquina · líneas y patrones personalizados</p>
+      <div class="card-footer"><span class="card-price">$250</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CARRUSEL DE CUPONES DESCARGABLES -->
+<section id="cupones">
+  <div class="cupones-header">
+    <div><h2 class="cupones-titulo">Cupones<br>Exclusivos</h2></div>
+    <span class="cupones-subt">Descarga y presenta en barbería</span>
+  </div>
+  <div class="carrusel-container" id="carruselContainer">
+    <div class="carrusel-track" id="carruselTrack">
+      <!-- Cupón 1 -->
+      <div class="cupon-card" data-cupon="1">
+        <span class="cupon-tag">🔥 MÁS VENDIDO</span>
+        <h3 class="cupon-titulo">Combo<br>Clásico</h3>
+        <p class="cupon-desc">Corte + Barba completo con toalla caliente</p>
+        <div class="cupon-precio">$170<span class="cupon-antes">$200</span></div>
+        <p class="cupon-validez">Válido Lunes a Miércoles · 2026</p>
+        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="1">📥 DESCARGAR PDF</button></div>
+      </div>
+      <!-- Cupón 2 -->
+      <div class="cupon-card" data-cupon="2">
+        <span class="cupon-tag">👑 PREMIUM</span>
+        <h3 class="cupon-titulo">Experiencia<br>VIP</h3>
+        <p class="cupon-desc">Corte + Barba + Ceja + Tratamiento + Bebida</p>
+        <div class="cupon-precio">$260<span class="cupon-antes">$300</span></div>
+        <p class="cupon-validez">Válido todo el mes · 2026</p>
+        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="2">📥 DESCARGAR PDF</button></div>
+      </div>
+      <!-- Cupón 3 -->
+      <div class="cupon-card" data-cupon="3">
+        <span class="cupon-tag">🧒 FAMILIAR</span>
+        <h3 class="cupon-titulo">2x1<br>Infantil</h3>
+        <p class="cupon-desc">Dos cortes infantiles por el precio de uno</p>
+        <div class="cupon-precio">$110<span class="cupon-antes">$220</span></div>
+        <p class="cupon-validez">Válido Sábados · 2026</p>
+        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="3">📥 DESCARGAR PDF</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="carrusel-nav" id="carruselDots">
+    <button class="carrusel-dot active" data-index="0"></button>
+    <button class="carrusel-dot" data-index="1"></button>
+    <button class="carrusel-dot" data-index="2"></button>
+  </div>
+  <div class="carrusel-arrows">
+    <button class="carrusel-arrow" id="prevCupon">←</button>
+    <button class="carrusel-arrow" id="nextCupon">→</button>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div>
+    <h2 class="ctc-h">Agenda<br>tu<br><em>Cita</em></h2>
+    <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
+    <div class="proto-list">
+      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico">💬</span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
+      <a id="btn-correo" href="#" class="proto mail"><span class="proto-ico">✉</span><div class="proto-txt"><strong>Correo Electrónico</strong><small id="label-correo">jesusjuarezperezel10@gmail.com</small></div></a>
+      <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="proto ig"><span class="proto-ico">📸</span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div></a>
+      <!-- ENLACE ACTUALIZADO: APUNTA DIRECTAMENTE AL MERCADO MIGUEL HIDALGO (LA FAYUCA) -->
+      <a id="btn-maps" href="https://www.google.com/maps/place/Mercado+Miguel+Hidalgo/@20.1296428,-98.7492772,15z/data=!3m1!5s0x85d109e930085815:0x276d47745604cdbc!4m14!1m7!3m6!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!2sMercado+Miguel+Hidalgo!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y!3m5!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="proto maps"><span class="proto-ico">📍</span><div class="proto-txt"><strong>Cómo Llegar</strong><small>Julián Villagrán 202 · Frente al Mercado Hidalgo</small></div></a>
+    </div>
+  </div>
+  <div class="ctc-info">
+    <div class="info-b">
+      <p class="info-lbl">Horario</p>
+      <div>
+        <div class="hr-row"><span class="hr-dia">Lun – Vie</span><span class="hr-h">9:00 – 20:00</span></div>
+        <div class="hr-row"><span class="hr-dia">Sábado</span><span class="hr-h">9:00 – 18:00</span></div>
+        <div class="hr-row"><span class="hr-dia">Domingo</span><span class="hr-h">10:00 – 15:00</span></div>
+      </div>
+    </div>
+    <div class="info-b">
+      <p class="info-lbl">Dirección</p>
+      <p class="info-val">Julián Villagrán 202<br>Centro, 42000<br>Pachuca de Soto, Hgo.</p>
+      <p style="font-size:.75rem; color:var(--lima); margin-top:.5rem;">⬆️ Frente al Mercado Miguel Hidalgo</p>
+    </div>
+    <div class="info-b">
+      <p class="info-lbl">Confirma tu cita</p>
+      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="btn btn-lima" style="margin-top:.4rem;">✂ Agendar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="ft-marca">Jesús<br>Juárez</div>
+    <p class="ft-sub">Barbería de precisión.<br>Pachuca de Soto, Hgo.</p>
+  </div>
+  <div>
+    <p class="ft-col-h">Contacto</p>
+    <a href="https://wa.me/527716682637" target="_blank" rel="noopener noreferrer" class="ft-lnk">💬 +52 771 668 2637</a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com" class="ft-lnk">✉ jesusjuarezperezel10@gmail.com</a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="ft-lnk">📸 @jesus_juarez_perez_01</a>
+  </div>
+  <div>
+    <p class="ft-col-h">Servicios</p>
+    <span class="ft-lnk">Corte Normal — $130</span>
+    <span class="ft-lnk">Corte + Barba — $200</span>
+    <span class="ft-lnk">Ceja — $50</span>
+    <span class="ft-lnk">VIP — $300</span>
+    <span class="ft-lnk">Afeitado Navaja — $150</span>
+    <span class="ft-lnk">Infantil — $110</span>
+    <span class="ft-lnk">Greca y Diseño — $250</span>
+  </div>
+  <div class="ft-copy">
+    <span>© 2026 Jesús Juárez · Barbería · Julián Villagrán 202, Centro, 42000 Pachuca de Soto, Hgo.</span>
+    <span>PWA · J3W Method</span>
+  </div>
+</footer>
 
 <script>
-// ========== CONFIGURACIÓN DE FIREBASE ==========
-const database = window.firebaseDB;
-const auth = window.firebaseAuth;
-const ref = window.firebaseRef;
-const set = window.firebaseSet;
-const get = window.firebaseGet;
-const update = window.firebaseUpdate;
-const remove = window.firebaseRemove;
-const onValue = window.firebaseOnValue;
+// ========== PWA SERVICE WORKER (INLINE) ==========
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'jj-barberia-v1';
+    const ASSETS = ['./', './index.html', './manifest.json'];
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys =>
+        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      ));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(
+        caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => caches.match('./')))
+      );
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  navigator.serviceWorker.register(URL.createObjectURL(blob))
+    .then(() => console.log('✂ SW registrado'))
+    .catch(e => console.warn('SW error:', e));
+}
 
-// ========== VARIABLES GLOBALES ==========
-let currentUser = null;
-let isAdmin = false;
-let guestEmail = '';
-let cuponesList = [];
-let currentCarouselIndex = 0;
+// ========== INSTALL BANNER ==========
+let deferredPrompt;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const dismissBtn = document.getElementById('dismiss-btn');
 
-// ========== LOGIN SCREEN ==========
-document.querySelectorAll('.login-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab === 'guest' ? 'guestForm' : 'adminForm').classList.add('active');
-  });
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => banner.classList.add('show'), 3000);
 });
 
-function loginAsGuest() {
-  const email = document.getElementById('guestEmail').value;
-  guestEmail = email || 'invitado@anonimo.com';
-  isAdmin = false;
-  
-  // Registrar visita
-  if (email) {
-    const registroRef = ref(database, 'visitas/' + email.replace(/\./g, '_'));
-    set(registroRef, {
-      email: email,
-      fechaVisita: new Date().toISOString(),
-      tipo: 'cliente'
-    });
+installBtn && installBtn.addEventListener('click', () => {
+  banner.classList.remove('show');
+  deferredPrompt && deferredPrompt.prompt();
+  deferredPrompt && deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+});
+
+dismissBtn && dismissBtn.addEventListener('click', () => {
+  banner.classList.remove('show');
+});
+
+// ========== DETECCIÓN DISPOSITIVO ==========
+const ua = navigator.userAgent || navigator.vendor || window.opera;
+const esMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+
+// ========== EMAIL INTELIGENTE ==========
+(function() {
+  const btn = document.getElementById('btn-correo');
+  const label = document.getElementById('label-correo');
+  const correo = 'jesusjuarezperezel10@gmail.com';
+  const asunto = 'Cita en Barbería Jesús Juárez';
+  const cuerpo = 'Hola Jesús,\n\nQuiero agendar una cita:\n\nNombre: \nFecha preferida: \nServicio: ';
+  if (esMobile) {
+    btn.href = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    if (label) label.textContent = 'Abre tu app de correo';
+  } else {
+    const p = new URLSearchParams({ view:'cm', to: correo, su: asunto, body: cuerpo });
+    btn.href = `https://mail.google.com/mail/?${p.toString()}`;
+    btn.setAttribute('target','_blank');
+    if (label) label.textContent = 'Abre Gmail Web';
   }
+})();
+
+// ========== CARRUSEL DE CUPONES ==========
+const track = document.getElementById('carruselTrack');
+const dots = document.querySelectorAll('.carrusel-dot');
+const prevBtn = document.getElementById('prevCupon');
+const nextBtn = document.getElementById('nextCupon');
+const cards = document.querySelectorAll('.cupon-card');
+let currentIndex = 0;
+let startX = 0;
+let isDragging = false;
+let startScroll = 0;
+
+function updateCarousel(index) {
+  if (index < 0) index = 0;
+  if (index >= cards.length) index = cards.length - 1;
+  currentIndex = index;
   
-  showMainContent();
-}
-
-async function loginAsAdmin() {
-  const email = document.getElementById('adminEmail').value;
-  const password = document.getElementById('adminPassword').value;
-  const errorDiv = document.getElementById('loginError');
+  const cardWidth = cards[0].offsetWidth + 28;
+  track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
   
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    currentUser = userCredential.user;
-    isAdmin = true;
-    guestEmail = email;
-    
-    // Registrar acceso admin
-    await set(ref(database, 'accesos/' + Date.now()), {
-      email: email,
-      timestamp: new Date().toISOString()
-    });
-    
-    showMainContent();
-  } catch (error) {
-    errorDiv.textContent = 'Error: Credenciales inválidas';
-  }
-}
-
-function showMainContent() {
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('mainContent').classList.add('visible');
-  
-  // Actualizar UI según tipo de usuario
-  document.getElementById('userBadge').textContent = isAdmin ? '👑 Admin' : '👤 Cliente';
-  if (isAdmin) {
-    document.getElementById('adminPanelBtn').style.display = 'block';
-  }
-  
-  // Cargar cupones
-  loadCupones();
-}
-
-// ========== LOGOUT ==========
-async function logout() {
-  try {
-    await signOut(auth);
-    currentUser = null;
-    isAdmin = false;
-    
-    // Volver a la pantalla de login
-    document.getElementById('loginScreen').classList.remove('hidden');
-    document.getElementById('mainContent').classList.remove('visible');
-    document.getElementById('adminPanel').classList.remove('show');
-    
-    // Limpiar campos
-    document.getElementById('adminEmail').value = '';
-    document.getElementById('adminPassword').value = '';
-    document.getElementById('loginError').textContent = '';
-  } catch (error) {
-    console.error('Error al cerrar sesión:', error);
-  }
-}
-
-// ========== ADMIN PANEL ==========
-function openAdminPanel() {
-  if (isAdmin) {
-    document.getElementById('adminPanel').classList.add('show');
-    loadAdminData();
-  }
-}
-
-function closeAdminPanel() {
-  document.getElementById('adminPanel').classList.remove('show');
-}
-
-// ========== GESTIÓN DE CUPONES ==========
-async function loadCupones() {
-  const cuponesRef = ref(database, 'cupones');
-  
-  onValue(cuponesRef, (snapshot) => {
-    const data = snapshot.val();
-    cuponesList = data ? Object.entries(data).map(([id, cupon]) => ({ id, ...cupon })) : [];
-    
-    if (isAdmin && document.getElementById('adminPanel').classList.contains('show')) {
-      renderCuponesAdmin();
-    } else {
-      renderCuponesCarousel();
-    }
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentIndex);
   });
 }
 
-function renderCuponesCarousel() {
-  const track = document.getElementById('carruselTrack');
-  const dotsContainer = document.getElementById('carruselDots');
+prevBtn.addEventListener('click', () => updateCarousel(currentIndex - 1));
+nextBtn.addEventListener('click', () => updateCarousel(currentIndex + 1));
+
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => updateCarousel(i));
+});
+
+track.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startX = e.pageX;
+  startScroll = track.style.transform ? parseFloat(track.style.transform.replace('translateX(', '')) || 0 : 0;
+  track.style.cursor = 'grabbing';
+});
+
+track.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const diff = e.pageX - startX;
+  track.style.transform = `translateX(${startScroll + diff}px)`;
+});
+
+track.addEventListener('mouseup', () => {
+  if (!isDragging) return;
+  isDragging = false;
+  track.style.cursor = 'grab';
   
-  if (cuponesList.length === 0) {
-    // Cupones por defecto
-    cuponesList = [
-      { id: '1', tag: '🔥 MÁS VENDIDO', titulo: 'Combo Clásico', desc: 'Corte + Barba completo', precio: '$170', antes: '$200', validez: 'Válido Lunes a Miércoles' },
-      { id: '2', tag: '👑 PREMIUM', titulo: 'Experiencia VIP', desc: 'Corte + Barba + Ceja + Bebida', precio: '$260', antes: '$300', validez: 'Válido todo el mes' },
-      { id: '3', tag: '🧒 FAMILIAR', titulo: '2x1 Infantil', desc: 'Dos cortes infantiles', precio: '$110', antes: '$220', validez: 'Válido Sábados' }
-    ];
+  const cardWidth = cards[0].offsetWidth + 28;
+  const currentTranslate = parseFloat(track.style.transform.replace('translateX(', '')) || 0;
+  const newIndex = Math.round(-currentTranslate / cardWidth);
+  updateCarousel(newIndex);
+});
+
+track.addEventListener('mouseleave', () => {
+  if (isDragging) {
+    isDragging = false;
+    track.style.cursor = 'grab';
   }
-  
-  track.innerHTML = cuponesList.map(cupon => `
-    <div class="cupon-card">
-      <span class="cupon-tag">${cupon.tag || '🔥 OFERTA'}</span>
-      <h3 class="cupon-titulo">${cupon.titulo}</h3>
-      <p class="cupon-desc">${cupon.desc}</p>
-      <div class="cupon-precio">${cupon.precio}${cupon.antes ? `<span class="cupon-antes">${cupon.antes}</span>` : ''}</div>
-      <p class="cupon-validez">${cupon.validez}</p>
-      <div class="cupon-actions">
-        <button class="btn-cupon descargar-cupon" data-id="${cupon.id}">📥 DESCARGAR PDF</button>
-      </div>
-    </div>
-  `).join('');
-  
-  dotsContainer.innerHTML = cuponesList.map((_, i) => 
-    `<button class="carrusel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>`
-  ).join('');
-  
-  attachCarouselEvents();
-  attachCuponEvents();
-}
+});
 
-function renderCuponesAdmin() {
-  const container = document.getElementById('cuponesAdminList');
-  
-  container.innerHTML = cuponesList.map(cupon => `
-    <div class="cupon-admin-item">
-      <div class="cupon-admin-fields">
-        <input type="text" class="admin-input" data-field="tag" value="${cupon.tag || ''}" placeholder="Tag">
-        <input type="text" class="admin-input" data-field="titulo" value="${cupon.titulo || ''}" placeholder="Título">
-        <input type="text" class="admin-input" data-field="desc" value="${cupon.desc || ''}" placeholder="Descripción">
-        <input type="text" class="admin-input" data-field="precio" value="${cupon.precio || ''}" placeholder="Precio">
-        <input type="text" class="admin-input" data-field="antes" value="${cupon.antes || ''}" placeholder="Antes">
-        <input type="text" class="admin-input" data-field="validez" value="${cupon.validez || ''}" placeholder="Validez">
-      </div>
-      <div>
-        <button class="admin-btn save" onclick="saveCupon('${cupon.id}', this)">Guardar</button>
-        <button class="admin-btn delete" onclick="deleteCupon('${cupon.id}')">Eliminar</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function saveCupon(id, btn) {
-  const item = btn.closest('.cupon-admin-item');
-  const inputs = item.querySelectorAll('.admin-input');
-  
-  const cuponData = {};
-  inputs.forEach(input => {
-    cuponData[input.dataset.field] = input.value;
-  });
-  
-  try {
-    await update(ref(database, 'cupones/' + id), cuponData);
-    alert('Cupón guardado');
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
-}
-
-async function deleteCupon(id) {
-  if (!confirm('¿Eliminar este cupón?')) return;
-  try {
-    await remove(ref(database, 'cupones/' + id));
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
-}
-
-async function addNewCupon() {
-  const newId = 'cupon_' + Date.now();
-  try {
-    await set(ref(database, 'cupones/' + newId), {
-      tag: '🔥 NUEVO',
-      titulo: 'Nuevo Cupón',
-      desc: 'Descripción',
-      precio: '$0',
-      antes: '',
-      validez: 'Válido hasta 2026'
-    });
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
-}
-
-async function loadAdminData() {
-  renderCuponesAdmin();
-  
-  // Cargar registros
-  const registrosRef = ref(database, 'visitas');
-  onValue(registrosRef, (snapshot) => {
-    const data = snapshot.val();
-    const tbody = document.getElementById('registrosTableBody');
-    
-    if (!data) {
-      tbody.innerHTML = '<tr><td colspan="3">No hay registros</td></tr>';
-      return;
-    }
-    
-    const registros = Object.values(data);
-    tbody.innerHTML = registros.map(r => `
-      <tr><td>${r.email || 'N/A'}</td><td>${r.fechaVisita ? new Date(r.fechaVisita).toLocaleString() : 'N/A'}</td><td>-</td></tr>
-    `).join('');
-  });
-}
-
-// ========== PDF ==========
+// ========== GENERAR PDF DE CUPONES ==========
 const { jsPDF } = window.jspdf;
 
-function generarCuponPDF(cupon) {
+function generarCuponPDF(cuponData) {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [140, 216] });
+  const width = 140, height = 216;
   
-  doc.setFillColor(8, 8, 8); doc.rect(0, 0, 140, 216, 'F');
-  doc.setDrawColor(214, 255, 0); doc.rect(5, 5, 130, 206);
-  doc.setFillColor(214, 255, 0); doc.rect(20, 20, 100, 3, 'F');
-  doc.setTextColor(214, 255, 0); doc.setFontSize(50); doc.text('JJ', 70, 55, { align: 'center' });
-  doc.setFontSize(12); doc.setTextColor(119, 119, 119); doc.text('Jesús Juárez · Barbería', 70, 68, { align: 'center' });
-  doc.setFontSize(28); doc.setTextColor(240, 240, 237); doc.text(cupon.titulo || 'CUPÓN', 70, 95, { align: 'center' });
-  doc.setFontSize(45); doc.setTextColor(214, 255, 0); doc.text(cupon.precio || '$0', 70, 140, { align: 'center' });
-  doc.setFontSize(9); doc.setTextColor(119, 119, 119); doc.text(cupon.validez || '', 70, 170, { align: 'center' });
-  doc.setFontSize(8); doc.text('Julián Villagrán 202, Centro, Pachuca', 70, 190, { align: 'center' });
+  doc.setFillColor(8, 8, 8); doc.rect(0, 0, width, height, 'F');
+  doc.setDrawColor(214, 255, 0); doc.setLineWidth(2); doc.rect(5, 5, width - 10, height - 10);
+  doc.setFillColor(214, 255, 0); doc.rect(20, 20, width - 40, 3, 'F');
+  doc.setTextColor(214, 255, 0); doc.setFont('helvetica', 'bold'); doc.setFontSize(50); doc.text('JJ', width / 2, 55, { align: 'center' });
+  doc.setFontSize(12); doc.setTextColor(119, 119, 119); doc.text('Jesús Juárez · Barbería', width / 2, 68, { align: 'center' });
+  doc.setFontSize(28); doc.setTextColor(240, 240, 237); doc.text(cuponData.titulo, width / 2, 95, { align: 'center' });
+  doc.setFontSize(10); doc.setTextColor(119, 119, 119); doc.text(cuponData.desc, width / 2, 110, { align: 'center' });
+  doc.setFontSize(45); doc.setTextColor(214, 255, 0); doc.text(cuponData.precio, width / 2, 140, { align: 'center' });
+  if (cuponData.antes) { doc.setFontSize(14); doc.setTextColor(119, 119, 119); doc.text(`Antes: ${cuponData.antes}`, width / 2, 152, { align: 'center' }); }
+  doc.setFontSize(9); doc.setTextColor(119, 119, 119); doc.text(cuponData.validez, width / 2, 170, { align: 'center' });
+  doc.setFontSize(8); doc.text('Julián Villagrán 202, Centro, 42000 Pachuca, Hgo.', width / 2, 185, { align: 'center' });
+  doc.text('Frente al Mercado Miguel Hidalgo', width / 2, 191, { align: 'center' });
+  doc.text('WhatsApp: 771 668 2637', width / 2, 197, { align: 'center' });
+  doc.setFillColor(214, 255, 0); doc.rect(20, 205, width - 40, 2, 'F');
   
-  doc.save(`cupon-jj-${cupon.id}.pdf`);
+  doc.save(`cupon-jj-barberia-${cuponData.id}.pdf`);
 }
 
-// ========== CARRUSEL ==========
-function attachCarouselEvents() {
-  const track = document.getElementById('carruselTrack');
-  const dots = document.querySelectorAll('.carrusel-dot');
-  const prevBtn = document.getElementById('prevCupon');
-  const nextBtn = document.getElementById('nextCupon');
-  const cards = document.querySelectorAll('.cupon-card');
-  
-  function updateCarousel(index) {
-    if (index < 0) index = 0;
-    if (index >= cards.length) index = cards.length - 1;
-    currentCarouselIndex = index;
-    
-    if (cards.length > 0) {
-      const cardWidth = cards[0].offsetWidth + 28;
-      track.style.transform = `translateX(-${currentCarouselIndex * cardWidth}px)`;
-    }
-    
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentCarouselIndex));
-  }
-  
-  if (prevBtn) prevBtn.onclick = () => updateCarousel(currentCarouselIndex - 1);
-  if (nextBtn) nextBtn.onclick = () => updateCarousel(currentCarouselIndex + 1);
-  
-  dots.forEach((dot, i) => dot.onclick = () => updateCarousel(i));
-}
+const cuponesData = {
+  1: { id: 'combo-clasico', titulo: 'COMBO CLÁSICO', desc: 'Corte + Barba completo con toalla caliente', precio: '$170', antes: '$200', validez: 'Válido Lunes a Miércoles · 2026' },
+  2: { id: 'experiencia-vip', titulo: 'EXPERIENCIA VIP', desc: 'Corte + Barba + Ceja + Tratamiento + Bebida', precio: '$260', antes: '$300', validez: 'Válido todo el mes · 2026' },
+  3: { id: '2x1-infantil', titulo: '2x1 INFANTIL', desc: 'Dos cortes infantiles por el precio de uno', precio: '$110', antes: '$220', validez: 'Válido Sábados · 2026' }
+};
 
-function attachCuponEvents() {
-  document.querySelectorAll('.descargar-cupon').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cupon = cuponesList.find(c => c.id === btn.dataset.id);
-      if (cupon) generarCuponPDF(cupon);
-    });
-  });
-}
-
-// ========== INICIALIZACIÓN ==========
-document.addEventListener('DOMContentLoaded', () => {
-  // Auth state observer
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      currentUser = user;
-      isAdmin = true;
-    }
-  });
-  
-  // PWA Install
-  let deferredPrompt;
-  const banner = document.getElementById('install-banner');
-  
-  window.addEventListener('beforeinstallprompt', e => {
+document.querySelectorAll('.descargar-cupon').forEach(btn => {
+  btn.addEventListener('click', (e) => {
     e.preventDefault();
-    deferredPrompt = e;
-    setTimeout(() => banner.classList.add('show'), 3000);
+    const cuponId = btn.dataset.cupon;
+    const cuponData = cuponesData[cuponId];
+    if (cuponData) generarCuponPDF(cuponData);
   });
-  
-  document.getElementById('install-btn')?.addEventListener('click', () => {
-    banner.classList.remove('show');
-    deferredPrompt?.prompt();
-  });
-  
-  document.getElementById('dismiss-btn')?.addEventListener('click', () => {
-    banner.classList.remove('show');
-  });
-  
-  // Service Worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register("data:application/javascript," + encodeURIComponent(
-      `self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match('./'))));`
-    ));
-  }
 });
 
-// Exponer funciones globales
-window.loginAsGuest = loginAsGuest;
-window.loginAsAdmin = loginAsAdmin;
-window.logout = logout;
-window.openAdminPanel = openAdminPanel;
-window.closeAdminPanel = closeAdminPanel;
-window.saveCupon = saveCupon;
-window.deleteCupon = deleteCupon;
-window.addNewCupon = addNewCupon;
+updateCarousel(0);
 </script>
 
 </body>
