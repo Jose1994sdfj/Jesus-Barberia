@@ -520,7 +520,7 @@ nav{
 .proto.mail{color:#FFA040;}       .proto.mail::before{background:#FFA040;}
 .proto.ig{color:#E1306C;}         .proto.ig::before{background:#E1306C;}
 .proto.maps{color:#4A9EFF;}       .proto.maps::before{background:#4A9EFF;}
-.proto-ico{font-size:1.45rem;flex-shrink:0;}
+.proto-ico{width:1.6rem;height:1.6rem;flex-shrink:0;display:flex;align-items:center;}
 .proto-txt strong{
   display:block; font-family:'Montserrat', sans-serif;
   font-size:.85rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
@@ -639,136 +639,138 @@ footer{
 
   <!-- ILUSTRACIÓN HÉROE COMPLETA RESTAURADA (Barbero + Cliente + Máquina) -->
   <div class="hero-right">
-    <svg class="hero-illustration" viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#0e0e0e"/>
-          <stop offset="100%" style="stop-color:#1a1a1a"/>
-        </linearGradient>
-        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#8B5E3C"/>
-          <stop offset="100%" style="stop-color:#6B4226"/>
-        </linearGradient>
-        <linearGradient id="shirGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#1C1C1C"/>
-          <stop offset="100%" style="stop-color:#0A0A0A"/>
-        </linearGradient>
-        <linearGradient id="limaLine" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#D6FF00;stop-opacity:0"/>
-          <stop offset="50%" style="stop-color:#D6FF00;stop-opacity:1"/>
-          <stop offset="100%" style="stop-color:#D6FF00;stop-opacity:0"/>
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="softglow">
-          <feGaussianBlur stdDeviation="12" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <radialGradient id="bgRadial" cx="50%" cy="40%" r="60%">
-          <stop offset="0%" style="stop-color:#1a1a14;stop-opacity:.8"/>
-          <stop offset="100%" style="stop-color:#080808;stop-opacity:0"/>
-        </radialGradient>
-        <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#D6FF00;stop-opacity:.07"/>
-          <stop offset="100%" style="stop-color:#D6FF00;stop-opacity:0"/>
-        </radialGradient>
-      </defs>
-      <rect width="700" height="900" fill="url(#bgGrad)"/>
-      <ellipse cx="350" cy="420" rx="320" ry="380" fill="url(#auraGrad)"/>
-      <g opacity="0.04" stroke="#D6FF00" stroke-width=".5">
-        <line x1="0" y1="0" x2="700" y2="900"/>
-        <line x1="100" y1="0" x2="800" y2="900"/>
-        <line x1="-100" y1="0" x2="600" y2="900"/>
-        <line x1="200" y1="0" x2="900" y2="900"/>
-        <line x1="-200" y1="0" x2="500" y2="900"/>
-        <line x1="300" y1="0" x2="1000" y2="900"/>
-      </g>
-      <!-- Silla de barbería -->
-      <rect x="220" y="680" width="260" height="20" rx="4" fill="#1E1E1E" stroke="#333" stroke-width="1"/>
-      <rect x="240" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
-      <rect x="448" y="700" width="12" height="160" rx="3" fill="#1A1A1A"/>
-      <rect x="230" y="850" width="240" height="12" rx="3" fill="#222"/>
-      <rect x="300" y="700" width="100" height="200" rx="4" fill="#151515"/>
-      <rect x="295" y="680" width="110" height="28" rx="5" fill="#242424"/>
-      <rect x="200" y="710" width="55" height="12" rx="4" fill="#222"/>
-      <rect x="445" y="710" width="55" height="12" rx="4" fill="#222"/>
-      <!-- Cliente sentado -->
-      <rect x="290" y="760" width="50" height="110" rx="8" fill="#1A1A1A"/>
-      <rect x="365" y="760" width="50" height="110" rx="8" fill="#1A1A1A"/>
-      <ellipse cx="315" cy="875" rx="28" ry="10" fill="#111"/>
-      <ellipse cx="390" cy="875" rx="28" ry="10" fill="#111"/>
-      <path d="M225 620 Q225 590 350 590 Q475 590 475 620 L490 760 Q350 780 210 760 Z" fill="#0F0F0F" stroke="#222" stroke-width="1"/>
-      <path d="M225 630 Q180 660 185 720" stroke="#0F0F0F" stroke-width="38" stroke-linecap="round" fill="none"/>
-      <path d="M475 630 Q520 660 515 720" stroke="#0F0F0F" stroke-width="38" stroke-linecap="round" fill="none"/>
-      <rect x="322" y="555" width="56" height="45" rx="12" fill="url(#skinGrad)"/>
-      <ellipse cx="350" cy="510" rx="68" ry="72" fill="url(#skinGrad)"/>
-      <path d="M285 490 Q290 430 350 425 Q410 430 415 490" fill="#1A0E00" stroke="#1A0E00" stroke-width="1"/>
-      <path d="M288 488 Q292 448 350 442 Q408 448 412 488" fill="#1A0E00"/>
-      <ellipse cx="283" cy="510" rx="12" ry="16" fill="url(#skinGrad)"/>
-      <ellipse cx="417" cy="510" rx="12" ry="16" fill="url(#skinGrad)"/>
-      <ellipse cx="325" cy="505" rx="8" ry="6" fill="#1A1A1A"/>
-      <ellipse cx="375" cy="505" rx="8" ry="6" fill="#1A1A1A"/>
-      <ellipse cx="325" cy="505" rx="4" ry="4" fill="#2A1800"/>
-      <ellipse cx="375" cy="505" rx="4" ry="4" fill="#2A1800"/>
-      <ellipse cx="327" cy="503" rx="1.5" ry="1.5" fill="white" opacity=".7"/>
-      <ellipse cx="377" cy="503" rx="1.5" ry="1.5" fill="white" opacity=".7"/>
-      <path d="M345 520 Q350 528 355 520" stroke="#6B4226" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M335 535 Q350 540 365 535" stroke="#5A3518" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M300 545 Q300 565 350 570 Q400 565 400 545 Q400 555 350 558 Q300 555 300 545Z" fill="#140A00"/>
-      <!-- Barbero de pie -->
-      <rect x="156" y="730" width="42" height="150" rx="8" fill="#1C1C1C"/>
-      <rect x="520" y="730" width="42" height="150" rx="8" fill="#1C1C1C"/>
-      <ellipse cx="177" cy="885" rx="24" ry="9" fill="#0A0A0A"/>
-      <ellipse cx="541" cy="885" rx="24" ry="9" fill="#0A0A0A"/>
-      <path d="M140 560 Q140 530 350 520 Q560 530 560 560 L570 740 Q350 760 130 740 Z" fill="url(#shirGrad)" stroke="#2A2A2A" stroke-width="1"/>
-      <rect x="300" y="560" width="100" height="185" rx="4" fill="#0A0A0A" opacity=".8"/>
-      <rect x="300" y="560" width="100" height="3" rx="1" fill="var(--lima)" opacity=".6"/>
-      <rect x="310" y="620" width="38" height="28" rx="3" stroke="#D6FF00" stroke-width="1" fill="none" opacity=".4"/>
-      <rect x="318" y="484" width="64" height="50" rx="14" fill="#8B5E3C"/>
-      <ellipse cx="350" cy="435" rx="76" ry="82" fill="#8B5E3C"/>
-      <path d="M278 415 Q278 350 350 345 Q422 350 422 415" fill="#1A0A00"/>
-      <path d="M280 413 Q282 360 350 355 Q418 360 420 413" fill="#160800"/>
-      <path d="M278 420 Q274 440 276 460 Q282 450 285 435Z" fill="#1A0A00"/>
-      <path d="M422 420 Q426 440 424 460 Q418 450 415 435Z" fill="#1A0A00"/>
-      <ellipse cx="276" cy="435" rx="13" ry="17" fill="#8B5E3C"/>
-      <ellipse cx="424" cy="435" rx="13" ry="17" fill="#8B5E3C"/>
-      <circle cx="424" cy="438" r="4" fill="#D6FF00" opacity=".8"/>
-      <path d="M310 407 Q325 400 340 405" stroke="#1A0A00" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M360 405 Q375 400 390 407" stroke="#1A0A00" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="325" cy="425" rx="9" ry="7" fill="#0A0A0A"/>
-      <ellipse cx="375" cy="425" rx="9" ry="7" fill="#0A0A0A"/>
-      <ellipse cx="326" cy="422" rx="3" ry="3" fill="white" opacity=".6"/>
-      <ellipse cx="376" cy="422" rx="3" ry="3" fill="white" opacity=".6"/>
-      <path d="M344 446 Q350 456 356 446" stroke="#6B3C1E" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M334 462 Q350 470 366 462" stroke="#5A2E10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path d="M298 460 Q298 478 350 482 Q402 478 402 460 Q395 472 350 474 Q305 472 298 460Z" fill="#1A0A00" opacity=".8"/>
-      <!-- Brazo con máquina -->
-      <path d="M520 580 Q560 600 570 640 Q575 660 555 680" stroke="#8B5E3C" stroke-width="36" stroke-linecap="round" fill="none"/>
-      <ellipse cx="552" cy="685" rx="22" ry="18" fill="#7A4F2E"/>
-      <rect x="535" y="685" width="55" height="30" rx="8" fill="#1A1A1A" stroke="#333" stroke-width="1"/>
-      <rect x="535" y="685" width="55" height="12" rx="4" fill="#222"/>
-      <rect x="533" y="714" width="59" height="5" rx="2" fill="#888"/>
-      <rect x="543" y="689" width="30" height="3" rx="1" fill="#D6FF00" opacity=".7"/>
-      <line x1="596" y1="688" x2="608" y2="682" stroke="#D6FF00" stroke-width="1" opacity=".5" filter="url(#glow)"/>
-      <line x1="596" y1="695" x2="610" y2="693" stroke="#D6FF00" stroke-width="1" opacity=".4" filter="url(#glow)"/>
-      <line x1="596" y1="702" x2="608" y2="706" stroke="#D6FF00" stroke-width="1" opacity=".3" filter="url(#glow)"/>
-      <path d="M140 590 Q105 620 108 670" stroke="#8B5E3C" stroke-width="34" stroke-linecap="round" fill="none"/>
-      <rect x="0" y="870" width="700" height="2" fill="url(#limaLine)" opacity=".5"/>
-      <text x="50" y="190" font-family="'Montserrat', Impact, sans-serif" font-size="130" fill="none" stroke="#D6FF00" stroke-width="1" opacity=".06" letter-spacing="2">CORTE</text>
-      <text x="80" y="310" font-family="'Montserrat', Impact, sans-serif" font-size="80" fill="none" stroke="#D6FF00" stroke-width="1" opacity=".04" letter-spacing="3">ESTILO</text>
-      <circle cx="573" cy="691" r="3" fill="#D6FF00" filter="url(#softglow)" opacity=".9"/>
-      <g opacity=".25" fill="#8B5E3C">
-        <ellipse cx="460" cy="475" rx="2" ry="1" transform="rotate(-30 460 475)"/>
-        <ellipse cx="472" cy="462" rx="1.5" ry="1" transform="rotate(20 472 462)"/>
-        <ellipse cx="452" cy="485" rx="2" ry="1" transform="rotate(-50 452 485)"/>
-        <ellipse cx="465" cy="450" rx="1" ry="2" transform="rotate(10 465 450)"/>
-        <ellipse cx="480" cy="470" rx="1.5" ry="1" transform="rotate(-70 480 470)"/>
-        <ellipse cx="455" cy="465" rx="2" ry="1" transform="rotate(45 455 465)"/>
-      </g>
-      <rect x="0" y="0" width="700" height="6" fill="url(#limaLine)" opacity=".3"/>
-    </svg>
+    <svg class="hero-illustration" viewBox="0 0 700 750" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="gw" x="-80%" y="-40%" width="260%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b1"/>
+      <feGaussianBlur stdDeviation="15" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gr" x="-60%" y="-30%" width="220%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="b1"/>
+      <feGaussianBlur stdDeviation="22" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gb" x="-80%" y="-40%" width="260%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b1"/>
+      <feGaussianBlur stdDeviation="16" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Clip cuerpo del pole (coordenadas locales, antes del rotate) -->
+    <clipPath id="pc">
+      <rect x="133" y="112" width="194" height="518" rx="6"/>
+    </clipPath>
+    <linearGradient id="bgG" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#070707"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="700" height="750" fill="url(#bgG)"/>
+  <!-- Halos ambientales -->
+  <ellipse cx="545" cy="375" rx="200" ry="360" fill="#ff0000" opacity="0.04"/>
+  <ellipse cx="230" cy="370" rx="195" ry="290" fill="#ffffff" opacity="0.016"/>
+
+  <!-- ═══ BARBER POLE  rotate(-18°, 230, 370) ═══
+       Cuerpo local: x133–327, y112–630 (194×518)
+       Cap top:  y62–112   h=50 rx=25
+       Cap bot:  y630–680  h=50 rx=25
+       Extremos rotados comprobados: todos dentro de Y 18-732
+  ════════════════════════════════════════════════ -->
+  <g transform="rotate(-18, 230, 370)">
+
+    <!-- Base oscura cuerpo -->
+    <rect x="133" y="112" width="194" height="518" fill="#0b0b0b"/>
+
+    <!-- Franjas diagonales -->
+    <g clip-path="url(#pc)">
+      <polygon points="-340,900   -220,900 458,112 338,112" fill="#b50e0e"/>
+      <polygon points="-220,900   -160,900 518,112 458,112" fill="#0040b5"/>
+      <polygon points="-160,900   -100,900 578,112 518,112" fill="#090909"/>
+      <polygon points="-100,900    20,900  698,112 578,112" fill="#b50e0e"/>
+      <polygon points="20,900      80,900  758,112 698,112" fill="#0040b5"/>
+      <polygon points="80,900     140,900  818,112 758,112" fill="#090909"/>
+      <polygon points="140,900    260,900  938,112 818,112" fill="#b50e0e"/>
+      <polygon points="260,900    320,900  998,112 938,112" fill="#0040b5"/>
+      <polygon points="320,900    440,900 1118,112 998,112" fill="#b50e0e"/>
+      <polygon points="440,900    500,900 1178,112 1118,112" fill="#090909"/>
+      <polygon points="500,900    560,900 1238,112 1178,112" fill="#0040b5"/>
+    </g>
+
+    <!-- Glow rojo -->
+    <g clip-path="url(#pc)" opacity="0.25">
+      <polygon points="-340,900 -220,900 458,112 338,112" fill="none" stroke="#ff2020" stroke-width="2" filter="url(#gr)"/>
+      <polygon points="-100,900   20,900  698,112 578,112" fill="none" stroke="#ff2020" stroke-width="2" filter="url(#gr)"/>
+      <polygon points=" 140,900  260,900  938,112 818,112" fill="none" stroke="#ff2020" stroke-width="2" filter="url(#gr)"/>
+      <polygon points=" 320,900  440,900 1118,112 998,112" fill="none" stroke="#ff2020" stroke-width="2" filter="url(#gr)"/>
+    </g>
+    <!-- Glow azul -->
+    <g clip-path="url(#pc)" opacity="0.3">
+      <polygon points="-220,900 -160,900 518,112 458,112" fill="none" stroke="#4488ff" stroke-width="2" filter="url(#gb)"/>
+      <polygon points="  20,900   80,900  758,112 698,112" fill="none" stroke="#4488ff" stroke-width="2" filter="url(#gb)"/>
+      <polygon points=" 260,900  320,900  998,112 938,112" fill="none" stroke="#4488ff" stroke-width="2" filter="url(#gb)"/>
+      <polygon points=" 500,900  560,900 1238,112 1178,112" fill="none" stroke="#4488ff" stroke-width="2" filter="url(#gb)"/>
+    </g>
+
+    <!-- Borde cuerpo - glow blanco -->
+    <rect x="133" y="112" width="194" height="518" rx="6" fill="none" stroke="white" stroke-width="4.5" filter="url(#gw)" opacity="0.78"/>
+    <!-- Borde cuerpo - línea precisa -->
+    <rect x="133" y="112" width="194" height="518" rx="6" fill="none" stroke="rgba(255,255,255,0.86)" stroke-width="1.8"/>
+
+    <!-- ── Tapa superior ── -->
+    <rect x="119" y="62" width="222" height="54" rx="27" fill="#0d0d0d"/>
+    <rect x="119" y="62" width="222" height="54" rx="27" fill="none" stroke="white" stroke-width="4.5" filter="url(#gw)" opacity="0.88"/>
+    <rect x="119" y="62" width="222" height="54" rx="27" fill="none" stroke="rgba(255,255,255,0.84)" stroke-width="2"/>
+    <rect x="148" y="78" width="96" height="8" rx="4" fill="white" opacity="0.1"/>
+
+    <!-- ── Tapa inferior ── -->
+    <rect x="119" y="628" width="222" height="54" rx="27" fill="#0d0d0d"/>
+    <rect x="119" y="628" width="222" height="54" rx="27" fill="none" stroke="white" stroke-width="4.5" filter="url(#gw)" opacity="0.88"/>
+    <rect x="119" y="628" width="222" height="54" rx="27" fill="none" stroke="rgba(255,255,255,0.84)" stroke-width="2"/>
+    <rect x="148" y="644" width="96" height="8" rx="4" fill="white" opacity="0.1"/>
+  </g>
+
+  <!-- ═══ OPEN — neon rojo vertical ═══
+       x=534 center  |  font-size=112
+       O y=142 → top≈37  (>18 ✓)
+       N y=604 → bot≈624 (<732 ✓)
+  ══════════════════════════════════════ -->
+  <text x="534" y="142"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#8a0000" filter="url(#gr)">O</text>
+  <text x="534" y="142"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#ff2b2b">O</text>
+
+  <text x="534" y="289"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#8a0000" filter="url(#gr)">P</text>
+  <text x="534" y="289"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#ff2b2b">P</text>
+
+  <text x="534" y="436"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#8a0000" filter="url(#gr)">E</text>
+  <text x="534" y="436"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#ff2b2b">E</text>
+
+  <text x="534" y="604"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#8a0000" filter="url(#gr)">N</text>
+  <text x="534" y="604"
+        font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+        font-size="112" font-weight="900" text-anchor="middle"
+        fill="#ff2b2b">N</text>
+</svg>
     <div class="hero-ghost" aria-hidden="true">JJ</div>
   </div>
 </section>
@@ -901,11 +903,11 @@ footer{
     <h2 class="ctc-h">Agenda<br>tu<br><em>Cita</em></h2>
     <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
     <div class="proto-list">
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico">💬</span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
-      <a id="btn-correo" href="#" class="proto mail"><span class="proto-ico">✉</span><div class="proto-txt"><strong>Correo Electrónico</strong><small id="label-correo">jesusjuarezperezel10@gmail.com</small></div></a>
-      <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="proto ig"><span class="proto-ico">📸</span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div></a>
+      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg></span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
+      <a id="btn-correo" href="#" class="proto mail"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg></span><div class="proto-txt"><strong>Correo Electrónico</strong><small id="label-correo">jesusjuarezperezel10@gmail.com</small></div></a>
+      <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="proto ig"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ig-g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-g)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg></span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div></a>
       <!-- ENLACE ACTUALIZADO: APUNTA DIRECTAMENTE AL MERCADO MIGUEL HIDALGO (LA FAYUCA) -->
-      <a id="btn-maps" href="https://www.google.com/maps/place/Mercado+Miguel+Hidalgo/@20.1296428,-98.7492772,15z/data=!3m1!5s0x85d109e930085815:0x276d47745604cdbc!4m14!1m7!3m6!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!2sMercado+Miguel+Hidalgo!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y!3m5!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="proto maps"><span class="proto-ico">📍</span><div class="proto-txt"><strong>Cómo Llegar</strong><small>Julián Villagrán 202 · Frente al Mercado Hidalgo</small></div></a>
+      <a id="btn-maps" href="https://www.google.com/maps/place/Mercado+Miguel+Hidalgo/@20.1296428,-98.7492772,15z/data=!3m1!5s0x85d109e930085815:0x276d47745604cdbc!4m14!1m7!3m6!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!2sMercado+Miguel+Hidalgo!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y!3m5!1s0x85d109e92f0c7fbf:0xcf89d541fa4d7e0b!8m2!3d20.1296236!4d-98.7308231!16s%2Fg%2F11b7gyhr2y?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="proto maps"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/><path d="M12 2C8.13 2 5 5.13 5 9c0 1.92.67 3.68 1.78 5.07L12 22s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#C5221F"/><circle cx="12" cy="9" r="3" fill="white"/><path d="M5 9c0 5.25 7 13 7 13v-7a3 3 0 01-3-3c0-1.66 1.34-3 3-3V2C8.13 2 5 5.13 5 9z" fill="#FBBC04" opacity=".7"/></svg></span><div class="proto-txt"><strong>Cómo Llegar</strong><small>Julián Villagrán 202 · Frente al Mercado Hidalgo</small></div></a>
     </div>
   </div>
   <div class="ctc-info">
