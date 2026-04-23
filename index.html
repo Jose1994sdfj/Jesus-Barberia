@@ -579,9 +579,34 @@ footer{
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr; min-height:auto;}
-  .hero-left{padding:120px 1.5rem 3rem;}
-  .hero-right{height:50vw;min-height:260px;}
+  .hero{
+    grid-template-columns:1fr;
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+  }
+  .hero-left{
+    padding:110px 1.5rem 2rem;
+    background:var(--negro);
+    order:1;
+  }
+  .hero-right{
+    order:2;
+    position:relative;
+    width:100%;
+    aspect-ratio:700/750;
+    max-height:96vw;
+    overflow:hidden;
+  }
+  .hero-right::before{
+    background:linear-gradient(to bottom,rgba(8,8,8,.0) 0%,rgba(8,8,8,.25) 100%);
+  }
+  .hero-illustration{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
   .hero-ghost{display:none;}
 }
 @media(max-width:768px){
@@ -639,7 +664,7 @@ footer{
 
   <!-- ILUSTRACIÓN HÉROE COMPLETA RESTAURADA (Barbero + Cliente + Máquina) -->
   <div class="hero-right">
-    <svg class="hero-illustration" viewBox="0 0 700 750" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <svg class="hero-illustration" viewBox="0 0 700 750" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
   <defs>
     <filter id="gw" x="-80%" y="-40%" width="260%" height="180%">
       <feGaussianBlur stdDeviation="5" result="b1"/>
@@ -960,6 +985,21 @@ footer{
 </footer>
 
 <script>
+// ========== HERO SVG ASPECT RATIO ADAPTATIVO ==========
+(function(){
+  const svg = document.querySelector('.hero-illustration');
+  if(!svg) return;
+  function updateAR(){
+    if(window.innerWidth <= 900){
+      svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+    } else {
+      svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+    }
+  }
+  updateAR();
+  window.addEventListener('resize', updateAR);
+})();
+
 // ========== PWA SERVICE WORKER (INLINE) ==========
 if ('serviceWorker' in navigator) {
   const swCode = `
