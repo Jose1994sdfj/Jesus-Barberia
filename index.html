@@ -1154,6 +1154,43 @@ track.addEventListener('mouseleave', () => {
   }
 });
 
+// Touch móvil — sensibilidad mejorada (sin afectar botón de descarga)
+let cTouchStartX = 0;
+let cTouchLastX = 0;
+let cTouchVelocity = 0;
+let cTouchStartScroll = 0;
+let cTouchDragging = false;
+
+track.addEventListener('touchstart', (e) => {
+  cTouchDragging = true;
+  cTouchStartX = e.touches[0].pageX;
+  cTouchLastX = cTouchStartX;
+  cTouchVelocity = 0;
+  cTouchStartScroll = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
+}, {passive:true});
+
+track.addEventListener('touchmove', (e) => {
+  if (!cTouchDragging) return;
+  cTouchVelocity = e.touches[0].pageX - cTouchLastX;
+  cTouchLastX = e.touches[0].pageX;
+  track.style.transform = `translateX(${cTouchStartScroll + (e.touches[0].pageX - cTouchStartX)}px)`;
+}, {passive:true});
+
+track.addEventListener('touchend', (e) => {
+  if (!cTouchDragging) return;
+  cTouchDragging = false;
+  const cardWidth = cards[0].offsetWidth + 28;
+  const current = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
+  const drag = cTouchStartScroll - current;
+  const threshold = cardWidth * 0.28;
+  // Solo cambia slide si hubo arrastre real; tap corto deja pasar el evento al botón
+  if (Math.abs(drag) > threshold || Math.abs(cTouchVelocity) > 8) {
+    updateCarousel(drag > 0 ? currentIndex + 1 : currentIndex - 1);
+  } else {
+    updateCarousel(currentIndex); // snap de vuelta
+  }
+});
+
 // ========== GENERAR PDF DE CUPONES ==========
 const { jsPDF } = window.jspdf;
 
