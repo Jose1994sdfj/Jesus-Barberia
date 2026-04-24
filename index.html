@@ -669,6 +669,72 @@ footer{
   letter-spacing:.07em; flex-wrap:wrap; gap:.5rem; font-weight:400;
 }
 
+/* ─── PROMOS ─────────────────────────────────────── */
+#promos{
+  padding:5.5rem 2.5rem;
+  background:var(--lima);
+}
+.promos-inner{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center;
+  max-width:1100px; margin:0 auto;
+}
+.promos-tag{
+  display:inline-block;
+  font-family:'Montserrat',sans-serif; font-size:.62rem;
+  font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--negro); opacity:.5; margin-bottom:1rem;
+}
+.promos-tit{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:clamp(2.4rem,5vw,4rem); line-height:.95;
+  letter-spacing:-.02em; color:var(--negro); margin-bottom:1.2rem;
+}
+.promos-tit em{font-style:normal; text-decoration:underline; text-decoration-thickness:3px;}
+.promos-desc{
+  font-size:.88rem; color:rgba(8,8,8,.65);
+  line-height:1.7; max-width:38ch; font-weight:400;
+}
+.promos-form-wrap{
+  background:var(--negro);
+  border-radius:var(--radius-lg);
+  padding:2.2rem;
+}
+.promos-input-row{
+  display:flex; flex-direction:column; gap:.8rem; margin-bottom:1rem;
+}
+.promos-input{
+  background:var(--gris); border:1px solid var(--gris2);
+  color:var(--blanco); padding:.9rem 1.1rem;
+  border-radius:var(--radius-sm); font-family:'Poppins',sans-serif;
+  font-size:.85rem; font-weight:300; width:100%;
+  transition:border-color .2s; outline:none;
+}
+.promos-input::placeholder{color:var(--humo);}
+.promos-input:focus{border-color:var(--lima);}
+.promos-btn{
+  width:100%; background:var(--lima); color:var(--negro);
+  border:none; padding:1rem; border-radius:40px;
+  font-family:'Montserrat',sans-serif; font-size:.78rem;
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  cursor:pointer; transition:opacity .2s;
+}
+.promos-btn:hover{opacity:.85;}
+.promos-btn:disabled{opacity:.5; cursor:not-allowed;}
+.promos-legal{
+  font-size:.62rem; color:var(--humo); text-align:center;
+  margin-top:.8rem; letter-spacing:.05em;
+}
+.promos-gracias{
+  text-align:center; padding:1rem 0;
+}
+.gracias-icon{font-size:2.5rem; display:block; margin-bottom:.8rem;}
+.promos-gracias h3{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:1.4rem; color:var(--lima); margin-bottom:.5rem;
+}
+.promos-gracias p{font-size:.85rem; color:var(--humo); line-height:1.6;}
+
 @keyframes slideUp{
   from{opacity:0;transform:translateY(38px);}
   to{opacity:1;transform:translateY(0);}
@@ -709,9 +775,10 @@ footer{
 @media(max-width:768px){
   nav{padding:1rem 1.2rem;}
   .nav-links{display:none;}
-  #servicios,#cupones,#contacto{padding:4rem 1.2rem;}
+  #servicios,#cupones,#promos,#contacto{padding:4rem 1.2rem;}
   .servicio-card{flex:0 0 260px;}
   .cupon-card{flex:0 0 280px;}
+  .promos-inner{grid-template-columns:1fr;}
   #contacto{grid-template-columns:1fr;}
   footer{grid-template-columns:1fr;padding:2.2rem 1.2rem 1.4rem;}
   .ft-copy{flex-direction:column;}
@@ -1046,6 +1113,33 @@ footer{
   </div>
 </section>
 
+<!-- SECCIÓN PROMOS -->
+<section id="promos">
+  <div class="promos-inner">
+    <div class="promos-text">
+      <span class="promos-tag">✂ Solo para los que saben</span>
+      <h2 class="promos-tit">Promos que<br><em>no se publican</em></h2>
+      <p class="promos-desc">Los mejores descuentos no llegan solos — llegan a quienes se apuntan primero. Deja tu correo y sé el primero en enterarte de ofertas exclusivas, combos de temporada y sorpresas de la barbería.</p>
+    </div>
+    <div class="promos-form-wrap">
+      <form id="promos-form" action="https://formspree.io/f/mwvaajew" method="POST">
+        <input type="hidden" name="_subject" value="Nuevo suscriptor — Promos JJ Barbería">
+        <div class="promos-input-row">
+          <input type="text" name="nombre" placeholder="Tu nombre" class="promos-input" required>
+          <input type="email" name="email" placeholder="Tu correo" class="promos-input" required>
+        </div>
+        <button type="submit" class="promos-btn">Quiero mis promos exclusivas →</button>
+        <p class="promos-legal">Sin spam. Solo lo bueno. Puedes salirte cuando quieras.</p>
+      </form>
+      <div id="promos-gracias" class="promos-gracias" style="display:none;">
+        <span class="gracias-icon">✂</span>
+        <h3>¡Ya estás dentro!</h3>
+        <p>Te avisaremos antes que a nadie cuando haya algo especial. Nos vemos en la silla.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACTO -->
 <section id="contacto">
   <div>
@@ -1367,6 +1461,37 @@ document.querySelectorAll('.descargar-cupon').forEach(btn => {
     }
   });
 });
+
+// ========== FORMULARIO PROMOS ==========
+const promosForm = document.getElementById('promos-form');
+const promosGracias = document.getElementById('promos-gracias');
+if (promosForm) {
+  promosForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = promosForm.querySelector('.promos-btn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(promosForm.action, {
+        method: 'POST',
+        body: new FormData(promosForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        promosForm.style.display = 'none';
+        promosGracias.style.display = 'block';
+      } else {
+        btn.textContent = 'Quiero mis promos exclusivas →';
+        btn.disabled = false;
+        alert('Algo salió mal, intenta de nuevo.');
+      }
+    } catch {
+      btn.textContent = 'Quiero mis promos exclusivas →';
+      btn.disabled = false;
+      alert('Sin conexión. Intenta de nuevo.');
+    }
+  });
+}
 
 // ========== CARRUSEL DE SERVICIOS ==========
 const serviciosTrack = document.getElementById('serviciosTrack');
