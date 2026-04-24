@@ -669,6 +669,68 @@ footer{
   letter-spacing:.07em; flex-wrap:wrap; gap:.5rem; font-weight:400;
 }
 
+/* ─── BANNER IMAGEN PROMOS ───────────────────────── */
+.promos-hero{
+  display:grid; grid-template-columns:1fr 1fr;
+  min-height:380px; overflow:hidden;
+  border-radius:var(--radius-lg);
+  margin-bottom:0;
+}
+.promos-hero-img{
+  overflow:hidden;
+}
+.promos-hero-img img{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  display:block;
+}
+.promos-hero-txt{
+  background:var(--negro);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:2.8rem 2.4rem; gap:1.1rem;
+}
+.promos-img-tag{
+  font-size:.6rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--lima);
+}
+.promos-img-tit{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:clamp(2.4rem,4.5vw,3.6rem); line-height:.9;
+  letter-spacing:-.03em; color:var(--blanco); margin:0;
+}
+.promos-img-tit em{font-style:normal; color:var(--lima);}
+.promos-img-sub{
+  font-size:.83rem; color:rgba(240,240,237,.6);
+  line-height:1.7; margin:0; max-width:32ch;
+}
+.promos-stats{
+  display:flex; align-items:center; gap:1.1rem; margin:.3rem 0;
+}
+.pstat{display:flex; flex-direction:column; gap:.15rem;}
+.pstat-num{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:1.3rem; color:var(--lima); line-height:1; letter-spacing:-.01em;
+}
+.pstat-label{
+  font-size:.58rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--humo); font-weight:400;
+}
+.pstat-div{
+  width:1px; height:1.8rem; background:var(--gris2);
+}
+.promos-img-extra{
+  font-size:.75rem; color:rgba(240,240,237,.4);
+  line-height:1.6; margin:0; font-style:italic;
+}
+.promos-img-btn{
+  display:inline-block; align-self:flex-start;
+  background:var(--lima); color:var(--negro);
+  padding:.75rem 1.8rem; border-radius:40px;
+  font-family:'Montserrat',sans-serif; font-size:.72rem;
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  text-decoration:none; transition:opacity .2s;
+}
+.promos-img-btn:hover{opacity:.85;}
+
 /* ─── PROMOS ─────────────────────────────────────── */
 #promos{
   padding:5.5rem 2.5rem;
@@ -778,6 +840,8 @@ footer{
   #servicios,#cupones,#promos,#contacto{padding:4rem 1.2rem;}
   .servicio-card{flex:0 0 260px;}
   .cupon-card{flex:0 0 280px;}
+  .promos-hero{grid-template-columns:1fr; min-height:auto;}
+  .promos-hero-img{height:240px;}
   .promos-inner{grid-template-columns:1fr;}
   #contacto{grid-template-columns:1fr;}
   footer{grid-template-columns:1fr;padding:2.2rem 1.2rem 1.4rem;}
@@ -1115,6 +1179,34 @@ footer{
 
 <!-- SECCIÓN PROMOS -->
 <section id="promos">
+  <div class="promos-hero">
+    <div class="promos-hero-img">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/barberia-hero.jpg" alt="Silla de barbería Jesús Juárez Pachuca" loading="lazy">
+    </div>
+    <div class="promos-hero-txt">
+      <span class="promos-img-tag">✂ Pachuca · Centro</span>
+      <h2 class="promos-img-tit">Tu mejor<br>versión<br><em>empieza aquí</em></h2>
+      <p class="promos-img-sub">No es solo un corte — es cómo llegas a la entrevista, a la cita, al momento que importa. Aquí cada detalle cuenta y se nota.</p>
+      <div class="promos-stats">
+        <div class="pstat">
+          <span class="pstat-num">+700</span>
+          <span class="pstat-label">clientes atendidos</span>
+        </div>
+        <div class="pstat-div"></div>
+        <div class="pstat">
+          <span class="pstat-num">3</span>
+          <span class="pstat-label">años de experiencia</span>
+        </div>
+        <div class="pstat-div"></div>
+        <div class="pstat">
+          <span class="pstat-num">7</span>
+          <span class="pstat-label">servicios distintos</span>
+        </div>
+      </div>
+      <p class="promos-img-extra">Frente al Mercado Hidalgo, en el corazón del Centro de Pachuca. Fácil de llegar, difícil de olvidar.</p>
+      <a href="https://wa.me/527716682637?text=Hola%20Jesús%2C%20quiero%20agendar%20mi%20cita." target="_blank" rel="noopener noreferrer" class="promos-img-btn">Agendar por WhatsApp →</a>
+    </div>
+  </div>
   <div class="promos-inner">
     <div class="promos-text">
       <span class="promos-tag">✂ Solo para los que saben</span>
