@@ -1247,10 +1247,36 @@ serviciosTrack.addEventListener('mouseup', () => {
 });
 serviciosTrack.addEventListener('mouseleave', () => { if (sIsDragging) { sIsDragging = false; serviciosTrack.style.cursor = 'grab'; } });
 
-// Touch para móvil
-serviciosTrack.addEventListener('touchstart', (e) => { sIsDragging = true; sStartX = e.touches[0].pageX; sStartScroll = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0; }, {passive:true});
-serviciosTrack.addEventListener('touchmove', (e) => { if (!sIsDragging) return; serviciosTrack.style.transform = `translateX(${sStartScroll + (e.touches[0].pageX - sStartX)}px)`; }, {passive:true});
-serviciosTrack.addEventListener('touchend', () => { if (!sIsDragging) return; sIsDragging = false; const cardWidth = servicioCards[0].offsetWidth + 24; const current = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0; updateServiciosCarousel(Math.round(-current / cardWidth)); });
+// Touch para móvil — sensibilidad mejorada
+let sTouchLastX = 0;
+let sTouchVelocity = 0;
+serviciosTrack.addEventListener('touchstart', (e) => {
+  sIsDragging = true;
+  sStartX = e.touches[0].pageX;
+  sTouchLastX = sStartX;
+  sTouchVelocity = 0;
+  sStartScroll = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
+}, {passive:true});
+serviciosTrack.addEventListener('touchmove', (e) => {
+  if (!sIsDragging) return;
+  sTouchVelocity = e.touches[0].pageX - sTouchLastX;
+  sTouchLastX = e.touches[0].pageX;
+  serviciosTrack.style.transform = `translateX(${sStartScroll + (e.touches[0].pageX - sStartX)}px)`;
+}, {passive:true});
+serviciosTrack.addEventListener('touchend', () => {
+  if (!sIsDragging) return;
+  sIsDragging = false;
+  const cardWidth = servicioCards[0].offsetWidth + 24;
+  const current = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
+  const drag = sStartScroll - current;
+  // Cambia con 28% del ancho O con un swipe rápido (velocidad > 8px)
+  const threshold = cardWidth * 0.28;
+  if (Math.abs(sTouchVelocity) > 8 || Math.abs(drag) > threshold) {
+    updateServiciosCarousel(drag > 0 ? servicioIndex + 1 : servicioIndex - 1);
+  } else {
+    updateServiciosCarousel(servicioIndex); // snap de vuelta
+  }
+});
 
 updateServiciosCarousel(0);
 
