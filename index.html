@@ -12,12 +12,83 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="JJ Barbería">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
+
+<!-- TODO (cuando haya dominio): actualizar canonical a la URL del dominio propio,
+     ej: https://jesusjuarezbarberia.com/ y verificar en Google Search Console -->
+<link rel="canonical" href="https://jesus-barberia.vercel.app/">
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Jes%C3%BAs%20Ju%C3%A1rez%20%C2%B7%20Barber%C3%ADa%22%2C%22short_name%22%3A%22JJ%20Barber%C3%ADa%22%2C%22description%22%3A%22Barber%C3%ADa%20de%20precisi%C3%B3n%20en%20Pachuca%2C%20Hgo.%20Corte%2C%20barba%20y%20dise%C3%B1o.%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230A0A0A%22%2C%22theme_color%22%3A%22%23E8FF00%22%2C%22orientation%22%3A%22portrait-primary%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520192%2520192'%253E%253Crect%2520width%3D'192'%2520height%3D'192'%2520fill%3D'%25230A0A0A'%2F%253E%253Ctext%2520x%3D'96'%2520y%3D'130'%2520font-family%3D'serif'%2520font-size%3D'110'%2520font-weight%3D'900'%2520text-anchor%3D'middle'%2520fill%3D'%2523E8FF00'%253EJJ%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520512%2520512'%253E%253Crect%2520width%3D'512'%2520height%3D'512'%2520fill%3D'%25230A0A0A'%2F%253E%253Ctext%2520x%3D'256'%2520y%3D'350'%2520font-family%3D'serif'%2520font-size%3D'300'%2520font-weight%3D'900'%2520text-anchor%3D'middle'%2520fill%3D'%2523E8FF00'%253EJJ%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%2C%22categories%22%3A%5B%22lifestyle%22%2C%22beauty%22%2C%22health%22%5D%7D">
 
 <!-- OG / Social -->
+<!-- 
+  TODO (cuando haya dominio): 
+  Reemplazar el content="data:image/svg+xml;base64,..." de og:image y twitter:image
+  por una URL real, ej: content="https://jesusjuarezbarberia.com/og-image.jpg"
+  La imagen debe ser 1200x630px JPG. Subir el archivo al servidor junto con el HTML.
+  Validar en: developers.facebook.com/tools/debug y cards-dev.twitter.com/validator
+-->
 <meta property="og:title" content="Jesús Juárez · Barbería Pachuca">
-<meta property="og:description" content="Corte, barba y diseño. Julián Villagrán 202, Centro, Pachuca.">
+<meta property="og:description" content="Corte, barba y diseño con precisión. Julián Villagrán 202, Centro, Pachuca — Frente al Mercado Miguel Hidalgo.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://jesusjuarezbarberia.com">
+<meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KICA8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9IiMwODA4MDgiLz4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iOCIgaGVpZ2h0PSI2MzAiIGZpbGw9IiNENkZGMDAiLz4KICA8cG9seWdvbiBwb2ludHM9IjEyMDAsMCA5MDAsMCAxMjAwLDE4MCIgZmlsbD0iI0Q2RkYwMCIgb3BhY2l0eT0iMC4wNiIvPgogIDx0ZXh0IHg9IjgwIiB5PSIyODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMDAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNENkZGMDAiIG9wYWNpdHk9IjAuMTIiPkpKPC90ZXh0PgogIDx0ZXh0IHg9IjgwIiB5PSIyNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMDAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNENkZGMDAiPkpKPC90ZXh0PgogIDx0ZXh0IHg9IjQ5MCIgeT0iMjIwIiBmb250LXNpemU9IjkwIiBmaWxsPSIjRDZGRjAwIiBvcGFjaXR5PSIwLjciPiYjeDI3MDI7PC90ZXh0PgogIDx0ZXh0IHg9IjgwIiB5PSIzODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2MiIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YwRjBFRCIgbGV0dGVyLXNwYWNpbmc9IjIiPkpFU1VTIEpVQVJFWjwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iNDQwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM3Nzc3NzciIGxldHRlci1zcGFjaW5nPSI2Ij5CQVJCRVJJQSDCtyBQQUNIVUNBLCBIR08uPC90ZXh0PgogIDxyZWN0IHg9IjgwIiB5PSI0NzgiIHdpZHRoPSIzMDAiIGhlaWdodD0iMSIgZmlsbD0iIzMzMyIvPgogIDx0ZXh0IHg9IjgwIiB5PSI1MTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSIgZmlsbD0iIzU1NTU1NSI+SnVsaWFuIFZpbGxhZ3JhbiAyMDIsIENlbnRybyDigJQgRnJlbnRlIGFsIE1lcmNhZG8gTWlndWVsIEhpZGFsZ288L3RleHQ+CiAgPHRleHQgeD0iODAiIHk9IjU1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIiBmaWxsPSIjNTU1NTU1Ij5XaGF0c0FwcDogNzcxIDY2OCAyNjM3PC90ZXh0PgogIDxyZWN0IHg9IjAiIHk9IjYyMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMTAiIGZpbGw9IiNENkZGMDAiLz4KPC9zdmc+">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jesús Juárez Barbería — Pachuca, Hgo.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jesús Juárez · Barbería Pachuca">
+<meta name="twitter:description" content="Corte, barba y diseño con precisión. Julián Villagrán 202, Centro, Pachuca.">
+<meta name="twitter:image" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KICA8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9IiMwODA4MDgiLz4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iOCIgaGVpZ2h0PSI2MzAiIGZpbGw9IiNENkZGMDAiLz4KICA8cG9seWdvbiBwb2ludHM9IjEyMDAsMCA5MDAsMCAxMjAwLDE4MCIgZmlsbD0iI0Q2RkYwMCIgb3BhY2l0eT0iMC4wNiIvPgogIDx0ZXh0IHg9IjgwIiB5PSIyODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMDAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNENkZGMDAiIG9wYWNpdHk9IjAuMTIiPkpKPC90ZXh0PgogIDx0ZXh0IHg9IjgwIiB5PSIyNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMDAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNENkZGMDAiPkpKPC90ZXh0PgogIDx0ZXh0IHg9IjQ5MCIgeT0iMjIwIiBmb250LXNpemU9IjkwIiBmaWxsPSIjRDZGRjAwIiBvcGFjaXR5PSIwLjciPiYjeDI3MDI7PC90ZXh0PgogIDx0ZXh0IHg9IjgwIiB5PSIzODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2MiIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI0YwRjBFRCIgbGV0dGVyLXNwYWNpbmc9IjIiPkpFU1VTIEpVQVJFWjwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iNDQwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM3Nzc3NzciIGxldHRlci1zcGFjaW5nPSI2Ij5CQVJCRVJJQSDCtyBQQUNIVUNBLCBIR08uPC90ZXh0PgogIDxyZWN0IHg9IjgwIiB5PSI0NzgiIHdpZHRoPSIzMDAiIGhlaWdodD0iMSIgZmlsbD0iIzMzMyIvPgogIDx0ZXh0IHg9IjgwIiB5PSI1MTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSIgZmlsbD0iIzU1NTU1NSI+SnVsaWFuIFZpbGxhZ3JhbiAyMDIsIENlbnRybyDigJQgRnJlbnRlIGFsIE1lcmNhZG8gTWlndWVsIEhpZGFsZ288L3RleHQ+CiAgPHRleHQgeD0iODAiIHk9IjU1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIiBmaWxsPSIjNTU1NTU1Ij5XaGF0c0FwcDogNzcxIDY2OCAyNjM3PC90ZXh0PgogIDxyZWN0IHg9IjAiIHk9IjYyMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMTAiIGZpbGw9IiNENkZGMDAiLz4KPC9zdmc+">
+
+<!-- Schema.org BarberShop — datos estructurados para Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": "Jesús Juárez Barbería",
+  "description": "Barbería de precisión en el Centro de Pachuca. Corte, barba, diseño, experiencia VIP y más. Frente al Mercado Miguel Hidalgo.",
+  "url": "https://jesusjuarezbarberia.com",
+  "telephone": "+52-771-668-2637",
+  "priceRange": "$50 – $300",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Julián Villagrán 202",
+    "addressLocality": "Pachuca de Soto",
+    "addressRegion": "Hidalgo",
+    "postalCode": "42000",
+    "addressCountry": "MX"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 20.1173,
+    "longitude": -98.7329
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "10:00",
+      "closes": "15:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/jesus_juarez_perez_01",
+    "https://wa.me/527716682637"
+  ],
+  "hasMap": "https://maps.google.com/?q=Julián+Villagrán+202,+Centro,+42000+Pachuca+de+Soto,+Hgo."
+}
+</script>
 
 <!-- Fonts: Tipografía más humana -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -930,7 +1001,7 @@ footer{
 <!-- CARRUSEL DE CUPONES DESCARGABLES -->
 <section id="cupones">
   <div class="cupones-header">
-    <div><h2 class="cupones-titulo">Cupones<br>Exclusivos</h2></div>
+    <div><h2 class="cupones-titulo" aria-label="Cupones Exclusivos">Cupones<br>Exclusivos</h2></div>
     <span class="cupones-subt">Descarga y presenta en barbería</span>
   </div>
   <div class="carrusel-container" id="carruselContainer">
@@ -938,7 +1009,7 @@ footer{
       <!-- Cupón 1 -->
       <div class="cupon-card" data-cupon="1">
         <span class="cupon-tag">🔥 MÁS VENDIDO</span>
-        <h3 class="cupon-titulo">Combo<br>Clásico</h3>
+        <h3 class="cupon-titulo" aria-label="Combo Clásico">Combo<br>Clásico</h3>
         <p class="cupon-desc">Corte + Barba completo con toalla caliente</p>
         <div class="cupon-precio">$170<span class="cupon-antes">$200</span></div>
         <p class="cupon-validez">Válido Lunes a Miércoles · 2026</p>
@@ -947,7 +1018,7 @@ footer{
       <!-- Cupón 2 -->
       <div class="cupon-card" data-cupon="2">
         <span class="cupon-tag">👑 PREMIUM</span>
-        <h3 class="cupon-titulo">Experiencia<br>VIP</h3>
+        <h3 class="cupon-titulo" aria-label="Experiencia VIP">Experiencia<br>VIP</h3>
         <p class="cupon-desc">Corte + Barba + Ceja + Tratamiento + Bebida</p>
         <div class="cupon-precio">$260<span class="cupon-antes">$300</span></div>
         <p class="cupon-validez">Válido todo el mes · 2026</p>
@@ -956,7 +1027,7 @@ footer{
       <!-- Cupón 3 -->
       <div class="cupon-card" data-cupon="3">
         <span class="cupon-tag">🧒 FAMILIAR</span>
-        <h3 class="cupon-titulo">2x1<br>Infantil</h3>
+        <h3 class="cupon-titulo" aria-label="2x1 Infantil">2x1<br>Infantil</h3>
         <p class="cupon-desc">Dos cortes infantiles por el precio de uno</p>
         <div class="cupon-precio">$110<span class="cupon-antes">$220</span></div>
         <p class="cupon-validez">Válido Sábados · 2026</p>
@@ -978,7 +1049,7 @@ footer{
 <!-- CONTACTO -->
 <section id="contacto">
   <div>
-    <h2 class="ctc-h">Agenda<br>tu<br><em>Cita</em></h2>
+    <h2 class="ctc-h" aria-label="Agenda tu Cita">Agenda<br>tu<br><em>Cita</em></h2>
     <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
     <div class="proto-list">
       <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg></span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
@@ -1012,7 +1083,7 @@ footer{
 <!-- FOOTER -->
 <footer>
   <div>
-    <div class="ft-marca">Jesús<br>Juárez</div>
+    <div class="ft-marca" aria-label="Jesús Juárez">Jesús<br>Juárez</div>
     <p class="ft-sub">Barbería de precisión.<br>Pachuca de Soto, Hgo.</p>
   </div>
   <div>
