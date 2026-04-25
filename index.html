@@ -1090,7 +1090,7 @@ footer{
       </div>
     </div>
   </div>
-  <div style="overflow:hidden; padding:.5rem 0;">
+  <div id="galeriaContainer" style="overflow:hidden; padding:.5rem 0;">
     <div id="galeriaTrack" style="display:flex; gap:1.2rem; transition:transform .5s cubic-bezier(.16,1,.3,1); cursor:grab;">
       <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%201.jpg" alt="Trabajo 1 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
       <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%202.jpg" alt="Trabajo 2 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
@@ -1649,31 +1649,39 @@ galeriaTrack.addEventListener('mousemove', (e) => { if (!gIsDragging) return; gV
 galeriaTrack.addEventListener('mouseup', () => { if (!gIsDragging) return; gIsDragging = false; galeriaTrack.style.cursor='grab'; const w = galeriaImgs[0].offsetWidth + 19; const cur = parseFloat(galeriaTrack.style.transform?.replace('translateX(','')) || 0; const drag = gStartScroll - cur; Math.abs(gVelocity) > 8 || Math.abs(drag) > w * 0.28 ? updateGaleria(drag > 0 ? galeriaIndex + 1 : galeriaIndex - 1) : updateGaleria(galeriaIndex); });
 galeriaTrack.addEventListener('mouseleave', () => { if (gIsDragging) { gIsDragging = false; galeriaTrack.style.cursor='grab'; } });
 
-galeriaTrack.addEventListener('touchstart', (e) => { 
-  gIsDragging=true; 
-  gStartX=e.touches[0].pageX; 
-  gLastX=gStartX; 
-  gVelocity=0; 
-  gStartScroll=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0;
-  galeriaTrack.style.transition='none';
+const galeriaContainer = document.getElementById('galeriaContainer');
+
+galeriaContainer.addEventListener('touchstart', (e) => {
+  gIsDragging = true;
+  gStartX = e.touches[0].pageX;
+  gLastX = gStartX;
+  gVelocity = 0;
+  const w = galeriaImgs[0].offsetWidth + 19;
+  gStartScroll = -(galeriaIndex * w);
+  galeriaTrack.style.transition = 'none';
 }, {passive:false});
 
-galeriaTrack.addEventListener('touchmove', (e) => { 
-  if(!gIsDragging) return; 
+galeriaContainer.addEventListener('touchmove', (e) => {
+  if (!gIsDragging) return;
   e.preventDefault();
-  gVelocity=e.touches[0].pageX-gLastX; 
-  gLastX=e.touches[0].pageX; 
-  galeriaTrack.style.transform=`translateX(${gStartScroll+(e.touches[0].pageX-gStartX)}px)`;
+  gVelocity = e.touches[0].pageX - gLastX;
+  gLastX = e.touches[0].pageX;
+  const drag = e.touches[0].pageX - gStartX;
+  galeriaTrack.style.transform = `translateX(${gStartScroll + drag}px)`;
 }, {passive:false});
 
-galeriaTrack.addEventListener('touchend', () => { 
-  if(!gIsDragging) return; 
-  gIsDragging=false; 
-  galeriaTrack.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';
-  const w=galeriaImgs[0].offsetWidth+19; 
-  const cur=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; 
-  const drag=gStartScroll-cur; 
-  Math.abs(gVelocity)>8||Math.abs(drag)>w*0.28 ? updateGaleria(drag>0?galeriaIndex+1:galeriaIndex-1) : updateGaleria(galeriaIndex); 
+galeriaContainer.addEventListener('touchend', () => {
+  if (!gIsDragging) return;
+  gIsDragging = false;
+  galeriaTrack.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
+  const w = galeriaImgs[0].offsetWidth + 19;
+  const cur = parseFloat(galeriaTrack.style.transform.replace('translateX(','')) || 0;
+  const drag = gStartScroll - cur;
+  if (Math.abs(gVelocity) > 8 || Math.abs(drag) > w * 0.28) {
+    updateGaleria(drag > 0 ? galeriaIndex + 1 : galeriaIndex - 1);
+  } else {
+    updateGaleria(galeriaIndex);
+  }
 });
 
 updateGaleria(0);
