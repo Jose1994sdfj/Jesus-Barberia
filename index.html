@@ -1649,9 +1649,32 @@ galeriaTrack.addEventListener('mousemove', (e) => { if (!gIsDragging) return; gV
 galeriaTrack.addEventListener('mouseup', () => { if (!gIsDragging) return; gIsDragging = false; galeriaTrack.style.cursor='grab'; const w = galeriaImgs[0].offsetWidth + 19; const cur = parseFloat(galeriaTrack.style.transform?.replace('translateX(','')) || 0; const drag = gStartScroll - cur; Math.abs(gVelocity) > 8 || Math.abs(drag) > w * 0.28 ? updateGaleria(drag > 0 ? galeriaIndex + 1 : galeriaIndex - 1) : updateGaleria(galeriaIndex); });
 galeriaTrack.addEventListener('mouseleave', () => { if (gIsDragging) { gIsDragging = false; galeriaTrack.style.cursor='grab'; } });
 
-galeriaTrack.addEventListener('touchstart', (e) => { gIsDragging=true; gStartX=e.touches[0].pageX; gLastX=gStartX; gVelocity=0; gStartScroll=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; }, {passive:true});
-galeriaTrack.addEventListener('touchmove', (e) => { if(!gIsDragging) return; gVelocity=e.touches[0].pageX-gLastX; gLastX=e.touches[0].pageX; galeriaTrack.style.transform=`translateX(${gStartScroll+(e.touches[0].pageX-gStartX)}px)`; }, {passive:true});
-galeriaTrack.addEventListener('touchend', () => { if(!gIsDragging) return; gIsDragging=false; const w=galeriaImgs[0].offsetWidth+19; const cur=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; const drag=gStartScroll-cur; Math.abs(gVelocity)>8||Math.abs(drag)>w*0.28 ? updateGaleria(drag>0?galeriaIndex+1:galeriaIndex-1) : updateGaleria(galeriaIndex); });
+galeriaTrack.addEventListener('touchstart', (e) => { 
+  gIsDragging=true; 
+  gStartX=e.touches[0].pageX; 
+  gLastX=gStartX; 
+  gVelocity=0; 
+  gStartScroll=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0;
+  galeriaTrack.style.transition='none';
+}, {passive:true});
+
+galeriaTrack.addEventListener('touchmove', (e) => { 
+  if(!gIsDragging) return; 
+  e.preventDefault();
+  gVelocity=e.touches[0].pageX-gLastX; 
+  gLastX=e.touches[0].pageX; 
+  galeriaTrack.style.transform=`translateX(${gStartScroll+(e.touches[0].pageX-gStartX)}px)`;
+}, {passive:false});
+
+galeriaTrack.addEventListener('touchend', () => { 
+  if(!gIsDragging) return; 
+  gIsDragging=false; 
+  galeriaTrack.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';
+  const w=galeriaImgs[0].offsetWidth+19; 
+  const cur=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; 
+  const drag=gStartScroll-cur; 
+  Math.abs(gVelocity)>8||Math.abs(drag)>w*0.28 ? updateGaleria(drag>0?galeriaIndex+1:galeriaIndex-1) : updateGaleria(galeriaIndex); 
+});
 
 updateGaleria(0);
 
