@@ -1490,33 +1490,46 @@ let cTouchVelocity = 0;
 let cTouchStartScroll = 0;
 let cTouchDragging = false;
 
+let cTouchIsHorizontal = null;
+let cTouchStartY = 0;
+
 track.addEventListener('touchstart', (e) => {
   cTouchDragging = true;
+  cTouchIsHorizontal = null;
   cTouchStartX = e.touches[0].pageX;
+  cTouchStartY = e.touches[0].pageY;
   cTouchLastX = cTouchStartX;
   cTouchVelocity = 0;
-  cTouchStartScroll = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
+  cTouchStartScroll = -(currentIndex * (cards[0].offsetWidth + 28));
+  track.style.transition = 'none';
 }, {passive:true});
 
 track.addEventListener('touchmove', (e) => {
   if (!cTouchDragging) return;
+  const dx = e.touches[0].pageX - cTouchStartX;
+  const dy = e.touches[0].pageY - cTouchStartY;
+  if (cTouchIsHorizontal === null) {
+    if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+    cTouchIsHorizontal = Math.abs(dx) > Math.abs(dy);
+  }
+  if (!cTouchIsHorizontal) { cTouchDragging = false; track.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)'; return; }
+  e.preventDefault();
   cTouchVelocity = e.touches[0].pageX - cTouchLastX;
   cTouchLastX = e.touches[0].pageX;
-  track.style.transform = `translateX(${cTouchStartScroll + (e.touches[0].pageX - cTouchStartX)}px)`;
-}, {passive:true});
+  track.style.transform = `translateX(${cTouchStartScroll + dx}px)`;
+}, {passive:false});
 
-track.addEventListener('touchend', (e) => {
-  if (!cTouchDragging) return;
+track.addEventListener('touchend', () => {
+  if (!cTouchDragging || !cTouchIsHorizontal) { cTouchDragging = false; return; }
   cTouchDragging = false;
+  track.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
   const cardWidth = cards[0].offsetWidth + 28;
-  const current = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
-  const drag = cTouchStartScroll - current;
-  const threshold = cardWidth * 0.28;
-  // Solo cambia slide si hubo arrastre real; tap corto deja pasar el evento al botón
-  if (Math.abs(drag) > threshold || Math.abs(cTouchVelocity) > 8) {
+  const cur = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
+  const drag = cTouchStartScroll - cur;
+  if (Math.abs(drag) > cardWidth * 0.38 || Math.abs(cTouchVelocity) > 14) {
     updateCarousel(drag > 0 ? currentIndex + 1 : currentIndex - 1);
   } else {
-    updateCarousel(currentIndex); // snap de vuelta
+    updateCarousel(currentIndex);
   }
 });
 
@@ -1751,31 +1764,46 @@ serviciosTrack.addEventListener('mouseleave', () => { if (sIsDragging) { sIsDrag
 // Touch para móvil — sensibilidad mejorada
 let sTouchLastX = 0;
 let sTouchVelocity = 0;
+let sTouchIsHorizontal = null;
+let sTouchStartY = 0;
+
 serviciosTrack.addEventListener('touchstart', (e) => {
   sIsDragging = true;
+  sTouchIsHorizontal = null;
   sStartX = e.touches[0].pageX;
+  sTouchStartY = e.touches[0].pageY;
   sTouchLastX = sStartX;
   sTouchVelocity = 0;
-  sStartScroll = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
+  sStartScroll = -(servicioIndex * (servicioCards[0].offsetWidth + 24));
+  serviciosTrack.style.transition = 'none';
 }, {passive:true});
+
 serviciosTrack.addEventListener('touchmove', (e) => {
   if (!sIsDragging) return;
+  const dx = e.touches[0].pageX - sStartX;
+  const dy = e.touches[0].pageY - sTouchStartY;
+  if (sTouchIsHorizontal === null) {
+    if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+    sTouchIsHorizontal = Math.abs(dx) > Math.abs(dy);
+  }
+  if (!sTouchIsHorizontal) { sIsDragging = false; serviciosTrack.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)'; return; }
+  e.preventDefault();
   sTouchVelocity = e.touches[0].pageX - sTouchLastX;
   sTouchLastX = e.touches[0].pageX;
-  serviciosTrack.style.transform = `translateX(${sStartScroll + (e.touches[0].pageX - sStartX)}px)`;
-}, {passive:true});
+  serviciosTrack.style.transform = `translateX(${sStartScroll + dx}px)`;
+}, {passive:false});
+
 serviciosTrack.addEventListener('touchend', () => {
-  if (!sIsDragging) return;
+  if (!sIsDragging || !sTouchIsHorizontal) { sIsDragging = false; return; }
   sIsDragging = false;
+  serviciosTrack.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
   const cardWidth = servicioCards[0].offsetWidth + 24;
-  const current = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
-  const drag = sStartScroll - current;
-  // Cambia con 28% del ancho O con un swipe rápido (velocidad > 8px)
-  const threshold = cardWidth * 0.28;
-  if (Math.abs(sTouchVelocity) > 8 || Math.abs(drag) > threshold) {
+  const cur = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
+  const drag = sStartScroll - cur;
+  if (Math.abs(sTouchVelocity) > 14 || Math.abs(drag) > cardWidth * 0.38) {
     updateServiciosCarousel(drag > 0 ? servicioIndex + 1 : servicioIndex - 1);
   } else {
-    updateServiciosCarousel(servicioIndex); // snap de vuelta
+    updateServiciosCarousel(servicioIndex);
   }
 });
 
