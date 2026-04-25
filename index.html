@@ -669,6 +669,15 @@ footer{
   letter-spacing:.07em; flex-wrap:wrap; gap:.5rem; font-weight:400;
 }
 
+/* ─── GALERÍA ────────────────────────────────────── */
+.galeria-img{
+  flex:0 0 420px; height:520px;
+  object-fit:cover; object-position:center top;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--gris2);
+  pointer-events:none; user-select:none;
+}
+
 /* ─── BANNER IMAGEN PROMOS ───────────────────────── */
 .promos-hero{
   display:grid; grid-template-columns:1fr 1fr;
@@ -1067,6 +1076,32 @@ footer{
 </div>
 
 <!-- SERVICIOS EN CARRUSEL -->
+<!-- GALERÍA DE TRABAJOS -->
+<section id="galeria" style="padding:5rem 2.5rem; background:var(--negro);">
+  <div class="sec-row">
+    <div>
+      <h2 class="sec-tit">Mi Trabajo</h2>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span class="sec-note">05 fotos</span>
+      <div class="carrusel-arrows" style="margin-top:0;">
+        <button class="carrusel-arrow" id="prevGaleria" aria-label="Anterior">‹</button>
+        <button class="carrusel-arrow" id="nextGaleria" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+  </div>
+  <div style="overflow:hidden; padding:.5rem 0;">
+    <div id="galeriaTrack" style="display:flex; gap:1.2rem; transition:transform .5s cubic-bezier(.16,1,.3,1); cursor:grab;">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%201.jpg" alt="Trabajo 1 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%202.jpg" alt="Trabajo 2 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%203.jpg" alt="Trabajo 3 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%204.jpg" alt="Trabajo 4 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
+      <img src="https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%205.jpg" alt="Trabajo 5 - Jesús Juárez Barbería" class="galeria-img" loading="lazy">
+    </div>
+  </div>
+  <div class="carrusel-nav" id="galeriaNav"></div>
+</section>
+
 <section id="servicios">
   <div class="sec-row">
     <div>
@@ -1579,6 +1614,46 @@ if (promosForm) {
     }
   });
 }
+
+// ========== CARRUSEL GALERÍA ==========
+const galeriaTrack = document.getElementById('galeriaTrack');
+const galeriaNav = document.getElementById('galeriaNav');
+const prevGaleria = document.getElementById('prevGaleria');
+const nextGaleria = document.getElementById('nextGaleria');
+const galeriaImgs = document.querySelectorAll('.galeria-img');
+let galeriaIndex = 0;
+let gStartX = 0, gIsDragging = false, gStartScroll = 0, gLastX = 0, gVelocity = 0;
+
+galeriaImgs.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'carrusel-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => updateGaleria(i));
+  galeriaNav.appendChild(dot);
+});
+const galeriaDots = document.querySelectorAll('#galeriaNav .carrusel-dot');
+
+function updateGaleria(index) {
+  if (index < 0) index = 0;
+  if (index >= galeriaImgs.length) index = galeriaImgs.length - 1;
+  galeriaIndex = index;
+  const w = galeriaImgs[0].offsetWidth + 19;
+  galeriaTrack.style.transform = `translateX(-${galeriaIndex * w}px)`;
+  galeriaDots.forEach((d, i) => d.classList.toggle('active', i === galeriaIndex));
+}
+
+prevGaleria.addEventListener('click', () => updateGaleria(galeriaIndex - 1));
+nextGaleria.addEventListener('click', () => updateGaleria(galeriaIndex + 1));
+
+galeriaTrack.addEventListener('mousedown', (e) => { gIsDragging = true; gStartX = e.pageX; gLastX = e.pageX; gVelocity = 0; gStartScroll = parseFloat(galeriaTrack.style.transform?.replace('translateX(','')) || 0; galeriaTrack.style.cursor='grabbing'; });
+galeriaTrack.addEventListener('mousemove', (e) => { if (!gIsDragging) return; gVelocity = e.pageX - gLastX; gLastX = e.pageX; galeriaTrack.style.transform = `translateX(${gStartScroll + (e.pageX - gStartX)}px)`; });
+galeriaTrack.addEventListener('mouseup', () => { if (!gIsDragging) return; gIsDragging = false; galeriaTrack.style.cursor='grab'; const w = galeriaImgs[0].offsetWidth + 19; const cur = parseFloat(galeriaTrack.style.transform?.replace('translateX(','')) || 0; const drag = gStartScroll - cur; Math.abs(gVelocity) > 8 || Math.abs(drag) > w * 0.28 ? updateGaleria(drag > 0 ? galeriaIndex + 1 : galeriaIndex - 1) : updateGaleria(galeriaIndex); });
+galeriaTrack.addEventListener('mouseleave', () => { if (gIsDragging) { gIsDragging = false; galeriaTrack.style.cursor='grab'; } });
+
+galeriaTrack.addEventListener('touchstart', (e) => { gIsDragging=true; gStartX=e.touches[0].pageX; gLastX=gStartX; gVelocity=0; gStartScroll=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; }, {passive:true});
+galeriaTrack.addEventListener('touchmove', (e) => { if(!gIsDragging) return; gVelocity=e.touches[0].pageX-gLastX; gLastX=e.touches[0].pageX; galeriaTrack.style.transform=`translateX(${gStartScroll+(e.touches[0].pageX-gStartX)}px)`; }, {passive:true});
+galeriaTrack.addEventListener('touchend', () => { if(!gIsDragging) return; gIsDragging=false; const w=galeriaImgs[0].offsetWidth+19; const cur=parseFloat(galeriaTrack.style.transform?.replace('translateX(',''))||0; const drag=gStartScroll-cur; Math.abs(gVelocity)>8||Math.abs(drag)>w*0.28 ? updateGaleria(drag>0?galeriaIndex+1:galeriaIndex-1) : updateGaleria(galeriaIndex); });
+
+updateGaleria(0);
 
 // ========== CARRUSEL DE SERVICIOS ==========
 const serviciosTrack = document.getElementById('serviciosTrack');
