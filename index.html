@@ -521,6 +521,11 @@ nav{
   overflow:hidden;
   padding:.5rem 0;
 }
+.carrusel-viewport{
+  position:relative;
+  overflow:hidden;
+  padding:.5rem 0;
+}
 .carrusel-track{
   display:flex;
   gap:1.8rem;
@@ -929,7 +934,6 @@ footer{
   }
   .hero-ghost{display:none;}
 }
-/* ─── TARJETAS DE PRODUCTOS REUZEL ────────────── */
 .producto-card{
   flex:0 0 260px; background:#0f0f0f;
   border-radius:14px; overflow:hidden;
@@ -993,7 +997,8 @@ footer{
 }
 
 @media(max-width:768px){
-  .producto-card{ flex:0 0 240px; }
+  .producto-card{ flex:0 0 calc(85vw - 2.4rem); max-width:260px; }
+  #productos{ padding:4rem 1.2rem; }
 }
 .wa-float{
   position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
@@ -1459,7 +1464,7 @@ footer{
   </div>
 
   <div class="carrusel-viewport" id="productosContainer">
-    <div class="carrusel-track" id="productosTrack" style="cursor:grab;">
+    <div class="carrusel-track" id="productosTrack" style="cursor:grab; gap:1.5rem;">
 
       <!-- Producto 1: Pomada Verde -->
       <div class="producto-card">
