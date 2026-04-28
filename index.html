@@ -935,20 +935,21 @@ footer{
   .hero-ghost{display:none;}
 }
 .producto-card{
-  flex:0 0 260px; background:#0f0f0f;
+  flex:0 0 260px; background:rgba(0,0,0,.08);
   border-radius:14px; overflow:hidden;
-  border:1px solid rgba(255,255,255,.06);
+  border:1px solid rgba(0,0,0,.12);
   transition:transform .25s cubic-bezier(.16,1,.3,1),
-             border-color .2s;
+             border-color .2s, background .2s;
   display:flex; flex-direction:column;
 }
 .producto-card:hover{
   transform:translateY(-4px);
-  border-color:rgba(214,255,0,.2);
+  background:rgba(0,0,0,.14);
+  border-color:rgba(0,0,0,.25);
 }
 .prod-img-wrap{
   width:100%; aspect-ratio:1/1;
-  background:#141414; overflow:hidden;
+  background:rgba(0,0,0,.06); overflow:hidden;
   display:flex; align-items:center; justify-content:center;
 }
 .prod-img{
@@ -962,15 +963,15 @@ footer{
 }
 .prod-tag{
   font-size:.55rem; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--lima); font-weight:700; font-family:'Montserrat',sans-serif;
+  color:rgba(0,0,0,.5); font-weight:700; font-family:'Montserrat',sans-serif;
   margin-bottom:.4rem; display:block;
 }
 .prod-nombre{
   font-family:'Montserrat',sans-serif; font-weight:800;
-  font-size:1.05rem; color:var(--blanco); margin:0 0 .3rem;
+  font-size:1.05rem; color:var(--negro); margin:0 0 .3rem;
 }
 .prod-desc{
-  font-size:.72rem; color:rgba(240,240,237,.45);
+  font-size:.72rem; color:rgba(0,0,0,.5);
   margin:0 0 .9rem; line-height:1.4; flex:1;
 }
 .prod-precio-row{
@@ -978,28 +979,27 @@ footer{
 }
 .prod-precio{
   font-family:'Montserrat',sans-serif; font-weight:800;
-  font-size:1.4rem; color:var(--lima);
+  font-size:1.4rem; color:var(--negro);
 }
 
 .prod-btn{
   display:block; text-align:center;
-  background:rgba(214,255,0,.1); color:var(--lima);
-  border:1px solid rgba(214,255,0,.25);
+  background:var(--negro); color:var(--lima);
+  border:1px solid var(--negro);
   padding:.55rem .8rem; border-radius:8px;
   font-family:'Montserrat',sans-serif; font-size:.65rem;
   font-weight:700; letter-spacing:.08em; text-transform:uppercase;
   text-decoration:none;
-  transition:background .2s, border-color .2s;
+  transition:background .2s, opacity .2s;
 }
-.prod-btn:hover{
-  background:rgba(214,255,0,.18);
-  border-color:rgba(214,255,0,.5);
-}
+.prod-btn:hover{ opacity:.82; }
 
 @media(max-width:768px){
   .producto-card{ flex:0 0 calc(85vw - 2.4rem); max-width:260px; }
   #productos{ padding:4rem 1.2rem; }
 }
+#productosNav .carrusel-dot{ background:rgba(0,0,0,.25); }
+#productosNav .carrusel-dot.active{ background:var(--negro); }
 .wa-float{
   position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
   display:flex; align-items:center; gap:.65rem;
@@ -1454,13 +1454,13 @@ footer{
 <!-- ══════════════════════════════════════════════════════
      SECCIÓN PRODUCTOS REUZEL
 ══════════════════════════════════════════════════════ -->
-<section id="productos" style="background:var(--negro); padding:5rem 2.5rem 4rem;">
+<section id="productos" style="background:var(--lima); padding:5rem 2.5rem 4rem;">
   <div class="servicios-header">
     <div>
-      <span class="servicios-tag">✂ Disponibles en barbería</span>
-      <h2 class="servicios-tit">Productos<br><em>Reuzel</em></h2>
+      <span class="servicios-tag" style="color:rgba(0,0,0,.5);">✂ Disponibles en barbería</span>
+      <h2 class="servicios-tit" style="color:var(--negro);">Productos<br><em style="color:var(--negro);">Reuzel</em></h2>
     </div>
-    <p class="servicios-desc">Los mismos productos que usamos en cada corte. Llévate tu estilo a casa con las marcas que los barberos de verdad usan.</p>
+    <p class="servicios-desc" style="color:rgba(0,0,0,.6);">Los mismos productos que usamos en cada corte. Llévate tu estilo a casa con las marcas que los barberos de verdad usan.</p>
   </div>
 
   <div class="carrusel-viewport" id="productosContainer">
@@ -1613,10 +1613,10 @@ footer{
     </div><!-- /carrusel-track -->
   </div><!-- /carrusel-viewport -->
 
-  <div class="carrusel-nav" id="productosNav"></div>
+  <div class="carrusel-nav" id="productosNav" style="--dot-color:rgba(0,0,0,.25); --dot-active:var(--negro);"></div>
   <div class="carrusel-arrows">
-    <button class="carrusel-arrow" id="prevProducto">←</button>
-    <button class="carrusel-arrow" id="nextProducto">→</button>
+    <button class="carrusel-arrow" id="prevProducto" style="border-color:rgba(0,0,0,.25); color:var(--negro);">←</button>
+    <button class="carrusel-arrow" id="nextProducto" style="border-color:rgba(0,0,0,.25); color:var(--negro);">→</button>
   </div>
 </section>
 
@@ -1786,27 +1786,39 @@ footer{
 // ========== PWA SERVICE WORKER (INLINE) ==========
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'jj-barberia-v1';
-    const ASSETS = ['./', './index.html', './manifest.json'];
+    const CACHE = 'jj-barberia-v4';
+    const SHELL = ['./'];
+
     self.addEventListener('install', e => {
-      e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+      e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
       self.skipWaiting();
     });
+
     self.addEventListener('activate', e => {
-      e.waitUntil(caches.keys().then(keys =>
-        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-      ));
+      e.waitUntil(
+        caches.keys().then(keys =>
+          Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+        )
+      );
       self.clients.claim();
     });
+
     self.addEventListener('fetch', e => {
+      if (e.request.method !== 'GET') return;
       e.respondWith(
-        caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => caches.match('./')))
+        fetch(e.request)
+          .then(res => {
+            const clone = res.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+            return res;
+          })
+          .catch(() => caches.match(e.request).then(cached => cached || caches.match('./')))
       );
     });
   `;
   const blob = new Blob([swCode], { type: 'application/javascript' });
   navigator.serviceWorker.register(URL.createObjectURL(blob))
-    .then(() => console.log('✂ SW registrado'))
+    .then(() => console.log('✂ SW v4 registrado'))
     .catch(e => console.warn('SW error:', e));
 }
 
