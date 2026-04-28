@@ -170,6 +170,92 @@ nav{
 }
 .nav-cta:hover{opacity:.85;}
 
+/* ─── HAMBURGUESA ──────────────────────────────── */
+.nav-hamburger{
+  display:none;
+  flex-direction:column; justify-content:center; align-items:center;
+  gap:5px; width:40px; height:40px;
+  background:none; border:none; cursor:pointer;
+  padding:4px; border-radius:8px;
+  transition:background .2s;
+  z-index:201;
+}
+.nav-hamburger:hover{ background:rgba(214,255,0,.08); }
+.nav-hamburger span{
+  display:block; width:22px; height:2px;
+  background:var(--blanco); border-radius:2px;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),
+             opacity .25s ease,
+             width .3s ease;
+  transform-origin:center;
+}
+/* Estado abierto — X animada */
+.nav-hamburger[aria-expanded="true"] span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+.nav-hamburger[aria-expanded="true"] span:nth-child(2){
+  opacity:0; width:0;
+}
+.nav-hamburger[aria-expanded="true"] span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+/* ─── MENÚ MÓVIL (drawer) ──────────────────────── */
+.nav-drawer{
+  display:none; /* solo visible en móvil */
+  position:fixed; inset:0; top:0; z-index:199;
+  background:rgba(8,8,8,.97);
+  backdrop-filter:blur(12px);
+  flex-direction:column; justify-content:center; align-items:center;
+  gap:0;
+  opacity:0; pointer-events:none;
+  transition:opacity .3s ease;
+}
+.nav-drawer.open{
+  opacity:1; pointer-events:all;
+}
+.nav-drawer ul{
+  list-style:none; display:flex; flex-direction:column;
+  align-items:center; gap:0; width:100%; padding:0 2rem;
+}
+.nav-drawer ul li{
+  width:100%; border-bottom:1px solid rgba(240,240,237,.06);
+  opacity:0; transform:translateY(16px);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.16,1,.3,1);
+}
+.nav-drawer ul li:first-child{ border-top:1px solid rgba(240,240,237,.06); }
+.nav-drawer.open ul li{
+  opacity:1; transform:translateY(0);
+}
+/* stagger */
+.nav-drawer.open ul li:nth-child(1){ transition-delay:.06s; }
+.nav-drawer.open ul li:nth-child(2){ transition-delay:.12s; }
+.nav-drawer.open ul li:nth-child(3){ transition-delay:.18s; }
+.nav-drawer ul li a{
+  display:block; padding:1.3rem 0;
+  font-family:'Montserrat', sans-serif; font-weight:800;
+  font-size:clamp(1.6rem,6vw,2rem); letter-spacing:-.01em;
+  color:var(--blanco); text-decoration:none;
+  transition:color .2s, padding-left .25s;
+}
+.nav-drawer ul li a:hover,
+.nav-drawer ul li a:focus{
+  color:var(--lima); padding-left:.5rem;
+}
+.nav-drawer-cta{
+  margin-top:2.5rem;
+  font-family:'Montserrat', sans-serif; font-size:.82rem; letter-spacing:.1em;
+  text-transform:uppercase; background:var(--lima); color:var(--negro);
+  padding:.9rem 2.4rem; text-decoration:none; font-weight:800;
+  border-radius:40px; transition:opacity .2s;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .35s ease .28s, transform .35s cubic-bezier(.16,1,.3,1) .28s;
+}
+.nav-drawer.open .nav-drawer-cta{
+  opacity:1; transform:translateY(0);
+}
+.nav-drawer-cta:hover{ opacity:.85; }
+
 /* ─── HERO ─────────────────────────────────────── */
 .hero{
   min-height:100vh;
@@ -843,9 +929,62 @@ footer{
   }
   .hero-ghost{display:none;}
 }
+/* ─── BOTÓN FLOTANTE WHATSAPP ──────────────────── */
+.wa-float{
+  position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
+  display:flex; align-items:center; gap:.65rem;
+  background:var(--wa); color:#fff;
+  padding:.75rem 1.3rem .75rem .85rem;
+  border-radius:50px;
+  text-decoration:none; font-family:'Montserrat', sans-serif;
+  font-weight:700; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
+  box-shadow:0 6px 28px rgba(37,211,102,.38);
+  transition:transform .25s cubic-bezier(.16,1,.3,1),
+             box-shadow .25s ease,
+             padding .3s cubic-bezier(.16,1,.3,1),
+             max-width .3s cubic-bezier(.16,1,.3,1);
+  overflow:hidden; max-width:220px;
+  animation:waEntrada .6s .8s cubic-bezier(.16,1,.3,1) both;
+}
+.wa-float:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 10px 36px rgba(37,211,102,.5);
+}
+.wa-float svg{ flex-shrink:0; }
+.wa-float-label{ white-space:nowrap; }
+
+/* Pulso verde de atención */
+.wa-float::after{
+  content:''; position:absolute;
+  inset:-2px; border-radius:50px;
+  background:transparent;
+  box-shadow:0 0 0 0 rgba(37,211,102,.5);
+  animation:waPulso 2.8s 1.8s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes waPulso{
+  0%  { box-shadow:0 0 0 0   rgba(37,211,102,.45); }
+  70% { box-shadow:0 0 0 14px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0   rgba(37,211,102,0); }
+}
+@keyframes waEntrada{
+  from{ opacity:0; transform:translateY(20px) scale(.9); }
+  to  { opacity:1; transform:translateY(0)    scale(1); }
+}
+
+/* En móvil solo muestra el ícono */
+@media(max-width:768px){
+  .wa-float{ padding:.82rem; max-width:52px; border-radius:50%; }
+  .wa-float-label{ display:none; }
+  .wa-float{ bottom:1.4rem; right:1.2rem; }
+}
+
 @media(max-width:768px){
   nav{padding:1rem 1.2rem;}
   .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .nav-hamburger{display:flex;}
+  .nav-drawer{display:flex;}
   #servicios,#cupones,#promos,#contacto{padding:4rem 1.2rem;}
   .servicio-card{flex:0 0 260px;}
   .cupon-card{flex:0 0 280px;}
@@ -868,6 +1007,17 @@ footer{
   <button class="dismiss" id="dismiss-btn" aria-label="Cerrar">×</button>
 </div>
 
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+   target="_blank" rel="noopener noreferrer"
+   class="wa-float" aria-label="Agendar cita por WhatsApp">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path fill="#fff" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+    <path fill="#25D366" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/>
+  </svg>
+  <span class="wa-float-label">Agendar Cita</span>
+</a>
+
 <!-- NAVBAR -->
 <nav>
   <a href="#inicio" class="nav-logo">JJ✂</a>
@@ -878,7 +1028,25 @@ footer{
   </ul>
   <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
      target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar →</a>
+  <!-- Botón hamburguesa — solo visible en móvil -->
+  <button class="nav-hamburger" id="nav-hamburger"
+          aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- Drawer móvil -->
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+  <ul>
+    <li><a href="#servicios" class="nav-drawer-link">Servicios</a></li>
+    <li><a href="#cupones" class="nav-drawer-link">Cupones</a></li>
+    <li><a href="#contacto" class="nav-drawer-link">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+     target="_blank" rel="noopener noreferrer" class="nav-drawer-cta">✂ Agendar Cita</a>
+</div>
 
 <!-- HERO (CON ILUSTRACIÓN COMPLETA RESTAURADA) -->
 <section id="inicio" class="hero">
@@ -1326,6 +1494,41 @@ footer{
 </footer>
 
 <script>
+// ========== MENÚ HAMBURGUESA ==========
+(function () {
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-drawer');
+  if (!hamburger || !drawer) return;
+
+  function openMenu() {
+    drawer.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.setAttribute('aria-label', 'Cerrar menú');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    drawer.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Abrir menú');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    drawer.classList.contains('open') ? closeMenu() : openMenu();
+  });
+
+  // Cierra al navegar a una sección
+  drawer.querySelectorAll('.nav-drawer-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Cierra con Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) closeMenu();
+  });
+})();
+
 // ========== HERO SVG ASPECT RATIO ADAPTATIVO ==========
 (function(){
   const svg = document.querySelector('.hero-illustration');
