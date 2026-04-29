@@ -231,6 +231,7 @@ nav{
 .nav-drawer.open ul li:nth-child(1){ transition-delay:.06s; }
 .nav-drawer.open ul li:nth-child(2){ transition-delay:.12s; }
 .nav-drawer.open ul li:nth-child(3){ transition-delay:.18s; }
+.nav-drawer.open ul li:nth-child(4){ transition-delay:.24s; }
 .nav-drawer ul li a{
   display:block; padding:1.3rem 0;
   font-family:'Montserrat', sans-serif; font-weight:800;
@@ -1001,6 +1002,46 @@ footer{
 }
 #productosNav .carrusel-dot{ background:rgba(0,0,0,.25); }
 #productosNav .carrusel-dot.active{ background:var(--negro); }
+
+/* ─── BANNER CTA TIENDA ────────────────────────── */
+.tienda-cta-banner{
+  display:block; text-decoration:none;
+  background:var(--lima); transition:opacity .2s;
+}
+.tienda-cta-banner:hover{ opacity:.92; }
+.tienda-cta-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.8rem 2.5rem; gap:1.5rem;
+  max-width:1200px; margin:0 auto;
+}
+.tienda-cta-left{ display:flex; flex-direction:column; gap:.3rem; }
+.tienda-cta-tag{
+  font-size:.58rem; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(8,8,8,.5); font-weight:700; font-family:'Montserrat',sans-serif;
+}
+.tienda-cta-tit{
+  font-family:'Montserrat',sans-serif; font-size:1.25rem;
+  color:var(--negro); line-height:1.2; font-weight:400;
+}
+.tienda-cta-tit strong{ font-weight:900; }
+.tienda-cta-right{
+  display:flex; flex-direction:column; align-items:flex-end; gap:.4rem; flex-shrink:0;
+}
+.tienda-cta-marcas{
+  font-size:.65rem; letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(8,8,8,.5); font-weight:600; font-family:'Montserrat',sans-serif;
+}
+.tienda-cta-arrow{
+  background:var(--negro); color:var(--lima);
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.6rem 1.4rem; border-radius:50px;
+}
+@media(max-width:768px){
+  .tienda-cta-inner{ padding:1.4rem 1.2rem; flex-wrap:wrap; }
+  .tienda-cta-tit{ font-size:1rem; }
+  .tienda-cta-right{ align-items:flex-start; }
+}
 .wa-float{
   position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
   display:flex; align-items:center; gap:.65rem;
@@ -1095,6 +1136,7 @@ footer{
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#cupones">Cupones</a></li>
+    <li><a href="tienda.html">🛍 Tienda</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
@@ -1113,6 +1155,7 @@ footer{
   <ul>
     <li><a href="#servicios" class="nav-drawer-link">Servicios</a></li>
     <li><a href="#cupones" class="nav-drawer-link">Cupones</a></li>
+    <li><a href="tienda.html" class="nav-drawer-link">🛍 Tienda</a></li>
     <li><a href="#contacto" class="nav-drawer-link">Contacto</a></li>
   </ul>
   <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
@@ -1621,6 +1664,20 @@ footer{
   </div>
 </section>
 
+<!-- BANNER CTA TIENDA -->
+<a href="tienda.html" class="tienda-cta-banner" aria-label="Ir a la tienda de productos">
+  <div class="tienda-cta-inner">
+    <div class="tienda-cta-left">
+      <span class="tienda-cta-tag">✂ Disponible ahora</span>
+      <p class="tienda-cta-tit">Visita nuestra<br><strong>Tienda Online</strong></p>
+    </div>
+    <div class="tienda-cta-right">
+      <span class="tienda-cta-marcas">Reuzel · Suavecito</span>
+      <span class="tienda-cta-arrow">Ver tienda →</span>
+    </div>
+  </div>
+</a>
+
 <!-- BANNER IMAGEN + CTA -->
 <div style="background:var(--negro); padding:4rem 2.5rem;">
   <div class="promos-hero">
@@ -1726,6 +1783,7 @@ footer{
     <span class="ft-lnk">Afeitado Navaja — $150</span>
     <span class="ft-lnk">Infantil — $110</span>
     <span class="ft-lnk">Greca y Diseño — $250</span>
+    <a href="tienda.html" class="ft-lnk" style="color:var(--lima); margin-top:.5rem;">🛍 Tienda de Productos →</a>
   </div>
   <div class="ft-copy">
     <span>© 2026 Jesús Juárez · Barbería · Av. Francisco I. Madero 400-402, Centro, 42000 Pachuca de Soto, Hgo.</span>
