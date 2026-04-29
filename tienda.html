@@ -231,6 +231,13 @@ nav{
 }
 .prod-card-marca.reuzel{border-color:rgba(214,255,0,.3); color:var(--lima);}
 .prod-card-marca.suavecito{border-color:rgba(255,100,50,.3); color:#ff7a4d;}
+.prod-card-best{
+  position:absolute; bottom:.75rem; left:.75rem;
+  background:var(--lima); color:var(--negro);
+  border-radius:50px; padding:.2rem .65rem;
+  font-family:'Montserrat',sans-serif; font-size:.5rem;
+  font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+}
 .prod-card-body{padding:1.1rem 1rem 1.2rem; display:flex; flex-direction:column; flex:1;}
 .prod-card-cat{
   font-size:.55rem; letter-spacing:.16em; text-transform:uppercase;
@@ -501,6 +508,7 @@ footer{
 <div class="filtros-bar" id="filtrosBar">
   <span class="filtro-label">Categoría</span>
   <button class="filtro-btn active" data-cat="todas">Todo</button>
+  <button class="filtro-btn" data-cat="bestseller">⭐ Más Vendidos</button>
   <button class="filtro-btn" data-cat="pomada">Pomadas</button>
   <button class="filtro-btn" data-cat="peinado">Peinado</button>
   <button class="filtro-btn" data-cat="barba">Barba</button>
@@ -567,88 +575,207 @@ footer{
 // Para agregar productos: añadir objetos a este array.
 // imagen: URL directa (raw GitHub, CDN, etc.)
 // ═══════════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────────
+// PLACEHOLDER: todas las img usan los links del repo de Jesús.
+// Cuando tengas las imágenes reales de cada producto, reemplaza
+// el campo img: por la URL correspondiente.
+// ─────────────────────────────────────────────────────────────────
+const IMG = {
+  // Reuzel — imágenes reales del repo
+  r_verde:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  r_roja:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  r_azul:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  r_rosa:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  r_fiber:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg',
+  r_clay:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg',
+  r_shamp:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg',
+  r_tonic:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg',
+  // Suavecito — usar mismo placeholder hasta tener imágenes reales
+  s_orig:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  s_firme:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  s_matte:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  s_clay:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  s_pb:     'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg',
+  s_shamp:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg',
+  s_cond:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg',
+  s_bwash:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg',
+  s_bbalm:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  s_boil:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  s_spray:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  s_cream:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+};
+
 const PRODUCTOS = [
-  // ── REUZEL ──────────────────────────────────────
-  {
-    id:'r01', marca:'reuzel', cat:'pomada',
-    nombre:'Pomada Verde', desc:'Fijación media · Brillo medio · Base aceite · 113g',
-    precio:320, wa:'Pomada%20Verde%20Reuzel%20%F0%9F%9F%A2',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg'
-  },
-  {
-    id:'r02', marca:'reuzel', cat:'pomada',
-    nombre:'Pomada Roja', desc:'Fijación media · Alto brillo · Base agua · 113g',
-    precio:320, wa:'Pomada%20Roja%20Reuzel%20%F0%9F%94%B4',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg'
-  },
-  {
-    id:'r03', marca:'reuzel', cat:'pomada',
+
+  // ══════════════════════════════════════════════
+  // REUZEL — Best Sellers
+  // ══════════════════════════════════════════════
+
+  // — POMADAS —
+  { id:'r01', marca:'reuzel', cat:'pomada', bestseller:true,
     nombre:'Pomada Azul', desc:'Fijación fuerte · Alto brillo · Base agua · 113g',
-    precio:320, wa:'Pomada%20Azul%20Reuzel%20%F0%9F%94%B5',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg'
-  },
-  {
-    id:'r04', marca:'reuzel', cat:'pomada',
+    precio:320, wa:'Pomada%20Azul%20Reuzel', img:IMG.r_azul },
+
+  { id:'r02', marca:'reuzel', cat:'pomada', bestseller:true,
+    nombre:'Pomada Roja', desc:'Fijación media · Alto brillo · Base agua · 113g',
+    precio:320, wa:'Pomada%20Roja%20Reuzel', img:IMG.r_roja },
+
+  { id:'r03', marca:'reuzel', cat:'pomada',
+    nombre:'Pomada Verde', desc:'Fijación media · Brillo natural · Base aceite · 113g',
+    precio:320, wa:'Pomada%20Verde%20Reuzel', img:IMG.r_verde },
+
+  { id:'r04', marca:'reuzel', cat:'pomada', bestseller:true,
     nombre:'Pomada Rosa', desc:'Fijación fuerte · Brillo medio · Base aceite · 113g',
-    precio:340, wa:'Pomada%20Rosa%20Reuzel',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg'
-  },
-  {
-    id:'r05', marca:'reuzel', cat:'peinado',
-    nombre:'Fiber Pomade', desc:'Fijación firme · Bajo brillo · Base agua · 113g',
-    precio:330, wa:'Fiber%20Pomade%20Reuzel',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg'
-  },
-  {
-    id:'r06', marca:'reuzel', cat:'peinado',
-    nombre:'Clay Matte', desc:'Fijación media · Acabado mate · Base agua · 113g',
-    precio:330, wa:'Clay%20Matte%20Reuzel',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg'
-  },
-  {
-    id:'r07', marca:'reuzel', cat:'shampoo',
-    nombre:'Shampoo', desc:'Limpieza profunda · Exfoliante · 350ml',
-    precio:290, wa:'Shampoo%20Reuzel',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg'
-  },
-  {
-    id:'r08', marca:'reuzel', cat:'tonico',
-    nombre:'Grooming Tonic', desc:'Volumen y textura · Fijación ligera · 355ml',
-    precio:360, wa:'Grooming%20Tonic%20Reuzel',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg'
-  },
-  // ── SUAVECITO ────────────────────────────────────
-  // Cuando tengas las imágenes de Suavecito, reemplaza los img: con sus URLs.
-  {
-    id:'s01', marca:'suavecito', cat:'pomada',
-    nombre:'Pomada Original', desc:'Fijación fuerte · Alto brillo · Base agua · 113g',
-    precio:280, wa:'Pomada%20Original%20Suavecito',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg'
-  },
-  {
-    id:'s02', marca:'suavecito', cat:'pomada',
-    nombre:'Pomada Firme', desc:'Fijación extra fuerte · Brillo suave · 113g',
-    precio:290, wa:'Pomada%20Firme%20Suavecito',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg'
-  },
-  {
-    id:'s03', marca:'suavecito', cat:'peinado',
-    nombre:'Matte Pomade', desc:'Fijación media · Acabado mate · 113g',
-    precio:290, wa:'Matte%20Pomade%20Suavecito',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg'
-  },
-  {
-    id:'s04', marca:'suavecito', cat:'barba',
-    nombre:'Aceite de Barba', desc:'Hidratación y suavidad · Aroma madera · 30ml',
-    precio:250, wa:'Aceite%20de%20Barba%20Suavecito',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg'
-  },
-  {
-    id:'s05', marca:'suavecito', cat:'shampoo',
-    nombre:'Shampoo Premium', desc:'Limpieza diaria · Vitaminas · 240ml',
-    precio:260, wa:'Shampoo%20Suavecito',
-    img:'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg'
-  },
+    precio:340, wa:'Pomada%20Rosa%20Reuzel', img:IMG.r_rosa },
+
+  // — PEINADO / ESTILIZADO —
+  { id:'r05', marca:'reuzel', cat:'peinado', bestseller:true,
+    nombre:'Fiber Pomade', desc:'Fijación firme · Bajo brillo · Textura definida · 113g',
+    precio:330, wa:'Fiber%20Pomade%20Reuzel', img:IMG.r_fiber },
+
+  { id:'r06', marca:'reuzel', cat:'peinado', bestseller:true,
+    nombre:'Clay Matte', desc:'Fijación media · Acabado mate · Textura arcilla · 113g',
+    precio:330, wa:'Clay%20Matte%20Reuzel', img:IMG.r_clay },
+
+  { id:'r07', marca:'reuzel', cat:'peinado',
+    nombre:'Surf Tonic Spray', desc:'Textura playa · Sal marina · Fijación ligera · 100ml',
+    precio:340, wa:'Surf%20Tonic%20Spray%20Reuzel', img:IMG.r_tonic },
+
+  { id:'r08', marca:'reuzel', cat:'peinado',
+    nombre:'Fiber Cream', desc:'Volumen y estructura · Pliable · Low shine · 100ml',
+    precio:320, wa:'Fiber%20Cream%20Reuzel', img:IMG.r_fiber },
+
+  // — TÓNICO —
+  { id:'r09', marca:'reuzel', cat:'tonico', bestseller:true,
+    nombre:'Grooming Tonic', desc:'Volumen · Textura · Protección térmica · 355ml',
+    precio:360, wa:'Grooming%20Tonic%20Reuzel', img:IMG.r_tonic },
+
+  { id:'r10', marca:'reuzel', cat:'tonico',
+    nombre:'Spray Grooming Tonic', desc:'Acabado natural · Fijación ligera · Spray · 355ml',
+    precio:370, wa:'Spray%20Grooming%20Tonic%20Reuzel', img:IMG.r_tonic },
+
+  // — SHAMPOO & CUIDADO —
+  { id:'r11', marca:'reuzel', cat:'shampoo', bestseller:true,
+    nombre:'Shampoo & Scrub', desc:'Limpieza profunda · Exfoliante · Anti-caspa · 350ml',
+    precio:290, wa:'Shampoo%20Scrub%20Reuzel', img:IMG.r_shamp },
+
+  { id:'r12', marca:'reuzel', cat:'shampoo',
+    nombre:'Conditioner', desc:'Hidratación · Suavidad · Todos los tipos de cabello · 350ml',
+    precio:290, wa:'Conditioner%20Reuzel', img:IMG.r_shamp },
+
+  { id:'r13', marca:'reuzel', cat:'shampoo',
+    nombre:'Rosemary Mint Shampoo', desc:'Cuero cabelludo · Menta · Romero · 350ml',
+    precio:310, wa:'Rosemary%20Mint%20Shampoo%20Reuzel', img:IMG.r_shamp },
+
+  // — BARBA —
+  { id:'r14', marca:'reuzel', cat:'barba',
+    nombre:'Beard & Skin Foam', desc:'Limpieza · Hidratación · Piel y barba · 70ml',
+    precio:280, wa:'Beard%20Skin%20Foam%20Reuzel', img:IMG.r_rosa },
+
+  { id:'r15', marca:'reuzel', cat:'barba',
+    nombre:'Beard Balm', desc:'Control · Brillo natural · Aceites nutritivos · 35g',
+    precio:300, wa:'Beard%20Balm%20Reuzel', img:IMG.r_verde },
+
+  // ══════════════════════════════════════════════
+  // SUAVECITO — Best Sellers
+  // ══════════════════════════════════════════════
+
+  // — POMADAS —
+  { id:'s01', marca:'suavecito', cat:'pomada', bestseller:true,
+    nombre:'Original Hold', desc:'Fijación media · Brillo natural · Base agua · 113g',
+    precio:280, wa:'Pomada%20Original%20Hold%20Suavecito', img:IMG.s_orig },
+
+  { id:'s02', marca:'suavecito', cat:'pomada', bestseller:true,
+    nombre:'Firme Hold', desc:'Fijación extra fuerte · Brillo medio · Base agua · 113g',
+    precio:290, wa:'Pomada%20Firme%20Hold%20Suavecito', img:IMG.s_firme },
+
+  { id:'s03', marca:'suavecito', cat:'pomada', bestseller:true,
+    nombre:'Matte Pomade', desc:'Fijación media · Sin brillo · Acabado natural · 113g',
+    precio:290, wa:'Matte%20Pomade%20Suavecito', img:IMG.s_matte },
+
+  { id:'s04', marca:'suavecito', cat:'pomada',
+    nombre:'Premium Blends', desc:'Fórmula premium · Aceites naturales · Brillo alto · 113g',
+    precio:320, wa:'Premium%20Blends%20Suavecito', img:IMG.s_pb },
+
+  // — PEINADO —
+  { id:'s05', marca:'suavecito', cat:'peinado', bestseller:true,
+    nombre:'Firme Clay', desc:'Arcilla · Fijación fuerte · Mate · Textura gruesa · 113g',
+    precio:300, wa:'Firme%20Clay%20Suavecito', img:IMG.s_clay },
+
+  { id:'s06', marca:'suavecito', cat:'peinado',
+    nombre:'Hair Cream', desc:'Crema estilizante · Definición · Sin pegajosidad · 100g',
+    precio:280, wa:'Hair%20Cream%20Suavecito', img:IMG.s_cream },
+
+  { id:'s07', marca:'suavecito', cat:'peinado',
+    nombre:'Firm Hold Hairspray', desc:'Fijación firme · Acabado natural · Sin residuo · 266ml',
+    precio:270, wa:'Firm%20Hold%20Hairspray%20Suavecito', img:IMG.s_spray },
+
+  // — SHAMPOO & CUIDADO —
+  { id:'s08', marca:'suavecito', cat:'shampoo', bestseller:true,
+    nombre:'Thickening Shampoo', desc:'Volumen · Niacinamida · Anticaída · 237ml',
+    precio:260, wa:'Thickening%20Shampoo%20Suavecito', img:IMG.s_shamp },
+
+  { id:'s09', marca:'suavecito', cat:'shampoo',
+    nombre:'Thickening Conditioner', desc:'Fortalecimiento · Densidad · Suavidad · 237ml',
+    precio:260, wa:'Thickening%20Conditioner%20Suavecito', img:IMG.s_cond },
+
+  // — BARBA —
+  { id:'s10', marca:'suavecito', cat:'barba', bestseller:true,
+    nombre:'Beard Wash', desc:'Limpieza suave · Hidratante · Aroma fresco · 237ml',
+    precio:250, wa:'Beard%20Wash%20Suavecito', img:IMG.s_bwash },
+
+  { id:'s11', marca:'suavecito', cat:'barba',
+    nombre:'Beard Balm', desc:'Control · Nutrición · Mantequilla de karité · 113g',
+    precio:270, wa:'Beard%20Balm%20Suavecito', img:IMG.s_bbalm },
+
+  { id:'s12', marca:'suavecito', cat:'barba', bestseller:true,
+    nombre:'Beard Oil Premium', desc:'Aceites naturales · Brillo · Suavidad · 30ml',
+    precio:250, wa:'Beard%20Oil%20Premium%20Suavecito', img:IMG.s_boil },
+
+  // ── REUZEL — productos adicionales ──────────────
+
+  { id:'r16', marca:'reuzel', cat:'peinado', bestseller:true,
+    nombre:'Matte Styling Paste', desc:'Pasta mate · Fijación fuerte · Textura definida · 113g',
+    precio:340, wa:'Matte%20Styling%20Paste%20Reuzel', img:IMG.r_clay },
+
+  { id:'r17', marca:'reuzel', cat:'tonico',
+    nombre:'Spray Tónico Volumen', desc:'Volumen instantáneo · Base agua · Protección UV · 200ml',
+    precio:350, wa:'Spray%20Tonico%20Volumen%20Reuzel', img:IMG.r_tonic },
+
+  { id:'r18', marca:'reuzel', cat:'barba', bestseller:true,
+    nombre:'Beard Serum', desc:'Serum ligero · Sin residuo · Hidratación profunda · 50ml',
+    precio:310, wa:'Beard%20Serum%20Reuzel', img:IMG.r_rosa },
+
+  { id:'r19', marca:'reuzel', cat:'shampoo',
+    nombre:'Dry Shampoo Rosemary', desc:'Shampoo seco · Menta · Sin enjuague · 200ml',
+    precio:300, wa:'Dry%20Shampoo%20Rosemary%20Reuzel', img:IMG.r_shamp },
+
+  { id:'r20', marca:'reuzel', cat:'pomada',
+    nombre:'Pomada Morada', desc:'Fijación extra fuerte · Brillo alto · Base agua · 113g',
+    precio:340, wa:'Pomada%20Morada%20Reuzel', img:IMG.r_azul },
+
+  // ── SUAVECITO — productos adicionales ────────────
+
+  { id:'s13', marca:'suavecito', cat:'barba',
+    nombre:'Beard Conditioner', desc:'Suavizante · Hidratación · Karité y argán · 237ml',
+    precio:260, wa:'Beard%20Conditioner%20Suavecito', img:IMG.s_cond },
+
+  { id:'s14', marca:'suavecito', cat:'peinado', bestseller:true,
+    nombre:'Sea Salt Spray', desc:'Sal marina · Textura playa · Fijación ligera · 237ml',
+    precio:270, wa:'Sea%20Salt%20Spray%20Suavecito', img:IMG.s_spray },
+
+  { id:'s15', marca:'suavecito', cat:'shampoo',
+    nombre:'Daily Shampoo', desc:'Uso diario · pH neutro · Cabello normal a graso · 237ml',
+    precio:240, wa:'Daily%20Shampoo%20Suavecito', img:IMG.s_shamp },
+
+  { id:'s16', marca:'suavecito', cat:'pomada',
+    nombre:'Winter Edition Pomade', desc:'Edición especial · Aroma canela · Fijación media · 113g',
+    precio:310, wa:'Winter%20Edition%20Pomade%20Suavecito', img:IMG.s_orig },
+
+  { id:'s17', marca:'suavecito', cat:'barba',
+    nombre:'Shave Cream', desc:'Crema de afeitado · Aloe vera · Piel sensible · 237ml',
+    precio:255, wa:'Shave%20Cream%20Suavecito', img:IMG.s_bwash },
+
 ];
 
 // ═══════════════════════════════════════════════════
@@ -667,7 +794,11 @@ function renderCatalogo() {
 
   const filtrados = PRODUCTOS.filter(p => {
     const okMarca = filtroMarca === 'todas' || p.marca === filtroMarca;
-    const okCat   = filtroCat   === 'todas' || p.cat   === filtroCat;
+    const okCat   = filtroCat === 'todas'
+                  ? true
+                  : filtroCat === 'bestseller'
+                    ? p.bestseller === true
+                    : p.cat === filtroCat;
     return okMarca && okCat;
   });
 
@@ -689,6 +820,7 @@ function renderCatalogo() {
       <div class="prod-card-img-wrap">
         <img src="${p.img}" alt="${p.nombre}" class="prod-card-img" loading="lazy">
         <span class="prod-card-marca ${p.marca}">${p.marca === 'reuzel' ? 'Reuzel' : 'Suavecito'}</span>
+        ${p.bestseller ? '<span class="prod-card-best">⭐ Más vendido</span>' : ''}
       </div>
       <div class="prod-card-body">
         <span class="prod-card-cat">${labelCat(p.cat)}</span>
