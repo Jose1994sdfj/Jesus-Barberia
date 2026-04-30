@@ -1,13 +1,90 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" itemscope itemtype="https://schema.org/Store">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tienda · JJ Barbería · Productos para Caballero</title>
-<meta name="description" content="Tienda oficial de JJ Barbería. Productos Reuzel y Suavecito para el cuidado, tratamiento y estilo del cabello. Pachuca, Hgo.">
+
+<!-- ══ SEO PRIMARIO ══════════════════════════════ -->
+<title>Tienda · JJ Barbería · Productos Reuzel y Suavecito · Pachuca</title>
+<meta name="description" content="Tienda oficial de JJ Barbería en Pachuca, Hgo. Compra productos Reuzel y Suavecito: pomadas, tratamientos anticaída, herramientas profesionales y más. Pedido por WhatsApp, entrega el mismo día.">
+<meta name="keywords" content="reuzel pachuca, suavecito pachuca, pomada barbería, productos barbería pachuca, minoxidil pachuca, tratamiento capilar, tijeras barbero, portanavaja barbero">
+<meta name="author" content="JJ Barbería — Jesús Juárez">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="https://jesus-barberia.vercel.app/tienda.html">
+
+<!-- ══ SEGURIDAD ═════════════════════════════════ -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com; connect-src 'self';">
+
+<!-- ══ OPEN GRAPH (Facebook / WhatsApp) ═════════ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JJ Barbería">
+<meta property="og:title" content="Tienda JJ Barbería · Reuzel y Suavecito en Pachuca">
+<meta property="og:description" content="Productos Reuzel y Suavecito originales. Pomadas, tratamientos y herramientas profesionales. Pedido por WhatsApp, entrega el mismo día en Pachuca.">
+<meta property="og:url" content="https://jesus-barberia.vercel.app/tienda.html">
+<meta property="og:locale" content="es_MX">
+
+<!-- ══ TWITTER CARD ══════════════════════════════ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tienda JJ Barbería · Reuzel y Suavecito en Pachuca">
+<meta name="twitter:description" content="Productos Reuzel y Suavecito originales. Pedido por WhatsApp, entrega el mismo día en Pachuca, Hgo.">
+
+<!-- ══ SCHEMA.ORG — Store ════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "JJ Barbería — Tienda",
+  "description": "Tienda de productos para caballero: pomadas Reuzel y Suavecito, tratamientos capilares, herramientas profesionales de barbería.",
+  "url": "https://jesus-barberia.vercel.app/tienda.html",
+  "telephone": "+527716682637",
+  "priceRange": "$45 - $990 MXN",
+  "currenciesAccepted": "MXN",
+  "paymentAccepted": "Cash, WhatsApp order",
+  "image": "https://jesus-barberia.vercel.app/og-image.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Pachuca de Soto",
+    "addressRegion": "Hidalgo",
+    "addressCountry": "MX"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 20.1179,
+    "longitude": -98.7316
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "20:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "18:00" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Productos de Barbería",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Pomadas Reuzel", "brand": { "@type": "Brand", "name": "Reuzel" } } },
+      { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Pomadas Suavecito", "brand": { "@type": "Brand", "name": "Suavecito" } } },
+      { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Tratamientos Capilares" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Herramientas de Barbería" } }
+    ]
+  },
+  "parentOrganization": {
+    "@type": "BarberShop",
+    "name": "JJ Barbería",
+    "url": "https://jesus-barberia.vercel.app"
+  }
+}
+</script>
+
+<!-- ══ PERFORMANCE ════════════════════════════════ -->
 <meta name="theme-color" content="#D6FF00">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -119,25 +196,75 @@ nav{
 
 /* ══ HERO TIENDA ════════════════════════════════ */
 .tienda-hero{
-  padding:9rem 2.5rem 4rem;
-  display:flex; flex-direction:column;
+  padding:9rem 2.5rem 5rem;
   border-bottom:1px solid rgba(255,255,255,.05);
+  max-width:1200px; margin:0 auto;
 }
+.tienda-hero-left{}
 .tienda-hero-tag{
   font-size:.62rem; letter-spacing:.22em; text-transform:uppercase;
   color:var(--lima); font-weight:700; font-family:'Montserrat',sans-serif;
-  margin-bottom:1rem;
+  margin-bottom:1rem; display:block;
 }
 .tienda-hero-tit{
   font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:clamp(2.8rem,7vw,5.5rem); line-height:.95;
+  font-size:clamp(2.4rem,5.5vw,4.5rem); line-height:.95;
   letter-spacing:-.03em; color:var(--blanco);
-  margin-bottom:1.5rem;
+  margin-bottom:1.2rem;
 }
 .tienda-hero-tit em{color:var(--lima); font-style:normal;}
 .tienda-hero-sub{
-  font-size:.9rem; color:var(--humo); max-width:500px; line-height:1.7;
+  font-size:.9rem; color:rgba(240,240,237,.55); max-width:460px;
+  line-height:1.75; margin-bottom:2rem;
 }
+.tienda-hero-cta{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--lima); color:var(--negro);
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.75rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.85rem 2rem; border-radius:50px; border:none;
+  text-decoration:none; transition:opacity .2s;
+}
+.tienda-hero-cta:hover{opacity:.88;}
+
+/* Stats grid */
+.tienda-hero-right{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px; background:rgba(255,255,255,.06);
+  border-radius:20px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+}
+.hero-stat{
+  background:var(--gris2);
+  padding:1.8rem 1.5rem;
+  display:flex; flex-direction:column; gap:.35rem;
+}
+.hero-stat-num{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:clamp(1.8rem,3.5vw,2.6rem); color:var(--lima);
+  line-height:1; letter-spacing:-.03em;
+}
+.hero-stat-label{
+  font-size:.7rem; color:rgba(240,240,237,.45);
+  line-height:1.4; font-weight:400;
+}
+.hero-stat-label strong{
+  display:block; color:rgba(240,240,237,.75);
+  font-size:.78rem; font-weight:600; margin-bottom:.1rem;
+}
+
+/* Trust badges */
+.hero-trust{
+  display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.6rem;
+}
+.hero-badge{
+  display:flex; align-items:center; gap:.35rem;
+  border:1px solid rgba(255,255,255,.1); border-radius:50px;
+  padding:.35rem .9rem; font-size:.62rem; color:rgba(240,240,237,.55);
+  font-family:'Montserrat',sans-serif; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.hero-badge span{ font-size:.8rem; }
 
 /* ══ MARCAS BANNER ══════════════════════════════ */
 .marcas-banner{
@@ -169,6 +296,10 @@ nav{
   overflow-x:auto; scrollbar-width:none;
 }
 .filtros-bar::-webkit-scrollbar{display:none;}
+.filtros-divisor{
+  width:1px; height:20px; flex-shrink:0;
+  background:rgba(255,255,255,.12); margin:0 .4rem;
+}
 .filtro-label{
   flex-shrink:0; font-size:.6rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--humo); font-weight:600;
@@ -231,6 +362,8 @@ nav{
 }
 .prod-card-marca.reuzel{border-color:rgba(214,255,0,.3); color:var(--lima);}
 .prod-card-marca.suavecito{border-color:rgba(255,100,50,.3); color:#ff7a4d;}
+.prod-card-marca.herramienta{border-color:rgba(160,160,255,.3); color:#a0a0ff;}
+.prod-card-marca.tratamiento{border-color:rgba(100,220,180,.3); color:#64dcb4;}
 .prod-card-best{
   position:absolute; bottom:.75rem; left:.75rem;
   background:var(--lima); color:var(--negro);
@@ -448,7 +581,9 @@ footer{
   .nav-back, .nav-cart-btn{display:none;}
   .nav-hamburger{display:flex;}
   .nav-drawer{display:flex;}
-  .tienda-hero{padding:7rem 1.2rem 2.5rem;}
+  .tienda-hero{padding:7rem 1.2rem 3rem; grid-template-columns:1fr; gap:2.5rem;}
+  .tienda-hero-right{grid-template-columns:1fr 1fr;}
+  .hero-stat{padding:1.3rem 1rem;}
   .marcas-banner, .filtros-bar, .catalogo{padding-left:1.2rem; padding-right:1.2rem;}
   .catalogo-grid{grid-template-columns:repeat(2, 1fr); gap:1rem;}
   .prod-card-nombre{font-size:.88rem;}
@@ -491,9 +626,22 @@ footer{
 
 <!-- ══ HERO ══════════════════════════════════════ -->
 <section class="tienda-hero">
-  <span class="tienda-hero-tag">✂ JJ Barbería · Pachuca, Hgo.</span>
-  <h1 class="tienda-hero-tit">Tu estilo,<br><em>en tus manos.</em></h1>
-  <p class="tienda-hero-sub">Los mismos productos que usamos en cada corte. Reuzel y Suavecito — marcas que los barberos de verdad usan, ahora disponibles para llevar a casa.</p>
+
+  <!-- Columna izquierda: copy -->
+  <div class="tienda-hero-left">
+    <span class="tienda-hero-tag">✂ JJ Barbería · Pachuca, Hgo. · Desde 2018</span>
+    <h1 class="tienda-hero-tit">Los productos<br>que usan los<br><em>barberos reales.</em></h1>
+    <p class="tienda-hero-sub">No vendemos lo que está de moda. Vendemos lo que funciona — lo mismo que Jesús usa en cada corte, con más de <strong style="color:var(--blanco);">700 clientes satisfechos</strong> como prueba. Reuzel, Suavecito y herramientas profesionales, directo a ti sin intermediarios.</p>
+    <div class="hero-trust">
+      <span class="hero-badge"><span>✓</span> Productos garantizados</span>
+      <span class="hero-badge"><span>✓</span> Precios justos</span>
+      <span class="hero-badge"><span>✓</span> Asesoría incluida</span>
+      <span class="hero-badge"><span>✓</span> Pago contra entrega</span>
+      <span class="hero-badge"><span>✓</span> Mismo día en Pachuca</span>
+      <span class="hero-badge"><span>✓</span> Sin mínimo de compra</span>
+    </div>
+  </div>
+
 </section>
 
 <!-- ══ MARCAS ════════════════════════════════════ -->
@@ -502,9 +650,11 @@ footer{
   <button class="marca-chip active" data-marca="todas">Todas</button>
   <button class="marca-chip" data-marca="reuzel">Reuzel</button>
   <button class="marca-chip" data-marca="suavecito">Suavecito</button>
+  <button class="marca-chip" data-marca="herramienta">✂ Herramientas</button>
+  <button class="marca-chip" data-marca="tratamiento">💊 Tratamientos</button>
 </div>
 
-<!-- ══ FILTROS ════════════════════════════════════ -->
+<!-- ══ FILTROS PRODUCTOS ══════════════════════════ -->
 <div class="filtros-bar" id="filtrosBar">
   <span class="filtro-label">Categoría</span>
   <button class="filtro-btn active" data-cat="todas">Todo</button>
@@ -603,6 +753,38 @@ const IMG = {
   s_boil:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
   s_spray:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
   s_cream:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  // Herramientas — placeholders hasta tener imágenes reales
+  h_pn1:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  h_pn2:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  h_pn3:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  h_peine1: 'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  h_peine2: 'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg',
+  h_tij1:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg',
+  h_tij2:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg',
+  h_tij3:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg',
+  // Accesorios adicionales — placeholder hasta tener imágenes reales
+  h_nav1:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  h_nav2:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  h_brocha: 'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  h_atom:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  h_capa:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg',
+  h_bledo:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg',
+  h_tazon:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg',
+  h_mandil: 'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg',
+  h_asen:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  h_hojas:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  h_cepb:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  // Tratamientos — placeholder hasta tener imágenes reales
+  t_minox:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  t_ampo:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
+  t_serum:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%208.jpg',
+  t_rom:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%209.jpg',
+  t_bio:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2010.jpg',
+  t_ker:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2011.jpg',
+  t_fibra:  'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2012.jpg',
+  t_mas:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%2013.jpg',
+  t_derm:   'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%206.jpg',
+  t_col:    'https://raw.githubusercontent.com/Jose1994sdfj/Jesus-Barberia/main/imagen%207.jpg',
 };
 
 const PRODUCTOS = [
@@ -776,6 +958,210 @@ const PRODUCTOS = [
     nombre:'Shave Cream', desc:'Crema de afeitado · Aloe vera · Piel sensible · 237ml',
     precio:255, wa:'Shave%20Cream%20Suavecito', img:IMG.s_bwash },
 
+  // ══════════════════════════════════════════════
+  // HERRAMIENTAS — Portanavajas · Peines · Tijeras
+  // ══════════════════════════════════════════════
+
+  { id:'h01', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Portanavaja Clásico Acero', desc:'Acero inoxidable · Doble tornillo · Compatible todas las navajas · Plateado',
+    precio:180, wa:'Portanavaja%20Cl%C3%A1sico%20Acero', img:IMG.h_pn1 },
+
+  { id:'h02', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Portanavaja Negro / Dorado', desc:'Acero inoxidable · Acabado premium · Tornillo de seguridad · Ed. especial',
+    precio:220, wa:'Portanavaja%20Negro%20Dorado', img:IMG.h_pn2 },
+
+  { id:'h03', marca:'herramienta', cat:'herramienta',
+    nombre:'Portanavaja Madera con Funda', desc:'Madera café · Grabado rombo · Incluye funda protectora · 6.5"',
+    precio:260, wa:'Portanavaja%20Madera%20Funda', img:IMG.h_pn3 },
+
+  { id:'h04', marca:'herramienta', cat:'herramienta',
+    nombre:'Peine de Corte Profesional', desc:'Carbono antiestático · Resistente al calor · 21 cm · Dientes finos',
+    precio:85, wa:'Peine%20Corte%20Profesional', img:IMG.h_peine1 },
+
+  { id:'h05', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Peine Dientes Anchos Barber', desc:'Plástico resistente · Dientes anchos y finos · Ideal cabello rizado · 20 cm',
+    precio:75, wa:'Peine%20Dientes%20Anchos%20Barber', img:IMG.h_peine2 },
+
+  { id:'h06', marca:'herramienta', cat:'herramienta',
+    nombre:'Set 3 Peines Profesionales', desc:'Peine de corte + cardo + colita · Antiestático · Kit completo',
+    precio:190, wa:'Set%203%20Peines%20Profesionales', img:IMG.h_peine1 },
+
+  { id:'h07', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Tijeras de Corte 6"', desc:'Acero inoxidable · Filo convexo navaja · Tornillo ajustable · Estuche incluido',
+    precio:480, wa:'Tijeras%20Corte%206%22', img:IMG.h_tij1 },
+
+  { id:'h08', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Tijeras de Entresacar 6"', desc:'Acero inoxidable · 30 dientes · Reduce volumen · Corte suave y natural',
+    precio:420, wa:'Tijeras%20Entresacar%206%22', img:IMG.h_tij2 },
+
+  { id:'h09', marca:'herramienta', cat:'herramienta',
+    nombre:'Tijeras de Barba y Nariz', desc:'Acero inoxidable · Puntas redondeadas · Corte preciso · Estuche de piel',
+    precio:335, wa:'Tijeras%20Barba%20Nariz', img:IMG.h_tij3 },
+
+  { id:'h10', marca:'herramienta', cat:'herramienta',
+    nombre:'Kit Tijeras + 2 Peines', desc:'Tijera 5.5" + entresacar + peine corte + cardo · Estuche profesional',
+    precio:650, wa:'Kit%20Tijeras%202%20Peines', img:IMG.h_tij1 },
+
+  // ── NAVAJAS ──────────────────────────────────────
+  { id:'h11', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Navaja Shavette Clásica', desc:'Acero inoxidable · Compatible cuchillas doble filo · Plateada',
+    precio:195, wa:'Navaja%20Shavette%20Cl%C3%A1sica', img:IMG.h_nav1 },
+
+  { id:'h12', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Navaja Mariposa Negro/Dorado', desc:'Apertura rápida · Intercambio seguro de hojas · Diseño premium',
+    precio:240, wa:'Navaja%20Mariposa%20Negro%20Dorado', img:IMG.h_nav2 },
+
+  { id:'h13', marca:'herramienta', cat:'herramienta',
+    nombre:'Hojas Doble Filo x10', desc:'Acero inoxidable · Alta precisión · Compatibles con todas las shavettes',
+    precio:45, wa:'Hojas%20Doble%20Filo%20x10', img:IMG.h_hojas },
+
+  // ── BROCHAS ───────────────────────────────────────
+  { id:'h14', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Brocha de Afeitar Profesional', desc:'Cerda sintética premium · Mango ergonómico · Espumado uniforme',
+    precio:210, wa:'Brocha%20Afeitar%20Profesional', img:IMG.h_brocha },
+
+  { id:'h15', marca:'herramienta', cat:'herramienta',
+    nombre:'Brocha Facial para Cuello', desc:'Suave · Retira cabello cortado · Esencial post-corte',
+    precio:95, wa:'Brocha%20Facial%20Cuello', img:IMG.h_brocha },
+
+  // ── ATOMIZADORES ──────────────────────────────────
+  { id:'h16', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Atomizador 500ml Profesional', desc:'Spray fino y uniforme · Ajustable · Resistente · Negro mate',
+    precio:120, wa:'Atomizador%20500ml%20Profesional', img:IMG.h_atom },
+
+  { id:'h17', marca:'herramienta', cat:'herramienta',
+    nombre:'Atomizador 250ml Compacto', desc:'Ligero · Fácil transporte · Ideal touch-up rápido',
+    precio:75, wa:'Atomizador%20250ml%20Compacto', img:IMG.h_atom },
+
+  // ── CAPAS ─────────────────────────────────────────
+  { id:'h18', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Capa de Corte Premium', desc:'Poliéster impermeable · Cierre ajustable · Color negro · Talla única',
+    precio:180, wa:'Capa%20Corte%20Premium', img:IMG.h_capa },
+
+  { id:'h19', marca:'herramienta', cat:'herramienta',
+    nombre:'Capa Infantil Barbería', desc:'Diseño estampado · Ligera · Fácil limpieza · Para niños',
+    precio:140, wa:'Capa%20Infantil%20Barberia', img:IMG.h_capa },
+
+  // ── BLEDO / PAPEL CUELLO ──────────────────────────
+  { id:'h20', marca:'herramienta', cat:'herramienta',
+    nombre:'Bledo Cuello x100 tiras', desc:'Papel cuellero desechable · Suave · Higiénico · Rollo 100 pzas',
+    precio:65, wa:'Bledo%20Cuello%20x100', img:IMG.h_bledo },
+
+  // ── TAZONES ───────────────────────────────────────
+  { id:'h21', marca:'herramienta', cat:'herramienta',
+    nombre:'Tazón para Jabón de Afeitar', desc:'Acero inoxidable · Base antideslizante · Compatible todas brochas',
+    precio:230, wa:'Tazon%20Jabon%20Afeitar', img:IMG.h_tazon },
+
+  // ── MANDILES ──────────────────────────────────────
+  { id:'h22', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Mandil Barbero New York', desc:'Cuero sintético · Bolsillos frontales · Ajustable · Negro',
+    precio:499, wa:'Mandil%20Barbero%20New%20York', img:IMG.h_mandil },
+
+  // ── ASENTADORES ───────────────────────────────────
+  { id:'h23', marca:'herramienta', cat:'herramienta',
+    nombre:'Asentador de Piel para Navaja', desc:'Cuero genuino · Doble cara · Mantiene el filo perfecto · 45cm',
+    precio:705, wa:'Asentador%20Piel%20Navaja', img:IMG.h_asen },
+
+  // ── CEPILLOS ──────────────────────────────────────
+  { id:'h24', marca:'herramienta', cat:'herramienta', bestseller:true,
+    nombre:'Cepillo de Cabello Barbero', desc:'Cerda natural · Mango de madera · Distribución uniforme · Profesional',
+    precio:280, wa:'Cepillo%20Cabello%20Barbero', img:IMG.h_cepb },
+
+  { id:'h25', marca:'herramienta', cat:'herramienta',
+    nombre:'Kit Cuidado de Bigote', desc:'Peine + tijera de precisión · Estuche compacto · 2 piezas',
+    precio:120, wa:'Kit%20Cuidado%20Bigote', img:IMG.h_tij3 },
+
+  // ══════════════════════════════════════════════════
+  // TRATAMIENTOS CAPILARES
+  // ══════════════════════════════════════════════════
+
+  // — ANTICAÍDA / CRECIMIENTO —
+  { id:'t01', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Minoxidil 5% Spray 60ml', desc:'Tratamiento anticaída · Estimula crecimiento · Cabello y barba · 1 mes',
+    precio:380, wa:'Minoxidil%205%25%20Spray%2060ml', img:IMG.t_minox },
+
+  { id:'t02', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Minoxidil 5% Espuma 100g', desc:'Fórmula foam · Absorción rápida · Sin residuo · 1 mes de tratamiento',
+    precio:420, wa:'Minoxidil%205%25%20Espuma', img:IMG.t_minox },
+
+  { id:'t03', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Minoxidil Kit 3 meses', desc:'3 frascos 60ml · Tratamiento completo · Mejor precio por volumen',
+    precio:990, wa:'Minoxidil%20Kit%203%20meses', img:IMG.t_minox },
+
+  { id:'t04', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Ampolletas Anticaída x12', desc:'Proteína de arroz hidrolizada · Biotina · 12 ampolletas x 6ml',
+    precio:390, wa:'Ampollas%20Anticaida%20x12', img:IMG.t_ampo },
+
+  { id:'t05', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Sérum Anticaída Cafeína', desc:'Cafeína + Arginina + Jengibre · Estimula folículos · 50ml',
+    precio:480, wa:'Serum%20Anticaida%20Cafeina', img:IMG.t_serum },
+
+  { id:'t06', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Aceite Esencial de Romero', desc:'100% puro orgánico · Estimula crecimiento · Cuero cabelludo · 30ml',
+    precio:180, wa:'Aceite%20Esencial%20Romero', img:IMG.t_rom },
+
+  // — FORTALECIMIENTO / NUTRICIÓN —
+  { id:'t07', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Biotina + Keratina Cápsulas x60', desc:'Crecimiento y fortaleza · Vitamina E · Colágeno hidrolizado · 60 días',
+    precio:320, wa:'Biotina%20Keratina%20Capsulas', img:IMG.t_bio },
+
+  { id:'t08', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Keratina Líquida Spray', desc:'Repara y revitaliza · Sin enjuague · Protección térmica · 125ml',
+    precio:260, wa:'Keratina%20Liquida%20Spray', img:IMG.t_ker },
+
+  { id:'t09', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Mascarilla Nutritiva Keratina', desc:'Hidratación intensa · Cabello seco y dañado · 250ml · Semana 1x',
+    precio:220, wa:'Mascarilla%20Nutritiva%20Keratina', img:IMG.t_mas },
+
+  { id:'t10', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Tratamiento Colágeno + Biotina', desc:'Reconstrucción capilar · Fortalece desde la raíz · 300ml',
+    precio:245, wa:'Tratamiento%20Colageno%20Biotina', img:IMG.t_col },
+
+  // — DENSIDAD / VOLUMEN —
+  { id:'t11', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Fibras Capilares Queratina 25g', desc:'Cubre calvicie al instante · Efecto natural · Negro / Castaño',
+    precio:350, wa:'Fibras%20Capilares%20Queratina%2025g', img:IMG.t_fibra },
+
+  { id:'t12', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Fibras Capilares 100g Premium', desc:'Mayor durabilidad · Resistente al viento · Queratina natural · Negro',
+    precio:580, wa:'Fibras%20Capilares%20100g%20Premium', img:IMG.t_fibra },
+
+  // — HERRAMIENTAS DE APLICACIÓN —
+  { id:'t13', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Dermaroller 0.25mm Titanio', desc:'540 agujas · Potencia absorción minoxidil · Estimula colágeno · Reutilizable',
+    precio:290, wa:'Dermaroller%200.25mm%20Titanio', img:IMG.t_derm },
+
+  { id:'t14', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Kit Dermaroller + Minoxidil', desc:'Dermaroller titanio + Minoxidil 5% 60ml · Combo máxima efectividad',
+    precio:620, wa:'Kit%20Dermaroller%20Minoxidil', img:IMG.t_derm },
+
+  // — CUERO CABELLUDO —
+  { id:'t15', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Tónico Capilar Bergamota', desc:'Estimula crecimiento · Bergamota + Biotina · Sin parabenos · 100ml',
+    precio:160, wa:'Tonico%20Capilar%20Bergamota', img:IMG.t_rom },
+
+  { id:'t16', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Shampoo Anticaída Bergamota', desc:'Minoxidil + Bergamota + Colágeno · Limpieza y tratamiento · 500ml',
+    precio:195, wa:'Shampoo%20Anticaida%20Bergamota', img:IMG.t_bio },
+
+  { id:'t17', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Shampoo Anticaspa Profesional', desc:'Zinc piritionato · Cuero cabelludo irritado · Uso diario · 400ml',
+    precio:185, wa:'Shampoo%20Anticaspa%20Profesional', img:IMG.t_serum },
+
+  // — BARBA —
+  { id:'t18', marca:'tratamiento', cat:'tratamiento', bestseller:true,
+    nombre:'Bálsamo Crecimiento de Barba 20%', desc:'Bergamota 20% · Cierra huecos · Densifica · 1 mes de tratamiento',
+    precio:280, wa:'Balsamo%20Crecimiento%20Barba', img:IMG.t_ampo },
+
+  { id:'t19', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Aceite para Barba Premium', desc:'Argán + Jojoba + Vitamina E · Suavidad · Brillo · Sin residuo · 30ml',
+    precio:210, wa:'Aceite%20Barba%20Premium', img:IMG.t_rom },
+
+  // — ALTA GAMA —
+  { id:'t20', marca:'tratamiento', cat:'tratamiento',
+    nombre:'Sérum Nocturno Capilar 8H', desc:'Nutrición intensa nocturna · Kerastase · Cabello seco · Sin enjuague · 90ml',
+    precio:680, wa:'Serum%20Nocturno%20Capilar%208H', img:IMG.t_serum },
+
 ];
 
 // ═══════════════════════════════════════════════════
@@ -793,12 +1179,14 @@ function renderCatalogo() {
   const noRes = document.getElementById('noResultados');
 
   const filtrados = PRODUCTOS.filter(p => {
-    const okMarca = filtroMarca === 'todas' || p.marca === filtroMarca;
-    const okCat   = filtroCat === 'todas'
-                  ? true
-                  : filtroCat === 'bestseller'
-                    ? p.bestseller === true
-                    : p.cat === filtroCat;
+    const okMarca = filtroMarca === 'todas'
+      ? p.cat !== 'herramienta' && p.cat !== 'tratamiento' // "Todas" no mezcla herramientas ni tratamientos
+      : p.marca === filtroMarca;
+    const okCat = filtroCat === 'todas'
+      ? true
+      : filtroCat === 'bestseller'
+        ? p.bestseller === true
+        : p.cat === filtroCat;
     return okMarca && okCat;
   });
 
@@ -819,7 +1207,7 @@ function renderCatalogo() {
     card.innerHTML = `
       <div class="prod-card-img-wrap">
         <img src="${p.img}" alt="${p.nombre}" class="prod-card-img" loading="lazy">
-        <span class="prod-card-marca ${p.marca}">${p.marca === 'reuzel' ? 'Reuzel' : 'Suavecito'}</span>
+        <span class="prod-card-marca ${p.marca}">${p.marca === 'reuzel' ? 'Reuzel' : p.marca === 'suavecito' ? 'Suavecito' : p.marca === 'herramienta' ? '✂ Herramienta' : '💊 Tratamiento'}</span>
         ${p.bestseller ? '<span class="prod-card-best">⭐ Más vendido</span>' : ''}
       </div>
       <div class="prod-card-body">
@@ -849,7 +1237,7 @@ function renderCatalogo() {
 }
 
 function labelCat(cat) {
-  const map = { pomada:'Pomada', peinado:'Peinado', barba:'Barba', shampoo:'Shampoo', tonico:'Tónico' };
+  const map = { pomada:'Pomada', peinado:'Peinado', barba:'Barba', shampoo:'Shampoo', tonico:'Tónico', herramienta:'Herramienta', tratamiento:'Tratamiento' };
   return map[cat] || cat;
 }
 
@@ -957,6 +1345,18 @@ document.querySelectorAll('.marca-chip').forEach(btn => {
     filtroMarca = btn.dataset.marca;
     document.querySelectorAll('.marca-chip').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    // Herramientas no tienen categoría — ocultar barra de filtros
+    const filtrosBar = document.getElementById('filtrosBar');
+    if (filtroMarca === 'herramienta' || filtroMarca === 'tratamiento') {
+      filtrosBar.style.opacity = '0.3';
+      filtrosBar.style.pointerEvents = 'none';
+      filtroCat = 'todas';
+      document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.filtro-btn[data-cat="todas"]').classList.add('active');
+    } else {
+      filtrosBar.style.opacity = '1';
+      filtrosBar.style.pointerEvents = 'all';
+    }
     renderCatalogo();
   });
 });
