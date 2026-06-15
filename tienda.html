@@ -199,6 +199,8 @@ nav{
   padding:9rem 2.5rem 5rem;
   border-bottom:1px solid rgba(255,255,255,.05);
   max-width:1200px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center;
 }
 .tienda-hero-left{}
 .tienda-hero-tag{
@@ -592,9 +594,131 @@ footer{
   .wa-float{padding:.82rem; border-radius:50%; bottom:1.4rem; right:1.2rem;}
   .wa-float span{display:none;}
   footer{padding:2rem 1.2rem 1.4rem; flex-direction:column; align-items:flex-start;}
+  .marcas-logo-section{padding:2.5rem 1.2rem;}
+  .benefits-section{padding:3rem 1.2rem;}
+  .benefits-grid{grid-template-columns:1fr 1fr;}
+  .hero-cta-row{flex-direction:column; gap:.8rem;}
 }
 @media(max-width:400px){
   .catalogo-grid{grid-template-columns:1fr;}
+}
+
+/* ══ MARCAS LOGOS SECTION ═══════════════════════ */
+.marcas-logo-section{
+  padding:3.5rem 2.5rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  background:var(--gris2);
+}
+.marcas-logo-inner{
+  max-width:1200px; margin:0 auto;
+  display:flex; flex-direction:column; gap:2.5rem;
+}
+.marcas-logo-label{
+  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--humo); font-weight:700; font-family:'Montserrat',sans-serif;
+  text-align:center;
+}
+.marcas-logo-row{
+  display:flex; align-items:center; justify-content:center;
+  gap:1.5rem; flex-wrap:wrap;
+}
+.marca-logo-card{
+  background:var(--gris3); border:1px solid rgba(255,255,255,.07);
+  border-radius:16px; padding:1.6rem 2.2rem;
+  display:flex; flex-direction:column; align-items:center; gap:.8rem;
+  min-width:160px; transition:border-color .2s, transform .2s;
+}
+.marca-logo-card:hover{
+  border-color:rgba(214,255,0,.2); transform:translateY(-3px);
+}
+.marca-logo-name{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.5rem; letter-spacing:-.02em;
+}
+.marca-logo-name.reuzel{color:var(--lima);}
+.marca-logo-name.suavecito{color:#ff7a4d;}
+.marca-logo-desc{
+  font-size:.62rem; color:rgba(240,240,237,.38);
+  letter-spacing:.1em; text-transform:uppercase;
+  font-family:'Montserrat',sans-serif; font-weight:600;
+  text-align:center;
+}
+.marca-logo-badge{
+  background:rgba(214,255,0,.08); color:var(--lima);
+  border:1px solid rgba(214,255,0,.18); border-radius:50px;
+  padding:.18rem .65rem; font-size:.52rem;
+  font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.marca-logo-badge.orange{
+  background:rgba(255,122,77,.08); color:#ff7a4d;
+  border-color:rgba(255,122,77,.2);
+}
+
+/* ══ BENEFITS SECTION ═══════════════════════════ */
+.benefits-section{
+  padding:5rem 2.5rem;
+  background:var(--negro);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.benefits-inner{max-width:1200px; margin:0 auto;}
+.benefits-header{
+  display:flex; flex-direction:column; gap:.8rem;
+  margin-bottom:3rem;
+}
+.benefits-tag{
+  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--lima); font-weight:700; font-family:'Montserrat',sans-serif;
+}
+.benefits-tit{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:clamp(1.6rem,3vw,2.4rem); line-height:1.1;
+  letter-spacing:-.025em;
+}
+.benefits-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem;
+}
+.benefit-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius-md); padding:1.8rem 1.4rem;
+  display:flex; flex-direction:column; gap:.8rem;
+  transition:border-color .2s, transform .2s;
+}
+.benefit-card:hover{
+  border-color:rgba(214,255,0,.15); transform:translateY(-4px);
+}
+.benefit-icon{
+  width:44px; height:44px; border-radius:12px;
+  background:rgba(214,255,0,.08); border:1px solid rgba(214,255,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem;
+}
+.benefit-title{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.9rem; color:var(--blanco); line-height:1.2;
+}
+.benefit-desc{
+  font-size:.72rem; color:rgba(240,240,237,.42);
+  line-height:1.6; font-weight:400;
+}
+
+/* ══ HERO CTA ROW ═══════════════════════════════ */
+.hero-cta-row{
+  display:flex; align-items:center; gap:1rem;
+  margin-top:2rem; flex-wrap:wrap;
+}
+.tienda-hero-cta-ghost{
+  display:inline-flex; align-items:center; gap:.5rem;
+  border:1px solid rgba(255,255,255,.15);
+  color:rgba(240,240,237,.65);
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.85rem 1.6rem; border-radius:50px;
+  text-decoration:none; transition:border-color .2s, color .2s;
+  white-space:nowrap;
+}
+.tienda-hero-cta-ghost:hover{
+  border-color:rgba(255,255,255,.35); color:var(--blanco);
 }
 </style>
 </head>
@@ -640,11 +764,69 @@ footer{
       <span class="hero-badge"><span>✓</span> Mismo día en Pachuca</span>
       <span class="hero-badge"><span>✓</span> Sin mínimo de compra</span>
     </div>
+    <div class="hero-cta-row">
+      <a href="#catalogo" class="tienda-hero-cta">
+        Ver catálogo completo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20un%20producto." target="_blank" rel="noopener" class="tienda-hero-cta-ghost">
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Columna derecha: stats -->
+  <div class="tienda-hero-right">
+    <div class="hero-stat">
+      <span class="hero-stat-num">700+</span>
+      <span class="hero-stat-label"><strong>Clientes satisfechos</strong>en Pachuca y alrededores</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">50+</span>
+      <span class="hero-stat-label"><strong>Productos en catálogo</strong>Reuzel, Suavecito y herramientas</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">$45</span>
+      <span class="hero-stat-label"><strong>Precio desde</strong>Sin mínimo de compra</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">≤24h</span>
+      <span class="hero-stat-label"><strong>Entrega en Pachuca</strong>mismo día en muchos casos</span>
+    </div>
   </div>
 
 </section>
 
-<!-- ══ MARCAS ════════════════════════════════════ -->
+<!-- ══ MARCAS LOGOS ════════════════════════════════ -->
+<section class="marcas-logo-section">
+  <div class="marcas-logo-inner">
+    <span class="marcas-logo-label">Distribuidores oficiales en Pachuca</span>
+    <div class="marcas-logo-row">
+      <div class="marca-logo-card">
+        <span class="marca-logo-name reuzel">REUZEL</span>
+        <span class="marca-logo-desc">Pomadas · Cuidado · Peinado</span>
+        <span class="marca-logo-badge">Desde $290 MXN</span>
+      </div>
+      <div class="marca-logo-card">
+        <span class="marca-logo-name suavecito">SUAVECITO</span>
+        <span class="marca-logo-desc">Pomadas · Barba · Shampoo</span>
+        <span class="marca-logo-badge orange">Desde $240 MXN</span>
+      </div>
+      <div class="marca-logo-card">
+        <span class="marca-logo-name" style="color:#a0a0ff; font-size:1.1rem; letter-spacing:.06em;">✂ HERRAMIENTAS</span>
+        <span class="marca-logo-desc">Tijeras · Navajas · Peines</span>
+        <span class="marca-logo-badge" style="background:rgba(160,160,255,.08);color:#a0a0ff;border-color:rgba(160,160,255,.2);">Desde $75 MXN</span>
+      </div>
+      <div class="marca-logo-card">
+        <span class="marca-logo-name" style="color:#64dcb4; font-size:1.1rem; letter-spacing:.04em;">💊 TRATAMIENTOS</span>
+        <span class="marca-logo-desc">Anticaída · Serum · Queratina</span>
+        <span class="marca-logo-badge" style="background:rgba(100,220,180,.08);color:#64dcb4;border-color:rgba(100,220,180,.2);">Desde $230 MXN</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARCAS FILTROS ════════════════════════════════ -->
 <div class="marcas-banner" id="marcasBanner">
   <span class="filtro-label">Marca</span>
   <button class="marca-chip active" data-marca="todas">Todas</button>
@@ -712,10 +894,45 @@ footer{
   <span>WhatsApp</span>
 </a>
 
+<!-- ══ BENEFITS ═══════════════════════════════════ -->
+<section class="benefits-section">
+  <div class="benefits-inner">
+    <div class="benefits-header">
+      <span class="benefits-tag">¿Por qué comprar con nosotros?</span>
+      <h2 class="benefits-tit">Así funciona<br>la tienda JJ</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">✅</div>
+        <div class="benefit-title">Productos 100% originales</div>
+        <div class="benefit-desc">Compramos directamente a distribuidores autorizados. Sin imitaciones, sin riesgo.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">Entrega el mismo día</div>
+        <div class="benefit-desc">En Pachuca y municipios cercanos. Pedido por WhatsApp antes de las 5 PM.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💬</div>
+        <div class="benefit-title">Asesoría personalizada</div>
+        <div class="benefit-desc">Jesús te recomienda qué producto va mejor con tu cabello y tipo de peinado.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💸</div>
+        <div class="benefit-title">Pago contra entrega</div>
+        <div class="benefit-desc">Sin adelantos. Pagas cuando recibes tu pedido, en efectivo o transferencia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ FOOTER ═════════════════════════════════════ -->
 <footer>
   <a href="index.html" class="ft-logo">JJ✂</a>
-  <span class="ft-copy">© 2025 Jesús Juárez Barbería · Pachuca, Hgo.</span>
+  <div style="display:flex;flex-direction:column;gap:.3rem;align-items:center;">
+    <span class="ft-copy">© 2025 Jesús Juárez Barbería · Pachuca, Hgo.</span>
+    <span class="ft-copy">Lun–Vie 9–20h · Sáb 9–18h · <a href="https://wa.me/527716682637" target="_blank" rel="noopener" style="color:var(--wa);text-decoration:none;">+52 771 668 2637</a></span>
+  </div>
   <a href="index.html" class="ft-back">← Volver al inicio</a>
 </footer>
 
