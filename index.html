@@ -1108,6 +1108,99 @@ footer{
   footer{grid-template-columns:1fr;padding:2.2rem 1.2rem 1.4rem;}
   .ft-copy{flex-direction:column;}
 }
+
+/* ─── NAV CONTACTO BUTTON ──────────────────────── */
+.nav-contacto-btn{
+  background:none; border:none; color:var(--humo);
+  font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  font-weight:500; font-family:'Poppins',sans-serif;
+  cursor:pointer; transition:color .2s; padding:0;
+}
+.nav-contacto-btn:hover{ color:var(--lima); }
+
+/* ─── NAV CONTACTO DROPDOWN CARD ───────────────── */
+.nav-contacto-card{
+  position:fixed; top:4.2rem; right:1.5rem; z-index:300;
+  background:#111; border:1px solid rgba(214,255,0,.18);
+  border-radius:20px; padding:1.4rem 1.2rem 1rem;
+  width:min(340px, calc(100vw - 2rem));
+  box-shadow:0 20px 60px rgba(0,0,0,.7),
+             0 0 0 1px rgba(214,255,0,.06);
+  animation:dropIn .25s cubic-bezier(.16,1,.3,1) both;
+}
+.nav-contacto-card[hidden]{ display:none; }
+@keyframes dropIn{
+  from{opacity:0;transform:translateY(-10px) scale(.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+.ncc-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:.35rem;
+}
+.ncc-title{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.82rem; letter-spacing:.04em; color:var(--blanco);
+}
+.ncc-close{
+  background:none; border:none; color:var(--humo);
+  font-size:1rem; cursor:pointer; transition:color .2s;
+  line-height:1; padding:.2rem;
+}
+.ncc-close:hover{ color:var(--blanco); }
+.ncc-sub{
+  font-size:.7rem; color:var(--humo); line-height:1.5;
+  margin-bottom:1rem; padding-bottom:.8rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.ncc-list{ display:flex; flex-direction:column; gap:.5rem; }
+.ncc-item{
+  display:flex; align-items:center; gap:.9rem;
+  padding:.65rem .8rem; border-radius:12px;
+  border:1px solid rgba(255,255,255,.05);
+  background:rgba(255,255,255,.03);
+  text-decoration:none; transition:all .18s;
+}
+.ncc-item:hover{
+  background:rgba(214,255,0,.06);
+  border-color:rgba(214,255,0,.2);
+}
+.ncc-ico{
+  width:32px; height:32px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; overflow:hidden;
+}
+.ncc-ico svg{ width:20px; height:20px; display:block; }
+.ncc-ico-wa{ background:#075e54; }
+.ncc-ico-mail{ background:#fff1f0; }
+.ncc-ico-cal{ background:#e8f0fe; }
+.ncc-ico-ig{ background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }
+.ncc-txt{ display:flex; flex-direction:column; gap:.08rem; min-width:0; }
+.ncc-txt strong{
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.78rem; color:var(--blanco); line-height:1.2;
+}
+.ncc-txt small{
+  font-size:.65rem; color:var(--humo); line-height:1.3;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* ─── DRAWER PROTOCOLOS ─────────────────────────── */
+.drawer-protos{
+  display:none; /* solo en móvil cuando se abre */
+  flex-wrap:wrap; gap:.6rem; justify-content:center;
+  margin:.5rem 0 1.5rem; padding-top:1rem;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.drawer-protos.open{ display:flex; }
+.drawer-proto{
+  display:flex; align-items:center; gap:.5rem;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:50px; padding:.5rem 1rem;
+  font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--blanco); text-decoration:none; transition:all .18s;
+}
+.drawer-proto:hover{ border-color:rgba(214,255,0,.4); color:var(--lima); }
 </style>
 </head>
 <body>
@@ -1134,12 +1227,63 @@ footer{
 <nav>
   <a href="#inicio" class="nav-logo">JJ✂</a>
   <ul class="nav-links">
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#cupones">Cupones</a></li>
-    <li><a href="tienda.html">🛍 Tienda</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="tienda.html">Tienda</a></li>
+    <li><a href="citas.html">Citas</a></li>
+    <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <a href="citas.html" class="nav-cta">Agendar →</a>
+
+  <!-- Dropdown de contacto -->
+  <div class="nav-contacto-card" id="navContactoCard" role="dialog" aria-label="Contacto" hidden>
+    <div class="ncc-header">
+      <span class="ncc-title">Contacto directo</span>
+      <button class="ncc-close" id="navContactoClose" aria-label="Cerrar">✕</button>
+    </div>
+    <p class="ncc-sub">Cada opción abre con un mensaje listo. Tú solo confirmas.</p>
+    <div class="ncc-list">
+      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+         target="_blank" rel="noopener noreferrer" class="ncc-item">
+        <span class="ncc-ico ncc-ico-wa">
+          <svg viewBox="0 0 24 24" fill="none"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
+        </span>
+        <div class="ncc-txt">
+          <strong>WhatsApp</strong>
+          <small>+52 771 668 2637 · Respuesta inmediata</small>
+        </div>
+      </a>
+      <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+         class="ncc-item">
+        <span class="ncc-ico ncc-ico-mail">
+          <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+        </span>
+        <div class="ncc-txt">
+          <strong>Correo Gmail</strong>
+          <small>jesusjuarezperezel10@gmail.com</small>
+        </div>
+      </a>
+      <a href="https://calendar.google.com/calendar/r/eventedit?text=Cita+JJ+Barber%C3%ADa&details=Cita+con+Jes%C3%BAs+Ju%C3%A1rez+%E2%80%93+Av.+Francisco+I.+Madero+400-402,+Centro,+Pachuca,+Hgo.&location=Av.+Francisco+I.+Madero+400-402,+Centro,+Pachuca+de+Soto,+Hgo."
+         target="_blank" rel="noopener noreferrer" class="ncc-item">
+        <span class="ncc-ico ncc-ico-cal">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="3" fill="#4285F4"/><rect x="3" y="4" width="18" height="6" rx="3" fill="#1a73e8"/><rect x="3" y="8" width="18" height="2" fill="#1a73e8"/><circle cx="8" cy="7" r="1.5" fill="white"/><circle cx="16" cy="7" r="1.5" fill="white"/><rect x="7" y="13" width="3" height="2" rx=".5" fill="white"/><rect x="10.5" y="13" width="3" height="2" rx=".5" fill="white"/><rect x="14" y="13" width="3" height="2" rx=".5" fill="white"/><rect x="7" y="16.5" width="3" height="2" rx=".5" fill="white"/><rect x="10.5" y="16.5" width="3" height="2" rx=".5" fill="white"/></svg>
+        </span>
+        <div class="ncc-txt">
+          <strong>Google Calendar</strong>
+          <small>Agenda tu cita en tu calendario</small>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/jesus_juarez_perez_01"
+         target="_blank" rel="noopener noreferrer" class="ncc-item">
+        <span class="ncc-ico ncc-ico-ig">
+          <svg viewBox="0 0 24 24"><defs><linearGradient id="ncc-ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ncc-ig)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+        </span>
+        <div class="ncc-txt">
+          <strong>Instagram</strong>
+          <small>@jesus_juarez_perez_01 · Ver trabajos</small>
+        </div>
+      </a>
+    </div>
+  </div>
   <!-- Botón hamburguesa — solo visible en móvil -->
   <button class="nav-hamburger" id="nav-hamburger"
           aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
@@ -1152,11 +1296,30 @@ footer{
 <!-- Drawer móvil -->
 <div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menú de navegación">
   <ul>
-    <li><a href="#servicios" class="nav-drawer-link">Servicios</a></li>
-    <li><a href="#cupones" class="nav-drawer-link">Cupones</a></li>
-    <li><a href="tienda.html" class="nav-drawer-link">🛍 Tienda</a></li>
-    <li><a href="#contacto" class="nav-drawer-link">Contacto</a></li>
+    <li><a href="#inicio" class="nav-drawer-link">Inicio</a></li>
+    <li><a href="tienda.html" class="nav-drawer-link">Tienda</a></li>
+    <li><a href="citas.html" class="nav-drawer-link">Citas</a></li>
+    <li><a href="#drawer-contacto" class="nav-drawer-link" id="drawerContactoLink">Contacto</a></li>
   </ul>
+  <!-- Protocolos en el drawer -->
+  <div class="drawer-protos" id="drawerProtos">
+    <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
+      WhatsApp
+    </a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita." class="drawer-proto">
+      <svg width="20" height="20" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+      Gmail
+    </a>
+    <a href="https://calendar.google.com/calendar/r/eventedit?text=Cita+JJ+Barber%C3%ADa&location=Av.+Francisco+I.+Madero+400-402,+Centro,+Pachuca" target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3" fill="#4285F4"/><rect x="3" y="4" width="18" height="6" rx="3" fill="#1a73e8"/><rect x="3" y="8" width="18" height="2" fill="#1a73e8"/><circle cx="8" cy="7" r="1.5" fill="white"/><circle cx="16" cy="7" r="1.5" fill="white"/><rect x="7" y="13" width="3" height="2" rx=".5" fill="white"/><rect x="11" y="13" width="3" height="2" rx=".5" fill="white"/><rect x="14" y="16.5" width="3" height="2" rx=".5" fill="white"/></svg>
+      Calendar
+    </a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="20" height="20" viewBox="0 0 24 24"><defs><linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig2)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+      Instagram
+    </a>
+  </div>
   <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
 </div>
 
@@ -2412,6 +2575,43 @@ updateServiciosCarousel(0);
 })();
 
 updateCarousel(0);
+
+/* ── NAV CONTACTO DROPDOWN ── */
+(function(){
+  const btn   = document.getElementById('navContactoBtn');
+  const card  = document.getElementById('navContactoCard');
+  const close = document.getElementById('navContactoClose');
+  if(!btn || !card) return;
+
+  function openCard(){
+    card.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded','true');
+  }
+  function closeCard(){
+    card.setAttribute('hidden','');
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    card.hasAttribute('hidden') ? openCard() : closeCard();
+  });
+  close.addEventListener('click', closeCard);
+  document.addEventListener('click', e=>{
+    if(!card.contains(e.target) && e.target !== btn) closeCard();
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCard(); });
+
+  /* Drawer: Contacto link shows protos inline */
+  const drawerLink   = document.getElementById('drawerContactoLink');
+  const drawerProtos = document.getElementById('drawerProtos');
+  if(drawerLink && drawerProtos){
+    drawerLink.addEventListener('click', e=>{
+      e.preventDefault();
+      drawerProtos.classList.toggle('open');
+    });
+  }
+})();
 </script>
 
 </body>
