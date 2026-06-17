@@ -1,0 +1,1 @@
+- [JJ Barbería Firebase Auth](jj-barberia-auth.md) — Auth + Admin dashboard implementados; admin detectado por email, NO por PIN.

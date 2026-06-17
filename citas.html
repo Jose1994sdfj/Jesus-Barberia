@@ -12,6 +12,7 @@
 
 <!-- Firebase SDK (compat) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 
@@ -619,6 +620,218 @@ nav{
   color:var(--humo); margin-top:.3rem;
 }
 
+/* ══ AUTH SCREEN ════════════════════════════════════════════════ */
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+#screenAuth{
+  position:fixed; inset:0; z-index:1000;
+  background:var(--negro);
+  display:flex; align-items:center; justify-content:center;
+  padding:1rem; animation:fadeIn .25s ease;
+}
+.auth-card{
+  background:var(--gris); border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-xl); padding:2.5rem 2rem;
+  width:100%; max-width:420px;
+  box-shadow:0 40px 80px rgba(0,0,0,.5);
+}
+.auth-logo-mark{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.6rem; color:var(--lima); letter-spacing:.04em;
+  margin-bottom:1.4rem; display:block;
+}
+.auth-headline{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.4rem; color:var(--blanco); margin-bottom:.3rem;
+  letter-spacing:-.02em;
+}
+.auth-sub{ font-size:.78rem; color:var(--humo); margin-bottom:1.8rem; line-height:1.55; }
+.auth-tabs{
+  display:flex; gap:.35rem; background:var(--gris2);
+  border-radius:30px; padding:.25rem; margin-bottom:1.6rem;
+}
+.auth-tab{
+  flex:1; font-family:'Montserrat',sans-serif; font-size:.68rem;
+  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  background:none; border:none; color:var(--humo);
+  padding:.5rem; border-radius:30px; cursor:pointer; transition:all .2s;
+}
+.auth-tab.active{ background:var(--lima); color:var(--negro); }
+.auth-error{
+  font-size:.74rem; color:#ff5a5a; margin-bottom:.7rem;
+  min-height:1rem; line-height:1.4;
+}
+.auth-submit{ width:100%; justify-content:center; margin-bottom:1.2rem; }
+.auth-note{
+  text-align:center; font-size:.72rem; color:var(--humo);
+}
+.auth-note a{ color:var(--lima); text-decoration:none; }
+.auth-note a:hover{ text-decoration:underline; }
+
+/* ══ NAV USER AREA ══════════════════════════════════════════════ */
+.nav-user-area{ display:none; align-items:center; gap:.55rem; }
+.nav-user-avatar{
+  width:30px; height:30px; border-radius:50%;
+  background:rgba(214,255,0,.12); border:1.5px solid rgba(214,255,0,.35);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:.75rem; color:var(--lima); flex-shrink:0;
+}
+.nav-user-name{
+  font-size:.68rem; color:rgba(240,240,237,.75); font-weight:500;
+  max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.nav-admin-chip{
+  display:none; font-family:'Montserrat',sans-serif;
+  font-size:.52rem; font-weight:800; letter-spacing:.1em;
+  background:var(--lima); color:var(--negro);
+  padding:.18rem .55rem; border-radius:30px;
+}
+.nav-logout-btn{
+  display:none; font-family:'Montserrat',sans-serif; font-size:.62rem;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; color:var(--humo);
+  border:1px solid #333; padding:.38rem .85rem; border-radius:30px;
+  cursor:pointer; transition:all .2s;
+}
+.nav-logout-btn:hover{ color:#ff5a5a; border-color:rgba(255,90,90,.4); }
+
+/* ══ ADMIN FULL-PAGE DASHBOARD ══════════════════════════════════ */
+#screenAdmin{ min-height:100vh; padding-top:70px; display:none; }
+.adm-wrap{ max-width:960px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+.adm-header{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:1.8rem; flex-wrap:wrap; gap:1rem;
+}
+.adm-header-title{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.6rem; color:var(--blanco); letter-spacing:-.02em;
+}
+.adm-header-sub{
+  font-size:.68rem; color:var(--humo); letter-spacing:.1em;
+  text-transform:uppercase; margin-top:.3rem;
+}
+.adm-date-chip{
+  background:var(--gris2); border:1px solid #2a2a2a;
+  border-radius:30px; padding:.5rem 1rem;
+  font-family:'Montserrat',sans-serif; font-size:.7rem;
+  font-weight:700; color:var(--blanco); white-space:nowrap; flex-shrink:0;
+}
+.adm-stats{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:.75rem; margin-bottom:1.8rem;
+}
+@media(max-width:720px){ .adm-stats{ grid-template-columns:1fr 1fr; } }
+.adm-stat{
+  background:var(--gris2); border:1px solid #2a2a2a;
+  border-radius:var(--r-md); padding:1.1rem 1rem;
+}
+.adm-stat-val{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.75rem; color:var(--lima); line-height:1;
+}
+.adm-stat-label{
+  font-size:.58rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--humo); font-weight:600; margin-top:.3rem;
+}
+.adm-stat-sub{ font-size:.62rem; color:#3a3a3a; margin-top:.15rem; }
+.adm-ctrl{
+  display:flex; align-items:center; gap:.7rem;
+  flex-wrap:wrap; margin-bottom:1.2rem;
+}
+.adm-tabs{ display:flex; gap:.35rem; flex-wrap:wrap; }
+.adm-tab{
+  font-family:'Montserrat',sans-serif; font-size:.62rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:var(--gris2); border:1px solid #2a2a2a;
+  color:var(--humo); padding:.42rem .95rem; border-radius:30px;
+  cursor:pointer; transition:all .2s;
+}
+.adm-tab.active{ background:var(--lima); color:var(--negro); border-color:var(--lima); }
+.adm-search{
+  flex:1; min-width:150px;
+  background:var(--gris2); border:1.5px solid #2a2a2a;
+  color:var(--blanco); font-family:'Poppins',sans-serif;
+  font-size:.84rem; padding:.5rem 1rem; border-radius:30px;
+  outline:none; transition:border-color .2s;
+}
+.adm-search:focus{ border-color:rgba(214,255,0,.4); }
+.adm-search::placeholder{ color:#3d3d3d; }
+.adm-list{ display:flex; flex-direction:column; gap:.65rem; }
+.adm-empty{
+  text-align:center; padding:3.5rem 1rem;
+  color:var(--humo); font-size:.85rem;
+  background:var(--gris2); border:1px solid #2a2a2a;
+  border-radius:var(--r-lg);
+}
+.adm-card{
+  background:var(--gris2); border:1px solid #2a2a2a;
+  border-radius:var(--r-md); padding:1rem 1.2rem;
+  display:flex; gap:.9rem; transition:border-color .2s;
+  border-left-width:3px;
+}
+.adm-card:hover{ border-color:#333; }
+.adm-card[data-estado="pendiente"]{ border-left-color:var(--lima); }
+.adm-card[data-estado="atendido"]{ border-left-color:#5aff9e; }
+.adm-card[data-estado="cancelado"]{ border-left-color:#ff5a5a; }
+.adm-avatar{
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(214,255,0,.1); border:1px solid rgba(214,255,0,.18);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:.85rem; color:var(--lima); flex-shrink:0; align-self:flex-start;
+  margin-top:.1rem;
+}
+.adm-card-body{ flex:1; min-width:0; }
+.adm-card-top{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:.7rem; margin-bottom:.5rem; flex-wrap:wrap;
+}
+.adm-name{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.9rem; color:var(--blanco);
+}
+.adm-badge{
+  font-family:'Montserrat',sans-serif; font-size:.55rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:.2rem .58rem; border-radius:30px; display:inline-block;
+}
+.adm-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
+.adm-badge-atendido{  background:rgba(90,255,158,.1);  color:#5aff9e; }
+.adm-badge-cancelado{ background:rgba(255,90,90,.1);   color:#ff5a5a; }
+.adm-today-pill{
+  font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:800;
+  letter-spacing:.12em; background:var(--lima); color:var(--negro);
+  padding:.14rem .48rem; border-radius:30px; vertical-align:middle;
+}
+.adm-time-block{ text-align:right; flex-shrink:0; }
+.adm-time{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1rem; color:var(--blanco); display:block;
+}
+.adm-date{ font-size:.62rem; color:var(--humo); display:block; margin-top:.1rem; }
+.adm-card-mid{
+  display:flex; align-items:center; gap:.5rem;
+  flex-wrap:wrap; margin-bottom:.65rem;
+}
+.adm-svc{ font-size:.72rem; color:var(--blanco); font-weight:500; }
+.adm-price{ font-family:'Montserrat',sans-serif; font-size:.72rem; font-weight:700; color:var(--lima); }
+.adm-dur,.adm-code{ font-size:.62rem; color:#555; letter-spacing:.04em; }
+.adm-dot{ font-size:.45rem; color:#2a2a2a; }
+.adm-card-actions{ display:flex; gap:.4rem; flex-wrap:wrap; }
+.adm-btn{
+  font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700;
+  letter-spacing:.07em; text-transform:uppercase;
+  border:1px solid #333; background:transparent;
+  color:var(--humo); padding:.3rem .72rem; border-radius:30px;
+  cursor:pointer; transition:all .18s; text-decoration:none;
+  display:inline-flex; align-items:center; gap:.3rem;
+}
+.adm-btn:hover{ color:var(--blanco); border-color:#555; }
+.adm-btn-ok:hover{    color:#5aff9e; border-color:#5aff9e; background:rgba(90,255,158,.05); }
+.adm-btn-cancel:hover{ color:#ff5a5a; border-color:#ff5a5a; background:rgba(255,90,90,.05); }
+.adm-btn-wa{ color:var(--wa); border-color:rgba(37,211,102,.3); }
+.adm-btn-wa:hover{ background:rgba(37,211,102,.07); border-color:var(--wa); color:var(--wa); }
+
 /* ══ TOAST ═══════════════════════════════════════════════════════ */
 .toast{
   position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
@@ -649,8 +862,46 @@ nav{
 </head>
 <body>
 
+<!-- ══ AUTH SCREEN ═════════════════════════════════════════════ -->
+<div id="screenAuth">
+  <div class="auth-card">
+    <span class="auth-logo-mark">JJ✂</span>
+    <h1 class="auth-headline">Bienvenido</h1>
+    <p class="auth-sub">Inicia sesión para agendar tu cita en JJ Barbería Pachuca</p>
+
+    <div class="auth-tabs">
+      <button id="tabLogin" class="auth-tab active">Entrar</button>
+      <button id="tabReg" class="auth-tab">Registrarse</button>
+    </div>
+
+    <div id="authRegFields" style="display:none">
+      <div class="form-group">
+        <label class="form-label" for="authNombre">Nombre completo</label>
+        <input class="form-input" type="text" id="authNombre" placeholder="Juan Pérez" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="authTel">Teléfono WhatsApp</label>
+        <input class="form-input" type="tel" id="authTel" placeholder="771 123 4567" autocomplete="tel">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="authEmail">Correo electrónico</label>
+      <input class="form-input" type="email" id="authEmail" placeholder="juan@ejemplo.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="authPassword">Contraseña</label>
+      <input class="form-input" type="password" id="authPassword" placeholder="Mínimo 6 caracteres" autocomplete="current-password">
+    </div>
+
+    <p class="auth-error" id="authError"></p>
+    <button class="btn btn-primary auth-submit" id="authSubmitBtn">Entrar</button>
+    <p class="auth-note">¿Eres el barbero? Usa tu correo de administrador.</p>
+  </div>
+</div>
+
 <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
-<nav>
+<nav id="mainNav" style="display:none">
   <a href="index.html" class="nav-logo">JJ✂</a>
   <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
@@ -659,8 +910,13 @@ nav{
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
-    <a href="citas.html" class="nav-cta">Agendar →</a>
-    <button class="nav-admin-btn" id="openAdminBtn">Admin</button>
+    <a href="citas.html" class="nav-cta" id="navCta" style="display:none">Agendar →</a>
+    <div class="nav-user-area" id="navUserArea">
+      <div class="nav-user-avatar" id="navUserAvatar">?</div>
+      <span class="nav-user-name" id="navUserName"></span>
+      <span class="nav-admin-chip" id="navAdminChip">Admin</span>
+    </div>
+    <button class="nav-logout-btn" id="navLogoutBtn">Salir</button>
     <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -720,6 +976,9 @@ nav{
   </div>
   <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
 </div>
+
+<!-- ══ BOOKING SCREEN ══════════════════════════════════════════ -->
+<div id="screenBooking" style="display:none">
 
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div class="page-header">
@@ -831,67 +1090,66 @@ nav{
 
 </div><!-- /wizard -->
 
-<!-- ══ ADMIN: PIN MODAL ════════════════════════════════════════ -->
-<div class="modal-overlay" id="pinModal">
-  <div class="modal">
-    <div class="modal-title">
-      Panel de administración
-      <button class="modal-close" id="closePinModal">&times;</button>
+</div><!-- /screenBooking -->
+
+<!-- ══ ADMIN SCREEN ════════════════════════════════════════════ -->
+<div id="screenAdmin">
+  <div class="adm-wrap">
+    <div class="adm-header">
+      <div>
+        <h1 class="adm-header-title">Panel de administración</h1>
+        <p class="adm-header-sub">JJ Barbería · Pachuca, Hidalgo</p>
+      </div>
+      <span class="adm-date-chip" id="admDateChip"></span>
     </div>
-    <label class="form-label">PIN de acceso</label>
-    <input class="pin-input" type="password" id="pinInput"
-      maxlength="4" placeholder="····" inputmode="numeric">
-    <p class="pin-error" id="pinError">PIN incorrecto</p>
-    <div class="btn-row" style="margin-top:1.2rem;">
-      <button class="btn btn-primary" id="pinSubmit">Entrar</button>
+
+    <div class="adm-stats">
+      <div class="adm-stat">
+        <div class="adm-stat-val" id="admStatHoy">–</div>
+        <div class="adm-stat-label">Citas hoy</div>
+        <div class="adm-stat-sub">Pendientes + atendidas</div>
+      </div>
+      <div class="adm-stat">
+        <div class="adm-stat-val" id="admStatPend">–</div>
+        <div class="adm-stat-label">Pendientes</div>
+        <div class="adm-stat-sub">Por confirmar</div>
+      </div>
+      <div class="adm-stat">
+        <div class="adm-stat-val" id="admStatIngresos">–</div>
+        <div class="adm-stat-label">Ingresos del mes</div>
+        <div class="adm-stat-sub">Solo citas atendidas</div>
+      </div>
+      <div class="adm-stat">
+        <div class="adm-stat-val" id="admStatTotal">–</div>
+        <div class="adm-stat-label">Total histórico</div>
+        <div class="adm-stat-sub">Todas las citas</div>
+      </div>
+    </div>
+
+    <div class="adm-ctrl">
+      <div class="adm-tabs">
+        <button class="adm-tab active" data-tab="hoy">📅 Hoy</button>
+        <button class="adm-tab" data-tab="pendientes">⏳ Pendientes</button>
+        <button class="adm-tab" data-tab="todas">📋 Todas</button>
+        <button class="adm-tab" data-tab="atendidas">✓ Atendidas</button>
+        <button class="adm-tab" data-tab="canceladas">✕ Canceladas</button>
+      </div>
+      <input type="search" class="adm-search" id="admSearch"
+        placeholder="Buscar nombre, servicio, código…">
+    </div>
+
+    <div class="adm-list" id="admList">
+      <div class="adm-empty">Cargando citas…</div>
     </div>
   </div>
-</div>
-
-<!-- ══ ADMIN MODAL ═════════════════════════════════════════════ -->
-<div class="modal-overlay" id="adminModal">
-  <div class="modal" style="max-width:620px;">
-    <div class="modal-title">
-      Citas · JJ Barbería
-      <button class="modal-close" id="closeAdminModal">&times;</button>
-    </div>
-
-    <div class="admin-stats" id="adminStats">
-      <div class="stat-card">
-        <div class="stat-num" id="statPendientes">–</div>
-        <div class="stat-lbl">Pendientes</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="statAtendidas">–</div>
-        <div class="stat-lbl">Hoy atendidas</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="statTotal">–</div>
-        <div class="stat-lbl">Total</div>
-      </div>
-    </div>
-
-    <div class="admin-filters">
-      <button class="filter-btn active" data-filter="pendiente">Pendientes</button>
-      <button class="filter-btn" data-filter="atendido">Atendidas</button>
-      <button class="filter-btn" data-filter="cancelado">Canceladas</button>
-      <button class="filter-btn" data-filter="all">Todas</button>
-    </div>
-
-    <div id="adminList"><div class="admin-loading">Cargando citas…</div></div>
-  </div>
-</div>
+</div><!-- /screenAdmin -->
 
 <!-- ══ TOAST ════════════════════════════════════════════════════ -->
 <div class="toast" id="toast"></div>
 
 <!-- ══ SCRIPT ═══════════════════════════════════════════════════ -->
 <script>
-/* ───────────────────────────────────────────────
-   FIREBASE CONFIG
-   (La apiKey de Firebase web es pública por diseño.
-    Protege los datos con Firebase Security Rules en la consola.)
-──────────────────────────────────────────────── */
+/* ─── FIREBASE CONFIG ────────────────────────────────────────── */
 const firebaseConfig = {
   apiKey: "AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
   authDomain: "bdfirebase-62a1b.firebaseapp.com",
@@ -902,16 +1160,13 @@ const firebaseConfig = {
   appId: "1:862846715518:web:39d9b85b418c9dfccc3a2f",
   measurementId: "G-Y2Q5JPNQC8"
 };
-
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const db   = firebase.database();
+const auth = firebase.auth();
 firebase.analytics();
 
-/* ───────────────────────────────────────────────
-   CONFIGURACIÓN
-──────────────────────────────────────────────── */
-/* CAMBIA ESTE PIN cuando subas al servidor */
-const ADMIN_PIN = "2637";
+/* ─── CONSTANTES ─────────────────────────────────────────────── */
+const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
 
 const WA_NUMBER = "527716682637";
 
@@ -937,48 +1192,267 @@ const HORARIOS = {
 /* Días cerrados (2=martes por ejemplo). Agrega/quita según necesites */
 const DIAS_CERRADOS = [];
 
-/* ───────────────────────────────────────────────
-   ESTADO DE LA RESERVA
-──────────────────────────────────────────────── */
+/* ─── ESTADO ─────────────────────────────────────────────────── */
 const booking = { servicio:null, fecha:null, hora:null };
-let calYear, calMonth;
-let adminFilter = "pendiente";
-let allCitas = {};
+let calYear, calMonth, calInitialized = false;
+let admTab = "hoy", admSearch = "", allCitas = {}, admListener = null;
+let currentUser = null;
 
-/* ───────────────────────────────────────────────
-   HELPERS
-──────────────────────────────────────────────── */
-function showToast(msg, dur=2800){
-  const t = document.getElementById("toast");
-  t.textContent = msg; t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"), dur);
+/* ─── HELPERS ────────────────────────────────────────────────── */
+function showToast(msg,dur=2800){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),dur);
 }
-
-function timeToMin(t){ const[h,m]=t.split(":").map(Number); return h*60+m; }
-function minToTime(m){ return `${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}`; }
-
-function genCode(){
-  const a = Math.random().toString(36).slice(2,5).toUpperCase();
-  const b = Math.floor(100000+Math.random()*900000);
-  return `JJ-${a}-${b}`;
-}
-
+function timeToMin(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
+function minToTime(m){return `${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}`;}
+function genCode(){const a=Math.random().toString(36).slice(2,5).toUpperCase();const b=Math.floor(100000+Math.random()*900000);return `JJ-${a}-${b}`;}
 function fmtFecha(iso){
   const[y,m,d]=iso.split("-").map(Number);
   const dias=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
   const meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  const dt = new Date(y,m-1,d);
+  const dt=new Date(y,m-1,d);
   return `${dias[dt.getDay()]}, ${d} de ${meses[m-1]} de ${y}`;
 }
+function todayISO(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`;}
 
-function todayISO(){
-  const n=new Date();
-  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`;
+/* ─── SCREEN MANAGEMENT ──────────────────────────────────────── */
+function showScreen(name){
+  document.getElementById("screenAuth").style.display    = name==="auth"    ? "flex"  : "none";
+  document.getElementById("screenBooking").style.display = name==="booking" ? "block" : "none";
+  document.getElementById("screenAdmin").style.display   = name==="admin"   ? "block" : "none";
+  document.getElementById("mainNav").style.display       = name!=="auth"    ? "flex"  : "none";
 }
 
-/* ───────────────────────────────────────────────
-   STEP NAVIGATION
-──────────────────────────────────────────────── */
+/* ─── AUTH UI ────────────────────────────────────────────────── */
+let authMode = "login";
+
+function setAuthMode(mode){
+  authMode = mode;
+  document.getElementById("tabLogin").classList.toggle("active", mode==="login");
+  document.getElementById("tabReg").classList.toggle("active", mode==="register");
+  document.getElementById("authRegFields").style.display = mode==="register" ? "block" : "none";
+  document.getElementById("authSubmitBtn").textContent = mode==="login" ? "Entrar" : "Crear cuenta";
+  document.getElementById("authError").textContent = "";
+}
+
+document.getElementById("tabLogin").addEventListener("click", ()=>setAuthMode("login"));
+document.getElementById("tabReg").addEventListener("click",   ()=>setAuthMode("register"));
+document.getElementById("authPassword").addEventListener("keydown", e=>{ if(e.key==="Enter") handleAuthSubmit(); });
+document.getElementById("authSubmitBtn").addEventListener("click", handleAuthSubmit);
+
+async function handleAuthSubmit(){
+  const email    = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const errorEl  = document.getElementById("authError");
+  const btn      = document.getElementById("authSubmitBtn");
+  if(!email||!password){ errorEl.textContent="Llena todos los campos"; return; }
+  errorEl.textContent="";
+  btn.disabled=true;
+  btn.innerHTML=`<span class="spinner" style="width:18px;height:18px;border-top-color:var(--negro);"></span> Cargando…`;
+  try{
+    if(authMode==="login"){
+      await auth.signInWithEmailAndPassword(email,password);
+    } else {
+      const nombre = document.getElementById("authNombre").value.trim();
+      const tel    = document.getElementById("authTel").value.trim().replace(/\D/g,"");
+      if(!nombre){ errorEl.textContent="Ingresa tu nombre completo"; btn.disabled=false; btn.textContent="Crear cuenta"; return; }
+      const cred = await auth.createUserWithEmailAndPassword(email,password);
+      await cred.user.updateProfile({displayName:nombre});
+      const wa = tel ? (tel.startsWith("52")?tel:"52"+tel) : "";
+      await db.ref(`usuarios/${cred.user.uid}`).set({nombre,whatsapp:wa,email,createdAt:Date.now()});
+    }
+  } catch(e){
+    const msgs={
+      "auth/user-not-found":      "No existe cuenta con ese correo",
+      "auth/wrong-password":      "Contraseña incorrecta",
+      "auth/invalid-credential":  "Correo o contraseña incorrectos",
+      "auth/email-already-in-use":"Ya existe una cuenta con ese correo",
+      "auth/weak-password":       "La contraseña debe tener al menos 6 caracteres",
+      "auth/invalid-email":       "Correo inválido",
+      "auth/too-many-requests":   "Demasiados intentos. Espera unos minutos",
+    };
+    errorEl.textContent = msgs[e.code]||e.message;
+    btn.disabled=false;
+    btn.textContent = authMode==="login" ? "Entrar" : "Crear cuenta";
+  }
+}
+
+/* ─── LOGOUT ─────────────────────────────────────────────────── */
+document.getElementById("navLogoutBtn").addEventListener("click", ()=>auth.signOut());
+
+/* ─── AUTH STATE ─────────────────────────────────────────────── */
+auth.onAuthStateChanged(user=>{
+  currentUser=user;
+  if(!user){ showScreen("auth"); return; }
+  updateNavUser(user);
+  if(user.email===ADMIN_EMAIL){
+    showScreen("admin");
+    initAdminDashboard();
+  } else {
+    showScreen("booking");
+    if(!calInitialized){
+      calInitialized=true;
+      renderServices();
+      initCal();
+      loadUserProfile(user.uid);
+      applyUrlServiceParam();
+    }
+    document.getElementById("navCta").style.display="inline-flex";
+  }
+});
+
+function updateNavUser(user){
+  const name = user.displayName||user.email.split("@")[0];
+  const initial = name[0].toUpperCase();
+  document.getElementById("navUserAvatar").textContent = initial;
+  document.getElementById("navUserName").textContent   = name.length>14 ? name.slice(0,14)+"…" : name;
+  document.getElementById("navUserArea").style.display = "flex";
+  document.getElementById("navLogoutBtn").style.display= "inline-block";
+  const isAdmin = user.email===ADMIN_EMAIL;
+  document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
+}
+
+async function loadUserProfile(uid){
+  try{
+    const snap = await db.ref(`usuarios/${uid}`).once("value");
+    const p = snap.val();
+    if(p){
+      if(p.nombre)    document.getElementById("inputNombre").value = p.nombre;
+      if(p.whatsapp){ const w=p.whatsapp.replace(/^52/,""); document.getElementById("inputWa").value=w; }
+    }
+  } catch(e){}
+}
+
+/* ─── ADMIN DASHBOARD ────────────────────────────────────────── */
+function initAdminDashboard(){
+  const now=new Date();
+  const days  =["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  document.getElementById("admDateChip").textContent=
+    `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
+
+  document.querySelectorAll(".adm-tab").forEach(t=>{
+    t.addEventListener("click",()=>{
+      admTab=t.dataset.tab;
+      document.querySelectorAll(".adm-tab").forEach(x=>x.classList.toggle("active",x===t));
+      renderAdmDashboard();
+    });
+  });
+  document.getElementById("admSearch").addEventListener("input",e=>{
+    admSearch=e.target.value.trim();
+    renderAdmDashboard();
+  });
+
+  if(!admListener){
+    admListener=db.ref("citas").orderByChild("fecha");
+    admListener.on("value",snap=>{
+      allCitas=snap.val()||{};
+      renderAdmDashboard();
+    });
+  }
+}
+
+function renderAdmDashboard(){
+  renderAdmStats();
+  const today=todayISO();
+  let items=Object.entries(allCitas).map(([id,c])=>({id,...c}));
+  items.sort((a,b)=>a.fecha===b.fecha?a.hora.localeCompare(b.hora):a.fecha.localeCompare(b.fecha));
+  switch(admTab){
+    case "hoy":       items=items.filter(c=>c.fecha===today);          break;
+    case "pendientes":items=items.filter(c=>c.estado==="pendiente");   break;
+    case "atendidas": items=items.filter(c=>c.estado==="atendido");    break;
+    case "canceladas":items=items.filter(c=>c.estado==="cancelado");   break;
+  }
+  if(admSearch){
+    const q=admSearch.toLowerCase();
+    items=items.filter(c=>(c.nombre||"").toLowerCase().includes(q)||(c.servicio||"").toLowerCase().includes(q)||(c.codigo||"").toLowerCase().includes(q));
+  }
+  renderAdmList(items);
+}
+
+function renderAdmStats(){
+  const today=todayISO();
+  const vals=Object.values(allCitas);
+  const now=new Date();
+  const mesStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+  const hoy    =vals.filter(c=>c.fecha===today).length;
+  const pend   =vals.filter(c=>c.estado==="pendiente").length;
+  const ingr   =vals.filter(c=>c.fecha?.startsWith(mesStr)&&c.estado==="atendido").reduce((s,c)=>s+(c.precio||0),0);
+  const total  =vals.length;
+  document.getElementById("admStatHoy").textContent     = hoy;
+  document.getElementById("admStatPend").textContent    = pend;
+  document.getElementById("admStatIngresos").textContent= `$${ingr.toLocaleString("es-MX")}`;
+  document.getElementById("admStatTotal").textContent   = total;
+}
+
+const WA_SVG=`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+function renderAdmList(items){
+  const list=document.getElementById("admList");
+  const today=todayISO();
+  if(items.length===0){
+    list.innerHTML=`<div class="adm-empty">Sin citas ${admTab==="hoy"?"para hoy":"en este filtro"}${admSearch?` · "${admSearch}"`:""}.</div>`;
+    return;
+  }
+  list.innerHTML=items.map(c=>{
+    const initial=(c.nombre||"?")[0].toUpperCase();
+    const isToday=c.fecha===today;
+    const statusMap={pendiente:"Pendiente",atendido:"Atendida",cancelado:"Cancelada"};
+    const statusLabel=statusMap[c.estado]||c.estado;
+    const waMsg=c.whatsapp?encodeURIComponent(`Hola ${c.nombre}! Te recuerdo tu cita de ${c.servicio} el ${fmtFecha(c.fecha)} a las ${c.hora} hrs. Código: ${c.codigo}`):"";
+    return `
+      <div class="adm-card" data-id="${c.id}" data-estado="${c.estado}">
+        <div class="adm-avatar">${initial}</div>
+        <div class="adm-card-body">
+          <div class="adm-card-top">
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:.35rem;">
+              <span class="adm-name">${c.nombre||"—"}</span>
+              <span class="adm-badge adm-badge-${c.estado}">${statusLabel}</span>
+              ${isToday?`<span class="adm-today-pill">HOY</span>`:""}
+            </div>
+            <div class="adm-time-block">
+              <span class="adm-time">${c.hora} hrs</span>
+              <span class="adm-date">${fmtFecha(c.fecha)}</span>
+            </div>
+          </div>
+          <div class="adm-card-mid">
+            <span class="adm-svc">${c.servicio}</span>
+            <span class="adm-dot">·</span>
+            <span class="adm-price">$${c.precio}</span>
+            <span class="adm-dot">·</span>
+            <span class="adm-dur">${c.duracion} min</span>
+            <span class="adm-dot">·</span>
+            <span class="adm-code">${c.codigo}</span>
+          </div>
+          <div class="adm-card-actions">
+            ${c.estado==="pendiente"?`
+              <button class="adm-btn adm-btn-ok" onclick="updateCita('${c.id}','atendido')">✓ Atendida</button>
+              <button class="adm-btn adm-btn-cancel" onclick="updateCita('${c.id}','cancelado')">✕ Cancelar</button>
+            `:""}
+            ${c.estado==="cancelado"?`
+              <button class="adm-btn" onclick="updateCita('${c.id}','pendiente')">↩ Restaurar</button>
+            `:""}
+            ${c.whatsapp?`
+              <a class="adm-btn adm-btn-wa" href="https://wa.me/${c.whatsapp}?text=${waMsg}" target="_blank" rel="noopener">
+                ${WA_SVG} WhatsApp
+              </a>
+            `:""}
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+async function updateCita(id,estado){
+  try{
+    await db.ref(`citas/${id}`).update({estado});
+    const msgs={atendido:"✓ Marcada como atendida",cancelado:"Cita cancelada",pendiente:"↩ Cita restaurada"};
+    showToast(msgs[estado]||"Actualizado");
+  } catch(e){ showToast("Error al actualizar"); console.error(e); }
+}
+
+/* ─── STEP NAVIGATION ────────────────────────────────────────── */
 let currentStep = 1;
 function goStep(n){
   document.getElementById(`panel-${currentStep}`).classList.remove("active");
@@ -1195,11 +1669,16 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
     precio: s.precio, duracion: s.duracion,
     fecha: booking.fecha, hora: booking.hora,
     codigo, estado: "pendiente",
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    uid:       currentUser ? currentUser.uid   : null,
+    userEmail: currentUser ? currentUser.email : null
   };
 
   try{
     await db.ref("citas").push(cita);
+    if(currentUser){
+      db.ref(`usuarios/${currentUser.uid}`).update({nombre, whatsapp:wa, updatedAt:Date.now()});
+    }
     mostrarConfirmacion(cita, codigo, wa);
   } catch(e){
     btn.innerHTML = "Confirmar cita"; btn.disabled = false;
@@ -1235,149 +1714,6 @@ function mostrarConfirmacion(cita, codigo, waCliente){
   });
 }
 
-/* ───────────────────────────────────────────────
-   ADMIN PANEL
-──────────────────────────────────────────────── */
-const openAdminBtn  = document.getElementById("openAdminBtn");
-const closePinModal = document.getElementById("closePinModal");
-const pinModal      = document.getElementById("pinModal");
-const adminModal    = document.getElementById("adminModal");
-const closeAdminModal = document.getElementById("closeAdminModal");
-const pinInput      = document.getElementById("pinInput");
-const pinError      = document.getElementById("pinError");
-
-openAdminBtn.addEventListener("click",()=>{
-  pinInput.value=""; pinError.style.display="none";
-  pinModal.classList.add("open");
-  setTimeout(()=>pinInput.focus(),200);
-});
-closePinModal.addEventListener("click",()=>pinModal.classList.remove("open"));
-pinModal.addEventListener("click",e=>{ if(e.target===pinModal) pinModal.classList.remove("open"); });
-closeAdminModal.addEventListener("click",()=>adminModal.classList.remove("open"));
-adminModal.addEventListener("click",e=>{ if(e.target===adminModal) adminModal.classList.remove("open"); });
-
-document.getElementById("pinSubmit").addEventListener("click", checkPin);
-pinInput.addEventListener("keydown",e=>{ if(e.key==="Enter") checkPin(); });
-
-function checkPin(){
-  if(pinInput.value === ADMIN_PIN){
-    pinModal.classList.remove("open");
-    openAdminPanel();
-  } else {
-    pinError.style.display="block";
-    pinInput.value=""; pinInput.focus();
-  }
-}
-
-function openAdminPanel(){
-  adminModal.classList.add("open");
-  loadAdminCitas();
-  document.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.classList.toggle("active", btn.dataset.filter===adminFilter);
-    btn.addEventListener("click",()=>{
-      adminFilter = btn.dataset.filter;
-      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.toggle("active",b===btn));
-      renderAdminList();
-    });
-  });
-}
-
-function loadAdminCitas(){
-  document.getElementById("adminList").innerHTML = `<div class="admin-loading">Cargando citas…</div>`;
-  db.ref("citas").orderByChild("fecha").on("value", snap=>{
-    allCitas = snap.val() || {};
-    renderAdminStats();
-    renderAdminList();
-  });
-}
-
-function renderAdminStats(){
-  const today = todayISO();
-  const vals = Object.values(allCitas);
-  const pendientes = vals.filter(c=>c.estado==="pendiente").length;
-  const atendidas  = vals.filter(c=>c.estado==="atendido" && c.fecha===today).length;
-  const total      = vals.length;
-  document.getElementById("statPendientes").textContent = pendientes;
-  document.getElementById("statAtendidas").textContent  = atendidas;
-  document.getElementById("statTotal").textContent      = total;
-}
-
-function renderAdminList(){
-  const list  = document.getElementById("adminList");
-  const today = todayISO();
-  let items = Object.entries(allCitas).map(([id,c])=>({id,...c}));
-  items.sort((a,b)=> a.fecha===b.fecha ? a.hora.localeCompare(b.hora) : a.fecha.localeCompare(b.fecha));
-
-  if(adminFilter!=="all") items = items.filter(c=>c.estado===adminFilter);
-
-  if(items.length===0){
-    list.innerHTML=`<div class="admin-empty">Sin citas en este filtro.</div>`;
-    return;
-  }
-
-  list.innerHTML = "";
-  items.forEach(c=>{
-    const isToday = c.fecha===today;
-    const div = document.createElement("div");
-    div.className = "admin-cita";
-    div.innerHTML = `
-      <div class="admin-cita-header">
-        <div>
-          <div class="admin-cita-name">${c.nombre}</div>
-          <div class="admin-cita-servicio">${c.servicio} · $${c.precio} · ${c.duracion} min</div>
-          <span class="badge badge-${c.estado}" style="margin-top:.4rem;">${c.estado}</span>
-        </div>
-        <div>
-          <div class="admin-cita-time">${c.hora} hrs</div>
-          <div class="admin-cita-date">${fmtFecha(c.fecha)}${isToday?" 📍":""}</div>
-          <div style="font-size:.6rem;color:#555;margin-top:.3rem;font-family:'Montserrat',sans-serif;letter-spacing:.05em;">${c.codigo}</div>
-        </div>
-      </div>
-      <div class="admin-cita-actions" id="actions-${c.id}"></div>`;
-
-    const acts = div.querySelector(`#actions-${c.id}`);
-    if(c.estado==="pendiente"){
-      const btnAt = document.createElement("button");
-      btnAt.className="admin-action-btn attend"; btnAt.textContent="✓ Atender";
-      btnAt.addEventListener("click",()=>updateCita(c.id,"atendido"));
-      acts.appendChild(btnAt);
-
-      const btnCa = document.createElement("button");
-      btnCa.className="admin-action-btn cancel"; btnCa.textContent="✕ Cancelar";
-      btnCa.addEventListener("click",()=>updateCita(c.id,"cancelado"));
-      acts.appendChild(btnCa);
-    }
-    if(c.estado==="cancelado"){
-      const btnRe = document.createElement("button");
-      btnRe.className="admin-action-btn"; btnRe.textContent="↩ Restaurar";
-      btnRe.addEventListener("click",()=>updateCita(c.id,"pendiente"));
-      acts.appendChild(btnRe);
-    }
-    if(c.whatsapp){
-      const waMsg = encodeURIComponent(`Hola ${c.nombre}! Te recuerdo tu cita de ${c.servicio} el ${fmtFecha(c.fecha)} a las ${c.hora} hrs. Código: ${c.codigo}`);
-      const waLink = document.createElement("a");
-      waLink.className="admin-wa-link"; waLink.target="_blank"; waLink.rel="noopener";
-      waLink.href=`https://wa.me/${c.whatsapp}?text=${waMsg}`;
-      waLink.innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp`;
-      acts.appendChild(waLink);
-    }
-    list.appendChild(div);
-  });
-}
-
-async function updateCita(id, estado){
-  try{
-    await db.ref(`citas/${id}`).update({ estado });
-    showToast(estado==="atendido"?"✓ Marcada como atendida": estado==="cancelado"?"Cita cancelada":"Cita restaurada");
-  } catch(e){ showToast("Error al actualizar"); console.error(e); }
-}
-
-/* ───────────────────────────────────────────────
-   INIT
-──────────────────────────────────────────────── */
-renderServices();
-initCal();
-
 // ═══════════════════════════════════════════════════
 // HAMBURGUESA MÓVIL
 // ═══════════════════════════════════════════════════
@@ -1411,10 +1747,11 @@ initCal();
   document.addEventListener('keydown', e => { if(e.key==='Escape') hide(); });
 })();
 
-/* Checa si viene de barber.html con servicio preseleccionado:
-   ej: citas.html?s=cortebarba  → preselecciona "Corte y barba" */
-const urlS = new URLSearchParams(location.search).get("s");
-if(urlS){
+/* Preselección de servicio desde URL: citas.html?s=cortebarba
+   Se aplica DESPUÉS de que renderServices() sea invocado por auth */
+function applyUrlServiceParam(){
+  const urlS = new URLSearchParams(location.search).get("s");
+  if(!urlS) return;
   const pre = SERVICIOS.find(x=>x.id===urlS);
   if(pre){
     booking.servicio = pre;
