@@ -939,66 +939,264 @@ footer{
 
 <!-- ══ MARCAS VISUAL ════════════════════════════════ -->
 <section class="marcas-logo-section">
-  <svg class="marcas-visual-svg" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <svg class="marcas-visual-svg" viewBox="0 0 1200 310" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
     <defs>
-      <filter id="glow-lima" x="-40%" y="-80%" width="180%" height="260%">
-        <feGaussianBlur stdDeviation="8" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="glow-orange" x="-40%" y="-80%" width="180%" height="260%">
-        <feGaussianBlur stdDeviation="8" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <linearGradient id="bg-mv" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#0f0f0f"/>
-        <stop offset="50%" stop-color="#141414"/>
-        <stop offset="100%" stop-color="#0f0f0f"/>
+      <clipPath id="poleClip">
+        <rect x="0" y="0" width="52" height="205" rx="3"/>
+      </clipPath>
+      <pattern id="stripePat" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+        <rect width="14" height="28" fill="#D6FF00" opacity="0.88"/>
+        <rect x="14" width="14" height="28" fill="rgba(255,255,255,0.86)"/>
+      </pattern>
+      <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#181818"/>
+        <stop offset="28%" stop-color="#2c2c2c"/>
+        <stop offset="72%" stop-color="#2c2c2c"/>
+        <stop offset="100%" stop-color="#181818"/>
       </linearGradient>
+      <linearGradient id="metalGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#141414"/>
+        <stop offset="35%" stop-color="#232323"/>
+        <stop offset="65%" stop-color="#232323"/>
+        <stop offset="100%" stop-color="#141414"/>
+      </linearGradient>
+      <radialGradient id="bgGlow" cx="55%" cy="80%" r="45%">
+        <stop offset="0%" stop-color="#D6FF00" stop-opacity="0.055"/>
+        <stop offset="100%" stop-color="#D6FF00" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="limaGlow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
     </defs>
-    <!-- Fondo -->
-    <rect width="1200" height="260" fill="url(#bg-mv)"/>
-    <!-- Líneas decorativas -->
-    <line x1="0" y1="1" x2="1200" y2="1" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-    <line x1="0" y1="259" x2="1200" y2="259" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-    <!-- Divisores verticales -->
-    <line x1="300" y1="40" x2="300" y2="220" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-    <line x1="600" y1="40" x2="600" y2="220" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-    <line x1="900" y1="40" x2="900" y2="220" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
 
-    <!-- REUZEL -->
-    <text x="150" y="98" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="48" fill="#D6FF00" text-anchor="middle" filter="url(#glow-lima)" opacity="0.9">REUZEL</text>
-    <text x="150" y="122" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="11" fill="rgba(214,255,0,.45)" text-anchor="middle" letter-spacing="3">POMADAS · PEINADO</text>
-    <rect x="80" y="138" width="140" height="1" fill="rgba(214,255,0,.15)"/>
-    <text x="150" y="162" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="13" fill="#D6FF00" text-anchor="middle">Desde $290 MXN</text>
-    <rect x="100" y="182" width="100" height="22" rx="11" fill="rgba(214,255,0,.07)" stroke="rgba(214,255,0,.2)" stroke-width="1"/>
-    <text x="150" y="197" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="9" fill="rgba(214,255,0,.7)" text-anchor="middle" letter-spacing="2">OFICIAL</text>
+    <!-- ── FONDO ── -->
+    <rect width="1200" height="310" fill="#111"/>
+    <rect width="1200" height="310" fill="url(#bgGlow)"/>
+    <rect y="0" width="1200" height="1" fill="rgba(255,255,255,.05)"/>
+    <rect y="309" width="1200" height="1" fill="rgba(255,255,255,.05)"/>
 
-    <!-- SUAVECITO -->
-    <text x="450" y="98" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="40" fill="#ff7a4d" text-anchor="middle" filter="url(#glow-orange)" opacity="0.9">SUAVECITO</text>
-    <text x="450" y="122" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="11" fill="rgba(255,122,77,.45)" text-anchor="middle" letter-spacing="3">POMADAS · BARBA</text>
-    <rect x="380" y="138" width="140" height="1" fill="rgba(255,122,77,.15)"/>
-    <text x="450" y="162" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="13" fill="#ff7a4d" text-anchor="middle">Desde $240 MXN</text>
-    <rect x="400" y="182" width="100" height="22" rx="11" fill="rgba(255,122,77,.07)" stroke="rgba(255,122,77,.2)" stroke-width="1"/>
-    <text x="450" y="197" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="9" fill="rgba(255,122,77,.7)" text-anchor="middle" letter-spacing="2">OFICIAL</text>
+    <!-- ── SUPERFICIE DEL ESTANTE ── -->
+    <rect y="268" width="1200" height="2" fill="rgba(255,255,255,.09)"/>
+    <rect y="270" width="1200" height="40" fill="rgba(0,0,0,.28)"/>
 
-    <!-- HERRAMIENTAS -->
-    <text x="750" y="84" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="32" fill="#a0a0ff" text-anchor="middle">✂ HERRAMIENTAS</text>
-    <text x="750" y="108" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="11" fill="rgba(160,160,255,.45)" text-anchor="middle" letter-spacing="3">TIJERAS · NAVAJAS</text>
-    <rect x="680" y="124" width="140" height="1" fill="rgba(160,160,255,.15)"/>
-    <text x="750" y="148" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="13" fill="#a0a0ff" text-anchor="middle">Desde $75 MXN</text>
-    <rect x="700" y="168" width="100" height="22" rx="11" fill="rgba(160,160,255,.07)" stroke="rgba(160,160,255,.2)" stroke-width="1"/>
-    <text x="750" y="183" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="9" fill="rgba(160,160,255,.7)" text-anchor="middle" letter-spacing="2">PROFESIONAL</text>
+    <!-- ── POLO DE BARBERO ── -->
+    <g transform="translate(72,28)">
+      <!-- Globo superior -->
+      <ellipse cx="26" cy="8" rx="26" ry="8" fill="#212121" stroke="#2d2d2d" stroke-width="1"/>
+      <circle cx="26" cy="0" r="18" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+      <circle cx="20" cy="-5" r="5" fill="rgba(255,255,255,.13)"/>
+      <!-- Cuerpo con rayas -->
+      <g clip-path="url(#poleClip)">
+        <rect width="52" height="205" fill="url(#stripePat)"/>
+        <rect width="9" height="205" fill="rgba(0,0,0,.3)"/>
+        <rect x="43" width="9" height="205" fill="rgba(0,0,0,.3)"/>
+      </g>
+      <rect width="52" height="205" fill="none" stroke="#1d1d1d" stroke-width="1"/>
+      <!-- Brillo borde izquierdo -->
+      <rect width="7" height="205" fill="rgba(255,255,255,.05)" rx="2"/>
+      <!-- Base -->
+      <ellipse cx="26" cy="205" rx="30" ry="9" fill="#212121" stroke="#2a2a2a" stroke-width="1"/>
+      <!-- Sombra base en estante -->
+      <ellipse cx="26" cy="268" rx="34" ry="5" fill="rgba(0,0,0,.35)"/>
+      <!-- Soportes de pared -->
+      <rect x="50" y="52" width="28" height="7" rx="3" fill="#1c1c1c" stroke="#252525" stroke-width="1"/>
+      <rect x="50" y="148" width="28" height="7" rx="3" fill="#1c1c1c" stroke="#252525" stroke-width="1"/>
+    </g>
 
-    <!-- TRATAMIENTOS -->
-    <text x="1050" y="84" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="32" fill="#64dcb4" text-anchor="middle">💊 TRATAMIENTOS</text>
-    <text x="1050" y="108" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="11" fill="rgba(100,220,180,.45)" text-anchor="middle" letter-spacing="3">ANTICAÍDA · SERUM</text>
-    <rect x="980" y="124" width="140" height="1" fill="rgba(100,220,180,.15)"/>
-    <text x="1050" y="148" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="13" fill="#64dcb4" text-anchor="middle">Desde $230 MXN</text>
-    <rect x="1000" y="168" width="100" height="22" rx="11" fill="rgba(100,220,180,.07)" stroke="rgba(100,220,180,.2)" stroke-width="1"/>
-    <text x="1050" y="183" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="9" fill="rgba(100,220,180,.7)" text-anchor="middle" letter-spacing="2">CAPILAR</text>
+    <!-- ── PRODUCTO 1: TIN GRANDE (pomada) ── -->
+    <g transform="translate(215,163)">
+      <ellipse cx="57" cy="108" rx="54" ry="7" fill="rgba(0,0,0,.4)"/>
+      <!-- Cuerpo -->
+      <rect width="114" height="105" rx="5" fill="url(#metalGrad)" stroke="#232323" stroke-width="1"/>
+      <!-- Tapa -->
+      <rect x="-6" y="-14" width="126" height="23" rx="7" fill="#1e1e1e" stroke="#282828" stroke-width="1"/>
+      <ellipse cx="57" cy="-14" rx="63" ry="7" fill="#262626"/>
+      <!-- Banda etiqueta -->
+      <rect y="24" width="114" height="56" fill="rgba(214,255,0,.042)"/>
+      <rect y="24" width="114" height="1.5" fill="rgba(214,255,0,.28)"/>
+      <rect y="79" width="114" height="1" fill="rgba(214,255,0,.13)"/>
+      <!-- Texto -->
+      <text x="57" y="53" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="16" fill="#D6FF00" text-anchor="middle" letter-spacing="2">POMADA</text>
+      <text x="57" y="68" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="8" fill="rgba(214,255,0,.48)" text-anchor="middle" letter-spacing="3">HEAVY HOLD</text>
+      <text x="57" y="92" font-family="Montserrat,Arial,sans-serif" font-size="8" fill="rgba(255,255,255,.22)" text-anchor="middle">113 g</text>
+      <!-- Brillo -->
+      <rect x="4" y="0" width="13" height="105" fill="rgba(255,255,255,.04)" rx="2"/>
+    </g>
 
-    <!-- Label central inferior -->
-    <text x="600" y="234" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="9" fill="rgba(255,255,255,.18)" text-anchor="middle" letter-spacing="4">DISTRIBUIDORES OFICIALES EN PACHUCA, HGO.</text>
+    <!-- ── PRODUCTO 2: BOTELLA ALTA (shampoo) ── -->
+    <g transform="translate(374,93)">
+      <ellipse cx="35" cy="178" rx="33" ry="6" fill="rgba(0,0,0,.4)"/>
+      <!-- Cuerpo -->
+      <rect width="70" height="175" rx="8" fill="#1c1c1c" stroke="#252525" stroke-width="1"/>
+      <!-- Hombro -->
+      <rect x="7" y="0" width="56" height="22" rx="6" fill="#1c1c1c" stroke="#252525" stroke-width="1"/>
+      <!-- Cuello -->
+      <rect x="18" y="-33" width="34" height="38" rx="4" fill="#1e1e1e" stroke="#252525" stroke-width="1"/>
+      <!-- Tapa lima -->
+      <rect x="13" y="-52" width="44" height="24" rx="6" fill="#D6FF00"/>
+      <rect x="13" y="-52" width="13" height="24" rx="4" fill="rgba(255,255,255,.22)"/>
+      <!-- Etiqueta -->
+      <rect y="44" width="70" height="82" fill="rgba(255,255,255,.018)"/>
+      <rect y="46" width="70" height="1.5" fill="rgba(255,255,255,.1)"/>
+      <rect y="125" width="70" height="1" fill="rgba(255,255,255,.05)"/>
+      <text x="35" y="88" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,.88)" text-anchor="middle" letter-spacing="1">SHAMPOO</text>
+      <text x="35" y="103" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="7.5" fill="rgba(255,255,255,.32)" text-anchor="middle" letter-spacing="2.5">CABELLO</text>
+      <text x="35" y="118" font-family="Montserrat,Arial,sans-serif" font-size="7" fill="rgba(255,255,255,.18)" text-anchor="middle">300 ml</text>
+      <!-- Brillo -->
+      <rect x="3" y="0" width="10" height="175" fill="rgba(255,255,255,.04)" rx="3"/>
+    </g>
+
+    <!-- ── PRODUCTO 3: TIN MEDIANA (cera) ── -->
+    <g transform="translate(488,191)">
+      <ellipse cx="50" cy="79" rx="47" ry="6" fill="rgba(0,0,0,.4)"/>
+      <!-- Cuerpo -->
+      <rect width="100" height="77" rx="5" fill="url(#metalGrad2)" stroke="#222" stroke-width="1"/>
+      <!-- Tapa -->
+      <rect x="-6" y="-13" width="112" height="19" rx="5" fill="#1e1e1e" stroke="#282828" stroke-width="1"/>
+      <ellipse cx="50" cy="-13" rx="56" ry="6" fill="#252525"/>
+      <!-- Etiqueta -->
+      <rect y="16" width="100" height="45" fill="rgba(255,255,255,.018)"/>
+      <rect y="17" width="100" height="1.5" fill="rgba(255,255,255,.09)"/>
+      <rect y="60" width="100" height="1" fill="rgba(255,255,255,.05)"/>
+      <text x="50" y="40" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="15" fill="rgba(255,255,255,.9)" text-anchor="middle" letter-spacing="1.5">CERA</text>
+      <text x="50" y="54" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="7.5" fill="rgba(255,255,255,.32)" text-anchor="middle" letter-spacing="2.5">MATTE · 100 g</text>
+      <!-- Brillo -->
+      <rect x="4" y="0" width="11" height="77" fill="rgba(255,255,255,.04)" rx="2"/>
+    </g>
+
+    <!-- ── PRODUCTO 4: SPRAY ── -->
+    <g transform="translate(632,110)">
+      <ellipse cx="30" cy="160" rx="28" ry="5" fill="rgba(0,0,0,.35)"/>
+      <!-- Cuerpo -->
+      <rect x="5" width="50" height="158" rx="8" fill="#1c1c1c" stroke="#252525" stroke-width="1"/>
+      <!-- Housing bomba -->
+      <rect x="18" y="-42" width="32" height="50" rx="5" fill="#1e1e1e" stroke="#252525" stroke-width="1"/>
+      <!-- Boquilla -->
+      <rect x="46" y="-28" width="26" height="8" rx="3" fill="#242424"/>
+      <!-- Gatillo -->
+      <path d="M25,-4 Q32,10 20,22" fill="none" stroke="#242424" stroke-width="6" stroke-linecap="round"/>
+      <!-- Collar -->
+      <rect x="2" y="5" width="56" height="13" rx="5" fill="#1e1e1e" stroke="#252525" stroke-width="1"/>
+      <!-- Etiqueta -->
+      <rect x="5" y="46" width="50" height="65" fill="rgba(255,255,255,.018)"/>
+      <rect x="5" y="48" width="50" height="1" fill="rgba(255,255,255,.08)"/>
+      <rect x="5" y="110" width="50" height="1" fill="rgba(255,255,255,.04)"/>
+      <text x="30" y="78" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="9" fill="rgba(255,255,255,.85)" text-anchor="middle" letter-spacing="0.8">SPRAY</text>
+      <text x="30" y="92" font-family="Montserrat,Arial,sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,.3)" text-anchor="middle" letter-spacing="1.5">FIJADOR</text>
+      <!-- Brillo -->
+      <rect x="8" y="0" width="8" height="158" fill="rgba(255,255,255,.04)" rx="3"/>
+    </g>
+
+    <!-- ── TIJERAS GRANDES ── -->
+    <g transform="translate(766,58)">
+      <!-- Hoja superior -->
+      <polygon points="38,88  200,38  200,53  42,100" fill="#2e2e2e" stroke="#3a3a3a" stroke-width="0.8"/>
+      <!-- Brillo hoja superior -->
+      <polygon points="50,88  200,38  200,41  52,90" fill="rgba(255,255,255,.2)"/>
+      <!-- Hoja inferior -->
+      <polygon points="38,106 200,155 200,140 42,100" fill="#282828" stroke="#3a3a3a" stroke-width="0.8"/>
+      <!-- Brillo hoja inferior -->
+      <polygon points="50,106 200,155 200,152 52,103" fill="rgba(255,255,255,.06)"/>
+      <!-- Tornillo pivote -->
+      <circle cx="42" cy="97" r="11" fill="#333" stroke="#404040" stroke-width="1.5"/>
+      <circle cx="42" cy="97" r="6" fill="#3c3c3c"/>
+      <circle cx="42" cy="97" r="2.5" fill="#484848"/>
+      <!-- Aro mango 1 -->
+      <circle cx="8" cy="65" r="28" fill="none" stroke="#303030" stroke-width="8"/>
+      <circle cx="8" cy="65" r="17" fill="#1c1c1c"/>
+      <circle cx="1" cy="58" r="5" fill="rgba(255,255,255,.07)"/>
+      <!-- Aro mango 2 -->
+      <circle cx="8" cy="128" r="28" fill="none" stroke="#303030" stroke-width="8"/>
+      <circle cx="8" cy="128" r="17" fill="#1c1c1c"/>
+      <!-- Sombra tijeras -->
+      <ellipse cx="100" cy="208" rx="105" ry="8" fill="rgba(0,0,0,.35)"/>
+    </g>
+
+    <!-- ── NAVAJA DE AFEITAR ── -->
+    <g transform="translate(960,148) rotate(-12)">
+      <!-- Mango -->
+      <rect width="108" height="22" rx="5" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+      <rect x="4" y="4" width="100" height="14" rx="3" fill="#252525"/>
+      <!-- Tornillo mango -->
+      <circle cx="108" cy="11" r="8" fill="#252525" stroke="#2e2e2e" stroke-width="1"/>
+      <circle cx="108" cy="11" r="4" fill="#2e2e2e"/>
+      <!-- Hoja -->
+      <path d="M108,3 L240,1 Q252,5 252,11 Q252,17 240,21 L108,19 Z" fill="#303030" stroke="#3a3a3a" stroke-width="0.8"/>
+      <!-- Brillo filo -->
+      <path d="M112,3 L240,1 Q248,4 250,8 L112,5 Z" fill="rgba(255,255,255,.22)"/>
+      <!-- Lomo -->
+      <rect x="108" y="3" width="144" height="3" fill="#3c3c3c"/>
+      <!-- Sombra -->
+      <ellipse cx="130" cy="30" rx="120" ry="5" fill="rgba(0,0,0,.3)"/>
+    </g>
+
+    <!-- ── PEINE ── -->
+    <g transform="translate(1020,76)">
+      <!-- Cuerpo del peine -->
+      <rect width="148" height="30" rx="7" fill="#1c1c1c" stroke="#262626" stroke-width="1"/>
+      <rect x="3" y="3" width="142" height="24" rx="5" fill="#212121"/>
+      <rect x="3" y="3" width="142" height="7" rx="3" fill="rgba(255,255,255,.05)"/>
+      <!-- Base dientes -->
+      <rect y="30" width="148" height="10" fill="#1a1a1a" stroke="#242424" stroke-width="1"/>
+      <!-- Dientes finos -->
+      <rect x="5"   y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="11"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="17"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="23"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="29"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="35"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="41"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="47"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="53"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="59"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="65"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="71"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="77"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="83"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="89"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="95"  y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="101" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="107" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="113" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="119" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="125" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="131" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="137" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <rect x="143" y="40" width="3" height="24" rx="1.5" fill="#262626"/>
+      <!-- Dientes gruesos (sección ancha) -->
+      <rect x="5"   y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="17"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="29"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="41"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="53"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="65"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="77"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="89"  y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="101" y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="113" y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="125" y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <rect x="137" y="40" width="5" height="34" rx="2" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="0.5"/>
+      <!-- Sombra peine -->
+      <ellipse cx="74" cy="78" rx="72" ry="5" fill="rgba(0,0,0,.3)"/>
+    </g>
+
+    <!-- ── CÍRCULO DECORATIVO LIMA ── -->
+    <circle cx="1168" cy="185" r="72" fill="none" stroke="#D6FF00" stroke-width="1" opacity="0.07"/>
+    <circle cx="1168" cy="185" r="52" fill="none" stroke="#D6FF00" stroke-width="1" opacity="0.05"/>
+    <circle cx="1168" cy="185" r="32" fill="rgba(214,255,0,.03)"/>
+    <text x="1168" y="178" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="22" fill="#D6FF00" text-anchor="middle" opacity="0.55" filter="url(#limaGlow)">✂</text>
+    <text x="1168" y="197" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="7" fill="rgba(214,255,0,.4)" text-anchor="middle" letter-spacing="3">BARBER</text>
+
+    <!-- ── TAGLINE INFERIOR ── -->
+    <text x="600" y="294" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="8.5" fill="rgba(255,255,255,.13)" text-anchor="middle" letter-spacing="5">PRODUCTOS PROFESIONALES · PACHUCA, HGO. · DESDE 2018</text>
+
+    <!-- ── DETALLES DECORATIVOS ── -->
+    <circle cx="215" cy="283" r="2.5" fill="#D6FF00" opacity="0.3" filter="url(#limaGlow)"/>
+    <circle cx="740" cy="283" r="2.5" fill="#D6FF00" opacity="0.3" filter="url(#limaGlow)"/>
+    <circle cx="600" cy="283" r="3.5" fill="#D6FF00" opacity="0.45" filter="url(#limaGlow)"/>
+    <text x="165" y="52" font-size="11" fill="rgba(214,255,0,.3)" text-anchor="middle">✦</text>
+    <text x="720" y="38" font-size="9"  fill="rgba(214,255,0,.22)" text-anchor="middle">✦</text>
   </svg>
 </section>
 
