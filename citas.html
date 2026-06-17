@@ -48,13 +48,27 @@ nav{
   font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.4rem;
   letter-spacing:.04em; color:var(--lima); text-decoration:none;
 }
-.nav-back{
-  font-size:.65rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--humo); text-decoration:none; font-weight:500;
-  display:flex; align-items:center; gap:.4rem; transition:color .2s;
+.nav-links{display:flex; gap:2.2rem; list-style:none; align-items:center;}
+.nav-links a{
+  font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--humo); text-decoration:none; transition:color .2s; font-weight:500;
 }
-.nav-back:hover{color:var(--blanco);}
-.nav-back svg{width:14px;height:14px;}
+.nav-links a:hover,.nav-links a.active{color:var(--lima);}
+.nav-contacto-btn{
+  background:none; border:none; color:var(--humo);
+  font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  font-weight:500; font-family:'Poppins',sans-serif;
+  cursor:pointer; transition:color .2s; padding:0;
+}
+.nav-contacto-btn:hover{color:var(--lima);}
+.nav-right{display:flex; align-items:center; gap:.8rem;}
+.nav-cta{
+  font-family:'Montserrat',sans-serif; font-size:.73rem; letter-spacing:.1em;
+  text-transform:uppercase; background:var(--lima); color:var(--negro);
+  padding:.5rem 1.3rem; text-decoration:none; font-weight:700;
+  border-radius:30px; transition:opacity .2s;
+}
+.nav-cta:hover{opacity:.85;}
 .nav-admin-btn{
   font-family:'Montserrat',sans-serif; font-size:.62rem; letter-spacing:.1em;
   text-transform:uppercase; background:transparent; color:var(--humo);
@@ -62,6 +76,112 @@ nav{
   transition:all .2s;
 }
 .nav-admin-btn:hover{color:var(--lima); border-color:rgba(214,255,0,.3);}
+
+/* Dropdown de contacto */
+.nav-contacto-card{
+  position:fixed; top:4rem; right:1.5rem; z-index:300;
+  background:#111; border:1px solid rgba(214,255,0,.18);
+  border-radius:20px; padding:1.4rem 1.2rem 1rem;
+  width:min(340px, calc(100vw - 2rem));
+  box-shadow:0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(214,255,0,.06);
+  animation:dropIn .25s cubic-bezier(.16,1,.3,1) both;
+}
+.nav-contacto-card[hidden]{display:none;}
+@keyframes dropIn{
+  from{opacity:0;transform:translateY(-10px) scale(.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+.ncc-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:.35rem;}
+.ncc-title{font-family:'Montserrat',sans-serif; font-weight:800; font-size:.82rem; letter-spacing:.04em; color:var(--blanco);}
+.ncc-close{background:none; border:none; color:var(--humo); font-size:1rem; cursor:pointer; transition:color .2s; line-height:1; padding:.2rem;}
+.ncc-close:hover{color:var(--blanco);}
+.ncc-sub{font-size:.7rem; color:var(--humo); line-height:1.5; margin-bottom:1rem; padding-bottom:.8rem; border-bottom:1px solid rgba(255,255,255,.06);}
+.ncc-list{display:flex; flex-direction:column; gap:.5rem;}
+.ncc-item{
+  display:flex; align-items:center; gap:.9rem; padding:.65rem .8rem;
+  border-radius:12px; border:1px solid rgba(255,255,255,.05);
+  background:rgba(255,255,255,.03); text-decoration:none; transition:all .18s;
+}
+.ncc-item:hover{background:rgba(214,255,0,.06); border-color:rgba(214,255,0,.2);}
+.ncc-ico{width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden;}
+.ncc-ico svg{width:20px; height:20px; display:block;}
+.ncc-ico-wa{background:#075e54;}
+.ncc-ico-mail{background:#fff1f0;}
+.ncc-ico-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);}
+.ncc-txt{display:flex; flex-direction:column; gap:.08rem; min-width:0;}
+.ncc-txt strong{font-family:'Montserrat',sans-serif; font-weight:700; font-size:.78rem; color:var(--blanco); line-height:1.2;}
+.ncc-txt small{font-size:.65rem; color:var(--humo); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+/* Hamburguesa móvil */
+.nav-hamburger{
+  display:none; flex-direction:column; justify-content:center;
+  align-items:center; gap:5px; width:40px; height:40px;
+  background:none; border:none; padding:4px; border-radius:8px;
+  transition:background .2s; z-index:201;
+}
+.nav-hamburger:hover{background:rgba(214,255,0,.08);}
+.nav-hamburger span{
+  display:block; width:22px; height:2px;
+  background:var(--blanco); border-radius:2px;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, width .3s ease;
+  transform-origin:center;
+}
+.nav-hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;width:0;}
+.nav-hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Drawer móvil */
+.nav-drawer{
+  display:none; position:fixed; inset:0; z-index:199;
+  background:rgba(8,8,8,.97); backdrop-filter:blur(12px);
+  flex-direction:column; justify-content:center; align-items:center;
+  gap:0; opacity:0; pointer-events:none; transition:opacity .3s ease;
+}
+.nav-drawer.open{opacity:1; pointer-events:all;}
+.nav-drawer ul{list-style:none; display:flex; flex-direction:column; align-items:center; width:100%; padding:0 2rem;}
+.nav-drawer ul li{
+  width:100%; border-bottom:1px solid rgba(240,240,237,.06);
+  opacity:0; transform:translateY(16px);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.16,1,.3,1);
+}
+.nav-drawer ul li:first-child{border-top:1px solid rgba(240,240,237,.06);}
+.nav-drawer.open ul li{opacity:1; transform:translateY(0);}
+.nav-drawer.open ul li:nth-child(1){transition-delay:.06s;}
+.nav-drawer.open ul li:nth-child(2){transition-delay:.12s;}
+.nav-drawer.open ul li:nth-child(3){transition-delay:.18s;}
+.nav-drawer.open ul li:nth-child(4){transition-delay:.24s;}
+.nav-drawer ul li a{
+  display:block; padding:1.3rem 0;
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:clamp(1.4rem,5vw,1.8rem);
+  color:var(--blanco); text-decoration:none; transition:color .2s, padding-left .25s;
+}
+.nav-drawer ul li a:hover{color:var(--lima); padding-left:.5rem;}
+.drawer-protos{
+  display:none; flex-wrap:wrap; gap:.6rem; justify-content:center;
+  margin:.5rem 0 1.5rem; padding-top:1rem;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.drawer-protos.open{display:flex;}
+.drawer-proto{
+  display:flex; align-items:center; gap:.5rem;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:50px; padding:.5rem 1rem;
+  font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--blanco); text-decoration:none; transition:all .18s;
+}
+.drawer-proto:hover{border-color:rgba(214,255,0,.4); color:var(--lima);}
+.nav-drawer-cta{
+  margin-top:2rem; font-family:'Montserrat',sans-serif;
+  font-size:.82rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--lima); color:var(--negro);
+  padding:.9rem 2.4rem; border-radius:40px; border:none; text-decoration:none;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .35s ease .3s, transform .35s cubic-bezier(.16,1,.3,1) .3s;
+}
+.nav-drawer.open .nav-drawer-cta{opacity:1; transform:translateY(0);}
+.nav-drawer-cta:hover{opacity:.85;}
 
 /* ══ HERO HEADER ════════════════════════════════════════════════ */
 .page-header{
@@ -511,6 +631,15 @@ nav{
 .toast.show{ opacity:1; }
 
 /* ══ RESPONSIVE ══════════════════════════════════════════════════ */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .nav-hamburger{display:flex;}
+  .nav-drawer{display:flex;}
+}
+@media(min-width:901px){
+  .nav-hamburger{display:none !important;}
+}
 @media(max-width:600px){
   .admin-stats{ grid-template-columns:1fr 1fr; }
   .admin-stats .stat-card:last-child{ grid-column:span 2; }
@@ -522,13 +651,75 @@ nav{
 
 <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
 <nav>
-  <a href="index.html" class="nav-logo">JJ</a>
-  <a href="index.html" class="nav-back">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="10,3 5,8 10,13"/></svg>
-    Inicio
-  </a>
-  <button class="nav-admin-btn" id="openAdminBtn">Admin</button>
+  <a href="index.html" class="nav-logo">JJ✂</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="tienda.html">Tienda</a></li>
+    <li><a href="citas.html" class="active">Citas</a></li>
+    <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
+  </ul>
+  <div class="nav-right">
+    <a href="citas.html" class="nav-cta">Agendar →</a>
+    <button class="nav-admin-btn" id="openAdminBtn">Admin</button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<!-- Dropdown de contacto -->
+<div class="nav-contacto-card" id="navContactoCard" role="dialog" aria-label="Contacto" hidden>
+  <div class="ncc-header">
+    <span class="ncc-title">Contacto directo</span>
+    <button class="ncc-close" id="navContactoClose" aria-label="Cerrar">✕</button>
+  </div>
+  <p class="ncc-sub">Cada opción abre con un mensaje listo. Tú solo confirmas.</p>
+  <div class="ncc-list">
+    <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="ncc-item">
+      <span class="ncc-ico ncc-ico-wa">
+        <svg viewBox="0 0 24 24" fill="none"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
+      </span>
+      <div class="ncc-txt"><strong>WhatsApp</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div>
+    </a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita." class="ncc-item">
+      <span class="ncc-ico ncc-ico-mail">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+      </span>
+      <div class="ncc-txt"><strong>Correo Gmail</strong><small>jesusjuarezperezel10@gmail.com</small></div>
+    </a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="ncc-item">
+      <span class="ncc-ico ncc-ico-ig">
+        <svg viewBox="0 0 24 24"><defs><linearGradient id="ncc-ig-c" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ncc-ig-c)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="ncc-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div>
+    </a>
+  </div>
+</div>
+
+<!-- Drawer móvil -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true">
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="tienda.html">Tienda</a></li>
+    <li><a href="citas.html">Citas</a></li>
+    <li><a href="#" id="drawerContactoLink">Contacto</a></li>
+  </ul>
+  <div class="drawer-protos" id="drawerProtos">
+    <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita." target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
+      WhatsApp
+    </a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20JJ%20Barber%C3%ADa" class="drawer-proto">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+      Gmail
+    </a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="18" height="18" viewBox="0 0 24 24"><defs><linearGradient id="ig-dc" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-dc)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+      Instagram
+    </a>
+  </div>
+  <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
+</div>
 
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div class="page-header">
@@ -1186,6 +1377,39 @@ async function updateCita(id, estado){
 ──────────────────────────────────────────────── */
 renderServices();
 initCal();
+
+// ═══════════════════════════════════════════════════
+// HAMBURGUESA MÓVIL
+// ═══════════════════════════════════════════════════
+(function(){
+  const hamburger = document.getElementById('navHamburger');
+  const drawer    = document.getElementById('navDrawer');
+  if(!hamburger || !drawer) return;
+  function abrirDrawer(){ drawer.classList.add('open'); hamburger.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function cerrarDrawer(){ drawer.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  hamburger.addEventListener('click', () => drawer.classList.contains('open') ? cerrarDrawer() : abrirDrawer());
+  drawer.querySelectorAll('a').forEach(l => l.addEventListener('click', e => {
+    if(e.target.id === 'drawerContactoLink'){ e.preventDefault(); document.getElementById('drawerProtos').classList.toggle('open'); }
+    else cerrarDrawer();
+  }));
+  document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarDrawer(); });
+})();
+
+// ═══════════════════════════════════════════════════
+// CONTACTO DROPDOWN
+// ═══════════════════════════════════════════════════
+(function(){
+  const btn   = document.getElementById('navContactoBtn');
+  const card  = document.getElementById('navContactoCard');
+  const close = document.getElementById('navContactoClose');
+  if(!btn || !card) return;
+  function toggle(){ card.hidden = !card.hidden; btn.setAttribute('aria-expanded', !card.hidden); }
+  function hide(){ card.hidden = true; btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click', e => { e.stopPropagation(); toggle(); });
+  close.addEventListener('click', hide);
+  document.addEventListener('click', e => { if(!card.contains(e.target) && e.target !== btn) hide(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') hide(); });
+})();
 
 /* Checa si viene de barber.html con servicio preseleccionado:
    ej: citas.html?s=cortebarba  → preselecciona "Corte y barba" */
