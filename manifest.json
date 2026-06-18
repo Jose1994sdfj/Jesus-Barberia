@@ -1,0 +1,56 @@
+{
+  "name": "Jesús Juárez · Barbería",
+  "short_name": "JJ Barbería",
+  "description": "Barbería de precisión en Pachuca, Hgo. Corte, barba y diseño.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#080808",
+  "theme_color": "#D6FF00",
+  "lang": "es-MX",
+  "categories": ["lifestyle", "beauty", "health"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Reservar cita",
+      "short_name": "Citas",
+      "url": "/citas.html",
+      "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"}]
+    },
+    {
+      "name": "Tienda",
+      "short_name": "Tienda",
+      "url": "/tienda.html",
+      "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"}]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/barberia-hero.jpg",
+      "sizes": "800x600",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "JJ Barbería · Pachuca"
+    }
+  ]
+}
