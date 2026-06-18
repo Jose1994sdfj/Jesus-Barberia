@@ -14,10 +14,7 @@
 
 <!-- ══ SEGURIDAD ═════════════════════════════════ -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com https://firebasestorage.googleapis.com; connect-src 'self' https://*.firebaseio.com wss://*.firebaseio.com https://*.googleapis.com;">
 
 <!-- ══ OPEN GRAPH (Facebook / WhatsApp) ═════════ -->
 <meta property="og:type" content="website">
@@ -103,11 +100,11 @@
   --radius-sm:10px; --radius-md:16px; --radius-lg:24px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%;}
 body{
   background:var(--negro); color:var(--blanco);
   font-family:'Poppins',sans-serif; font-weight:300;
-  overflow-x:hidden;
+  overflow-x:hidden; max-width:100vw;
 }
 a,button{cursor:pointer;}
 img{max-width:100%;display:block;}
@@ -701,9 +698,20 @@ footer{
   .hero-cta-row{flex-direction:column; gap:.8rem;}
   .tienda-hero-visual{display:none;}
 }
+@media(max-width:480px){
+  nav{padding:.9rem 1rem;}
+  .tienda-hero{padding:7rem 1rem 3rem;}
+  .marcas-banner, .filtros-bar, .catalogo{padding-left:1rem; padding-right:1rem;}
+  .benefits-section{padding:2.5rem 1rem;}
+  .marcas-logo-section{padding:2rem 1rem;}
+  .marcas-logo-row{gap:1rem;}
+  .marca-logo-card{padding:1.2rem 1.4rem; min-width:0; flex:1 1 calc(50% - .5rem);}
+  footer{padding:1.8rem 1rem 1.2rem;}
+}
 @media(max-width:400px){
   .catalogo-grid{grid-template-columns:1fr;}
   .benefits-grid{grid-template-columns:1fr;}
+  .marca-logo-card{flex:1 1 100%;}
 }
 
 /* ══ MARCAS VISUAL SVG ═══════════════════════════ */
@@ -732,7 +740,7 @@ footer{
   background:var(--gris3); border:1px solid rgba(255,255,255,.07);
   border-radius:16px; padding:1.6rem 2.2rem;
   display:flex; flex-direction:column; align-items:center; gap:.8rem;
-  min-width:160px; transition:border-color .2s, transform .2s;
+  min-width:min(160px, 42vw); transition:border-color .2s, transform .2s;
 }
 .marca-logo-card:hover{
   border-color:rgba(214,255,0,.2); transform:translateY(-3px);
