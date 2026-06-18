@@ -94,6 +94,9 @@
 <!-- Fonts: Tipografía más humana -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 
 <style>
@@ -1231,7 +1234,13 @@ footer{
     <li><a href="citas.html">Citas</a></li>
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
-  <a href="citas.html" class="nav-cta">Agendar →</a>
+  <div style="display:flex;align-items:center;gap:.7rem;">
+    <a href="citas.html" class="nav-cta" id="navCta">Agendar →</a>
+    <div id="navUserChip" style="display:none;align-items:center;gap:.5rem;">
+      <div id="navUserAvatarI" style="width:28px;height:28px;border-radius:50%;background:rgba(214,255,0,.12);border:1.5px solid rgba(214,255,0,.35);display:flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-weight:900;font-size:.7rem;color:var(--lima);">?</div>
+      <button onclick="firebase.auth().signOut().then(()=>window.location.href='login.html')" style="font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--humo);border:1px solid #333;padding:.35rem .8rem;border-radius:30px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='#ff5a5a';this.style.borderColor='rgba(255,90,90,.4)'" onmouseout="this.style.color='var(--humo)';this.style.borderColor='#333'">Salir</button>
+    </div>
+  </div>
 
   <!-- Dropdown de contacto -->
   <div class="nav-contacto-card" id="navContactoCard" role="dialog" aria-label="Contacto" hidden>
@@ -2580,6 +2589,38 @@ updateCarousel(0);
       drawerProtos.classList.toggle('open');
     });
   }
+})();
+</script>
+
+<!-- ══ AUTH GUARD ════════════════════════════════════════════════ -->
+<script>
+(function(){
+  const FB={
+    apiKey:"AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
+    authDomain:"bdfirebase-62a1b.firebaseapp.com",
+    projectId:"bdfirebase-62a1b",
+    storageBucket:"bdfirebase-62a1b.firebasestorage.app",
+    messagingSenderId:"862846715518",
+    appId:"1:862846715518:web:39d9b85b418c9dfccc3a2f"
+  };
+  if(!firebase.apps.length) firebase.initializeApp(FB);
+  const auth=firebase.auth();
+  document.body.style.visibility="hidden";
+  auth.onAuthStateChanged(user=>{
+    if(!user){
+      window.location.href="login.html?redirect=index.html";
+      return;
+    }
+    document.body.style.visibility="visible";
+    const chip=document.getElementById("navUserChip");
+    const avatar=document.getElementById("navUserAvatarI");
+    if(chip && avatar){
+      const name=user.displayName||user.email.split("@")[0];
+      avatar.textContent=name[0].toUpperCase();
+      chip.style.display="flex";
+      document.getElementById("navCta").style.display="none";
+    }
+  });
 })();
 </script>
 

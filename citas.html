@@ -481,27 +481,125 @@ nav{
 }
 .btn-wa:hover{ opacity:.88; }
 
-/* ══ CONFIRMATION ════════════════════════════════════════════════ */
-.confirm-card{
-  background:var(--gris2); border:1px solid rgba(214,255,0,.2);
-  border-radius:var(--r-xl); padding:2.5rem 2rem; text-align:center;
-  box-shadow:0 0 60px -20px rgba(214,255,0,.1);
+/* ══ CONFIRMATION TICKET ════════════════════════════════════════ */
+.confirm-ticket{
+  max-width:440px; margin:0 auto;
+  background:var(--gris); border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-xl); overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.5);
 }
-.confirm-icon{
-  font-size:2.8rem; margin-bottom:1rem; display:block;
+.ct-head{
+  background:linear-gradient(135deg,rgba(214,255,0,.07) 0%,rgba(214,255,0,.03) 100%);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:2.4rem 2rem 2rem; text-align:center;
 }
-.confirm-code{
+.ct-check{
+  width:60px; height:60px; border-radius:50%;
+  background:rgba(214,255,0,.1); border:2px solid rgba(214,255,0,.4);
+  color:var(--lima); font-size:1.6rem;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 1.1rem; font-weight:900; font-family:'Montserrat',sans-serif;
+}
+.ct-title{
   font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.6rem; color:var(--lima); letter-spacing:.1em;
-  background:rgba(214,255,0,.07); border:1px dashed rgba(214,255,0,.3);
-  border-radius:var(--r-md); padding:.7rem 1.5rem;
-  display:inline-block; margin:1rem auto;
+  font-size:1.35rem; color:var(--blanco); letter-spacing:-.02em; margin-bottom:.3rem;
 }
-.confirm-title{
+.ct-subtitle{ font-size:.68rem; color:var(--humo); letter-spacing:.1em; text-transform:uppercase; }
+.ct-code-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 2rem;
+  border-bottom:1px dashed rgba(255,255,255,.09);
+  background:rgba(214,255,0,.03);
+}
+.ct-code-inner{ display:flex; flex-direction:column; gap:.2rem; }
+.ct-code-label{ font-size:.58rem; text-transform:uppercase; letter-spacing:.15em; color:var(--humo); }
+.ct-code-val{
   font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.5rem; color:var(--blanco); margin-bottom:.5rem;
+  font-size:1.05rem; color:var(--lima); letter-spacing:.08em;
 }
-.confirm-sub{ font-size:.85rem; color:var(--humo); line-height:1.7; }
+.ct-copy-btn{
+  background:rgba(214,255,0,.08); border:1px solid rgba(214,255,0,.2);
+  color:var(--lima); border-radius:8px; padding:.4rem .7rem;
+  cursor:pointer; font-size:.72rem; transition:background .2s;
+}
+.ct-copy-btn:hover{ background:rgba(214,255,0,.15); }
+.ct-details{
+  padding:1.4rem 2rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:1.1rem;
+  border-bottom:1px dashed rgba(255,255,255,.08);
+}
+.ct-dl{ font-size:.58rem; text-transform:uppercase; letter-spacing:.12em; color:var(--humo); margin-bottom:.25rem; }
+.ct-dv{ font-size:.82rem; color:var(--blanco); font-weight:500; }
+.ct-addr{
+  display:flex; align-items:flex-start; gap:.8rem;
+  padding:1.1rem 2rem;
+  border-bottom:1px dashed rgba(255,255,255,.08);
+  background:rgba(255,255,255,.012);
+}
+.ct-addr-icon{ font-size:1rem; margin-top:.08rem; flex-shrink:0; }
+.ct-addr-title{ font-size:.78rem; color:var(--blanco); font-weight:500; margin-bottom:.18rem; }
+.ct-addr-sub{ font-size:.68rem; color:var(--humo); }
+.ct-actions{
+  padding:1.4rem 2rem;
+  display:flex; flex-direction:column; gap:.7rem;
+}
+.ct-actions .btn{ justify-content:center; }
+.btn-ghost{
+  background:none; border:none; color:var(--humo);
+  font-size:.72rem; font-family:'Montserrat',sans-serif;
+  font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  cursor:pointer; padding:.4rem; transition:color .2s;
+}
+.btn-ghost:hover{ color:var(--blanco); }
+
+/* ══ MIS CITAS ══════════════════════════════════════════════════ */
+#screenMyCitas{ min-height:100vh; padding-top:74px; display:none; }
+.mc-wrap{ max-width:640px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+.mc-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:2rem; flex-wrap:wrap; gap:.8rem;
+}
+.mc-header-title{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.6rem; color:var(--blanco); letter-spacing:-.02em;
+}
+.mc-section-lbl{
+  font-size:.58rem; text-transform:uppercase; letter-spacing:.2em;
+  color:var(--humo); margin-bottom:.7rem; margin-top:1.6rem;
+  padding-bottom:.4rem; border-bottom:1px solid rgba(255,255,255,.05);
+}
+.mc-card{
+  background:var(--gris); border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r-md); padding:1.2rem 1.4rem; margin-bottom:.75rem;
+  display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
+  transition:border-color .2s;
+}
+.mc-card:hover{ border-color:rgba(214,255,0,.15); }
+.mc-card-code{
+  font-family:'Montserrat',sans-serif; font-size:.62rem;
+  font-weight:700; color:var(--lima); letter-spacing:.1em; margin-bottom:.3rem;
+}
+.mc-card-service{ font-size:.9rem; color:var(--blanco); font-weight:500; margin-bottom:.35rem; }
+.mc-card-meta{ font-size:.7rem; color:var(--humo); line-height:1.6; }
+.mc-card-right{ display:flex; flex-direction:column; align-items:flex-end; gap:.6rem; flex-shrink:0; }
+.mc-badge{
+  font-size:.56rem; font-family:'Montserrat',sans-serif; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; padding:.22rem .7rem; border-radius:30px;
+}
+.mc-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
+.mc-badge-confirmada{ background:rgba(90,255,158,.12); color:#5aff9e; }
+.mc-badge-cancelada{ background:rgba(255,90,90,.1); color:#ff5a5a; }
+.mc-badge-pasada{ background:rgba(255,255,255,.07); color:var(--humo); }
+.mc-cancel-btn{
+  font-size:.6rem; color:#ff5a5a; background:none;
+  border:1px solid rgba(255,90,90,.25); border-radius:30px;
+  padding:.22rem .65rem; cursor:pointer;
+  font-family:'Montserrat',sans-serif; font-weight:600; transition:all .2s;
+}
+.mc-cancel-btn:hover{ background:rgba(255,90,90,.1); border-color:rgba(255,90,90,.5); }
+.mc-empty{ text-align:center; padding:4rem 1rem; color:var(--humo); font-size:.85rem; line-height:1.7; }
+.mc-empty-icon{ font-size:2.5rem; margin-bottom:.8rem; }
+.mc-loading{ text-align:center; padding:2rem; color:var(--humo); font-size:.8rem; }
 
 /* ══ LOADING SPINNER ════════════════════════════════════════════ */
 .spinner{
@@ -817,52 +915,15 @@ nav{
   color:var(--humo); margin-top:.3rem;
 }
 
-/* ══ AUTH SCREEN ════════════════════════════════════════════════ */
-@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-#screenAuth{
-  position:fixed; inset:0; z-index:1000;
-  background:var(--negro);
-  display:flex; align-items:center; justify-content:center;
-  padding:1rem; animation:fadeIn .25s ease;
+/* ══ NAV MISCITAS BTN ════════════════════════════════════════════ */
+.nav-miscitas-btn{
+  font-family:'Montserrat',sans-serif; font-size:.62rem;
+  font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; color:var(--blanco);
+  border:1px solid rgba(255,255,255,.15); padding:.38rem .85rem;
+  border-radius:30px; cursor:pointer; transition:all .2s; display:none;
 }
-.auth-card{
-  background:var(--gris); border:1px solid rgba(255,255,255,.08);
-  border-radius:var(--r-xl); padding:2.5rem 2rem;
-  width:100%; max-width:420px;
-  box-shadow:0 40px 80px rgba(0,0,0,.5);
-}
-.auth-logo-mark{
-  font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.6rem; color:var(--lima); letter-spacing:.04em;
-  margin-bottom:1.4rem; display:block;
-}
-.auth-headline{
-  font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.4rem; color:var(--blanco); margin-bottom:.3rem;
-  letter-spacing:-.02em;
-}
-.auth-sub{ font-size:.78rem; color:var(--humo); margin-bottom:1.8rem; line-height:1.55; }
-.auth-tabs{
-  display:flex; gap:.35rem; background:var(--gris2);
-  border-radius:30px; padding:.25rem; margin-bottom:1.6rem;
-}
-.auth-tab{
-  flex:1; font-family:'Montserrat',sans-serif; font-size:.68rem;
-  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  background:none; border:none; color:var(--humo);
-  padding:.5rem; border-radius:30px; cursor:pointer; transition:all .2s;
-}
-.auth-tab.active{ background:var(--lima); color:var(--negro); }
-.auth-error{
-  font-size:.74rem; color:#ff5a5a; margin-bottom:.7rem;
-  min-height:1rem; line-height:1.4;
-}
-.auth-submit{ width:100%; justify-content:center; margin-bottom:1.2rem; }
-.auth-note{
-  text-align:center; font-size:.72rem; color:var(--humo);
-}
-.auth-note a{ color:var(--lima); text-decoration:none; }
-.auth-note a:hover{ text-decoration:underline; }
+.nav-miscitas-btn:hover{ border-color:var(--lima); color:var(--lima); }
 
 /* ══ NAV USER AREA ══════════════════════════════════════════════ */
 .nav-user-area{ display:none; align-items:center; gap:.55rem; }
@@ -1059,44 +1120,6 @@ nav{
 </head>
 <body>
 
-<!-- ══ AUTH SCREEN ═════════════════════════════════════════════ -->
-<div id="screenAuth">
-  <div class="auth-card">
-    <span class="auth-logo-mark">JJ✂</span>
-    <h1 class="auth-headline">Bienvenido</h1>
-    <p class="auth-sub">Inicia sesión para agendar tu cita en JJ Barbería Pachuca</p>
-
-    <div class="auth-tabs">
-      <button id="tabLogin" class="auth-tab active">Entrar</button>
-      <button id="tabReg" class="auth-tab">Registrarse</button>
-    </div>
-
-    <div id="authRegFields" style="display:none">
-      <div class="form-group">
-        <label class="form-label" for="authNombre">Nombre completo</label>
-        <input class="form-input" type="text" id="authNombre" placeholder="Juan Pérez" autocomplete="name">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="authTel">Teléfono WhatsApp</label>
-        <input class="form-input" type="tel" id="authTel" placeholder="771 123 4567" autocomplete="tel">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" for="authEmail">Correo electrónico</label>
-      <input class="form-input" type="email" id="authEmail" placeholder="juan@ejemplo.com" autocomplete="email">
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="authPassword">Contraseña</label>
-      <input class="form-input" type="password" id="authPassword" placeholder="Mínimo 6 caracteres" autocomplete="current-password">
-    </div>
-
-    <p class="auth-error" id="authError"></p>
-    <button class="btn btn-primary auth-submit" id="authSubmitBtn">Entrar</button>
-    <p class="auth-note">¿Eres el barbero? Usa tu correo de administrador.</p>
-  </div>
-</div>
-
 <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
 <nav id="mainNav" style="display:none">
   <a href="index.html" class="nav-logo">JJ✂</a>
@@ -1107,6 +1130,7 @@ nav{
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
+    <button class="nav-miscitas-btn" id="navMisCitasBtn">Mis citas</button>
     <a href="citas.html" class="nav-cta" id="navCta" style="display:none">Agendar →</a>
     <div class="nav-user-area" id="navUserArea">
       <div class="nav-user-avatar" id="navUserAvatar">?</div>
@@ -1278,18 +1302,47 @@ nav{
 
   <!-- PASO 5: CONFIRMACIÓN -->
   <div class="step-panel" id="panel-5">
-    <div class="confirm-card" id="confirmCard">
-      <span class="confirm-icon">✂️</span>
-      <div class="confirm-title">¡Cita agendada!</div>
-      <div class="confirm-code" id="confirmCode">JJ-0000</div>
-      <p class="confirm-sub" id="confirmSub"></p>
-      <div class="btn-row" style="justify-content:center; margin-top:1.5rem;" id="confirmActions"></div>
+    <div class="confirm-ticket">
+      <div class="ct-head">
+        <div class="ct-check">✓</div>
+        <div class="ct-title">¡Cita confirmada!</div>
+        <div class="ct-subtitle">JJ Barbería · Pachuca, Hgo.</div>
+      </div>
+      <div class="ct-code-row">
+        <div class="ct-code-inner">
+          <span class="ct-code-label">Código de reserva</span>
+          <span class="ct-code-val" id="confirmCode">JJ-0000</span>
+        </div>
+        <button class="ct-copy-btn" id="ctCopyBtn">📋 Copiar</button>
+      </div>
+      <div class="ct-details" id="ctDetails"></div>
+      <div class="ct-addr">
+        <span class="ct-addr-icon">📍</span>
+        <div>
+          <div class="ct-addr-title">Av. Francisco I. Madero 400-402</div>
+          <div class="ct-addr-sub">Centro, Pachuca de Soto, Hgo. · +52 771 668 2637</div>
+        </div>
+      </div>
+      <div class="ct-actions" id="ctActions"></div>
     </div>
   </div>
 
 </div><!-- /wizard -->
 
 </div><!-- /screenBooking -->
+
+<!-- ══ MIS CITAS ════════════════════════════════════════════════ -->
+<div id="screenMyCitas" style="display:none">
+  <div class="mc-wrap">
+    <div class="mc-header">
+      <h2 class="mc-header-title">Mis citas</h2>
+      <button class="btn btn-outline" id="btnNuevaCita" style="padding:.5rem 1.2rem;font-size:.68rem;border-radius:30px;">+ Agendar nueva</button>
+    </div>
+    <div id="mcContent">
+      <div class="mc-loading">Cargando tus citas…</div>
+    </div>
+  </div>
+</div>
 
 <!-- ══ ADMIN SCREEN ════════════════════════════════════════════ -->
 <div id="screenAdmin">
@@ -1519,73 +1572,22 @@ function todayISO(){const n=new Date();return `${n.getFullYear()}-${String(n.get
 
 /* ─── SCREEN MANAGEMENT ──────────────────────────────────────── */
 function showScreen(name){
-  document.getElementById("screenAuth").style.display    = name==="auth"    ? "flex"  : "none";
-  document.getElementById("screenBooking").style.display = name==="booking" ? "block" : "none";
-  document.getElementById("screenAdmin").style.display   = name==="admin"   ? "block" : "none";
-  document.getElementById("mainNav").style.display       = name!=="auth"    ? "flex"  : "none";
-}
-
-/* ─── AUTH UI ────────────────────────────────────────────────── */
-let authMode = "login";
-
-function setAuthMode(mode){
-  authMode = mode;
-  document.getElementById("tabLogin").classList.toggle("active", mode==="login");
-  document.getElementById("tabReg").classList.toggle("active", mode==="register");
-  document.getElementById("authRegFields").style.display = mode==="register" ? "block" : "none";
-  document.getElementById("authSubmitBtn").textContent = mode==="login" ? "Entrar" : "Crear cuenta";
-  document.getElementById("authError").textContent = "";
-}
-
-document.getElementById("tabLogin").addEventListener("click", ()=>setAuthMode("login"));
-document.getElementById("tabReg").addEventListener("click",   ()=>setAuthMode("register"));
-document.getElementById("authPassword").addEventListener("keydown", e=>{ if(e.key==="Enter") handleAuthSubmit(); });
-document.getElementById("authSubmitBtn").addEventListener("click", handleAuthSubmit);
-
-async function handleAuthSubmit(){
-  const email    = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
-  const errorEl  = document.getElementById("authError");
-  const btn      = document.getElementById("authSubmitBtn");
-  if(!email||!password){ errorEl.textContent="Llena todos los campos"; return; }
-  errorEl.textContent="";
-  btn.disabled=true;
-  btn.innerHTML=`<span class="spinner" style="width:18px;height:18px;border-top-color:var(--negro);"></span> Cargando…`;
-  try{
-    if(authMode==="login"){
-      await auth.signInWithEmailAndPassword(email,password);
-    } else {
-      const nombre = document.getElementById("authNombre").value.trim();
-      const tel    = document.getElementById("authTel").value.trim().replace(/\D/g,"");
-      if(!nombre){ errorEl.textContent="Ingresa tu nombre completo"; btn.disabled=false; btn.textContent="Crear cuenta"; return; }
-      const cred = await auth.createUserWithEmailAndPassword(email,password);
-      await cred.user.updateProfile({displayName:nombre});
-      const wa = tel ? (tel.startsWith("52")?tel:"52"+tel) : "";
-      await db.ref(`usuarios/${cred.user.uid}`).set({nombre,whatsapp:wa,email,createdAt:Date.now()});
-    }
-  } catch(e){
-    const msgs={
-      "auth/user-not-found":      "No existe cuenta con ese correo",
-      "auth/wrong-password":      "Contraseña incorrecta",
-      "auth/invalid-credential":  "Correo o contraseña incorrectos",
-      "auth/email-already-in-use":"Ya existe una cuenta con ese correo",
-      "auth/weak-password":       "La contraseña debe tener al menos 6 caracteres",
-      "auth/invalid-email":       "Correo inválido",
-      "auth/too-many-requests":   "Demasiados intentos. Espera unos minutos",
-    };
-    errorEl.textContent = msgs[e.code]||e.message;
-    btn.disabled=false;
-    btn.textContent = authMode==="login" ? "Entrar" : "Crear cuenta";
-  }
+  if(name==="auth"){ window.location.href="login.html?redirect=citas.html"; return; }
+  document.getElementById("screenBooking").style.display  = name==="booking"  ? "block" : "none";
+  document.getElementById("screenAdmin").style.display    = name==="admin"    ? "block" : "none";
+  document.getElementById("screenMyCitas").style.display  = name==="miscitas" ? "block" : "none";
+  document.getElementById("mainNav").style.display        = "flex";
 }
 
 /* ─── LOGOUT ─────────────────────────────────────────────────── */
 document.getElementById("navLogoutBtn").addEventListener("click", ()=>auth.signOut());
+document.getElementById("navMisCitasBtn").addEventListener("click", ()=>{ showScreen("miscitas"); cargarMisCitas(); });
+document.getElementById("btnNuevaCita").addEventListener("click",   ()=>{ resetBooking(); showScreen("booking"); });
 
 /* ─── AUTH STATE ─────────────────────────────────────────────── */
 auth.onAuthStateChanged(user=>{
   currentUser=user;
-  if(!user){ showScreen("auth"); return; }
+  if(!user){ window.location.href="login.html?redirect=citas.html"; return; }
   updateNavUser(user);
   if(user.email===ADMIN_EMAIL){
     showScreen("admin");
@@ -1612,6 +1614,7 @@ function updateNavUser(user){
   document.getElementById("navLogoutBtn").style.display= "inline-block";
   const isAdmin = user.email===ADMIN_EMAIL;
   document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
+  if(!isAdmin) document.getElementById("navMisCitasBtn").style.display="inline-block";
 }
 
 async function loadUserProfile(uid){
@@ -2003,26 +2006,140 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
 ──────────────────────────────────────────────── */
 function mostrarConfirmacion(cita, codigo, waCliente){
   document.getElementById("confirmCode").textContent = codigo;
-  document.getElementById("confirmSub").innerHTML =
-    `<strong style="color:var(--blanco);">${cita.nombre}</strong>, tu cita de <strong style="color:var(--blanco);">${cita.servicio}</strong><br>
-     quedó para el <strong style="color:var(--blanco);">${fmtFecha(cita.fecha)}</strong> a las <strong style="color:var(--blanco);">${cita.hora} hrs</strong>.<br><br>
-     Guarda tu código. Si necesitas cancelar escríbeme por WhatsApp.`;
+
+  document.getElementById("ctCopyBtn").onclick = ()=>{
+    navigator.clipboard.writeText(codigo).catch(()=>{});
+    showToast("Código copiado 📋");
+  };
+
+  document.getElementById("ctDetails").innerHTML = `
+    <div><div class="ct-dl">Servicio</div><div class="ct-dv">${cita.servicio}</div></div>
+    <div><div class="ct-dl">Precio</div><div class="ct-dv">$${cita.precio} MXN</div></div>
+    <div><div class="ct-dl">Fecha</div><div class="ct-dv">${fmtFecha(cita.fecha)}</div></div>
+    <div><div class="ct-dl">Hora</div><div class="ct-dv">${cita.hora} hrs</div></div>
+    <div><div class="ct-dl">Duración</div><div class="ct-dv">~${cita.duracion} min</div></div>
+    <div><div class="ct-dl">Barbero</div><div class="ct-dv">Jesús Juárez</div></div>
+  `;
+
+  const gcDate  = cita.fecha.replace(/-/g,"");
+  const [fh,fm] = cita.hora.split(":").map(Number);
+  const endMin  = fh*60 + fm + cita.duracion;
+  const gcStart = gcDate+"T"+cita.hora.replace(":","")+"00";
+  const gcEnd   = gcDate+"T"+String(Math.floor(endMin/60)).padStart(2,"0")+String(endMin%60).padStart(2,"0")+"00";
+  const gcUrl   = `https://calendar.google.com/calendar/render?action=TEMPLATE`
+    +`&text=${encodeURIComponent("Cita JJ Barbería — "+cita.servicio)}`
+    +`&dates=${gcStart}/${gcEnd}`
+    +`&details=${encodeURIComponent("Código: "+codigo+"\nBarbero: Jesús Juárez\nDirección: Av. Francisco I. Madero 400-402, Centro, Pachuca, Hgo.\nWhatsApp: +52 771 668 2637")}`
+    +`&location=${encodeURIComponent("Av. Francisco I. Madero 400-402, Pachuca de Soto, Hidalgo")}`;
 
   const waMsg = encodeURIComponent(
-    `Hola Jesús! Te confirmo mi cita:\n\n📋 Código: ${codigo}\n👤 Nombre: ${cita.nombre}\n✂️ Servicio: ${cita.servicio}\n📅 Fecha: ${fmtFecha(cita.fecha)}\n🕐 Hora: ${cita.hora} hrs`
+    `Hola Jesús! Te confirmo mi cita:\n\n📋 Código: ${codigo}\n👤 Nombre: ${cita.nombre}\n✂️ Servicio: ${cita.servicio}\n📅 Fecha: ${fmtFecha(cita.fecha)}\n🕐 Hora: ${cita.hora} hrs\n\n¡Ahí estaré puntual!`
   );
 
-  document.getElementById("confirmActions").innerHTML = `
+  document.getElementById("ctActions").innerHTML = `
+    <a href="${gcUrl}" target="_blank" rel="noopener" class="btn btn-outline" style="gap:.5rem;">📅 Agregar al calendario</a>
     <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn btn-wa">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Confirmar por WhatsApp
     </a>
-    <a href="index.html" class="btn btn-outline">Volver al inicio</a>`;
+    <button onclick="showScreen('miscitas');cargarMisCitas();" class="btn btn-outline" style="gap:.5rem;">📋 Ver mis citas</button>
+    <button onclick="resetBooking();" class="btn-ghost">+ Agendar otra cita</button>
+  `;
 
   goStep(5);
   document.querySelectorAll(".step-item").forEach(el=>{
     el.classList.remove("active"); el.classList.add("done");
   });
+}
+
+function resetBooking(){
+  booking.servicio=null; booking.fecha=null; booking.hora=null;
+  calInitialized=false;
+  document.querySelectorAll(".step-item").forEach(el=>{
+    el.classList.remove("done","active");
+  });
+  document.getElementById("step-ind-1").classList.add("active");
+  goStep(1);
+  renderServices();
+  initCal();
+  loadUserProfile(currentUser.uid);
+  document.getElementById("btn1Next").disabled=true;
+  document.getElementById("btn2Next").disabled=true;
+  document.getElementById("btn3Next").disabled=true;
+  document.getElementById("btnConfirm").disabled=true;
+}
+
+async function cargarMisCitas(){
+  if(!currentUser) return;
+  const container = document.getElementById("mcContent");
+  container.innerHTML = `<div class="mc-loading">Cargando tus citas…</div>`;
+  try{
+    const snap = await db.ref("citas").orderByChild("uid").equalTo(currentUser.uid).once("value");
+    const data  = snap.val();
+    if(!data){
+      container.innerHTML = `<div class="mc-empty"><div class="mc-empty-icon">✂️</div>Aún no tienes citas agendadas.<br>¡Agenda tu primera cita!</div>`;
+      return;
+    }
+    const todayStr = todayISO();
+    const futuras=[], pasadas=[];
+    Object.entries(data).forEach(([key,c])=>{
+      c._key=key;
+      if(c.fecha>=todayStr && c.estado!=="cancelada") futuras.push(c);
+      else pasadas.push(c);
+    });
+    futuras.sort((a,b)=>a.fecha.localeCompare(b.fecha)||(a.hora.localeCompare(b.hora)));
+    pasadas.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+    let html="";
+    if(futuras.length){
+      html+=`<div class="mc-section-lbl">Próximas</div>`;
+      futuras.forEach(c=>{html+=renderMcCard(c,true);});
+    }
+    if(pasadas.length){
+      html+=`<div class="mc-section-lbl">Historial</div>`;
+      pasadas.forEach(c=>{html+=renderMcCard(c,false);});
+    }
+    if(!futuras.length && !pasadas.length){
+      html=`<div class="mc-empty"><div class="mc-empty-icon">✂️</div>Aún no tienes citas agendadas.</div>`;
+    }
+    container.innerHTML=html;
+    container.querySelectorAll(".mc-cancel-btn").forEach(btn=>{
+      btn.addEventListener("click",()=>cancelarCita(btn.dataset.key,btn.dataset.code));
+    });
+  } catch(e){
+    container.innerHTML=`<div class="mc-empty">Error al cargar. Intenta de nuevo.</div>`;
+    console.error(e);
+  }
+}
+
+function renderMcCard(c,upcoming){
+  let badge,cancelBtn="";
+  if(c.estado==="confirmada")      badge=`<span class="mc-badge mc-badge-confirmada">Confirmada</span>`;
+  else if(c.estado==="cancelada")  badge=`<span class="mc-badge mc-badge-cancelada">Cancelada</span>`;
+  else if(upcoming)                badge=`<span class="mc-badge mc-badge-pendiente">Pendiente</span>`;
+  else                             badge=`<span class="mc-badge mc-badge-pasada">Pasada</span>`;
+  if(upcoming && c.estado!=="cancelada"){
+    cancelBtn=`<button class="mc-cancel-btn" data-key="${c._key}" data-code="${c.codigo}">Cancelar</button>`;
+  }
+  return `<div class="mc-card">
+    <div>
+      <div class="mc-card-code">${c.codigo||"—"}</div>
+      <div class="mc-card-service">${c.servicio}</div>
+      <div class="mc-card-meta">${fmtFecha(c.fecha)} · ${c.hora} hrs · $${c.precio} MXN · ~${c.duracion} min</div>
+    </div>
+    <div class="mc-card-right">${badge}${cancelBtn}</div>
+  </div>`;
+}
+
+async function cancelarCita(key,codigo){
+  if(!confirm(`¿Cancelar la cita ${codigo}?\n\nEsta acción no se puede deshacer.`)) return;
+  try{
+    await db.ref(`citas/${key}`).update({estado:"cancelada",canceladaAt:Date.now()});
+    showToast("Cita cancelada. Puedes agendar una nueva cuando quieras.");
+    cargarMisCitas();
+  } catch(e){
+    showToast("Error al cancelar. Intenta de nuevo.");
+    console.error(e);
+  }
 }
 
 // ========== PWA SERVICE WORKER ==========

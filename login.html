@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acceder · JJ Barbería · Pachuca</title>
+<meta name="theme-color" content="#D6FF00">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<style>
+:root{
+  --negro:#080808; --blanco:#F0F0ED; --lima:#D6FF00;
+  --gris:#161616; --gris2:#1a1a1a; --gris3:#252525;
+  --humo:#777; --wa:#25D366;
+  --r-md:16px; --r-lg:24px; --r-xl:32px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  background:var(--negro); color:var(--blanco);
+  font-family:'Poppins',sans-serif; font-weight:300;
+  display:flex; min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── SPLIT LAYOUT ── */
+.login-wrap{
+  display:flex; width:100%; min-height:100vh;
+}
+.login-aside{
+  flex:1; background:var(--gris2);
+  border-right:1px solid rgba(255,255,255,.05);
+  display:flex; flex-direction:column;
+  justify-content:space-between;
+  padding:3rem;
+  position:relative; overflow:hidden;
+}
+.login-aside::before{
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 50% at 30% 60%, rgba(214,255,0,.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.aside-logo{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.8rem; color:var(--lima); letter-spacing:.04em;
+  text-decoration:none;
+}
+.aside-headline{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:2.8rem; line-height:1.1; color:var(--blanco);
+  letter-spacing:-.03em;
+}
+.aside-headline em{color:var(--lima); font-style:normal;}
+.aside-desc{
+  font-size:.85rem; color:rgba(240,240,237,.45);
+  line-height:1.7; margin-top:.9rem; max-width:300px;
+}
+.aside-badges{
+  display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.8rem;
+}
+.aside-badge{
+  font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  border:1px solid rgba(255,255,255,.1); color:rgba(240,240,237,.45);
+  padding:.3rem .75rem; border-radius:30px;
+}
+.aside-footer{
+  font-size:.65rem; color:rgba(240,240,237,.2); line-height:1.6;
+}
+
+/* ── FORM PANEL ── */
+.login-panel{
+  width:100%; max-width:460px;
+  display:flex; flex-direction:column;
+  justify-content:center; padding:3rem 3.5rem;
+}
+.panel-eyebrow{
+  font-family:'Montserrat',sans-serif; font-size:.6rem;
+  font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--humo); margin-bottom:1.8rem;
+  display:flex; align-items:center; gap:.6rem;
+}
+.panel-eyebrow::before{
+  content:''; flex:0 0 24px; height:1px; background:var(--humo);
+}
+.panel-title{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:2rem; letter-spacing:-.03em; color:var(--blanco);
+  margin-bottom:.4rem;
+}
+.panel-sub{
+  font-size:.78rem; color:var(--humo); line-height:1.6;
+  margin-bottom:2rem;
+}
+
+/* ── TABS ── */
+.auth-tabs{
+  display:flex; gap:.35rem; background:var(--gris2);
+  border-radius:30px; padding:.25rem; margin-bottom:1.8rem;
+}
+.auth-tab{
+  flex:1; font-family:'Montserrat',sans-serif; font-size:.68rem;
+  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  background:none; border:none; color:var(--humo);
+  padding:.55rem; border-radius:30px; cursor:pointer; transition:all .2s;
+}
+.auth-tab.active{ background:var(--lima); color:var(--negro); }
+
+/* ── FORM ── */
+.form-group{ margin-bottom:1.1rem; }
+.form-label{
+  display:block; font-size:.65rem; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(240,240,237,.5);
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  margin-bottom:.45rem;
+}
+.form-input{
+  width:100%; background:var(--gris2);
+  border:1.5px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md); padding:.75rem 1rem;
+  font-family:'Poppins',sans-serif; font-size:.88rem;
+  color:var(--blanco); transition:border-color .2s; outline:none;
+}
+.form-input:focus{ border-color:rgba(214,255,0,.5); }
+.form-input::placeholder{ color:rgba(240,240,237,.22); }
+
+.auth-error{
+  font-size:.74rem; color:#ff5a5a; margin-bottom:.9rem;
+  min-height:1.1em; line-height:1.4;
+  display:flex; align-items:flex-start; gap:.4rem;
+}
+.auth-error:not(:empty)::before{ content:'⚠'; flex-shrink:0; }
+
+/* ── BUTTONS ── */
+.btn-primary{
+  display:flex; align-items:center; justify-content:center; gap:.5rem;
+  width:100%; padding:.85rem 1.5rem;
+  background:var(--lima); color:var(--negro);
+  border:none; border-radius:30px;
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+  cursor:pointer; transition:opacity .2s, transform .15s;
+}
+.btn-primary:hover{ opacity:.88; transform:translateY(-1px); }
+.btn-primary:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+.spinner{
+  width:14px; height:14px; border:2px solid rgba(8,8,8,.3);
+  border-top-color:var(--negro); border-radius:50%;
+  animation:spin .6s linear infinite; flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── DIVIDER ── */
+.auth-divider{
+  display:flex; align-items:center; gap:.8rem;
+  margin:1.4rem 0;
+  font-size:.65rem; color:rgba(240,240,237,.2);
+  letter-spacing:.1em; text-transform:uppercase;
+}
+.auth-divider::before,.auth-divider::after{
+  content:''; flex:1; height:1px; background:rgba(255,255,255,.07);
+}
+
+/* ── FOOTER LINK ── */
+.panel-note{
+  text-align:center; font-size:.72rem; color:var(--humo);
+  margin-top:1.2rem; line-height:1.6;
+}
+.panel-note a{
+  color:var(--lima); text-decoration:none; font-weight:500;
+}
+.panel-note a:hover{ text-decoration:underline; }
+
+/* ── LOADING SCREEN ── */
+#loadingScreen{
+  position:fixed; inset:0; background:var(--negro);
+  display:flex; align-items:center; justify-content:center;
+  z-index:999; flex-direction:column; gap:1.2rem;
+}
+.loading-logo{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:2rem; color:var(--lima);
+}
+.loading-dots{
+  display:flex; gap:.4rem;
+}
+.loading-dot{
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(214,255,0,.4);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+.loading-dot:nth-child(2){animation-delay:.2s;}
+.loading-dot:nth-child(3){animation-delay:.4s;}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(1);}50%{opacity:1;transform:scale(1.3);}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .login-aside{ display:none; }
+  .login-panel{ max-width:100%; padding:2.5rem 1.5rem; }
+  .login-wrap{ justify-content:center; }
+}
+@media(max-width:400px){
+  .login-panel{ padding:2rem 1.2rem; }
+  .panel-title{ font-size:1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Loading mientras verifica auth -->
+<div id="loadingScreen">
+  <span class="loading-logo">JJ✂</span>
+  <div class="loading-dots">
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+  </div>
+</div>
+
+<div class="login-wrap" id="loginWrap" style="display:none">
+
+  <!-- Aside decorativo -->
+  <div class="login-aside">
+    <a href="login.html" class="aside-logo">JJ✂</a>
+
+    <div>
+      <h1 class="aside-headline">Barbería<br>de <em>precisión</em>.<br>Pachuca.</h1>
+      <p class="aside-desc">Corte, barba, diseño y ritual VIP. Agenda tu cita, sigue tu historial y recibe atención personalizada.</p>
+      <div class="aside-badges">
+        <span class="aside-badge">✂ Corte experto</span>
+        <span class="aside-badge">⭐ 700+ clientes</span>
+        <span class="aside-badge">📍 Centro, Pachuca</span>
+        <span class="aside-badge">Desde 2018</span>
+      </div>
+    </div>
+
+    <p class="aside-footer">Av. Francisco I. Madero 400-402 · Centro, Pachuca de Soto, Hgo.<br>Lun–Vie 9–20h · Sáb 9–18h · +52 771 668 2637</p>
+  </div>
+
+  <!-- Panel auth -->
+  <div class="login-panel">
+    <p class="panel-eyebrow">JJ Barbería</p>
+    <h2 class="panel-title" id="panelTitle">Bienvenido</h2>
+    <p class="panel-sub" id="panelSub">Inicia sesión para agendar tu cita, ver la tienda y acceder a tu historial.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin">Iniciar sesión</button>
+      <button class="auth-tab" id="tabReg">Crear cuenta</button>
+    </div>
+
+    <!-- Campos solo en registro -->
+    <div id="regFields" style="display:none">
+      <div class="form-group">
+        <label class="form-label" for="fNombre">Nombre completo</label>
+        <input class="form-input" type="text" id="fNombre" placeholder="Juan Pérez" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="fTel">Teléfono WhatsApp</label>
+        <input class="form-input" type="tel" id="fTel" placeholder="771 123 4567" autocomplete="tel">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="fEmail">Correo electrónico</label>
+      <input class="form-input" type="email" id="fEmail" placeholder="juan@ejemplo.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="fPass">Contraseña</label>
+      <input class="form-input" type="password" id="fPass" placeholder="Mínimo 6 caracteres" autocomplete="current-password">
+    </div>
+
+    <p class="auth-error" id="authError"></p>
+
+    <button class="btn-primary" id="submitBtn">Entrar</button>
+
+    <div class="auth-divider">o</div>
+
+    <p class="panel-note" id="panelNote">
+      ¿No tienes cuenta? <a href="#" id="switchLink">Regístrate gratis</a>
+    </p>
+    <p class="panel-note" style="margin-top:.5rem; font-size:.65rem;">
+      ¿Eres el barbero? Usa tu correo de administrador.
+    </p>
+  </div>
+
+</div>
+
+<script>
+const FB_CFG = {
+  apiKey:            "AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
+  authDomain:        "bdfirebase-62a1b.firebaseapp.com",
+  databaseURL:       "https://bdfirebase-62a1b-default-rtdb.firebaseio.com",
+  projectId:         "bdfirebase-62a1b",
+  storageBucket:     "bdfirebase-62a1b.firebasestorage.app",
+  messagingSenderId: "862846715518",
+  appId:             "1:862846715518:web:39d9b85b418c9dfccc3a2f"
+};
+if(!firebase.apps.length) firebase.initializeApp(FB_CFG);
+const auth = firebase.auth();
+const db   = firebase.database();
+
+const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+
+/* Destino después del login */
+function getRedirect(){
+  const p = new URLSearchParams(window.location.search).get("redirect");
+  const safe = ["index.html","tienda.html","citas.html"];
+  return safe.includes(p) ? p : "index.html";
+}
+
+function doRedirect(user){
+  const dest = getRedirect();
+  window.location.href = dest;
+}
+
+/* Comprobar si ya hay sesión */
+auth.onAuthStateChanged(user=>{
+  document.getElementById("loadingScreen").style.display="none";
+  if(user){
+    doRedirect(user);
+  } else {
+    document.getElementById("loginWrap").style.display="flex";
+  }
+});
+
+/* ── TABS ── */
+let mode = "login";
+function setMode(m){
+  mode = m;
+  const isReg = m==="reg";
+  document.getElementById("regFields").style.display   = isReg ? "block" : "none";
+  document.getElementById("panelTitle").textContent     = isReg ? "Crear cuenta" : "Bienvenido";
+  document.getElementById("panelSub").textContent       = isReg
+    ? "Crea tu cuenta para agendar citas y llevar tu historial."
+    : "Inicia sesión para agendar tu cita, ver la tienda y acceder a tu historial.";
+  document.getElementById("submitBtn").textContent      = isReg ? "Crear cuenta" : "Entrar";
+  document.getElementById("panelNote").innerHTML        = isReg
+    ? `¿Ya tienes cuenta? <a href="#" id="switchLink">Inicia sesión</a>`
+    : `¿No tienes cuenta? <a href="#" id="switchLink">Regístrate gratis</a>`;
+  document.getElementById("tabLogin").classList.toggle("active", !isReg);
+  document.getElementById("tabReg").classList.toggle("active",    isReg);
+  document.getElementById("authError").textContent = "";
+  document.getElementById("fPass").autocomplete = isReg ? "new-password" : "current-password";
+  bindSwitch();
+}
+
+function bindSwitch(){
+  const link = document.getElementById("switchLink");
+  if(link) link.addEventListener("click", e=>{ e.preventDefault(); setMode(mode==="login"?"reg":"login"); });
+}
+bindSwitch();
+document.getElementById("tabLogin").addEventListener("click",()=>setMode("login"));
+document.getElementById("tabReg").addEventListener("click",  ()=>setMode("reg"));
+
+/* ── SUBMIT ── */
+document.getElementById("submitBtn").addEventListener("click", handleSubmit);
+document.addEventListener("keydown", e=>{ if(e.key==="Enter") handleSubmit(); });
+
+async function handleSubmit(){
+  const email  = document.getElementById("fEmail").value.trim();
+  const pass   = document.getElementById("fPass").value;
+  const errEl  = document.getElementById("authError");
+  const btn    = document.getElementById("submitBtn");
+  errEl.textContent = "";
+
+  if(!email || !pass){ errEl.textContent="Por favor llena todos los campos."; return; }
+
+  btn.innerHTML=`<span class="spinner"></span> ${mode==="login"?"Entrando…":"Creando cuenta…"}`;
+  btn.disabled=true;
+
+  try{
+    let cred;
+    if(mode==="login"){
+      cred = await auth.signInWithEmailAndPassword(email, pass);
+    } else {
+      const nombre = document.getElementById("fNombre").value.trim();
+      const tel    = document.getElementById("fTel").value.trim().replace(/\D/g,"");
+      if(!nombre){ errEl.textContent="El nombre es obligatorio."; resetBtn(); return; }
+      cred = await auth.createUserWithEmailAndPassword(email, pass);
+      await cred.user.updateProfile({displayName: nombre});
+      const wa = tel.startsWith("52") ? tel : "52"+tel;
+      db.ref(`usuarios/${cred.user.uid}`).set({
+        nombre, whatsapp: wa||"", email, createdAt: Date.now()
+      });
+    }
+    doRedirect(cred.user);
+  } catch(e){
+    const msgs = {
+      "auth/user-not-found":       "No existe una cuenta con ese correo",
+      "auth/wrong-password":       "Contraseña incorrecta",
+      "auth/invalid-credential":   "Correo o contraseña incorrectos",
+      "auth/email-already-in-use": "Ya existe una cuenta con ese correo",
+      "auth/weak-password":        "La contraseña debe tener al menos 6 caracteres",
+      "auth/invalid-email":        "Formato de correo inválido",
+      "auth/too-many-requests":    "Demasiados intentos. Espera unos minutos",
+    };
+    errEl.textContent = msgs[e.code] || e.message;
+    resetBtn();
+  }
+}
+
+function resetBtn(){
+  const btn = document.getElementById("submitBtn");
+  btn.disabled=false;
+  btn.textContent = mode==="login" ? "Entrar" : "Crear cuenta";
+}
+</script>
+</body>
+</html>
