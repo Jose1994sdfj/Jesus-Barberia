@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>body{visibility:hidden}</style>
-<script>setTimeout(function(){document.body.style.visibility='visible'},1500)</script>
 <title>Reservar Cita · JJ Barbería · Pachuca</title>
 <meta name="description" content="Reserva tu cita en JJ Barbería Pachuca. Corte, barba, diseño y ritual VIP. Elige servicio, fecha y horario en segundos.">
 <meta name="theme-color" content="#D6FF00">
@@ -541,51 +539,6 @@ nav{
 .ct-addr-icon{ font-size:1rem; margin-top:.08rem; flex-shrink:0; }
 .ct-addr-title{ font-size:.78rem; color:var(--blanco); font-weight:500; margin-bottom:.18rem; }
 .ct-addr-sub{ font-size:.68rem; color:var(--humo); }
-/* ══ CONFIRMACIÓN — ESTADO ESPERA ═══════════════════════════════ */
-.ct-wait-head{
-  text-align:center; padding:2rem 1rem 1.5rem;
-}
-.ct-wait-icon{
-  font-size:2.6rem; margin-bottom:.9rem;
-  display:inline-block;
-  animation:ct-breathe 2s ease-in-out infinite;
-}
-@keyframes ct-breathe{
-  0%,100%{ opacity:.5; transform:scale(1); }
-  50%{ opacity:1; transform:scale(1.12); }
-}
-.ct-wait-title{
-  font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.15rem; color:var(--blanco); margin-bottom:.45rem; letter-spacing:-.02em;
-}
-.ct-wait-sub{
-  font-size:.75rem; color:var(--humo); line-height:1.65; max-width:280px; margin:0 auto;
-}
-.ct-wait-dots{
-  display:flex; justify-content:center; gap:.4rem; margin-top:1.1rem;
-}
-.ct-wait-dot{
-  width:7px; height:7px; border-radius:50%;
-  background:rgba(255,180,0,.5);
-  animation:ct-dotpulse 1.4s ease-in-out infinite;
-}
-.ct-wait-dot:nth-child(2){animation-delay:.22s;}
-.ct-wait-dot:nth-child(3){animation-delay:.44s;}
-@keyframes ct-dotpulse{
-  0%,100%{opacity:.25;transform:scale(.85);}
-  50%{opacity:1;transform:scale(1.3);}
-}
-.adm-btn-confirmar{
-  background:rgba(90,255,158,.1); color:#5aff9e;
-  border-color:rgba(90,255,158,.3);
-}
-.adm-btn-confirmar:hover{ background:rgba(90,255,158,.2); }
-@keyframes ct-confirmed-flash{
-  0%{ background:rgba(90,255,158,.12); }
-  100%{ background:transparent; }
-}
-.ct-confirmed-flash{ animation:ct-confirmed-flash .8s ease forwards; }
-
 .ct-actions{
   padding:1.4rem 2rem;
   display:flex; flex-direction:column; gap:.7rem;
@@ -633,11 +586,10 @@ nav{
   font-size:.56rem; font-family:'Montserrat',sans-serif; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase; padding:.22rem .7rem; border-radius:30px;
 }
-.mc-badge-por_confirmar{ background:rgba(255,180,0,.13); color:#ffb400; }
-.mc-badge-pendiente{     background:rgba(214,255,0,.12); color:var(--lima); }
-.mc-badge-confirmada{    background:rgba(90,255,158,.12); color:#5aff9e; }
-.mc-badge-cancelada{     background:rgba(255,90,90,.1);  color:#ff5a5a; }
-.mc-badge-pasada{        background:rgba(255,255,255,.07); color:var(--humo); }
+.mc-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
+.mc-badge-confirmada{ background:rgba(90,255,158,.12); color:#5aff9e; }
+.mc-badge-cancelada{ background:rgba(255,90,90,.1); color:#ff5a5a; }
+.mc-badge-pasada{ background:rgba(255,255,255,.07); color:var(--humo); }
 .mc-cancel-btn{
   font-size:.6rem; color:#ff5a5a; background:none;
   border:1px solid rgba(255,90,90,.25); border-radius:30px;
@@ -1101,11 +1053,9 @@ nav{
   letter-spacing:.1em; text-transform:uppercase;
   padding:.2rem .58rem; border-radius:30px; display:inline-block;
 }
-.adm-badge-por_confirmar{ background:rgba(255,180,0,.13); color:#ffb400; }
-.adm-badge-pendiente{     background:rgba(214,255,0,.12); color:var(--lima); }
-.adm-badge-confirmada{    background:rgba(90,255,158,.12); color:#5aff9e; }
-.adm-badge-atendido{      background:rgba(90,255,158,.1);  color:#5aff9e; }
-.adm-badge-cancelado{     background:rgba(255,90,90,.1);   color:#ff5a5a; }
+.adm-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
+.adm-badge-atendido{  background:rgba(90,255,158,.1);  color:#5aff9e; }
+.adm-badge-cancelado{ background:rgba(255,90,90,.1);   color:#ff5a5a; }
 .adm-today-pill{
   font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:800;
   letter-spacing:.12em; background:var(--lima); color:var(--negro);
@@ -1165,30 +1115,6 @@ nav{
   .admin-stats{ grid-template-columns:1fr 1fr; }
   .admin-stats .stat-card:last-child{ grid-column:span 2; }
   nav{ padding:.9rem 1.2rem; }
-}
-/* ══ BOTTOM NAV MÓVIL ═══════════════════════════════════════════ */
-.bottom-nav{
-  display:none; position:fixed; bottom:0; left:0; right:0; z-index:300;
-  background:rgba(8,8,8,.97); backdrop-filter:blur(16px);
-  border-top:1px solid rgba(255,255,255,.07);
-  padding:.45rem 0 calc(.45rem + env(safe-area-inset-bottom,0px));
-}
-.bottom-nav-inner{ display:flex; justify-content:space-around; align-items:center; }
-.bn-item{
-  display:flex; flex-direction:column; align-items:center; gap:.2rem;
-  flex:1; padding:.35rem .5rem; border-radius:10px;
-  text-decoration:none; color:rgba(240,240,237,.35);
-  font-family:'Montserrat',sans-serif; font-size:.48rem;
-  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  transition:color .18s; background:none; border:none; cursor:pointer;
-}
-.bn-item svg{ width:20px; height:20px; stroke:currentColor; fill:none;
-  stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.bn-item.active{ color:var(--lima,#D6FF00); }
-.bn-item:not(.active):hover{ color:rgba(240,240,237,.65); }
-@media(max-width:768px){
-  .bottom-nav{ display:block; }
-  body{ padding-bottom:calc(68px + env(safe-area-inset-bottom,0px)) !important; }
 }
 </style>
 </head>
@@ -1376,32 +1302,12 @@ nav{
 
   <!-- PASO 5: CONFIRMACIÓN -->
   <div class="step-panel" id="panel-5">
-    <div class="confirm-ticket" id="confirmTicket">
-
-      <!-- Estado: esperando confirmación del barbero -->
-      <div id="ctWaitState">
-        <div class="ct-wait-head">
-          <div class="ct-wait-icon">✂️</div>
-          <div class="ct-wait-title">Solicitud enviada al barbero</div>
-          <div class="ct-wait-sub">Jesús revisará tu cita y la confirmará en breve.<br>Esta pantalla se actualiza en tiempo real.</div>
-          <div class="ct-wait-dots">
-            <div class="ct-wait-dot"></div>
-            <div class="ct-wait-dot"></div>
-            <div class="ct-wait-dot"></div>
-          </div>
-        </div>
+    <div class="confirm-ticket">
+      <div class="ct-head">
+        <div class="ct-check">✓</div>
+        <div class="ct-title">¡Cita confirmada!</div>
+        <div class="ct-subtitle">JJ Barbería · Pachuca, Hgo.</div>
       </div>
-
-      <!-- Estado: confirmada por el barbero -->
-      <div id="ctDoneState" style="display:none">
-        <div class="ct-head">
-          <div class="ct-check">✓</div>
-          <div class="ct-title">¡Cita confirmada!</div>
-          <div class="ct-subtitle">Jesús confirmó tu cita · JJ Barbería · Pachuca</div>
-        </div>
-      </div>
-
-      <!-- Siempre visible: código + detalles + dirección -->
       <div class="ct-code-row">
         <div class="ct-code-inner">
           <span class="ct-code-label">Código de reserva</span>
@@ -1417,16 +1323,7 @@ nav{
           <div class="ct-addr-sub">Centro, Pachuca de Soto, Hgo. · +52 771 668 2637</div>
         </div>
       </div>
-
-      <!-- Acciones mientras espera confirmación -->
-      <div class="ct-actions" id="ctActionsPending">
-        <button onclick="showScreen('miscitas');cargarMisCitas();" class="btn btn-outline" style="gap:.5rem;">📋 Ver mis citas</button>
-        <button onclick="resetBooking();" class="btn-ghost">+ Agendar otra cita</button>
-      </div>
-
-      <!-- Acciones tras confirmación del barbero -->
-      <div class="ct-actions" id="ctActions" style="display:none"></div>
-
+      <div class="ct-actions" id="ctActions"></div>
     </div>
   </div>
 
@@ -1466,8 +1363,8 @@ nav{
       </div>
       <div class="adm-stat">
         <div class="adm-stat-val" id="admStatPend">–</div>
-        <div class="adm-stat-label">Por confirmar</div>
-        <div class="adm-stat-sub">Requieren acción</div>
+        <div class="adm-stat-label">Pendientes</div>
+        <div class="adm-stat-sub">Por confirmar</div>
       </div>
       <div class="adm-stat">
         <div class="adm-stat-val" id="admStatIngresos">–</div>
@@ -1484,8 +1381,7 @@ nav{
     <div class="adm-ctrl">
       <div class="adm-tabs">
         <button class="adm-tab active" data-tab="hoy">📅 Hoy</button>
-        <button class="adm-tab" data-tab="porconfirmar">🔔 Por confirmar</button>
-        <button class="adm-tab" data-tab="pendientes">⏳ Confirmadas</button>
+        <button class="adm-tab" data-tab="pendientes">⏳ Pendientes</button>
         <button class="adm-tab" data-tab="todas">📋 Todas</button>
         <button class="adm-tab" data-tab="atendidas">✓ Atendidas</button>
         <button class="adm-tab" data-tab="canceladas">✕ Canceladas</button>
@@ -1653,7 +1549,7 @@ const DIAS_CERRADOS = [];
 /* ─── ESTADO ─────────────────────────────────────────────────── */
 const booking = { servicio:null, fecha:null, hora:null };
 let calYear, calMonth, calInitialized = false;
-let admTab = "hoy", admSearch = "", allCitas = {}, admListener = null, confirmListener = null;
+let admTab = "hoy", admSearch = "", allCitas = {}, admListener = null;
 let currentUser = null;
 
 /* ─── HELPERS ────────────────────────────────────────────────── */
@@ -1692,7 +1588,6 @@ document.getElementById("btnNuevaCita").addEventListener("click",   ()=>{ resetB
 auth.onAuthStateChanged(user=>{
   currentUser=user;
   if(!user){ window.location.href="login.html?redirect=citas.html"; return; }
-  document.body.style.visibility="visible";
   updateNavUser(user);
   if(user.email===ADMIN_EMAIL){
     showScreen("admin");
@@ -1778,11 +1673,10 @@ function renderAdmDashboard(){
   let items=Object.entries(allCitas).map(([id,c])=>({id,...c}));
   items.sort((a,b)=>a.fecha===b.fecha?a.hora.localeCompare(b.hora):a.fecha.localeCompare(b.fecha));
   switch(admTab){
-    case "hoy":         items=items.filter(c=>c.fecha===today);                                              break;
-    case "porconfirmar":items=items.filter(c=>c.estado==="por_confirmar");                                   break;
-    case "pendientes":  items=items.filter(c=>c.estado==="confirmada"||c.estado==="pendiente");              break;
-    case "atendidas":   items=items.filter(c=>c.estado==="atendido");                                        break;
-    case "canceladas":  items=items.filter(c=>c.estado==="cancelado"||c.estado==="cancelada");               break;
+    case "hoy":       items=items.filter(c=>c.fecha===today);          break;
+    case "pendientes":items=items.filter(c=>c.estado==="pendiente");   break;
+    case "atendidas": items=items.filter(c=>c.estado==="atendido");    break;
+    case "canceladas":items=items.filter(c=>c.estado==="cancelado");   break;
   }
   if(admSearch){
     const q=admSearch.toLowerCase();
@@ -1797,7 +1691,7 @@ function renderAdmStats(){
   const now=new Date();
   const mesStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
   const hoy    =vals.filter(c=>c.fecha===today).length;
-  const pend   =vals.filter(c=>c.estado==="por_confirmar").length;
+  const pend   =vals.filter(c=>c.estado==="pendiente").length;
   const ingr   =vals.filter(c=>c.fecha?.startsWith(mesStr)&&c.estado==="atendido").reduce((s,c)=>s+(c.precio||0),0);
   const total  =vals.length;
   document.getElementById("admStatHoy").textContent     = hoy;
@@ -1818,7 +1712,7 @@ function renderAdmList(items){
   list.innerHTML=items.map(c=>{
     const initial=(c.nombre||"?")[0].toUpperCase();
     const isToday=c.fecha===today;
-    const statusMap={por_confirmar:"Por confirmar",pendiente:"Pendiente",confirmada:"Confirmada",atendido:"Atendida",cancelado:"Cancelada",cancelada:"Cancelada"};
+    const statusMap={pendiente:"Pendiente",atendido:"Atendida",cancelado:"Cancelada"};
     const statusLabel=statusMap[c.estado]||c.estado;
     const waMsg=c.whatsapp?encodeURIComponent(`Hola ${c.nombre}! Te recuerdo tu cita de ${c.servicio} el ${fmtFecha(c.fecha)} a las ${c.hora} hrs. Código: ${c.codigo}`):"";
     return `
@@ -1846,16 +1740,12 @@ function renderAdmList(items){
             <span class="adm-code">${c.codigo}</span>
           </div>
           <div class="adm-card-actions">
-            ${c.estado==="por_confirmar"?`
-              <button class="adm-btn adm-btn-confirmar" onclick="updateCita('${c.id}','confirmada')">✓ Confirmar cita</button>
-              <button class="adm-btn adm-btn-cancel" onclick="updateCita('${c.id}','cancelado')">✕ Rechazar</button>
-            `:""}
-            ${c.estado==="pendiente"||c.estado==="confirmada"?`
+            ${c.estado==="pendiente"?`
               <button class="adm-btn adm-btn-ok" onclick="updateCita('${c.id}','atendido')">✓ Atendida</button>
               <button class="adm-btn adm-btn-cancel" onclick="updateCita('${c.id}','cancelado')">✕ Cancelar</button>
             `:""}
-            ${c.estado==="cancelado"||c.estado==="cancelada"?`
-              <button class="adm-btn" onclick="updateCita('${c.id}','por_confirmar')">↩ Restaurar</button>
+            ${c.estado==="cancelado"?`
+              <button class="adm-btn" onclick="updateCita('${c.id}','pendiente')">↩ Restaurar</button>
             `:""}
             ${c.whatsapp?`
               <a class="adm-btn adm-btn-wa" href="https://wa.me/${c.whatsapp}?text=${waMsg}" target="_blank" rel="noopener">
@@ -1871,13 +1761,7 @@ function renderAdmList(items){
 async function updateCita(id,estado){
   try{
     await db.ref(`citas/${id}`).update({estado});
-    const msgs={
-      confirmada:"✓ Cita confirmada · el cliente fue notificado en tiempo real",
-      atendido:"✓ Marcada como atendida",
-      cancelado:"Cita cancelada",
-      pendiente:"↩ Cita restaurada",
-      por_confirmar:"↩ Cita restaurada a Por confirmar"
-    };
+    const msgs={atendido:"✓ Marcada como atendida",cancelado:"Cita cancelada",pendiente:"↩ Cita restaurada"};
     showToast(msgs[estado]||"Actualizado");
   } catch(e){ showToast("Error al actualizar"); console.error(e); }
 }
@@ -2098,19 +1982,18 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
     nombre, whatsapp: wa, servicio: s.nombre,
     precio: s.precio, duracion: s.duracion,
     fecha: booking.fecha, hora: booking.hora,
-    codigo, estado: "por_confirmar",
+    codigo, estado: "pendiente",
     createdAt: Date.now(),
     uid:       currentUser ? currentUser.uid   : null,
     userEmail: currentUser ? currentUser.email : null
   };
 
   try{
-    const citaRef = await db.ref("citas").push(cita);
-    const citaKey = citaRef.key;
+    await db.ref("citas").push(cita);
     if(currentUser){
       db.ref(`usuarios/${currentUser.uid}`).update({nombre, whatsapp:wa, updatedAt:Date.now()});
     }
-    mostrarConfirmacion(cita, codigo, wa, citaKey);
+    mostrarConfirmacion(cita, codigo, wa);
   } catch(e){
     btn.innerHTML = "Confirmar cita"; btn.disabled = false;
     showToast("Error al guardar. Intenta de nuevo.");
@@ -2121,18 +2004,14 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
 /* ───────────────────────────────────────────────
    PASO 5: CONFIRMACIÓN
 ──────────────────────────────────────────────── */
-function mostrarConfirmacion(cita, codigo, waCliente, citaKey){
-  /* Limpiar listener previo */
-  if(confirmListener){ confirmListener.off(); confirmListener=null; }
-
-  /* Código de reserva */
+function mostrarConfirmacion(cita, codigo, waCliente){
   document.getElementById("confirmCode").textContent = codigo;
+
   document.getElementById("ctCopyBtn").onclick = ()=>{
     navigator.clipboard.writeText(codigo).catch(()=>{});
     showToast("Código copiado 📋");
   };
 
-  /* Detalles de la cita */
   document.getElementById("ctDetails").innerHTML = `
     <div><div class="ct-dl">Servicio</div><div class="ct-dv">${cita.servicio}</div></div>
     <div><div class="ct-dl">Precio</div><div class="ct-dv">$${cita.precio} MXN</div></div>
@@ -2142,7 +2021,6 @@ function mostrarConfirmacion(cita, codigo, waCliente, citaKey){
     <div><div class="ct-dl">Barbero</div><div class="ct-dv">Jesús Juárez</div></div>
   `;
 
-  /* Pre-calcular URLs para cuando se confirme */
   const gcDate  = cita.fecha.replace(/-/g,"");
   const [fh,fm] = cita.hora.split(":").map(Number);
   const endMin  = fh*60 + fm + cita.duracion;
@@ -2153,48 +2031,20 @@ function mostrarConfirmacion(cita, codigo, waCliente, citaKey){
     +`&dates=${gcStart}/${gcEnd}`
     +`&details=${encodeURIComponent("Código: "+codigo+"\nBarbero: Jesús Juárez\nDirección: Av. Francisco I. Madero 400-402, Centro, Pachuca, Hgo.\nWhatsApp: +52 771 668 2637")}`
     +`&location=${encodeURIComponent("Av. Francisco I. Madero 400-402, Pachuca de Soto, Hidalgo")}`;
+
   const waMsg = encodeURIComponent(
     `Hola Jesús! Te confirmo mi cita:\n\n📋 Código: ${codigo}\n👤 Nombre: ${cita.nombre}\n✂️ Servicio: ${cita.servicio}\n📅 Fecha: ${fmtFecha(cita.fecha)}\n🕐 Hora: ${cita.hora} hrs\n\n¡Ahí estaré puntual!`
   );
 
-  /* Estado inicial: esperando al barbero */
-  document.getElementById("ctWaitState").style.display  = "block";
-  document.getElementById("ctDoneState").style.display  = "none";
-  document.getElementById("ctActionsPending").style.display = "flex";
-  document.getElementById("ctActions").style.display    = "none";
-
-  /* Escuchar en tiempo real el cambio de estado */
-  if(citaKey){
-    confirmListener = db.ref(`citas/${citaKey}/estado`);
-    confirmListener.on("value", snap=>{
-      if(snap.val()==="confirmada"){
-        /* Desconectar listener */
-        confirmListener.off(); confirmListener=null;
-        /* Cambiar a estado confirmado */
-        document.getElementById("ctWaitState").style.display  = "none";
-        document.getElementById("ctDoneState").style.display  = "block";
-        document.getElementById("ctActionsPending").style.display = "none";
-        document.getElementById("ctActions").style.display    = "flex";
-        /* Animación flash en el head */
-        const doneHead = document.getElementById("ctDoneState");
-        doneHead.style.animation = "none";
-        doneHead.offsetHeight; /* reflow */
-        doneHead.style.animation = "ct-confirmed-flash .9s ease forwards";
-        /* Poblar botones de acción confirmados */
-        document.getElementById("ctActions").innerHTML = `
-          <a href="${gcUrl}" target="_blank" rel="noopener" class="btn btn-outline" style="gap:.5rem;">📅 Agregar al calendario</a>
-          <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn btn-wa">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Confirmar por WhatsApp
-          </a>
-          <button onclick="showScreen('miscitas');cargarMisCitas();" class="btn btn-outline" style="gap:.5rem;">📋 Ver mis citas</button>
-          <button onclick="resetBooking();" class="btn-ghost">+ Agendar otra cita</button>
-        `;
-        showToast("🎉 ¡El barbero confirmó tu cita!", 4000);
-        window.scrollTo({top:0,behavior:"smooth"});
-      }
-    });
-  }
+  document.getElementById("ctActions").innerHTML = `
+    <a href="${gcUrl}" target="_blank" rel="noopener" class="btn btn-outline" style="gap:.5rem;">📅 Agregar al calendario</a>
+    <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn btn-wa">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Confirmar por WhatsApp
+    </a>
+    <button onclick="showScreen('miscitas');cargarMisCitas();" class="btn btn-outline" style="gap:.5rem;">📋 Ver mis citas</button>
+    <button onclick="resetBooking();" class="btn-ghost">+ Agendar otra cita</button>
+  `;
 
   goStep(5);
   document.querySelectorAll(".step-item").forEach(el=>{
@@ -2263,11 +2113,10 @@ async function cargarMisCitas(){
 
 function renderMcCard(c,upcoming){
   let badge,cancelBtn="";
-  if(c.estado==="por_confirmar")                     badge=`<span class="mc-badge mc-badge-por_confirmar">⏳ Por confirmar</span>`;
-  else if(c.estado==="confirmada")                   badge=`<span class="mc-badge mc-badge-confirmada">✓ Confirmada</span>`;
-  else if(c.estado==="cancelada"||c.estado==="cancelado") badge=`<span class="mc-badge mc-badge-cancelada">Cancelada</span>`;
-  else if(upcoming)                                  badge=`<span class="mc-badge mc-badge-pendiente">Pendiente</span>`;
-  else                                               badge=`<span class="mc-badge mc-badge-pasada">Pasada</span>`;
+  if(c.estado==="confirmada")      badge=`<span class="mc-badge mc-badge-confirmada">Confirmada</span>`;
+  else if(c.estado==="cancelada")  badge=`<span class="mc-badge mc-badge-cancelada">Cancelada</span>`;
+  else if(upcoming)                badge=`<span class="mc-badge mc-badge-pendiente">Pendiente</span>`;
+  else                             badge=`<span class="mc-badge mc-badge-pasada">Pasada</span>`;
   if(upcoming && c.estado!=="cancelada"){
     cancelBtn=`<button class="mc-cancel-btn" data-key="${c._key}" data-code="${c.codigo}">Cancelar</button>`;
   }
@@ -2567,24 +2416,5 @@ function applyUrlServiceParam(){
   }
 }
 </script>
-
-<!-- ══ BOTTOM NAV MÓVIL ══════════════════════════════════════════ -->
-<nav class="bottom-nav" aria-label="Navegación móvil">
-  <div class="bottom-nav-inner">
-    <a href="index.html" class="bn-item" aria-label="Inicio">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Inicio
-    </a>
-    <a href="tienda.html" class="bn-item" aria-label="Tienda">
-      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      Tienda
-    </a>
-    <a href="citas.html" class="bn-item active" aria-label="Citas">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Citas
-    </a>
-  </div>
-</nav>
-
 </body>
 </html>
