@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>body{visibility:hidden}</style>
 <title>Jesús Juárez · Barbería · Pachuca</title>
 
 <!-- PWA Meta -->
@@ -1044,53 +1045,50 @@ footer{
   .tienda-cta-tit{ font-size:1rem; }
   .tienda-cta-right{ align-items:flex-start; }
 }
-.wa-float{
+.gm-float{
   position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
   display:flex; align-items:center; gap:.65rem;
-  background:var(--wa); color:#fff;
+  background:#fff; color:#1a1a1a;
   padding:.75rem 1.3rem .75rem .85rem;
   border-radius:50px;
   text-decoration:none; font-family:'Montserrat', sans-serif;
   font-weight:700; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
-  box-shadow:0 6px 28px rgba(37,211,102,.38);
+  box-shadow:0 6px 28px rgba(0,0,0,.32);
   transition:transform .25s cubic-bezier(.16,1,.3,1),
              box-shadow .25s ease,
              padding .3s cubic-bezier(.16,1,.3,1),
              max-width .3s cubic-bezier(.16,1,.3,1);
   overflow:hidden; max-width:220px;
-  animation:waEntrada .6s .8s cubic-bezier(.16,1,.3,1) both;
+  animation:gmEntrada .6s .8s cubic-bezier(.16,1,.3,1) both;
 }
-.wa-float:hover{
+.gm-float:hover{
   transform:translateY(-3px) scale(1.03);
-  box-shadow:0 10px 36px rgba(37,211,102,.5);
+  box-shadow:0 10px 36px rgba(0,0,0,.44);
 }
-.wa-float svg{ flex-shrink:0; }
-.wa-float-label{ white-space:nowrap; }
+.gm-float svg{ flex-shrink:0; }
+.gm-float-label{ white-space:nowrap; }
 
-/* Pulso verde de atención */
-.wa-float::after{
+.gm-float::after{
   content:''; position:absolute;
   inset:-2px; border-radius:50px;
   background:transparent;
-  box-shadow:0 0 0 0 rgba(37,211,102,.5);
-  animation:waPulso 2.8s 1.8s ease-out infinite;
+  box-shadow:0 0 0 0 rgba(234,67,53,.4);
+  animation:gmPulso 2.8s 1.8s ease-out infinite;
   pointer-events:none;
 }
-@keyframes waPulso{
-  0%  { box-shadow:0 0 0 0   rgba(37,211,102,.45); }
-  70% { box-shadow:0 0 0 14px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0   rgba(37,211,102,0); }
+@keyframes gmPulso{
+  0%  { box-shadow:0 0 0 0   rgba(234,67,53,.35); }
+  70% { box-shadow:0 0 0 14px rgba(234,67,53,0); }
+  100%{ box-shadow:0 0 0 0   rgba(234,67,53,0); }
 }
-@keyframes waEntrada{
+@keyframes gmEntrada{
   from{ opacity:0; transform:translateY(20px) scale(.9); }
   to  { opacity:1; transform:translateY(0)    scale(1); }
 }
 
-/* En móvil solo muestra el ícono */
 @media(max-width:768px){
-  .wa-float{ padding:.82rem; max-width:52px; border-radius:50%; }
-  .wa-float-label{ display:none; }
-  .wa-float{ bottom:1.4rem; right:1.2rem; }
+  .gm-float{ padding:.82rem; max-width:52px; border-radius:50%; bottom:calc(76px + env(safe-area-inset-bottom,0px)); right:1.2rem; }
+  .gm-float-label{ display:none; }
 }
 
 @media(max-width:768px){
@@ -1203,6 +1201,30 @@ footer{
   color:var(--blanco); text-decoration:none; transition:all .18s;
 }
 .drawer-proto:hover{ border-color:rgba(214,255,0,.4); color:var(--lima); }
+/* ══ BOTTOM NAV MÓVIL ═══════════════════════════════════════════ */
+.bottom-nav{
+  display:none; position:fixed; bottom:0; left:0; right:0; z-index:300;
+  background:rgba(8,8,8,.97); backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:.45rem 0 calc(.45rem + env(safe-area-inset-bottom,0px));
+}
+.bottom-nav-inner{ display:flex; justify-content:space-around; align-items:center; }
+.bn-item{
+  display:flex; flex-direction:column; align-items:center; gap:.2rem;
+  flex:1; padding:.35rem .5rem; border-radius:10px;
+  text-decoration:none; color:rgba(240,240,237,.35);
+  font-family:'Montserrat',sans-serif; font-size:.48rem;
+  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  transition:color .18s; background:none; border:none; cursor:pointer;
+}
+.bn-item svg{ width:20px; height:20px; stroke:currentColor; fill:none;
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.bn-item.active{ color:var(--lima,#D6FF00); }
+.bn-item:not(.active):hover{ color:rgba(240,240,237,.65); }
+@media(max-width:768px){
+  .bottom-nav{ display:block; }
+  body{ padding-bottom:calc(68px + env(safe-area-inset-bottom,0px)) !important; }
+}
 </style>
 </head>
 <body>
@@ -1214,15 +1236,16 @@ footer{
   <button class="dismiss" id="dismiss-btn" aria-label="Cerrar">×</button>
 </div>
 
-<!-- BOTÓN FLOTANTE WHATSAPP -->
-<a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-   target="_blank" rel="noopener noreferrer"
-   class="wa-float" aria-label="Agendar cita por WhatsApp">
+<!-- BOTÓN FLOTANTE GMAIL -->
+<a href="mailto:jesusjuarezperezel10@gmail.com?subject=Asunto%20importante%20%E2%80%94%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20comunico%20con%20usted%20para%20tratar%20el%20siguiente%20asunto%3A%0A%0A%5BDescriba%20brevemente%20su%20consulta%5D%0A%0AQuedo%20en%20espera%20de%20su%20respuesta.%0A%0AAtentamente%2C%0A%5BNombre%20completo%5D"
+   class="gm-float" aria-label="Contactar por correo Gmail">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fill="#fff" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
-    <path fill="#25D366" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/>
+    <path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/>
+    <path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/>
+    <path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/>
+    <path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/>
   </svg>
-  <span class="wa-float-label">Agendar Cita</span>
+  <span class="gm-float-label">Contacto</span>
 </a>
 
 <!-- NAVBAR -->
@@ -1248,19 +1271,9 @@ footer{
       <span class="ncc-title">Contacto directo</span>
       <button class="ncc-close" id="navContactoClose" aria-label="Cerrar">✕</button>
     </div>
-    <p class="ncc-sub">Cada opción abre con un mensaje listo. Tú solo confirmas.</p>
+    <p class="ncc-sub">Selecciona el canal de comunicación de tu preferencia.</p>
     <div class="ncc-list">
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-         target="_blank" rel="noopener noreferrer" class="ncc-item">
-        <span class="ncc-ico ncc-ico-wa">
-          <svg viewBox="0 0 24 24" fill="none"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
-        </span>
-        <div class="ncc-txt">
-          <strong>WhatsApp</strong>
-          <small>+52 771 668 2637 · Respuesta inmediata</small>
-        </div>
-      </a>
-      <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita.%20%C2%BFTienes%20disponibilidad%3F"
+      <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Asunto%20importante%20%E2%80%94%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20comunico%20con%20usted%20para%20tratar%20el%20siguiente%20asunto%3A%0A%0A%5BDescriba%20brevemente%20su%20consulta%5D%0A%0AQuedo%20en%20espera%20de%20su%20respuesta.%0A%0AAtentamente%2C%0A%5BNombre%20completo%5D"
          class="ncc-item">
         <span class="ncc-ico ncc-ico-mail">
           <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
@@ -1311,11 +1324,7 @@ footer{
   </ul>
   <!-- Protocolos en el drawer -->
   <div class="drawer-protos" id="drawerProtos">
-    <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="drawer-proto">
-      <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
-      WhatsApp
-    </a>
-    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita." class="drawer-proto">
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Asunto%20importante%20%E2%80%94%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20comunico%20con%20usted%20para%20tratar%20el%20siguiente%20asunto%3A%0A%0A%5BDescriba%20brevemente%20su%20consulta%5D%0A%0AQuedo%20en%20espera%20de%20su%20respuesta.%0A%0AAtentamente%2C%0A%5BNombre%20completo%5D" class="drawer-proto">
       <svg width="20" height="20" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
       Gmail
     </a>
@@ -1866,7 +1875,7 @@ footer{
         <div class="pstat"><span class="pstat-num">7</span><span class="pstat-label">servicios distintos</span></div>
       </div>
       <p class="promos-img-extra">En el Centro de Pachuca, fácil de llegar desde cualquier punto de la ciudad. Difícil de olvidar.</p>
-      <a href="https://wa.me/527716682637?text=Hola%20Jesús%2C%20quiero%20agendar%20mi%20cita." target="_blank" rel="noopener noreferrer" class="promos-img-btn">Agendar por WhatsApp →</a>
+      <a href="citas.html" class="promos-img-btn">Agendar cita →</a>
     </div>
   </div>
 </div>
@@ -1904,7 +1913,6 @@ footer{
     <h2 class="ctc-h" aria-label="Agenda tu Cita">Agenda<br>tu<br><em>Cita</em></h2>
     <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
     <div class="proto-list">
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg></span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
       <a id="btn-correo" href="#" class="proto mail"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg></span><div class="proto-txt"><strong>Correo Electrónico</strong><small id="label-correo">Correo electrónico</small></div></a>
       <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="proto ig"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ig-g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-g)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg></span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div></a>
       <!-- ENLACE ACTUALIZADO: APUNTA DIRECTAMENTE AL MERCADO MIGUEL HIDALGO (LA FAYUCA) -->
@@ -1926,8 +1934,8 @@ footer{
       <p style="font-size:.75rem; color:var(--lima); margin-top:.5rem;">📍 Centro · Pachuca</p>
     </div>
     <div class="info-b">
-      <p class="info-lbl">Confirma tu cita</p>
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="btn btn-lima" style="margin-top:.4rem;">✂ Agendar por WhatsApp</a>
+      <p class="info-lbl">Agenda tu cita</p>
+      <a href="citas.html" class="btn btn-lima" style="margin-top:.4rem;">✂ Ir al sistema de citas</a>
     </div>
   </div>
 </section>
@@ -1940,8 +1948,7 @@ footer{
   </div>
   <div>
     <p class="ft-col-h">Contacto</p>
-    <a href="https://wa.me/527716682637" target="_blank" rel="noopener noreferrer" class="ft-lnk">💬 +52 771 668 2637</a>
-    <a href="#" id="ft-correo-lnk" class="ft-lnk">✉ Correo electrónico</a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Asunto%20importante%20%E2%80%94%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20comunico%20con%20usted%20para%20tratar%20el%20siguiente%20asunto%3A%0A%0A%5BDescriba%20brevemente%20su%20consulta%5D%0A%0AQuedo%20en%20espera%20de%20su%20respuesta.%0A%0AAtentamente%2C%0A%5BNombre%20completo%5D" class="ft-lnk">✉ jesusjuarezperezel10@gmail.com</a>
     <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="ft-lnk">📸 @jesus_juarez_perez_01</a>
   </div>
   <div>
@@ -2045,22 +2052,13 @@ dismissBtn && dismissBtn.addEventListener('click', () => {
 const ua = navigator.userAgent || navigator.vendor || window.opera;
 const esMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
 
-// Reconstruir correo en footer (ofuscado en HTML)
-(function(){
-  const lnk = document.getElementById('ft-correo-lnk');
-  if (!lnk) return;
-  const c = ['jesusjuarez','perez','el10','@gmail.com'].join('');
-  lnk.href = 'mailto:' + c;
-  lnk.textContent = '✉ ' + c;
-})();
-
 // ========== EMAIL INTELIGENTE ==========
 (function() {
   const btn = document.getElementById('btn-correo');
   const label = document.getElementById('label-correo');
   const correo = ['jesusjuarez','perez','el10','@gmail.com'].join('');
-  const asunto = 'Cita en Barbería Jesús Juárez';
-  const cuerpo = 'Hola Jesús,\n\nQuiero agendar una cita:\n\nNombre: \nFecha preferida: \nServicio: ';
+  const asunto = 'Asunto importante — JJ Barbería';
+  const cuerpo = 'Estimado Jesús,\n\nMe comunico con usted para tratar el siguiente asunto:\n\n[Describa brevemente su consulta]\n\nQuedo en espera de su respuesta.\n\nAtentamente,\n[Nombre completo]';
   if (esMobile) {
     btn.href = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
     if (label) label.textContent = 'Abre tu app de correo';
@@ -2623,6 +2621,24 @@ updateCarousel(0);
   });
 })();
 </script>
+
+<!-- ══ BOTTOM NAV MÓVIL ══════════════════════════════════════════ -->
+<nav class="bottom-nav" aria-label="Navegación móvil">
+  <div class="bottom-nav-inner">
+    <a href="index.html" class="bn-item active" aria-label="Inicio">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Inicio
+    </a>
+    <a href="tienda.html" class="bn-item" aria-label="Tienda">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Tienda
+    </a>
+    <a href="citas.html" class="bn-item" aria-label="Citas">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Citas
+    </a>
+  </div>
+</nav>
 
 </body>
 </html>
