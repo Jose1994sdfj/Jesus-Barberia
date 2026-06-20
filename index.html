@@ -85,7 +85,7 @@
   ],
   "sameAs": [
     "https://www.instagram.com/jesus_juarez_perez_01",
-    "https://wa.me/527716682637"
+    "mailto:jesusjuarezperezel10@gmail.com"
   ],
   "hasMap": "https://maps.app.goo.gl/Lb2f8zVu3N8tb8B39"
 }
@@ -1047,12 +1047,12 @@ footer{
 .wa-float{
   position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
   display:flex; align-items:center; gap:.65rem;
-  background:var(--wa); color:#fff;
+  background:#111; color:var(--blanco);
   padding:.75rem 1.3rem .75rem .85rem;
   border-radius:50px;
   text-decoration:none; font-family:'Montserrat', sans-serif;
   font-weight:700; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
-  box-shadow:0 6px 28px rgba(37,211,102,.38);
+  box-shadow:0 6px 28px rgba(0,0,0,.55);
   transition:transform .25s cubic-bezier(.16,1,.3,1),
              box-shadow .25s ease,
              padding .3s cubic-bezier(.16,1,.3,1),
@@ -1062,24 +1062,24 @@ footer{
 }
 .wa-float:hover{
   transform:translateY(-3px) scale(1.03);
-  box-shadow:0 10px 36px rgba(37,211,102,.5);
+  box-shadow:0 10px 36px rgba(214,255,0,.18);
 }
 .wa-float svg{ flex-shrink:0; }
 .wa-float-label{ white-space:nowrap; }
 
-/* Pulso verde de atención */
+/* Pulso de atención */
 .wa-float::after{
   content:''; position:absolute;
   inset:-2px; border-radius:50px;
   background:transparent;
-  box-shadow:0 0 0 0 rgba(37,211,102,.5);
+  box-shadow:0 0 0 0 rgba(214,255,0,.35);
   animation:waPulso 2.8s 1.8s ease-out infinite;
   pointer-events:none;
 }
 @keyframes waPulso{
-  0%  { box-shadow:0 0 0 0   rgba(37,211,102,.45); }
-  70% { box-shadow:0 0 0 14px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0   rgba(37,211,102,0); }
+  0%  { box-shadow:0 0 0 0   rgba(214,255,0,.3); }
+  70% { box-shadow:0 0 0 14px rgba(214,255,0,0); }
+  100%{ box-shadow:0 0 0 0   rgba(214,255,0,0); }
 }
 @keyframes waEntrada{
   from{ opacity:0; transform:translateY(20px) scale(.9); }
@@ -1227,15 +1227,16 @@ footer{
   <button class="dismiss" id="dismiss-btn" aria-label="Cerrar">×</button>
 </div>
 
-<!-- BOTÓN FLOTANTE WHATSAPP -->
-<a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-   target="_blank" rel="noopener noreferrer"
-   class="wa-float" aria-label="Agendar cita por WhatsApp">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fill="#fff" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
-    <path fill="#25D366" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/>
+<!-- BOTÓN FLOTANTE CONTACTO -->
+<a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20Profesional%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20con%20usted%20para%20tratar%20un%20asunto%20de%20%C3%ADndole%20profesional%2C%20externo%20a%20los%20servicios%20de%20barber%C3%ADa.%0A%0A%5BDescriba%20aqu%C3%AD%20el%20motivo%20de%20su%20comunicaci%C3%B3n%5D%0A%0AAgradezco%20su%20atenci%C3%B3n%20y%20quedo%20en%20espera%20de%20su%20respuesta.%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D"
+   class="wa-float" aria-label="Contacto por correo">
+  <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/>
+    <path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/>
+    <path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/>
+    <path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/>
   </svg>
-  <span class="wa-float-label">Agendar Cita</span>
+  <span class="wa-float-label">Contacto</span>
 </a>
 
 <!-- NAVBAR -->
@@ -1263,16 +1264,6 @@ footer{
     </div>
     <p class="ncc-sub">Cada opción abre con un mensaje listo. Tú solo confirmas.</p>
     <div class="ncc-list">
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F"
-         target="_blank" rel="noopener noreferrer" class="ncc-item">
-        <span class="ncc-ico ncc-ico-wa">
-          <svg viewBox="0 0 24 24" fill="none"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
-        </span>
-        <div class="ncc-txt">
-          <strong>WhatsApp</strong>
-          <small>+52 771 668 2637 · Respuesta inmediata</small>
-        </div>
-      </a>
       <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita.%20%C2%BFTienes%20disponibilidad%3F"
          class="ncc-item">
         <span class="ncc-ico ncc-ico-mail">
@@ -1324,11 +1315,7 @@ footer{
   </ul>
   <!-- Protocolos en el drawer -->
   <div class="drawer-protos" id="drawerProtos">
-    <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="drawer-proto">
-      <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg>
-      WhatsApp
-    </a>
-    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Cita%20en%20JJ%20Barber%C3%ADa&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita." class="drawer-proto">
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20Profesional%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20con%20usted%20para%20tratar%20un%20asunto%20de%20%C3%ADndole%20profesional%2C%20externo%20a%20los%20servicios%20de%20barber%C3%ADa.%0A%0A%5BDescriba%20aqu%C3%AD%20el%20motivo%5D%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="drawer-proto">
       <svg width="20" height="20" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
       Gmail
     </a>
@@ -1706,8 +1693,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$320</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Pomada%20Verde%20Reuzel%20%F0%9F%9F%A2%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Pomada%20Verde%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1724,8 +1710,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$320</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Pomada%20Roja%20Reuzel%20%F0%9F%94%B4%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Pomada%20Roja%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1742,8 +1727,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$320</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Pomada%20Azul%20Reuzel%20%F0%9F%94%B5%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Pomada%20Azul%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1760,8 +1744,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$340</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Pomada%20Rosa%20Reuzel%20%F0%9F%9F%A1%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Pomada%20Rosa%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1778,8 +1761,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$330</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Fiber%20Pomade%20Reuzel%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Fiber%20Pomade%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1796,8 +1778,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$330</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20la%20Clay%20Matte%20Reuzel%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Clay%20Matte%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1814,8 +1795,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$290</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20el%20Shampoo%20Reuzel%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Shampoo%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1832,8 +1812,7 @@ footer{
           <div class="prod-precio-row">
             <span class="prod-precio">$360</span>
           </div>
-          <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20me%20interesa%20el%20Grooming%20Tonic%20Reuzel%20%C2%BFTienes%20disponible%3F"
-             target="_blank" rel="noopener noreferrer" class="prod-btn">Pedir por WhatsApp</a>
+          <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20de%20Producto%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20para%20consultar%20la%20disponibilidad%20de%3A%20Grooming%20Tonic%20Reuzel.%0A%0A%C2%BFPodr%C3%ADa%20indicarme%20precio%20y%20disponibilidad%3F%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="prod-btn">Consultar por Correo</a>
         </div>
       </div>
 
@@ -1879,7 +1858,7 @@ footer{
         <div class="pstat"><span class="pstat-num">7</span><span class="pstat-label">servicios distintos</span></div>
       </div>
       <p class="promos-img-extra">En el Centro de Pachuca, fácil de llegar desde cualquier punto de la ciudad. Difícil de olvidar.</p>
-      <a href="https://wa.me/527716682637?text=Hola%20Jesús%2C%20quiero%20agendar%20mi%20cita." target="_blank" rel="noopener noreferrer" class="promos-img-btn">Agendar por WhatsApp →</a>
+      <a href="citas.html" class="promos-img-btn">Agendar tu Cita →</a>
     </div>
   </div>
 </div>
@@ -1917,7 +1896,6 @@ footer{
     <h2 class="ctc-h" aria-label="Agenda tu Cita">Agenda<br>tu<br><em>Cita</em></h2>
     <p class="ctc-d">Sin bots. Sin formularios. Contacto directo con Jesús.</p>
     <div class="proto-list">
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="proto wa"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.304A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/><path fill="#fff" d="M16.735 14.358c-.228-.114-1.347-.664-1.557-.74-.21-.076-.362-.114-.515.114-.152.228-.589.74-.722.893-.133.152-.266.171-.494.057-.228-.114-.963-.355-1.834-1.13-.678-.606-1.136-1.352-1.269-1.58-.133-.228-.014-.352.1-.465.103-.103.228-.266.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.4-.057-.114-.515-1.237-.705-1.694-.186-.445-.375-.385-.515-.392l-.437-.008c-.152 0-.4.057-.609.285-.21.228-.8.781-.8 1.903 0 1.123.819 2.208.932 2.36.114.152 1.611 2.46 3.903 3.452.546.235.971.376 1.303.48.547.175 1.045.15 1.438.091.439-.065 1.35-.552 1.541-1.085.19-.532.19-.988.133-1.085-.057-.096-.21-.152-.437-.266z"/></svg></span><div class="proto-txt"><strong>WhatsApp — Agendar</strong><small>+52 771 668 2637 · Respuesta inmediata</small></div></a>
       <a id="btn-correo" href="#" class="proto mail"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg></span><div class="proto-txt"><strong>Correo Electrónico</strong><small id="label-correo">Correo electrónico</small></div></a>
       <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="proto ig"><span class="proto-ico"><svg style="width:1.6rem;height:1.6rem;display:block;flex-shrink:0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ig-g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-g)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg></span><div class="proto-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div></a>
       <!-- ENLACE ACTUALIZADO: APUNTA DIRECTAMENTE AL MERCADO MIGUEL HIDALGO (LA FAYUCA) -->
@@ -1940,7 +1918,7 @@ footer{
     </div>
     <div class="info-b">
       <p class="info-lbl">Confirma tu cita</p>
-      <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20quiero%20agendar%20mi%20cita.%20%C2%BFTienes%20disponibilidad%3F" target="_blank" rel="noopener noreferrer" class="btn btn-lima" style="margin-top:.4rem;">✂ Agendar por WhatsApp</a>
+      <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20Profesional%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20con%20usted%20para%20tratar%20un%20asunto%20de%20%C3%ADndole%20profesional%2C%20externo%20a%20los%20servicios%20de%20barber%C3%ADa.%0A%0A%5BDescriba%20aqu%C3%AD%20el%20motivo%5D%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="btn btn-lima" style="margin-top:.4rem;">✉ Escribir Correo</a>
     </div>
   </div>
 </section>
@@ -1953,8 +1931,7 @@ footer{
   </div>
   <div>
     <p class="ft-col-h">Contacto</p>
-    <a href="https://wa.me/527716682637" target="_blank" rel="noopener noreferrer" class="ft-lnk">💬 +52 771 668 2637</a>
-    <a href="#" id="ft-correo-lnk" class="ft-lnk">✉ Correo electrónico</a>
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20Profesional%20%C2%B7%20JJ%20Barber%C3%ADa&body=Estimado%20Jes%C3%BAs%2C%0A%0AMe%20pongo%20en%20contacto%20con%20usted%20para%20tratar%20un%20asunto%20de%20%C3%ADndole%20profesional%2C%20externo%20a%20los%20servicios%20de%20barber%C3%ADa.%0A%0A%5BDescriba%20aqu%C3%AD%20el%20motivo%5D%0A%0AAtentamente%2C%0A%5BSu%20nombre%5D" class="ft-lnk">✉ jesusjuarezperezel10@gmail.com</a>
     <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="ft-lnk">📸 @jesus_juarez_perez_01</a>
   </div>
   <div>
@@ -2230,7 +2207,7 @@ function generarCuponPDF(cuponData) {
   doc.setFontSize(9); doc.setTextColor(119, 119, 119); doc.text(cuponData.validez, width / 2, 170, { align: 'center' });
   doc.setFontSize(8); doc.text('Av. Francisco I. Madero 400-402, Centro, 42000 Pachuca, Hgo.', width / 2, 185, { align: 'center' });
   doc.text('Centro · Pachuca', width / 2, 191, { align: 'center' });
-  doc.text('WhatsApp: 771 668 2637', width / 2, 197, { align: 'center' });
+  doc.text('Correo: jesusjuarezperezel10@gmail.com', width / 2, 197, { align: 'center' });
   doc.setFillColor(214, 255, 0); doc.rect(20, 205, width - 40, 2, 'F');
   doc.save(`cupon-jj-barberia-${cuponData.id}.pdf`);
 }
