@@ -498,17 +498,22 @@ nav{
   padding:2.4rem 2rem 2rem; text-align:center;
 }
 .ct-check{
-  width:60px; height:60px; border-radius:50%;
+  width:64px; height:64px; border-radius:50%;
   background:rgba(214,255,0,.1); border:2px solid rgba(214,255,0,.4);
-  color:var(--lima); font-size:1.6rem;
+  color:var(--lima); font-size:1.7rem;
   display:flex; align-items:center; justify-content:center;
   margin:0 auto 1.1rem; font-weight:900; font-family:'Montserrat',sans-serif;
+  transition:color .4s, border-color .4s, background .4s;
 }
 .ct-title{
   font-family:'Montserrat',sans-serif; font-weight:900;
   font-size:1.35rem; color:var(--blanco); letter-spacing:-.02em; margin-bottom:.3rem;
+  transition:color .4s;
 }
-.ct-subtitle{ font-size:.68rem; color:var(--humo); letter-spacing:.1em; text-transform:uppercase; }
+.ct-subtitle{
+  font-size:.72rem; color:var(--humo); letter-spacing:.05em;
+  transition:color .4s;
+}
 .ct-code-row{
   display:flex; align-items:center; justify-content:space-between;
   padding:1rem 2rem;
@@ -576,9 +581,37 @@ nav{
   background:var(--gris); border:1px solid rgba(255,255,255,.07);
   border-radius:var(--r-md); padding:1.2rem 1.4rem; margin-bottom:.75rem;
   display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
-  transition:border-color .2s;
+  transition:border-color .2s, transform .15s;
+  cursor:pointer;
 }
-.mc-card:hover{ border-color:rgba(214,255,0,.15); }
+.mc-card:hover{ border-color:rgba(214,255,0,.25); transform:translateY(-1px); }
+.mc-card:active{ transform:translateY(0); }
+
+/* ══ MODAL DETALLE CITA ══════════════════════════════════════════ */
+.mc-detail-overlay{
+  position:fixed; inset:0; z-index:800;
+  background:rgba(0,0,0,.75); backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  padding:1.2rem; opacity:0; pointer-events:none;
+  transition:opacity .25s;
+}
+.mc-detail-overlay.open{ opacity:1; pointer-events:all; }
+.mc-detail-inner{
+  width:100%; max-width:440px; max-height:90vh;
+  overflow-y:auto; border-radius:var(--r-xl);
+  transform:translateY(20px); transition:transform .28s cubic-bezier(.16,1,.3,1);
+  position:relative;
+}
+.mc-detail-overlay.open .mc-detail-inner{ transform:translateY(0); }
+.mc-detail-close{
+  position:absolute; top:.9rem; right:.9rem; z-index:10;
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+  color:var(--humo); font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.mc-detail-close:hover{ background:rgba(255,90,90,.15); color:#ff5a5a; border-color:rgba(255,90,90,.3); }
 .mc-card-code{
   font-family:'Montserrat',sans-serif; font-size:.62rem;
   font-weight:700; color:var(--lima); letter-spacing:.1em; margin-bottom:.3rem;
@@ -590,10 +623,10 @@ nav{
   font-size:.56rem; font-family:'Montserrat',sans-serif; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase; padding:.22rem .7rem; border-radius:30px;
 }
-.mc-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
-.mc-badge-confirmada{ background:rgba(90,255,158,.12); color:#5aff9e; }
-.mc-badge-cancelada{ background:rgba(255,90,90,.1); color:#ff5a5a; }
-.mc-badge-pasada{ background:rgba(255,255,255,.07); color:var(--humo); }
+.mc-badge-pendiente{  background:rgba(214,255,0,.12);  color:var(--lima); }
+.mc-badge-confirmada{ background:rgba(80,180,255,.12); color:#50b4ff; }
+.mc-badge-cancelada{  background:rgba(255,90,90,.1);   color:#ff5a5a; }
+.mc-badge-pasada{     background:rgba(255,255,255,.07); color:var(--humo); }
 .mc-cancel-btn{
   font-size:.6rem; color:#ff5a5a; background:none;
   border:1px solid rgba(255,90,90,.25); border-radius:30px;
@@ -1033,6 +1066,7 @@ nav{
 }
 .adm-card:hover{ border-color:#333; }
 .adm-card[data-estado="pendiente"]{ border-left-color:var(--lima); }
+.adm-card[data-estado="confirmada"]{ border-left-color:#50b4ff; }
 .adm-card[data-estado="atendido"]{ border-left-color:#5aff9e; }
 .adm-card[data-estado="cancelado"]{ border-left-color:#ff5a5a; }
 .adm-avatar{
@@ -1057,9 +1091,10 @@ nav{
   letter-spacing:.1em; text-transform:uppercase;
   padding:.2rem .58rem; border-radius:30px; display:inline-block;
 }
-.adm-badge-pendiente{ background:rgba(214,255,0,.12); color:var(--lima); }
-.adm-badge-atendido{  background:rgba(90,255,158,.1);  color:#5aff9e; }
-.adm-badge-cancelado{ background:rgba(255,90,90,.1);   color:#ff5a5a; }
+.adm-badge-pendiente{   background:rgba(214,255,0,.12);  color:var(--lima); }
+.adm-badge-confirmada{ background:rgba(80,180,255,.12); color:#50b4ff; }
+.adm-badge-atendido{   background:rgba(90,255,158,.1);  color:#5aff9e; }
+.adm-badge-cancelado{  background:rgba(255,90,90,.1);   color:#ff5a5a; }
 .adm-today-pill{
   font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:800;
   letter-spacing:.12em; background:var(--lima); color:var(--negro);
@@ -1089,10 +1124,37 @@ nav{
   display:inline-flex; align-items:center; gap:.3rem;
 }
 .adm-btn:hover{ color:var(--blanco); border-color:#555; }
-.adm-btn-ok:hover{    color:#5aff9e; border-color:#5aff9e; background:rgba(90,255,158,.05); }
+.adm-btn-ok:hover{     color:#5aff9e; border-color:#5aff9e; background:rgba(90,255,158,.05); }
+.adm-btn-confirm:hover{ color:#50b4ff; border-color:#50b4ff; background:rgba(80,180,255,.05); }
 .adm-btn-cancel:hover{ color:#ff5a5a; border-color:#ff5a5a; background:rgba(255,90,90,.05); }
 .adm-btn-wa{ color:var(--wa); border-color:rgba(37,211,102,.3); }
 .adm-btn-wa:hover{ background:rgba(37,211,102,.07); border-color:var(--wa); color:var(--wa); }
+
+/* ══ STATUS EN TIEMPO REAL (paso 5) ══════════════════════════════ */
+.ct-live-status{
+  margin:1.1rem 0 0; padding:1rem 1.1rem;
+  border-radius:var(--r-md); border:1px solid #2a2a2a;
+  background:var(--gris2); display:flex; align-items:center; gap:.8rem;
+}
+.ct-live-dot{
+  width:10px; height:10px; border-radius:50%; flex-shrink:0;
+  animation:ctPulse 2s ease-in-out infinite;
+}
+@keyframes ctPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+.ct-live-dot.pendiente{ background:var(--lima); }
+.ct-live-dot.confirmada{ background:#50b4ff; animation:none; }
+.ct-live-dot.atendido{   background:#5aff9e; animation:none; }
+.ct-live-dot.cancelado,.ct-live-dot.cancelada{ background:#ff5a5a; animation:none; }
+.ct-live-label{ font-size:.72rem; font-weight:500; color:var(--humo); }
+.ct-live-val{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.78rem; letter-spacing:.04em;
+}
+.ct-live-val.pendiente{ color:var(--lima); }
+.ct-live-val.confirmada{ color:#50b4ff; }
+.ct-live-val.atendido{   color:#5aff9e; }
+.ct-live-val.cancelado,.ct-live-val.cancelada{ color:#ff5a5a; }
+
 
 /* ══ TOAST ═══════════════════════════════════════════════════════ */
 .toast{
@@ -1108,9 +1170,12 @@ nav{
 /* ══ RESPONSIVE ══════════════════════════════════════════════════ */
 @media(max-width:900px){
   .nav-links{display:none;}
-  .nav-cta{display:none;}
   .nav-hamburger{display:flex;}
   .nav-drawer{display:flex;}
+  /* Forzar ocultos en móvil aunque JS los active con inline style */
+  #navCta,
+  .nav-miscitas-btn,
+  .nav-user-name{ display:none !important; }
 }
 @media(min-width:901px){
   .nav-hamburger{display:none !important;}
@@ -1190,6 +1255,7 @@ nav{
     <li><a href="index.html">Inicio</a></li>
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html" class="active">Citas</a></li>
+    <li id="drawerMisCitasItem" style="display:none"><a href="#" id="drawerMisCitasLink">Mis citas</a></li>
     <li><a href="#" id="drawerContactoLink">Contacto</a></li>
   </ul>
   <div class="drawer-protos" id="drawerProtos">
@@ -1311,9 +1377,9 @@ nav{
   <div class="step-panel" id="panel-5">
     <div class="confirm-ticket">
       <div class="ct-head">
-        <div class="ct-check">✓</div>
-        <div class="ct-title">¡Cita confirmada!</div>
-        <div class="ct-subtitle">JJ Barbería · Pachuca, Hgo.</div>
+        <div class="ct-check" id="ctStatusIcon">⏳</div>
+        <div class="ct-title" id="ctStatusTitle">Estado de tu cita</div>
+        <div class="ct-subtitle" id="ctStatusSubtitle">Esperando confirmación del barbero…</div>
       </div>
       <div class="ct-code-row">
         <div class="ct-code-inner">
@@ -1389,6 +1455,7 @@ nav{
       <div class="adm-tabs">
         <button class="adm-tab active" data-tab="hoy">📅 Hoy</button>
         <button class="adm-tab" data-tab="pendientes">⏳ Pendientes</button>
+        <button class="adm-tab" data-tab="confirmadas">✔ Confirmadas</button>
         <button class="adm-tab" data-tab="todas">📋 Todas</button>
         <button class="adm-tab" data-tab="atendidas">✓ Atendidas</button>
         <button class="adm-tab" data-tab="canceladas">✕ Canceladas</button>
@@ -1501,6 +1568,36 @@ nav{
     <div class="tp-form-actions">
       <button class="tp-btn-cancel-form" id="tpCancelBtn">Cancelar</button>
       <button class="tp-btn-save" id="tpSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL DETALLE CITA ══════════════════════════════════════════ -->
+<div class="mc-detail-overlay" id="mcDetailOverlay">
+  <div class="mc-detail-inner">
+    <button class="mc-detail-close" id="mcDetailClose" aria-label="Cerrar">✕</button>
+    <div class="confirm-ticket">
+      <div class="ct-head">
+        <div class="ct-check" id="mdStatusIcon">⏳</div>
+        <div class="ct-title" id="mdStatusTitle">Estado de tu cita</div>
+        <div class="ct-subtitle" id="mdStatusSubtitle">Esperando confirmación del barbero…</div>
+      </div>
+      <div class="ct-code-row">
+        <div class="ct-code-inner">
+          <span class="ct-code-label">Código de reserva</span>
+          <span class="ct-code-val" id="mdCode">—</span>
+        </div>
+        <button class="ct-copy-btn" id="mdCopyBtn">📋 Copiar</button>
+      </div>
+      <div class="ct-details" id="mdDetails"></div>
+      <div class="ct-addr">
+        <span class="ct-addr-icon">📍</span>
+        <div>
+          <div class="ct-addr-title">Av. Francisco I. Madero 400-402</div>
+          <div class="ct-addr-sub">Centro, Pachuca de Soto, Hgo. · +52 771 668 2637</div>
+        </div>
+      </div>
+      <div class="ct-actions" id="mdActions"></div>
     </div>
   </div>
 </div>
@@ -1628,7 +1725,11 @@ function updateNavUser(user){
   document.getElementById("navLogoutBtn").style.display= "inline-block";
   const isAdmin = user.email===ADMIN_EMAIL;
   document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
-  if(!isAdmin) document.getElementById("navMisCitasBtn").style.display="inline-block";
+  if(!isAdmin){
+    document.getElementById("navMisCitasBtn").style.display="inline-block";
+    const drawerMisCitasItem = document.getElementById("drawerMisCitasItem");
+    if(drawerMisCitasItem) drawerMisCitasItem.style.display="";
+  }
 }
 
 async function loadUserProfile(uid){
@@ -1687,10 +1788,11 @@ function renderAdmDashboard(){
   let items=Object.entries(allCitas).map(([id,c])=>({id,...c}));
   items.sort((a,b)=>a.fecha===b.fecha?a.hora.localeCompare(b.hora):a.fecha.localeCompare(b.fecha));
   switch(admTab){
-    case "hoy":       items=items.filter(c=>c.fecha===today);          break;
-    case "pendientes":items=items.filter(c=>c.estado==="pendiente");   break;
-    case "atendidas": items=items.filter(c=>c.estado==="atendido");    break;
-    case "canceladas":items=items.filter(c=>c.estado==="cancelado");   break;
+    case "hoy":        items=items.filter(c=>c.fecha===today);           break;
+    case "pendientes": items=items.filter(c=>c.estado==="pendiente");    break;
+    case "confirmadas":items=items.filter(c=>c.estado==="confirmada");   break;
+    case "atendidas":  items=items.filter(c=>c.estado==="atendido");     break;
+    case "canceladas": items=items.filter(c=>c.estado==="cancelado");    break;
   }
   if(admSearch){
     const q=admSearch.toLowerCase();
@@ -1726,7 +1828,7 @@ function renderAdmList(items){
   list.innerHTML=items.map(c=>{
     const initial=(c.nombre||"?")[0].toUpperCase();
     const isToday=c.fecha===today;
-    const statusMap={pendiente:"Pendiente",atendido:"Atendida",cancelado:"Cancelada"};
+    const statusMap={pendiente:"Pendiente",confirmada:"Confirmada",atendido:"Atendida",cancelado:"Cancelada"};
     const statusLabel=statusMap[c.estado]||c.estado;
     const waMsg=c.whatsapp?encodeURIComponent(`Hola ${c.nombre}! Te recuerdo tu cita de ${c.servicio} el ${fmtFecha(c.fecha)} a las ${c.hora} hrs. Código: ${c.codigo}`):"";
     return `
@@ -1755,6 +1857,10 @@ function renderAdmList(items){
           </div>
           <div class="adm-card-actions">
             ${c.estado==="pendiente"?`
+              <button class="adm-btn adm-btn-confirm" onclick="updateCita('${c.id}','confirmada')">✔ Confirmar</button>
+              <button class="adm-btn adm-btn-cancel" onclick="updateCita('${c.id}','cancelado')">✕ Cancelar</button>
+            `:""}
+            ${c.estado==="confirmada"?`
               <button class="adm-btn adm-btn-ok" onclick="updateCita('${c.id}','atendido')">✓ Atendida</button>
               <button class="adm-btn adm-btn-cancel" onclick="updateCita('${c.id}','cancelado')">✕ Cancelar</button>
             `:""}
@@ -1774,8 +1880,15 @@ function renderAdmList(items){
 
 async function updateCita(id,estado){
   try{
-    await db.ref(`citas/${id}`).update({estado});
-    const msgs={atendido:"✓ Marcada como atendida",cancelado:"Cita cancelada",pendiente:"↩ Cita restaurada"};
+    const updateData={estado};
+    if(estado==="confirmada") updateData.confirmedAt=Date.now();
+    await db.ref(`citas/${id}`).update(updateData);
+    const msgs={
+      confirmada:"✔ Cita confirmada — el usuario lo verá al instante",
+      atendido:"✓ Marcada como atendida",
+      cancelado:"Cita cancelada",
+      pendiente:"↩ Cita restaurada"
+    };
     showToast(msgs[estado]||"Actualizado");
   } catch(e){ showToast("Error al actualizar"); console.error(e); }
 }
@@ -2003,11 +2116,12 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
   };
 
   try{
-    await db.ref("citas").push(cita);
+    const ref = await db.ref("citas").push(cita);
+    const citaKey = ref.key;
     if(currentUser){
       db.ref(`usuarios/${currentUser.uid}`).update({nombre, whatsapp:wa, updatedAt:Date.now()});
     }
-    mostrarConfirmacion(cita, codigo, wa);
+    mostrarConfirmacion(cita, codigo, wa, citaKey);
   } catch(e){
     btn.innerHTML = "Confirmar cita"; btn.disabled = false;
     showToast("Error al guardar. Intenta de nuevo.");
@@ -2018,7 +2132,9 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
 /* ───────────────────────────────────────────────
    PASO 5: CONFIRMACIÓN
 ──────────────────────────────────────────────── */
-function mostrarConfirmacion(cita, codigo, waCliente){
+let liveStatusListener = null;
+
+function mostrarConfirmacion(cita, codigo, waCliente, citaKey){
   document.getElementById("confirmCode").textContent = codigo;
 
   document.getElementById("ctCopyBtn").onclick = ()=>{
@@ -2034,6 +2150,41 @@ function mostrarConfirmacion(cita, codigo, waCliente){
     <div><div class="ct-dl">Duración</div><div class="ct-dv">~${cita.duracion} min</div></div>
     <div><div class="ct-dl">Barbero</div><div class="ct-dv">Jesús Juárez</div></div>
   `;
+
+  /* ── Encabezado dinámico en tiempo real ── */
+  const statusTexts = {
+    pendiente:  { icon:"⏳", title:"Estado de tu cita",      subtitle:"Esperando confirmación del barbero…", color:"var(--lima)" },
+    confirmada: { icon:"✓",  title:"¡Cita confirmada!",       subtitle:"El barbero aceptó tu cita. ¡Te esperamos!", color:"#50b4ff" },
+    atendido:   { icon:"🌟", title:"¡Cita completada!",       subtitle:"Gracias por visitarnos en JJ Barbería.", color:"#5aff9e" },
+    cancelado:  { icon:"✕",  title:"Cita cancelada",          subtitle:"Puedes agendar una nueva cuando quieras.", color:"#ff5a5a" },
+    cancelada:  { icon:"✕",  title:"Cita cancelada",          subtitle:"Puedes agendar una nueva cuando quieras.", color:"#ff5a5a" },
+  };
+
+  function renderLiveStatus(estado){
+    const info = statusTexts[estado] || statusTexts.pendiente;
+    const iconEl    = document.getElementById("ctStatusIcon");
+    const titleEl   = document.getElementById("ctStatusTitle");
+    const subtitleEl= document.getElementById("ctStatusSubtitle");
+    if(!iconEl) return;
+    iconEl.textContent     = info.icon;
+    iconEl.style.color     = info.color;
+    iconEl.style.borderColor = info.color;
+    iconEl.style.background  = `${info.color}18`;
+    titleEl.textContent    = info.title;
+    subtitleEl.textContent = info.subtitle;
+    subtitleEl.style.color = info.color;
+  }
+
+  renderLiveStatus("pendiente");
+
+  if(liveStatusListener) liveStatusListener.off();
+  if(citaKey){
+    liveStatusListener = db.ref(`citas/${citaKey}/estado`);
+    liveStatusListener.on("value", snap=>{
+      const estado = snap.val() || "pendiente";
+      renderLiveStatus(estado);
+    });
+  }
 
   const gcDate  = cita.fecha.replace(/-/g,"");
   const [fh,fm] = cita.hora.split(":").map(Number);
@@ -2086,13 +2237,17 @@ function resetBooking(){
   document.getElementById("btnConfirm").disabled=true;
 }
 
-async function cargarMisCitas(){
+let mcListener = null;
+
+function cargarMisCitas(){
   if(!currentUser) return;
   const container = document.getElementById("mcContent");
   container.innerHTML = `<div class="mc-loading">Cargando tus citas…</div>`;
-  try{
-    const snap = await db.ref("citas").orderByChild("uid").equalTo(currentUser.uid).once("value");
-    const data  = snap.val();
+
+  if(mcListener) mcListener.off();
+  mcListener = db.ref("citas").orderByChild("uid").equalTo(currentUser.uid);
+  mcListener.on("value", snap=>{
+    const data = snap.val();
     if(!data){
       container.innerHTML = `<div class="mc-empty"><div class="mc-empty-icon">✂️</div>Aún no tienes citas agendadas.<br>¡Agenda tu primera cita!</div>`;
       return;
@@ -2120,24 +2275,39 @@ async function cargarMisCitas(){
     }
     container.innerHTML=html;
     container.querySelectorAll(".mc-cancel-btn").forEach(btn=>{
-      btn.addEventListener("click",()=>cancelarCita(btn.dataset.key,btn.dataset.code));
+      btn.addEventListener("click", e=>{
+        e.stopPropagation();
+        cancelarCita(btn.dataset.key,btn.dataset.code);
+      });
     });
-  } catch(e){
-    container.innerHTML=`<div class="mc-empty">Error al cargar. Intenta de nuevo.</div>`;
-    console.error(e);
-  }
+    container.querySelectorAll(".mc-card").forEach(card=>{
+      card.addEventListener("click", ()=>{
+        const key = card.dataset.key;
+        try{
+          const cData = JSON.parse(card.dataset.cita.replace(/&#39;/g,"'"));
+          /* Leer estado fresco desde allCitas o Firebase */
+          const snap = db.ref(`citas/${key}`).once("value").then(s=>{
+            const fresh = s.val();
+            if(fresh){ mostrarDetalleCita(key, {...fresh, _key:key}); }
+            else      { mostrarDetalleCita(key, {...cData, _key:key}); }
+          });
+        } catch(e){ console.error(e); }
+      });
+    });
+  });
 }
 
 function renderMcCard(c,upcoming){
   let badge,cancelBtn="";
-  if(c.estado==="confirmada")      badge=`<span class="mc-badge mc-badge-confirmada">Confirmada</span>`;
+  if(c.estado==="confirmada")      badge=`<span class="mc-badge mc-badge-confirmada">Confirmada ✔</span>`;
   else if(c.estado==="cancelada")  badge=`<span class="mc-badge mc-badge-cancelada">Cancelada</span>`;
-  else if(upcoming)                badge=`<span class="mc-badge mc-badge-pendiente">Pendiente</span>`;
+  else if(c.estado==="atendido")   badge=`<span class="mc-badge mc-badge-pasada">Atendida ✓</span>`;
+  else if(upcoming)                badge=`<span class="mc-badge mc-badge-pendiente">Por confirmar</span>`;
   else                             badge=`<span class="mc-badge mc-badge-pasada">Pasada</span>`;
   if(upcoming && c.estado!=="cancelada"){
     cancelBtn=`<button class="mc-cancel-btn" data-key="${c._key}" data-code="${c.codigo}">Cancelar</button>`;
   }
-  return `<div class="mc-card">
+  return `<div class="mc-card" data-key="${c._key}" data-cita='${JSON.stringify({...c,_key:undefined}).replace(/'/g,"&#39;")}'>
     <div>
       <div class="mc-card-code">${c.codigo||"—"}</div>
       <div class="mc-card-service">${c.servicio}</div>
@@ -2152,12 +2322,88 @@ async function cancelarCita(key,codigo){
   try{
     await db.ref(`citas/${key}`).update({estado:"cancelada",canceladaAt:Date.now()});
     showToast("Cita cancelada. Puedes agendar una nueva cuando quieras.");
-    cargarMisCitas();
+    cerrarDetalleCita();
   } catch(e){
     showToast("Error al cancelar. Intenta de nuevo.");
     console.error(e);
   }
 }
+
+/* ─── MODAL DETALLE CITA ─────────────────────────────────────── */
+let mdListener = null;
+
+const mdStatusTexts = {
+  pendiente:  { icon:"⏳", title:"Estado de tu cita",    subtitle:"Esperando confirmación del barbero…", color:"var(--lima)" },
+  confirmada: { icon:"✓",  title:"¡Cita confirmada!",     subtitle:"El barbero aceptó tu cita. ¡Te esperamos!", color:"#50b4ff" },
+  atendido:   { icon:"🌟", title:"¡Cita completada!",     subtitle:"Gracias por visitarnos en JJ Barbería.", color:"#5aff9e" },
+  cancelado:  { icon:"✕",  title:"Cita cancelada",        subtitle:"Puedes agendar una nueva cuando quieras.", color:"#ff5a5a" },
+  cancelada:  { icon:"✕",  title:"Cita cancelada",        subtitle:"Puedes agendar una nueva cuando quieras.", color:"#ff5a5a" },
+};
+
+function mdRenderStatus(estado){
+  const info = mdStatusTexts[estado] || mdStatusTexts.pendiente;
+  const iconEl    = document.getElementById("mdStatusIcon");
+  const titleEl   = document.getElementById("mdStatusTitle");
+  const subEl     = document.getElementById("mdStatusSubtitle");
+  if(!iconEl) return;
+  iconEl.textContent     = info.icon;
+  iconEl.style.color     = info.color;
+  iconEl.style.borderColor = info.color;
+  iconEl.style.background  = `${info.color}18`;
+  titleEl.textContent    = info.title;
+  subEl.textContent      = info.subtitle;
+  subEl.style.color      = info.color;
+}
+
+function mostrarDetalleCita(key, c){
+  const overlay = document.getElementById("mcDetailOverlay");
+
+  /* Datos estáticos */
+  document.getElementById("mdCode").textContent = c.codigo || "—";
+  document.getElementById("mdCopyBtn").onclick = ()=>{
+    navigator.clipboard.writeText(c.codigo||"").catch(()=>{});
+    showToast("Código copiado 📋");
+  };
+  document.getElementById("mdDetails").innerHTML = `
+    <div><div class="ct-dl">Servicio</div><div class="ct-dv">${c.servicio}</div></div>
+    <div><div class="ct-dl">Precio</div><div class="ct-dv">$${c.precio} MXN</div></div>
+    <div><div class="ct-dl">Fecha</div><div class="ct-dv">${fmtFecha(c.fecha)}</div></div>
+    <div><div class="ct-dl">Hora</div><div class="ct-dv">${c.hora} hrs</div></div>
+    <div><div class="ct-dl">Duración</div><div class="ct-dv">~${c.duracion} min</div></div>
+    <div><div class="ct-dl">Barbero</div><div class="ct-dv">Jesús Juárez</div></div>
+  `;
+
+  /* Acciones */
+  const actEl = document.getElementById("mdActions");
+  if(c.estado!=="cancelada" && c.estado!=="atendido"){
+    actEl.innerHTML = `<button class="adm-btn adm-btn-cancel mc-cancel-btn" style="font-size:.7rem;padding:.4rem 1rem;" data-key="${key}" data-code="${c.codigo}">✕ Cancelar cita</button>`;
+    actEl.querySelector(".mc-cancel-btn").addEventListener("click",()=>cancelarCita(key,c.codigo));
+  } else {
+    actEl.innerHTML = `<button onclick="cerrarDetalleCita();resetBooking();showScreen('booking');" class="btn btn-primary" style="width:100%;justify-content:center;">+ Agendar nueva cita</button>`;
+  }
+
+  /* Estado en tiempo real */
+  mdRenderStatus(c.estado || "pendiente");
+  if(mdListener) mdListener.off();
+  mdListener = db.ref(`citas/${key}/estado`);
+  mdListener.on("value", snap => mdRenderStatus(snap.val() || "pendiente"));
+
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarDetalleCita(){
+  document.getElementById("mcDetailOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+  if(mdListener){ mdListener.off(); mdListener = null; }
+}
+
+/* Wiring del modal */
+document.getElementById("mcDetailClose").addEventListener("click", cerrarDetalleCita);
+document.getElementById("mcDetailOverlay").addEventListener("click", e=>{
+  if(e.target === document.getElementById("mcDetailOverlay")) cerrarDetalleCita();
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") cerrarDetalleCita(); });
 
 // ========== PWA SERVICE WORKER ==========
 if ('serviceWorker' in navigator) {
@@ -2176,8 +2422,17 @@ if ('serviceWorker' in navigator) {
   function cerrarDrawer(){ drawer.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
   hamburger.addEventListener('click', () => drawer.classList.contains('open') ? cerrarDrawer() : abrirDrawer());
   drawer.querySelectorAll('a').forEach(l => l.addEventListener('click', e => {
-    if(e.target.id === 'drawerContactoLink'){ e.preventDefault(); document.getElementById('drawerProtos').classList.toggle('open'); }
-    else cerrarDrawer();
+    if(e.target.id === 'drawerContactoLink'){
+      e.preventDefault();
+      document.getElementById('drawerProtos').classList.toggle('open');
+    } else if(e.target.id === 'drawerMisCitasLink'){
+      e.preventDefault();
+      cerrarDrawer();
+      showScreen('miscitas');
+      cargarMisCitas();
+    } else {
+      cerrarDrawer();
+    }
   }));
   document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarDrawer(); });
 })();
