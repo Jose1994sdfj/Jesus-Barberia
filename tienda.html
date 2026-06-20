@@ -896,6 +896,19 @@ nav{
 </head>
 <body>
 
+<!-- ══ AUTH SPLASH ══════════════════════════════════════════════ -->
+<div id="jjSplash" style="position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;z-index:99999;transition:opacity .35s ease">
+  <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.4rem;color:#D6FF00;letter-spacing:.04em">JJ✂</span>
+  <div style="display:flex;gap:.4rem">
+    <span class="jj-dot"></span><span class="jj-dot"></span><span class="jj-dot"></span>
+  </div>
+</div>
+<style>
+.jj-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(214,255,0,.45);animation:jjPulse 1.2s ease-in-out infinite}
+.jj-dot:nth-child(2){animation-delay:.2s}.jj-dot:nth-child(3){animation-delay:.4s}
+@keyframes jjPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+</style>
+
 <!-- ══ NAVBAR ═══════════════════════════════════ -->
 <nav>
   <a href="index.html" class="nav-logo">JJ✂</a>
@@ -2224,13 +2237,18 @@ initTienda();
 /* ── AUTH GUARD ──────────────────────────────────────────────── */
 (function(){
   const auth = firebase.auth();
-  document.body.style.visibility="hidden";
+  function hideSplash(){
+    const s=document.getElementById("jjSplash");
+    if(!s)return;
+    s.style.opacity="0";
+    setTimeout(()=>s.remove(),350);
+  }
   auth.onAuthStateChanged(user=>{
     if(!user){
       window.location.href="login.html?redirect=tienda.html";
       return;
     }
-    document.body.style.visibility="visible";
+    hideSplash();
     const chip=document.getElementById("navUserChipT");
     const avatar=document.getElementById("navUserAvatarT");
     if(chip && avatar){
