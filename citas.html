@@ -1185,6 +1185,158 @@ nav{
   .admin-stats .stat-card:last-child{ grid-column:span 2; }
   nav{ padding:.9rem 1.2rem; }
 }
+
+/* ══ PANELES EXTRA ADMIN (destacados, servicios, cupones, contactos, correos) ════ */
+#destPanel,#svcsPanel,#cupsPanel,#ctcsPanel,#mailPanel{ display:none; }
+.gen-toolbar{
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:.7rem; margin-bottom:1.2rem;
+}
+.gen-panel-title{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.95rem; color:var(--blanco); margin-bottom:.2rem;
+}
+.gen-panel-sub{ font-size:.72rem; color:var(--humo); }
+.gen-btn-add{
+  font-family:'Montserrat',sans-serif; font-size:.68rem; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:var(--lima); color:var(--negro);
+  border:none; padding:.5rem 1.3rem; border-radius:30px;
+  cursor:pointer; transition:opacity .2s; white-space:nowrap;
+}
+.gen-btn-add:hover{ opacity:.85; }
+.gen-btn-sec{
+  font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; color:var(--humo);
+  border:1px solid #333; padding:.42rem 1rem; border-radius:30px;
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.gen-btn-sec:hover{ color:var(--blanco); border-color:#555; }
+.gen-table{
+  width:100%; border-collapse:collapse;
+  background:var(--gris2); border:1px solid #2a2a2a; border-radius:var(--r-md);
+  overflow:hidden;
+}
+.gen-table th{
+  font-family:'Montserrat',sans-serif; font-size:.57rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--humo);
+  padding:.65rem 1rem; text-align:left; border-bottom:1px solid #222;
+  background:var(--gris);
+}
+.gen-table td{
+  padding:.7rem 1rem; border-bottom:1px solid #1e1e1e;
+  font-size:.79rem; color:var(--blanco); vertical-align:middle;
+}
+.gen-table tr:last-child td{ border-bottom:none; }
+.gen-table tr:hover td{ background:rgba(255,255,255,.02); }
+.gen-toggle{
+  width:38px; height:22px; border-radius:30px; border:none; cursor:pointer;
+  position:relative; transition:background .2s; flex-shrink:0; background:#2a2a2a;
+}
+.gen-toggle.on{ background:var(--lima); }
+.gen-toggle::after{
+  content:''; position:absolute; top:3px; left:3px;
+  width:16px; height:16px; border-radius:50%; background:#fff; transition:transform .2s;
+}
+.gen-toggle.on::after{ transform:translateX(16px); }
+.gen-icon-btn{
+  background:transparent; border:1px solid #2a2a2a; color:var(--humo);
+  width:28px; height:28px; border-radius:8px; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:.75rem; transition:all .18s; margin:0 .1rem;
+}
+.gen-icon-btn:hover{ background:rgba(255,255,255,.04); color:var(--blanco); }
+.gen-icon-btn.del:hover{ color:#ff5a5a; border-color:rgba(255,90,90,.4); }
+.gen-empty{
+  text-align:center; padding:3rem 1rem; color:var(--humo);
+  font-size:.85rem; background:var(--gris2); border:1px solid #2a2a2a;
+  border-radius:var(--r-lg);
+}
+/* Modal genérico */
+.gen-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.88);
+  display:flex; align-items:center; justify-content:center;
+  z-index:800; padding:1rem; opacity:0; pointer-events:none; transition:opacity .22s;
+}
+.gen-overlay.open{ opacity:1; pointer-events:all; }
+.gen-modal-box{
+  background:var(--gris); border:1px solid #2a2a2a;
+  border-radius:var(--r-xl); padding:1.8rem;
+  width:100%; max-width:480px; max-height:90vh; overflow-y:auto;
+}
+.gen-modal-head{
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:1.4rem;
+}
+.gen-modal-ttl{
+  font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; color:var(--blanco);
+}
+.gen-modal-x{
+  background:transparent; border:none; color:var(--humo); font-size:1.1rem; cursor:pointer;
+}
+.gen-fl{ margin-bottom:1rem; }
+.gen-lbl{
+  display:block; font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--humo); margin-bottom:.4rem;
+}
+.gen-inp,.gen-sel,.gen-ta{
+  width:100%; background:#1a1a1a; border:1.5px solid #2a2a2a;
+  color:var(--blanco); font-family:'Poppins',sans-serif;
+  font-size:.84rem; padding:.58rem .9rem; border-radius:var(--r-sm);
+  outline:none; transition:border-color .2s; box-sizing:border-box;
+}
+.gen-inp:focus,.gen-sel:focus,.gen-ta:focus{ border-color:rgba(214,255,0,.4); }
+.gen-sel option{ background:#1a1a1a; }
+.gen-ta{ resize:vertical; min-height:90px; }
+.gen-2col{ display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+.gen-modal-btns{
+  display:flex; gap:.7rem; justify-content:flex-end; margin-top:1.4rem;
+}
+.gen-save{
+  font-family:'Montserrat',sans-serif; font-size:.72rem; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:var(--lima); color:var(--negro);
+  border:none; padding:.6rem 1.6rem; border-radius:30px; cursor:pointer;
+}
+.gen-save:disabled{ opacity:.45; cursor:not-allowed; }
+.gen-cancel{
+  font-family:'Montserrat',sans-serif; font-size:.72rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; color:var(--humo);
+  border:1px solid #333; padding:.6rem 1.2rem; border-radius:30px; cursor:pointer;
+}
+/* Correos */
+.mail-send-btn{
+  font-family:'Montserrat',sans-serif; font-size:.75rem; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:var(--lima); color:var(--negro);
+  border:none; padding:.75rem; border-radius:30px;
+  cursor:pointer; transition:opacity .2s; width:100%; margin-top:1rem;
+}
+.mail-send-btn:hover{ opacity:.85; }
+.mail-send-btn:disabled{ opacity:.4; cursor:not-allowed; }
+.mail-rcpt-list{
+  background:var(--gris2); border:1px solid #2a2a2a; border-radius:var(--r-md);
+  padding:.6rem .8rem; max-height:180px; overflow-y:auto; margin-top:.5rem;
+}
+.mail-rcpt-row{
+  display:flex; align-items:center; gap:.55rem;
+  padding:.32rem 0; border-bottom:1px solid #1c1c1c; font-size:.78rem;
+}
+.mail-rcpt-row:last-child{ border-bottom:none; }
+.mail-rcpt-row input[type=checkbox]{ accent-color:var(--lima); flex-shrink:0; }
+.mail-chip{
+  background:var(--gris2); border:1px solid #2a2a2a; border-radius:30px;
+  padding:.28rem .75rem; font-family:'Montserrat',sans-serif;
+  font-size:.62rem; font-weight:700; color:var(--humo);
+  display:inline-block; margin:.15rem;
+}
+.mail-chip b{ color:var(--lima); }
+.mail-preview-box{
+  background:#111; border:1px solid #2a2a2a; border-radius:var(--r-md);
+  padding:1rem; font-size:.82rem; line-height:1.6; color:var(--blanco);
+  min-height:60px;
+}
 </style>
 </head>
 <body>
@@ -1460,6 +1612,11 @@ nav{
         <button class="adm-tab" data-tab="atendidas">✓ Atendidas</button>
         <button class="adm-tab" data-tab="canceladas">✕ Canceladas</button>
         <button class="adm-tab" data-tab="tienda">🛍 Tienda</button>
+        <button class="adm-tab" data-tab="destacados">⭐ Destacados</button>
+        <button class="adm-tab" data-tab="servicios">✂ Servicios</button>
+        <button class="adm-tab" data-tab="cupones">🏷 Cupones</button>
+        <button class="adm-tab" data-tab="contactos">📋 Contactos</button>
+        <button class="adm-tab" data-tab="correos">📧 Correos</button>
       </div>
       <input type="search" class="adm-search" id="admSearch"
         placeholder="Buscar nombre, servicio, código…">
@@ -1502,8 +1659,239 @@ nav{
 
       <div id="tpList"><div class="tp-empty">Cargando productos…</div></div>
     </div>
+
+    <!-- ══ DESTACADOS PANEL ══════════════════════════════════════════ -->
+    <div id="destPanel">
+      <div class="gen-toolbar">
+        <div>
+          <div class="gen-panel-title">Galería Destacados</div>
+          <div class="gen-panel-sub">Imágenes visibles en "Destacados" de la página principal</div>
+        </div>
+        <button class="gen-btn-add" id="destBtnAdd">+ Agregar imagen</button>
+      </div>
+      <div id="destList"><div class="gen-empty">Cargando imágenes…</div></div>
+    </div>
+
+    <!-- ══ SERVICIOS PANEL ════════════════════════════════════════════ -->
+    <div id="svcsPanel">
+      <div class="gen-toolbar">
+        <div>
+          <div class="gen-panel-title">Servicios</div>
+          <div class="gen-panel-sub">Servicios disponibles en el sistema de citas · Arrastra para reordenar</div>
+        </div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="gen-btn-sec" id="svcsSeedBtn">↑ Cargar por defecto</button>
+          <button class="gen-btn-add" id="svcsBtnAdd">+ Nuevo servicio</button>
+        </div>
+      </div>
+      <div id="svcsList"><div class="gen-empty">Cargando servicios…</div></div>
+    </div>
+
+    <!-- ══ CUPONES PANEL ══════════════════════════════════════════════ -->
+    <div id="cupsPanel">
+      <div class="gen-toolbar">
+        <div>
+          <div class="gen-panel-title">Cupones de descuento</div>
+          <div class="gen-panel-sub">Códigos de descuento para clientes</div>
+        </div>
+        <button class="gen-btn-add" id="cupsBtnAdd">+ Nuevo cupón</button>
+      </div>
+      <div id="cupsList"><div class="gen-empty">Cargando cupones…</div></div>
+    </div>
+
+    <!-- ══ CONTACTOS PANEL ════════════════════════════════════════════ -->
+    <div id="ctcsPanel">
+      <div class="gen-toolbar">
+        <div>
+          <div class="gen-panel-title">Clientes registrados</div>
+          <div class="gen-panel-sub">Todos los que crearon cuenta · Toggle para incluir/excluir de promociones</div>
+        </div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="gen-btn-sec" id="ctcsExportBtn">↓ Exportar CSV</button>
+        </div>
+      </div>
+      <div id="ctcsStatsRow" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem;"></div>
+      <div id="ctcsList"><div class="gen-empty">Cargando contactos…</div></div>
+    </div>
+
+    <!-- ══ CORREOS PANEL ══════════════════════════════════════════════ -->
+    <div id="mailPanel">
+      <div class="gen-panel-title" style="margin-bottom:1.2rem;">Enviar promoción por correo</div>
+
+      <div class="gen-fl">
+        <label class="gen-lbl">Destinatarios</label>
+        <div id="mailStatsRow" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;"></div>
+        <div class="mail-rcpt-list" id="mailRcptList">
+          <div style="color:var(--humo);font-size:.78rem;text-align:center;padding:.5rem;">
+            Primero agrega contactos en la pestaña "Contactos"
+          </div>
+        </div>
+        <div style="display:flex;gap:.5rem;margin-top:.5rem;">
+          <button class="gen-btn-sec" id="mailSelAll" style="font-size:.6rem;padding:.35rem .8rem;">✓ Todos</button>
+          <button class="gen-btn-sec" id="mailSelNone" style="font-size:.6rem;padding:.35rem .8rem;">✕ Ninguno</button>
+        </div>
+      </div>
+
+      <div class="gen-fl">
+        <label class="gen-lbl">Asunto del correo</label>
+        <input class="gen-inp" id="mailSubject" placeholder="Ej: 🔥 Promoción especial · JJ Barbería">
+      </div>
+
+      <div class="gen-fl">
+        <label class="gen-lbl">Mensaje (acepta HTML básico)</label>
+        <textarea class="gen-ta" id="mailBody" style="min-height:160px;"
+          placeholder="Hola, te escribimos desde JJ Barbería para avisarte de nuestra nueva promoción…"></textarea>
+      </div>
+
+      <div class="gen-fl">
+        <label class="gen-lbl">Vista previa del mensaje</label>
+        <div class="mail-preview-box" id="mailPreview" style="white-space:pre-wrap;">
+          El mensaje aparecerá aquí mientras escribes…
+        </div>
+      </div>
+
+      <button class="mail-send-btn" id="mailSendBtn">📧 Enviar a seleccionados</button>
+      <div id="mailSendStatus"
+        style="text-align:center;font-size:.75rem;color:var(--humo);margin-top:.8rem;min-height:1.2rem;"></div>
+    </div>
+
   </div>
 </div><!-- /screenAdmin -->
+
+<!-- ══ MODAL DESTACADO ══════════════════════════════════════════════ -->
+<div class="gen-overlay" id="destOverlay">
+  <div class="gen-modal-box">
+    <div class="gen-modal-head">
+      <span class="gen-modal-ttl" id="destModalTitle">Nueva imagen</span>
+      <button class="gen-modal-x" id="destModalClose">✕</button>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">URL de la imagen</label>
+      <input class="gen-inp" id="destUrl" placeholder="https://…/imagen.jpg">
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Texto alternativo (descripción)</label>
+      <input class="gen-inp" id="destAlt" placeholder="Corte de cabello · JJ Barbería">
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Orden (número)</label>
+      <input class="gen-inp" type="number" id="destOrden" value="1" min="1">
+    </div>
+    <div class="gen-modal-btns">
+      <button class="gen-cancel" id="destCancelBtn">Cancelar</button>
+      <button class="gen-save" id="destSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL SERVICIO ════════════════════════════════════════════════ -->
+<div class="gen-overlay" id="svcsOverlay">
+  <div class="gen-modal-box">
+    <div class="gen-modal-head">
+      <span class="gen-modal-ttl" id="svcsModalTitle">Nuevo servicio</span>
+      <button class="gen-modal-x" id="svcsModalClose">✕</button>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Nombre del servicio</label>
+      <input class="gen-inp" id="svcsNombre" placeholder="Corte normal">
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Descripción corta</label>
+      <input class="gen-inp" id="svcsNota" placeholder="Lavado, corte y peinado">
+    </div>
+    <div class="gen-2col">
+      <div class="gen-fl">
+        <label class="gen-lbl">Precio ($MXN)</label>
+        <input class="gen-inp" type="number" id="svcsPrecio" placeholder="130" min="0">
+      </div>
+      <div class="gen-fl">
+        <label class="gen-lbl">Duración (min)</label>
+        <input class="gen-inp" type="number" id="svcsDuracion" placeholder="45" min="5">
+      </div>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Orden (número)</label>
+      <input class="gen-inp" type="number" id="svcsOrden" value="1" min="1">
+    </div>
+    <div class="gen-fl" style="display:flex;align-items:center;gap:.7rem;">
+      <input type="checkbox" id="svcsActivo" checked style="accent-color:var(--lima);width:16px;height:16px;">
+      <label for="svcsActivo" class="gen-lbl" style="margin:0;">Servicio activo (visible en citas)</label>
+    </div>
+    <div class="gen-modal-btns">
+      <button class="gen-cancel" id="svcsCancelBtn">Cancelar</button>
+      <button class="gen-save" id="svcsSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CUPÓN ═══════════════════════════════════════════════════ -->
+<div class="gen-overlay" id="cupsOverlay">
+  <div class="gen-modal-box">
+    <div class="gen-modal-head">
+      <span class="gen-modal-ttl" id="cupsModalTitle">Nuevo cupón</span>
+      <button class="gen-modal-x" id="cupsModalClose">✕</button>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Código del cupón</label>
+      <input class="gen-inp" id="cupsCodigo" placeholder="JJ20" style="text-transform:uppercase;">
+    </div>
+    <div class="gen-2col">
+      <div class="gen-fl">
+        <label class="gen-lbl">Descuento</label>
+        <input class="gen-inp" type="number" id="cupsDescuento" placeholder="20" min="1">
+      </div>
+      <div class="gen-fl">
+        <label class="gen-lbl">Tipo</label>
+        <select class="gen-sel" id="cupsTipo">
+          <option value="porcentaje">Porcentaje (%)</option>
+          <option value="fijo">Monto fijo ($)</option>
+        </select>
+      </div>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Fecha de vencimiento (opcional)</label>
+      <input class="gen-inp" type="date" id="cupsVence">
+    </div>
+    <div class="gen-fl" style="display:flex;align-items:center;gap:.7rem;">
+      <input type="checkbox" id="cupsActivo" checked style="accent-color:var(--lima);width:16px;height:16px;">
+      <label for="cupsActivo" class="gen-lbl" style="margin:0;">Cupón activo</label>
+    </div>
+    <div class="gen-modal-btns">
+      <button class="gen-cancel" id="cupsCancelBtn">Cancelar</button>
+      <button class="gen-save" id="cupsSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CONTACTO ════════════════════════════════════════════════ -->
+<div class="gen-overlay" id="ctcsOverlay">
+  <div class="gen-modal-box">
+    <div class="gen-modal-head">
+      <span class="gen-modal-ttl" id="ctcsModalTitle">Nuevo contacto</span>
+      <button class="gen-modal-x" id="ctcsModalClose">✕</button>
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Nombre</label>
+      <input class="gen-inp" id="ctcsNombre" placeholder="Juan Pérez">
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Correo electrónico</label>
+      <input class="gen-inp" type="email" id="ctcsEmail" placeholder="juan@correo.com">
+    </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Teléfono / WhatsApp (opcional)</label>
+      <input class="gen-inp" type="tel" id="ctcsTel" placeholder="771 123 4567">
+    </div>
+    <div class="gen-fl" style="display:flex;align-items:center;gap:.7rem;">
+      <input type="checkbox" id="ctcsActivo" checked style="accent-color:var(--lima);width:16px;height:16px;">
+      <label for="ctcsActivo" class="gen-lbl" style="margin:0;">Activo (recibe correos)</label>
+    </div>
+    <div class="gen-modal-btns">
+      <button class="gen-cancel" id="ctcsCancelBtn">Cancelar</button>
+      <button class="gen-save" id="ctcsSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ MODAL PRODUCTO ══════════════════════════════════════════════ -->
 <div class="tp-modal-overlay" id="tpModalOverlay">
@@ -1628,7 +2016,7 @@ const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
 
 const WA_NUMBER = "527716682637";
 
-const SERVICIOS = [
+let SERVICIOS = [
   { id:"corte",      nombre:"Corte normal",    nota:"Lavado, corte y peinado",            precio:130, duracion:45 },
   { id:"cortebarba", nombre:"Corte y barba",   nota:"El combo de la casa",                precio:200, duracion:60 },
   { id:"ceja",       nombre:"Ceja",            nota:"Perfilado al detalle",               precio:50,  duracion:20 },
@@ -1755,15 +2143,34 @@ function initAdminDashboard(){
     t.addEventListener("click",()=>{
       admTab=t.dataset.tab;
       document.querySelectorAll(".adm-tab").forEach(x=>x.classList.toggle("active",x===t));
-      if(admTab==="tienda"){
+      const EXTRA_TABS = ["tienda","destacados","servicios","cupones","contactos","correos"];
+      const PANEL_MAP  = {
+        tienda:"tiendaPanel", destacados:"destPanel",
+        servicios:"svcsPanel", cupones:"cupsPanel",
+        contactos:"ctcsPanel", correos:"mailPanel"
+      };
+      const INIT_MAP = {
+        tienda:    initTiendaAdmin,
+        destacados:initDestAdmin,
+        servicios: initSvcsAdmin,
+        cupones:   initCupsAdmin,
+        contactos: initCtcsAdmin,
+        correos:   initMailAdmin,
+      };
+      if(EXTRA_TABS.includes(admTab)){
         document.getElementById("admList").style.display="none";
         document.getElementById("admSearch").style.display="none";
-        document.getElementById("tiendaPanel").style.display="block";
-        initTiendaAdmin();
+        Object.values(PANEL_MAP).forEach(id=>{
+          document.getElementById(id).style.display="none";
+        });
+        document.getElementById(PANEL_MAP[admTab]).style.display="block";
+        INIT_MAP[admTab]();
       } else {
         document.getElementById("admList").style.display="";
         document.getElementById("admSearch").style.display="";
-        document.getElementById("tiendaPanel").style.display="none";
+        Object.values(PANEL_MAP).forEach(id=>{
+          document.getElementById(id).style.display="none";
+        });
         renderAdmDashboard();
       }
     });
@@ -2685,6 +3092,529 @@ function applyUrlServiceParam(){
     document.querySelectorAll(".service-card").forEach(c=>{
       if(c.dataset.id===urlS) c.classList.add("selected");
     });
+  }
+}
+
+/* ─── Cargar servicios desde Firebase (para usuarios normales) ── */
+(function cargarServiciosFirebase(){
+  db.ref("servicios").orderByChild("orden").once("value", snap=>{
+    const data = snap.val();
+    if(!data) return;
+    const activos = Object.values(data)
+      .filter(s=>s.activo!==false)
+      .sort((a,b)=>(a.orden||0)-(b.orden||0));
+    if(activos.length){
+      SERVICIOS = activos;
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   DESTACADOS ADMIN
+═══════════════════════════════════════════════════════════════ */
+let allDest={}, destListener=null, destEditKey=null;
+
+function initDestAdmin(){
+  if(destListener) return;
+  document.getElementById("destBtnAdd").addEventListener("click",()=>abrirDestModal(null));
+  document.getElementById("destModalClose").addEventListener("click",cerrarDestModal);
+  document.getElementById("destCancelBtn").addEventListener("click",cerrarDestModal);
+  document.getElementById("destOverlay").addEventListener("click",e=>{
+    if(e.target===document.getElementById("destOverlay")) cerrarDestModal();
+  });
+  document.getElementById("destSaveBtn").addEventListener("click",guardarDest);
+  const errDest = err=>{
+    document.getElementById("destList").innerHTML=
+      `<div class="gen-empty" style="color:#ff8c42;">⚠ Sin acceso: ${err.message}<br><small>Abre Firebase Console → Realtime Database → Rules y asegúrate de que '.read' sea "auth != null"</small></div>`;
+  };
+  destListener = db.ref("destacados").orderByChild("orden");
+  destListener.on("value",snap=>{ allDest=snap.val()||{}; renderDestList(); }, errDest);
+}
+
+function renderDestList(){
+  const list=document.getElementById("destList");
+  const items=Object.entries(allDest)
+    .map(([k,v])=>({...v,_key:k}))
+    .sort((a,b)=>(a.orden||0)-(b.orden||0));
+  if(!items.length){
+    list.innerHTML=`<div class="gen-empty">Sin imágenes. Agrega la primera con el botón de arriba.</div>`;
+    return;
+  }
+  list.innerHTML=`
+    <table class="gen-table"><thead><tr>
+      <th>Imagen</th><th>Alt / Descripción</th><th>Orden</th><th></th>
+    </tr></thead><tbody>${items.map(i=>`
+      <tr>
+        <td><img src="${i.url||''}" alt="${i.alt||''}"
+          style="width:72px;height:52px;object-fit:cover;border-radius:8px;"
+          onerror="this.style.opacity='.3'"></td>
+        <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${i.alt||'–'}</td>
+        <td>${i.orden||1}</td>
+        <td>
+          <button class="gen-icon-btn" onclick="abrirDestModal('${i._key}')">✏</button>
+          <button class="gen-icon-btn del" onclick="eliminarDest('${i._key}')">🗑</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function abrirDestModal(key){
+  destEditKey=key;
+  document.getElementById("destModalTitle").textContent=key?"Editar imagen":"Nueva imagen";
+  if(key&&allDest[key]){
+    const d=allDest[key];
+    document.getElementById("destUrl").value=d.url||"";
+    document.getElementById("destAlt").value=d.alt||"";
+    document.getElementById("destOrden").value=d.orden||1;
+  } else {
+    document.getElementById("destUrl").value="";
+    document.getElementById("destAlt").value="";
+    document.getElementById("destOrden").value=Object.keys(allDest).length+1;
+  }
+  document.getElementById("destOverlay").classList.add("open");
+}
+
+function cerrarDestModal(){
+  document.getElementById("destOverlay").classList.remove("open"); destEditKey=null;
+}
+
+async function guardarDest(){
+  const url=document.getElementById("destUrl").value.trim();
+  const alt=document.getElementById("destAlt").value.trim();
+  const orden=parseInt(document.getElementById("destOrden").value)||1;
+  if(!url){ showToast("La URL es obligatoria"); return; }
+  const btn=document.getElementById("destSaveBtn");
+  btn.disabled=true; btn.textContent="Guardando…";
+  try{
+    if(destEditKey){
+      await db.ref(`destacados/${destEditKey}`).update({url,alt,orden});
+      showToast("✓ Imagen actualizada");
+    } else {
+      await db.ref("destacados").push({url,alt,orden});
+      showToast("✓ Imagen agregada");
+    }
+    cerrarDestModal();
+  } catch(e){ showToast("Error al guardar"); }
+  finally{ btn.disabled=false; btn.textContent="Guardar"; }
+}
+
+async function eliminarDest(key){
+  if(!confirm("¿Eliminar esta imagen de los destacados?")) return;
+  try{ await db.ref(`destacados/${key}`).remove(); showToast("Imagen eliminada"); }
+  catch(e){ showToast("Error"); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SERVICIOS ADMIN
+═══════════════════════════════════════════════════════════════ */
+let allSvcs={}, svcsListener=null, svcsEditKey=null;
+
+const SERVICIOS_DEFAULT=[
+  {id:"corte",      nombre:"Corte normal",   nota:"Lavado, corte y peinado",           precio:130,duracion:45,activo:true,orden:1},
+  {id:"cortebarba", nombre:"Corte y barba",  nota:"El combo de la casa",               precio:200,duracion:60,activo:true,orden:2},
+  {id:"ceja",       nombre:"Ceja",           nota:"Perfilado al detalle",              precio:50, duracion:20,activo:true,orden:3},
+  {id:"greca",      nombre:"Greca y diseño", nota:"Diseño personalizado",              precio:250,duracion:75,activo:true,orden:4},
+  {id:"vip",        nombre:"VIP",            nota:"Ritual completo · toalla caliente", precio:300,duracion:90,activo:true,orden:5},
+];
+
+function initSvcsAdmin(){
+  if(svcsListener) return;
+  document.getElementById("svcsBtnAdd").addEventListener("click",()=>abrirSvcsModal(null));
+  document.getElementById("svcsModalClose").addEventListener("click",cerrarSvcsModal);
+  document.getElementById("svcsCancelBtn").addEventListener("click",cerrarSvcsModal);
+  document.getElementById("svcsOverlay").addEventListener("click",e=>{
+    if(e.target===document.getElementById("svcsOverlay")) cerrarSvcsModal();
+  });
+  document.getElementById("svcsSaveBtn").addEventListener("click",guardarSvcs);
+  document.getElementById("svcsSeedBtn").addEventListener("click",seedServicios);
+  const errSvcs=err=>{
+    document.getElementById("svcsList").innerHTML=
+      `<div class="gen-empty" style="color:#ff8c42;">⚠ Sin acceso: ${err.message}<br><small>Firebase Console → Realtime Database → Rules → asegura ".read":"auth != null"</small></div>`;
+  };
+  svcsListener=db.ref("servicios").orderByChild("orden");
+  svcsListener.on("value",snap=>{
+    allSvcs=snap.val()||{};
+    renderSvcsList();
+    const activos=Object.values(allSvcs).filter(s=>s.activo!==false).sort((a,b)=>(a.orden||0)-(b.orden||0));
+    if(activos.length) SERVICIOS=activos;
+  }, errSvcs);
+}
+
+function renderSvcsList(){
+  const list=document.getElementById("svcsList");
+  const items=Object.entries(allSvcs).map(([k,v])=>({...v,_key:k})).sort((a,b)=>(a.orden||0)-(b.orden||0));
+  if(!items.length){
+    list.innerHTML=`<div class="gen-empty">Sin servicios. Usa "Cargar por defecto" o agrega uno manualmente.</div>`;
+    return;
+  }
+  list.innerHTML=`
+    <table class="gen-table"><thead><tr>
+      <th>Nombre</th><th>Descripción</th><th>Precio</th><th>Duración</th><th>Activo</th><th></th>
+    </tr></thead><tbody>${items.map(s=>`
+      <tr>
+        <td><strong>${s.nombre||'–'}</strong></td>
+        <td style="color:var(--humo);font-size:.74rem;">${s.nota||''}</td>
+        <td>$${(s.precio||0).toLocaleString('es-MX')}</td>
+        <td>${s.duracion||0} min</td>
+        <td><button class="gen-toggle ${s.activo!==false?'on':''}"
+          onclick="toggleSvcs('${s._key}',${s.activo!==false})"></button></td>
+        <td>
+          <button class="gen-icon-btn" onclick="abrirSvcsModal('${s._key}')">✏</button>
+          <button class="gen-icon-btn del" onclick="eliminarSvcs('${s._key}','${(s.nombre||'').replace(/'/g,"\\'")}')">🗑</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+async function toggleSvcs(key,esActivo){
+  try{ await db.ref(`servicios/${key}`).update({activo:!esActivo}); showToast(esActivo?"Servicio desactivado":"Servicio activado"); }
+  catch(e){ showToast("Error"); }
+}
+
+function abrirSvcsModal(key){
+  svcsEditKey=key;
+  document.getElementById("svcsModalTitle").textContent=key?"Editar servicio":"Nuevo servicio";
+  if(key&&allSvcs[key]){
+    const s=allSvcs[key];
+    document.getElementById("svcsNombre").value=s.nombre||"";
+    document.getElementById("svcsNota").value=s.nota||"";
+    document.getElementById("svcsPrecio").value=s.precio||"";
+    document.getElementById("svcsDuracion").value=s.duracion||"";
+    document.getElementById("svcsOrden").value=s.orden||1;
+    document.getElementById("svcsActivo").checked=s.activo!==false;
+  } else {
+    document.getElementById("svcsNombre").value="";
+    document.getElementById("svcsNota").value="";
+    document.getElementById("svcsPrecio").value="";
+    document.getElementById("svcsDuracion").value="";
+    document.getElementById("svcsOrden").value=Object.keys(allSvcs).length+1;
+    document.getElementById("svcsActivo").checked=true;
+  }
+  document.getElementById("svcsOverlay").classList.add("open");
+}
+
+function cerrarSvcsModal(){
+  document.getElementById("svcsOverlay").classList.remove("open"); svcsEditKey=null;
+}
+
+async function guardarSvcs(){
+  const nombre=document.getElementById("svcsNombre").value.trim();
+  const precio=parseFloat(document.getElementById("svcsPrecio").value);
+  const duracion=parseInt(document.getElementById("svcsDuracion").value);
+  if(!nombre){ showToast("El nombre es obligatorio"); return; }
+  if(isNaN(precio)||precio<0){ showToast("Precio inválido"); return; }
+  if(isNaN(duracion)||duracion<1){ showToast("Duración inválida"); return; }
+  const data={
+    nombre,precio,duracion,
+    nota:document.getElementById("svcsNota").value.trim(),
+    orden:parseInt(document.getElementById("svcsOrden").value)||1,
+    activo:document.getElementById("svcsActivo").checked,
+    id:svcsEditKey?(allSvcs[svcsEditKey].id||`svc${Date.now()}`):("svc"+Date.now()),
+  };
+  const btn=document.getElementById("svcsSaveBtn");
+  btn.disabled=true; btn.textContent="Guardando…";
+  try{
+    if(svcsEditKey){
+      await db.ref(`servicios/${svcsEditKey}`).update(data); showToast("✓ Servicio actualizado");
+    } else {
+      await db.ref("servicios").push(data); showToast("✓ Servicio creado");
+    }
+    cerrarSvcsModal();
+  } catch(e){ showToast("Error al guardar"); }
+  finally{ btn.disabled=false; btn.textContent="Guardar"; }
+}
+
+async function eliminarSvcs(key,nombre){
+  if(!confirm(`¿Eliminar "${nombre}"?`)) return;
+  try{ await db.ref(`servicios/${key}`).remove(); showToast("Servicio eliminado"); }
+  catch(e){ showToast("Error"); }
+}
+
+async function seedServicios(){
+  const total=Object.keys(allSvcs).length;
+  if(total>0&&!confirm(`Ya hay ${total} servicios. ¿Agregar los predeterminados igual?`)) return;
+  showToast("Importando servicios…");
+  try{
+    const batch={};
+    SERVICIOS_DEFAULT.forEach(s=>{ batch[`servicios/${db.ref("servicios").push().key}`]={...s}; });
+    await db.ref().update(batch);
+    showToast(`✓ ${SERVICIOS_DEFAULT.length} servicios importados`);
+  } catch(e){ showToast("Error al importar"); console.error(e); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUPONES ADMIN
+═══════════════════════════════════════════════════════════════ */
+let allCups={}, cupsListener=null, cupsEditKey=null;
+
+function initCupsAdmin(){
+  if(cupsListener) return;
+  document.getElementById("cupsBtnAdd").addEventListener("click",()=>abrirCupsModal(null));
+  document.getElementById("cupsModalClose").addEventListener("click",cerrarCupsModal);
+  document.getElementById("cupsCancelBtn").addEventListener("click",cerrarCupsModal);
+  document.getElementById("cupsOverlay").addEventListener("click",e=>{
+    if(e.target===document.getElementById("cupsOverlay")) cerrarCupsModal();
+  });
+  document.getElementById("cupsSaveBtn").addEventListener("click",guardarCupon);
+  const errCups=err=>{
+    document.getElementById("cupsList").innerHTML=
+      `<div class="gen-empty" style="color:#ff8c42;">⚠ Sin acceso: ${err.message}<br><small>Firebase Console → Realtime Database → Rules → asegura ".read":"auth != null"</small></div>`;
+  };
+  cupsListener=db.ref("cupones");
+  cupsListener.on("value",snap=>{ allCups=snap.val()||{}; renderCupsList(); }, errCups);
+}
+
+function renderCupsList(){
+  const list=document.getElementById("cupsList");
+  const items=Object.entries(allCups).map(([k,v])=>({...v,_key:k}))
+    .sort((a,b)=>(a.codigo||'').localeCompare(b.codigo||''));
+  if(!items.length){
+    list.innerHTML=`<div class="gen-empty">Sin cupones. Crea el primero con el botón de arriba.</div>`;
+    return;
+  }
+  list.innerHTML=`
+    <table class="gen-table"><thead><tr>
+      <th>Código</th><th>Descuento</th><th>Tipo</th><th>Vence</th><th>Usos</th><th>Activo</th><th></th>
+    </tr></thead><tbody>${items.map(c=>`
+      <tr>
+        <td><strong style="color:var(--lima);font-family:'Montserrat',sans-serif;letter-spacing:.06em;">${c.codigo||'–'}</strong></td>
+        <td>${c.descuento||0}${c.tipo==='porcentaje'?'%':' $'}</td>
+        <td style="color:var(--humo);font-size:.72rem;">${c.tipo==='porcentaje'?'Porcentaje':'Monto fijo'}</td>
+        <td style="font-size:.74rem;">${c.vence||'Sin límite'}</td>
+        <td style="font-size:.74rem;">${c.usos||0}</td>
+        <td><button class="gen-toggle ${c.activo!==false?'on':''}"
+          onclick="toggleCupon('${c._key}',${c.activo!==false})"></button></td>
+        <td>
+          <button class="gen-icon-btn" onclick="abrirCupsModal('${c._key}')">✏</button>
+          <button class="gen-icon-btn del" onclick="eliminarCupon('${c._key}','${(c.codigo||'').replace(/'/g,"\\'")}')">🗑</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+async function toggleCupon(key,esActivo){
+  try{ await db.ref(`cupones/${key}`).update({activo:!esActivo}); showToast(esActivo?"Cupón desactivado":"Cupón activado"); }
+  catch(e){ showToast("Error"); }
+}
+
+function abrirCupsModal(key){
+  cupsEditKey=key;
+  document.getElementById("cupsModalTitle").textContent=key?"Editar cupón":"Nuevo cupón";
+  if(key&&allCups[key]){
+    const c=allCups[key];
+    document.getElementById("cupsCodigo").value=c.codigo||"";
+    document.getElementById("cupsDescuento").value=c.descuento||"";
+    document.getElementById("cupsTipo").value=c.tipo||"porcentaje";
+    document.getElementById("cupsVence").value=c.vence||"";
+    document.getElementById("cupsActivo").checked=c.activo!==false;
+  } else {
+    document.getElementById("cupsCodigo").value="";
+    document.getElementById("cupsDescuento").value="";
+    document.getElementById("cupsTipo").value="porcentaje";
+    document.getElementById("cupsVence").value="";
+    document.getElementById("cupsActivo").checked=true;
+  }
+  document.getElementById("cupsOverlay").classList.add("open");
+}
+
+function cerrarCupsModal(){
+  document.getElementById("cupsOverlay").classList.remove("open"); cupsEditKey=null;
+}
+
+async function guardarCupon(){
+  const codigo=document.getElementById("cupsCodigo").value.trim().toUpperCase();
+  const descuento=parseFloat(document.getElementById("cupsDescuento").value);
+  if(!codigo){ showToast("El código es obligatorio"); return; }
+  if(isNaN(descuento)||descuento<=0){ showToast("Descuento inválido"); return; }
+  const data={
+    codigo,descuento,
+    tipo:document.getElementById("cupsTipo").value,
+    vence:document.getElementById("cupsVence").value||"",
+    activo:document.getElementById("cupsActivo").checked,
+    usos:cupsEditKey?(allCups[cupsEditKey].usos||0):0,
+  };
+  const btn=document.getElementById("cupsSaveBtn");
+  btn.disabled=true; btn.textContent="Guardando…";
+  try{
+    if(cupsEditKey){
+      await db.ref(`cupones/${cupsEditKey}`).update(data); showToast("✓ Cupón actualizado");
+    } else {
+      await db.ref("cupones").push(data); showToast("✓ Cupón creado");
+    }
+    cerrarCupsModal();
+  } catch(e){ showToast("Error al guardar"); }
+  finally{ btn.disabled=false; btn.textContent="Guardar"; }
+}
+
+async function eliminarCupon(key,codigo){
+  if(!confirm(`¿Eliminar cupón "${codigo}"?`)) return;
+  try{ await db.ref(`cupones/${key}`).remove(); showToast("Cupón eliminado"); }
+  catch(e){ showToast("Error"); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTACTOS ADMIN
+═══════════════════════════════════════════════════════════════ */
+/* Contactos = usuarios registrados en Firebase Auth vía login.html
+   Nodo: usuarios/{uid} → { nombre, email, whatsapp, createdAt, activo? } */
+let allCtcs={}, ctcsListener=null;
+
+function initCtcsAdmin(){
+  if(ctcsListener) return;
+  document.getElementById("ctcsExportBtn").addEventListener("click",exportarCSV);
+  const errCtcs=err=>{
+    document.getElementById("ctcsList").innerHTML=
+      `<div class="gen-empty" style="color:#ff8c42;">⚠ Sin acceso: ${err.message}<br><small>Firebase Console → Realtime Database → Rules → asegura ".read":"auth != null"</small></div>`;
+  };
+  ctcsListener=db.ref("usuarios");
+  ctcsListener.on("value",snap=>{ allCtcs=snap.val()||{}; renderCtcsList(); renderCtcsStats(); }, errCtcs);
+}
+
+function renderCtcsStats(){
+  const vals=Object.values(allCtcs);
+  document.getElementById("ctcsStatsRow").innerHTML=`
+    <span class="mail-chip">Cuentas registradas <b>${vals.length}</b></span>
+    <span class="mail-chip">Recibirán promos <b>${vals.filter(c=>c.activo!==false).length}</b></span>`;
+}
+
+function renderCtcsList(){
+  const list=document.getElementById("ctcsList");
+  const items=Object.entries(allCtcs).map(([k,v])=>({...v,_key:k}))
+    .sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));
+  if(!items.length){
+    list.innerHTML=`<div class="gen-empty">Aún no hay clientes registrados. Aquí aparecerán cuando alguien cree su cuenta.</div>`;
+    return;
+  }
+  list.innerHTML=`
+    <table class="gen-table"><thead><tr>
+      <th>Nombre</th><th>Correo</th><th>WhatsApp</th><th>Enviar promos</th><th></th>
+    </tr></thead><tbody>${items.map(c=>`
+      <tr>
+        <td><strong>${c.nombre||'–'}</strong></td>
+        <td style="font-size:.76rem;">${c.email||'–'}</td>
+        <td style="font-size:.76rem;color:var(--humo);">${c.whatsapp||'–'}</td>
+        <td><button class="gen-toggle ${c.activo!==false?'on':''}"
+          onclick="toggleCtc('${c._key}',${c.activo!==false})"
+          title="${c.activo!==false?'Quitar de promos':'Incluir en promos'}"></button></td>
+        <td>
+          <button class="gen-icon-btn del" onclick="eliminarCtc('${c._key}','${(c.nombre||'').replace(/'/g,"\\'")}')">🗑</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+async function toggleCtc(key,esActivo){
+  try{
+    await db.ref(`usuarios/${key}`).update({activo:!esActivo});
+    showToast(esActivo?"Excluido de promociones":"Incluido en promociones");
+  } catch(e){ showToast("Error"); }
+}
+
+async function eliminarCtc(key,nombre){
+  if(!confirm(`¿Eliminar a "${nombre}" del historial? No borrará su cuenta de Firebase Auth.`)) return;
+  try{ await db.ref(`usuarios/${key}`).remove(); showToast("Registro eliminado"); }
+  catch(e){ showToast("Error"); }
+}
+
+function exportarCSV(){
+  const items=Object.values(allCtcs);
+  if(!items.length){ showToast("No hay usuarios para exportar"); return; }
+  const csv=["Nombre,Correo,WhatsApp,Recibe promos,Registro",
+    ...items.map(c=>`"${c.nombre||''}","${c.email||''}","${c.whatsapp||''}","${c.activo!==false?'Sí':'No'}","${c.createdAt?new Date(c.createdAt).toLocaleDateString('es-MX'):''}"`)
+  ].join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+  a.download="clientes-jj-barberia.csv"; a.click();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREOS ADMIN
+═══════════════════════════════════════════════════════════════ */
+let mailInited=false;
+
+function initMailAdmin(){
+  if(!mailInited){ mailInited=true; }
+  // Reutilizar datos de usuarios si ya están cargados, si no, cargarlos
+  if(!ctcsListener){
+    ctcsListener=db.ref("usuarios");
+    ctcsListener.on("value",snap=>{ allCtcs=snap.val()||{}; renderMailRcptList(); renderMailStats(); });
+  } else {
+    renderMailRcptList(); renderMailStats();
+  }
+  document.getElementById("mailBody").addEventListener("input",e=>{
+    document.getElementById("mailPreview").innerHTML=e.target.value||"El mensaje aparecerá aquí mientras escribes…";
+  });
+  document.getElementById("mailSelAll").addEventListener("click",()=>{
+    document.querySelectorAll("#mailRcptList input[type=checkbox]").forEach(cb=>cb.checked=true);
+  });
+  document.getElementById("mailSelNone").addEventListener("click",()=>{
+    document.querySelectorAll("#mailRcptList input[type=checkbox]").forEach(cb=>cb.checked=false);
+  });
+  document.getElementById("mailSendBtn").addEventListener("click",enviarCorreos);
+}
+
+function renderMailStats(){
+  const vals=Object.values(allCtcs);
+  const activos=vals.filter(c=>c.activo!==false&&c.email);
+  document.getElementById("mailStatsRow").innerHTML=`
+    <span class="mail-chip">Total <b>${vals.length}</b></span>
+    <span class="mail-chip">Con correo activo <b>${activos.length}</b></span>`;
+}
+
+function renderMailRcptList(){
+  const list=document.getElementById("mailRcptList");
+  const items=Object.entries(allCtcs).map(([k,v])=>({...v,_key:k}))
+    .filter(c=>c.email).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));
+  if(!items.length){
+    list.innerHTML=`<div style="color:var(--humo);font-size:.78rem;text-align:center;padding:.6rem;">
+      Aún no hay clientes registrados. Cuando alguien cree su cuenta aparecerá aquí.</div>`;
+    return;
+  }
+  list.innerHTML=items.map(c=>`
+    <div class="mail-rcpt-row">
+      <input type="checkbox" value="${c._key}" ${c.activo!==false?'checked':''}>
+      <span>${c.nombre||''}</span>
+      <span style="color:var(--humo);font-size:.72rem;">· ${c.email}</span>
+    </div>`).join('');
+  renderMailStats();
+}
+
+async function enviarCorreos(){
+  const subject=document.getElementById("mailSubject").value.trim();
+  const html=document.getElementById("mailBody").value.trim();
+  const status=document.getElementById("mailSendStatus");
+  if(!subject){ showToast("El asunto es obligatorio"); return; }
+  if(!html){ showToast("El mensaje es obligatorio"); return; }
+  const checked=[...document.querySelectorAll("#mailRcptList input[type=checkbox]:checked")];
+  if(!checked.length){ showToast("Selecciona al menos un destinatario"); return; }
+  const recipients=checked.map(cb=>{
+    const c=allCtcs[cb.value]; return {nombre:c?.nombre||'',email:c?.email||cb.value};
+  }).filter(r=>r.email);
+  const btn=document.getElementById("mailSendBtn");
+  btn.disabled=true;
+  btn.textContent=`Enviando a ${recipients.length} persona${recipients.length!==1?'s':''}…`;
+  status.textContent="";
+  try{
+    const res=await fetch("/api/send-email",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({subject,html,recipients})
+    });
+    const data=await res.json();
+    if(res.ok&&data.success){
+      showToast(`✓ Enviado a ${data.sent} persona${data.sent!==1?'s':''}`);
+      status.textContent=`✓ Correos enviados: ${data.sent}${data.errors?.length?` · Fallaron: ${data.errors.length}`:''}`;
+      status.style.color="#5aff9e";
+    } else {
+      showToast(data.error||"Error al enviar");
+      status.textContent="⚠ "+(data.error||"Error al enviar");
+      status.style.color="#ff5a5a";
+    }
+  } catch(e){
+    showToast("Error de conexión");
+    status.textContent="⚠ Error de conexión al servidor";
+    status.style.color="#ff5a5a";
+  } finally{
+    btn.disabled=false; btn.textContent="📧 Enviar a seleccionados";
   }
 }
 </script>
