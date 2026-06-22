@@ -379,15 +379,28 @@ async function handleSubmit(){
     let cred;
     if(mode==="login"){
       cred = await auth.signInWithEmailAndPassword(email, pass);
+      // Asegurar que el perfil exista en la base de datos (upsert sin sobreescribir datos)
+      const uid  = cred.user.uid;
+      const snap = await db.ref(`usuarios/${uid}`).once("value");
+      if(!snap.exists()){
+        // Primera vez que entra: crear registro con los datos disponibles
+        const nombre = cred.user.displayName || email.split("@")[0];
+        await db.ref(`usuarios/${uid}`).set({
+          nombre, email, whatsapp:"", createdAt: Date.now()
+        });
+      } else {
+        // Ya existe: actualizar solo email por si acaso
+        await db.ref(`usuarios/${uid}`).update({ email });
+      }
     } else {
       const nombre = document.getElementById("fNombre").value.trim();
       const tel    = document.getElementById("fTel").value.trim().replace(/\D/g,"");
       if(!nombre){ errEl.textContent="El nombre es obligatorio."; resetBtn(); return; }
       cred = await auth.createUserWithEmailAndPassword(email, pass);
       await cred.user.updateProfile({displayName: nombre});
-      const wa = tel.startsWith("52") ? tel : "52"+tel;
-      db.ref(`usuarios/${cred.user.uid}`).set({
-        nombre, whatsapp: wa||"", email, createdAt: Date.now()
+      const wa = tel ? (tel.startsWith("52") ? tel : "52"+tel) : "";
+      await db.ref(`usuarios/${cred.user.uid}`).set({
+        nombre, whatsapp: wa, email, createdAt: Date.now()
       });
     }
     doRedirect(cred.user);
