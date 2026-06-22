@@ -2526,7 +2526,12 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
     const ref = await db.ref("citas").push(cita);
     const citaKey = ref.key;
     if(currentUser){
-      db.ref(`usuarios/${currentUser.uid}`).update({nombre, whatsapp:wa, updatedAt:Date.now()});
+      db.ref(`usuarios/${currentUser.uid}`).update({
+        nombre,
+        whatsapp: wa,
+        email: currentUser.email || "",
+        updatedAt: Date.now()
+      });
     }
     mostrarConfirmacion(cita, codigo, wa, citaKey);
   } catch(e){
@@ -3563,19 +3568,36 @@ function renderMailStats(){
 
 function renderMailRcptList(){
   const list=document.getElementById("mailRcptList");
-  const items=Object.entries(allCtcs).map(([k,v])=>({...v,_key:k}))
-    .filter(c=>c.email).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));
-  if(!items.length){
+  const all=Object.entries(allCtcs).map(([k,v])=>({...v,_key:k}))
+    .sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));
+  if(!all.length){
     list.innerHTML=`<div style="color:var(--humo);font-size:.78rem;text-align:center;padding:.6rem;">
-      Aún no hay clientes registrados. Cuando alguien cree su cuenta aparecerá aquí.</div>`;
+      Aún no hay clientes registrados. Aparecerán aquí cuando alguien inicie sesión o agende una cita.</div>`;
     return;
   }
-  list.innerHTML=items.map(c=>`
-    <div class="mail-rcpt-row">
-      <input type="checkbox" value="${c._key}" ${c.activo!==false?'checked':''}>
-      <span>${c.nombre||''}</span>
-      <span style="color:var(--humo);font-size:.72rem;">· ${c.email}</span>
-    </div>`).join('');
+  const conEmail    = all.filter(c=>c.email && c.activo!==false);
+  const sinEmail    = all.filter(c=>!c.email);
+  const desactivados= all.filter(c=>c.email && c.activo===false);
+  list.innerHTML = [
+    ...conEmail.map(c=>`
+      <div class="mail-rcpt-row">
+        <input type="checkbox" value="${c._key}" checked>
+        <span>${c.nombre||''}</span>
+        <span style="color:var(--humo);font-size:.72rem;">· ${c.email}</span>
+      </div>`),
+    ...desactivados.map(c=>`
+      <div class="mail-rcpt-row" style="opacity:.45;">
+        <input type="checkbox" value="${c._key}" disabled>
+        <span>${c.nombre||''}</span>
+        <span style="color:var(--humo);font-size:.72rem;">· ${c.email} · excluido</span>
+      </div>`),
+    ...sinEmail.map(c=>`
+      <div class="mail-rcpt-row" style="opacity:.4;">
+        <input type="checkbox" disabled title="Sin correo registrado">
+        <span>${c.nombre||''}</span>
+        <span style="color:#ff8c42;font-size:.72rem;">· sin correo aún · que agende una cita o inicie sesión</span>
+      </div>`),
+  ].join('');
   renderMailStats();
 }
 
