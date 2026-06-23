@@ -1267,107 +1267,118 @@ nav{
 }
 .mp-empty-icon{ font-size:2.2rem; margin-bottom:.7rem; }
 
+/* ── Tarjeta ── */
 .mp-card{
-  background:#1a1a1a; border:1px solid rgba(255,255,255,.07);
-  border-radius:16px; padding:1.1rem 1.2rem;
-  margin-bottom:.8rem; transition:border-color .2s;
-  border-left:3px solid #333;
+  background:#161616;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  margin-bottom:1rem;
+  overflow:hidden;
+  transition:border-color .2s, transform .15s;
 }
-.mp-card[data-estado="pendiente"]  { border-left-color:var(--lima); }
-.mp-card[data-estado="confirmado"] { border-left-color:#6ab4ff; }
-.mp-card[data-estado="en_camino"] { border-left-color:#a87aff; }
-.mp-card[data-estado="entregado"] { border-left-color:#5aff9e; }
-.mp-card[data-estado="pagado"]    { border-left-color:var(--lima); }
-.mp-card[data-estado="cancelado"] { border-left-color:#ff5a5a; }
+.mp-card:hover{ border-color:rgba(255,255,255,.13); transform:translateY(-1px); }
+.mp-card[data-estado="pendiente"]  { border-top:2px solid var(--lima); }
+.mp-card[data-estado="confirmado"] { border-top:2px solid #6ab4ff; }
+.mp-card[data-estado="en_camino"]  { border-top:2px solid #a87aff; }
+.mp-card[data-estado="entregado"]  { border-top:2px solid #5aff9e; }
+.mp-card[data-estado="pagado"]     { border-top:2px solid var(--lima); }
+.mp-card[data-estado="cancelado"]  { border-top:2px solid #ff5a5a; }
 
-.mp-card-top{
+/* Cabecera de la tarjeta */
+.mp-card-head{
   display:flex; align-items:center; justify-content:space-between;
-  flex-wrap:wrap; gap:.4rem; margin-bottom:.75rem;
+  padding:.9rem 1.2rem .75rem; gap:.5rem; flex-wrap:wrap;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
 .mp-folio{
   font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:.82rem; color:var(--lima); letter-spacing:.06em;
+  font-size:.8rem; color:var(--blanco); letter-spacing:.06em;
 }
+.mp-card-date{
+  font-size:.6rem; color:var(--humo); letter-spacing:.03em;
+  font-family:'Montserrat',sans-serif;
+}
+
+/* Badge de estado */
 .mp-badge{
   font-family:'Montserrat',sans-serif; font-weight:700;
-  font-size:.56rem; letter-spacing:.1em; text-transform:uppercase;
-  padding:.25rem .72rem; border-radius:20px; white-space:nowrap;
+  font-size:.54rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.28rem .78rem; border-radius:20px; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:.4rem;
 }
-.mp-badge-pendiente  { background:rgba(214,255,0,.12); color:var(--lima); border:1px solid rgba(214,255,0,.25); }
-.mp-badge-confirmado { background:rgba(106,180,255,.12); color:#6ab4ff; border:1px solid rgba(106,180,255,.25); }
-.mp-badge-en_camino  { background:rgba(168,122,255,.12); color:#a87aff; border:1px solid rgba(168,122,255,.25); }
-.mp-badge-entregado  { background:rgba(90,255,158,.1);  color:#5aff9e; border:1px solid rgba(90,255,158,.25); }
-.mp-badge-pagado     { background:rgba(214,255,0,.12); color:var(--lima); border:1px solid rgba(214,255,0,.25); }
-.mp-badge-cancelado  { background:rgba(255,90,90,.1);  color:#ff5a5a; border:1px solid rgba(255,90,90,.2); }
+.mp-badge::before{
+  content:''; width:5px; height:5px; border-radius:50%; flex-shrink:0;
+}
+.mp-badge-pendiente::before  { background:var(--lima); box-shadow:0 0 5px rgba(214,255,0,.6); animation:mpPulse 1.8s ease-in-out infinite; }
+.mp-badge-confirmado::before { background:#6ab4ff; }
+.mp-badge-en_camino::before  { background:#a87aff; box-shadow:0 0 5px rgba(168,122,255,.6); animation:mpPulse 1.8s ease-in-out infinite; }
+.mp-badge-entregado::before  { background:#5aff9e; }
+.mp-badge-pagado::before     { background:var(--lima); }
+.mp-badge-cancelado::before  { background:#ff5a5a; }
+.mp-badge-pendiente  { background:rgba(214,255,0,.1);  color:var(--lima); border:1px solid rgba(214,255,0,.22); }
+.mp-badge-confirmado { background:rgba(106,180,255,.1); color:#6ab4ff;   border:1px solid rgba(106,180,255,.22); }
+.mp-badge-en_camino  { background:rgba(168,122,255,.1); color:#a87aff;   border:1px solid rgba(168,122,255,.22); }
+.mp-badge-entregado  { background:rgba(90,255,158,.08); color:#5aff9e;   border:1px solid rgba(90,255,158,.2); }
+.mp-badge-pagado     { background:rgba(214,255,0,.1);  color:var(--lima); border:1px solid rgba(214,255,0,.22); }
+.mp-badge-cancelado  { background:rgba(255,90,90,.08); color:#ff5a5a;   border:1px solid rgba(255,90,90,.18); }
 
-.mp-live-dot{
-  display:inline-block; width:7px; height:7px; border-radius:50%;
-  vertical-align:middle; margin-right:.35rem; flex-shrink:0;
-}
-.mp-live-dot.pulsing{ animation:mpPulse 1.8s ease-in-out infinite; }
 @keyframes mpPulse{
   0%,100%{ opacity:.5; transform:scale(1); }
-  50%{ opacity:1; transform:scale(1.3); }
+  50%{ opacity:1; transform:scale(1.35); }
 }
-.mp-live-dot.pendiente  { background:var(--lima); }
-.mp-live-dot.confirmado { background:#6ab4ff; }
-.mp-live-dot.en_camino  { background:#a87aff; }
-.mp-live-dot.entregado  { background:#5aff9e; }
-.mp-live-dot.pagado     { background:var(--lima); }
-.mp-live-dot.cancelado  { background:#ff5a5a; }
 
-.mp-items-list{
-  background:#141414; border-radius:10px;
-  padding:.6rem .85rem; margin-bottom:.7rem;
+/* Productos */
+.mp-products{
+  padding:.85rem 1.2rem; display:flex; flex-direction:column; gap:.6rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
-.mp-item-row{
-  display:flex; justify-content:space-between; align-items:baseline;
-  padding:.22rem 0; border-bottom:1px solid rgba(255,255,255,.04);
-  font-size:.75rem; color:rgba(240,240,237,.7);
+.mp-product-row{
+  display:flex; align-items:center; gap:.85rem;
 }
-.mp-item-row:last-child{ border-bottom:none; }
-.mp-item-row span:last-child{
-  font-family:'Montserrat',sans-serif; font-weight:700;
-  color:var(--blanco);
+.mp-product-img{
+  width:48px; height:48px; border-radius:10px;
+  object-fit:cover; background:#222; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.07);
 }
-.mp-total-row{
-  display:flex; justify-content:space-between; align-items:center;
-  padding-top:.55rem; margin-top:.15rem;
-  border-top:1px solid rgba(255,255,255,.09);
+.mp-product-img-placeholder{
+  width:48px; height:48px; border-radius:10px; flex-shrink:0;
+  background:#1e1e1e; border:1px solid rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem;
+}
+.mp-product-info{ flex:1; min-width:0; }
+.mp-product-name{
+  font-size:.8rem; color:var(--blanco); font-weight:500;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  margin-bottom:.1rem;
+}
+.mp-product-qty{
+  font-size:.65rem; color:var(--humo); font-family:'Montserrat',sans-serif;
+}
+.mp-product-price{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.85rem; color:var(--blanco); flex-shrink:0;
+}
+
+/* Footer de la tarjeta */
+.mp-card-foot{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.75rem 1.2rem; gap:.5rem; flex-wrap:wrap;
+}
+.mp-address{
+  font-size:.65rem; color:var(--humo); line-height:1.5; flex:1; min-width:0;
+}
+.mp-address strong{ display:block; color:rgba(240,240,237,.6); font-weight:500; }
+.mp-total-pill{
+  display:flex; flex-direction:column; align-items:flex-end; flex-shrink:0;
 }
 .mp-total-lbl{
-  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+  font-size:.54rem; letter-spacing:.1em; text-transform:uppercase;
   font-family:'Montserrat',sans-serif; font-weight:700; color:var(--humo);
 }
 .mp-total-val{
   font-family:'Montserrat',sans-serif; font-weight:900;
-  font-size:1.05rem; color:var(--lima);
-}
-.mp-meta{
-  font-size:.68rem; color:var(--humo); line-height:1.6;
-  margin-bottom:.6rem;
-}
-.mp-meta b{ color:rgba(240,240,237,.7); }
-
-.mp-status-bar{
-  display:flex; align-items:center; gap:.6rem;
-  background:#161616; border:1px solid rgba(255,255,255,.06);
-  border-radius:10px; padding:.65rem .9rem; margin-top:.65rem;
-}
-.mp-status-text{ font-size:.72rem; color:var(--humo); }
-.mp-status-val{
-  font-family:'Montserrat',sans-serif; font-weight:800;
-  font-size:.74rem; letter-spacing:.03em;
-}
-.mp-status-val.pendiente  { color:var(--lima); }
-.mp-status-val.confirmado { color:#6ab4ff; }
-.mp-status-val.en_camino  { color:#a87aff; }
-.mp-status-val.entregado  { color:#5aff9e; }
-.mp-status-val.pagado     { color:var(--lima); }
-.mp-status-val.cancelado  { color:#ff5a5a; }
-
-.mp-card-date{
-  font-size:.63rem; color:var(--humo); letter-spacing:.04em;
+  font-size:1.1rem; color:var(--lima); line-height:1.1;
 }
 </style>
 </head>
@@ -3068,14 +3079,6 @@ initTienda();
   }
 
   /* ── Helpers de formato ── */
-  const LABEL_ESTADO = {
-    pendiente:  '🕐 Pendiente',
-    confirmado: '✔ Confirmado',
-    en_camino:  '🛵 En camino',
-    entregado:  '📦 Entregado',
-    pagado:     '✅ Pagado',
-    cancelado:  '✕ Cancelado',
-  };
   function fmtFechaPedido(ts){
     if(!ts) return '—';
     const d = new Date(ts);
@@ -3086,7 +3089,6 @@ initTienda();
 
   /* ── Renderiza la tarjeta de un pedido y suscribe su estado en tiempo real ── */
   function renderCard(pedido, id){
-    // Crea o reutiliza el elemento
     let card = document.getElementById('mpCard-' + id);
     if(!card){
       card = document.createElement('div');
@@ -3099,36 +3101,57 @@ initTienda();
     card.dataset.estado = estado;
 
     const items = Array.isArray(pedido.items) ? pedido.items : Object.values(pedido.items || {});
-    const itemsHTML = items.map(it =>
-      `<div class="mp-item-row">
-        <span>${it.qty}× ${it.nombre}</span>
-        <span>${fmtMXN(it.subtotal)}</span>
-      </div>`
-    ).join('');
 
-    const isPulsing = ['pendiente','confirmado','en_camino'].includes(estado);
+    const ESTADO_LABEL = {
+      pendiente:  'Pendiente',
+      confirmado: 'Confirmado',
+      en_camino:  'En camino',
+      entregado:  'Entregado',
+      pagado:     'Pagado',
+      cancelado:  'Cancelado',
+    };
+    const ESTADO_ICON = {
+      pendiente:'🕐', confirmado:'✔', en_camino:'🛵',
+      entregado:'📦', pagado:'✅', cancelado:'✕'
+    };
+
+    const productosHTML = items.map(it => {
+      const imgEl = it.img
+        ? `<img class="mp-product-img" src="${it.img}" alt="${it.nombre}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        : '';
+      const placeholder = `<div class="mp-product-img-placeholder" ${it.img ? 'style="display:none"' : ''}>🧴</div>`;
+      return `
+        <div class="mp-product-row">
+          ${imgEl}${placeholder}
+          <div class="mp-product-info">
+            <div class="mp-product-name">${it.nombre}</div>
+            <div class="mp-product-qty">${it.qty} unidad${it.qty > 1 ? 'es' : ''} · ${it.marca || ''}</div>
+          </div>
+          <div class="mp-product-price">${fmtMXN(it.subtotal)}</div>
+        </div>`;
+    }).join('');
+
+    const dir = pedido.direccion || {};
+    const dirStr = [dir.calle, dir.colonia, dir.cp ? `C.P. ${dir.cp}` : ''].filter(Boolean).join(', ');
 
     card.innerHTML = `
-      <div class="mp-card-top">
-        <span class="mp-folio">${pedido.folio || id}</span>
-        <span class="mp-badge mp-badge-${estado}">${LABEL_ESTADO[estado] || estado}</span>
+      <div class="mp-card-head">
+        <div>
+          <div class="mp-folio">${pedido.folio || id.slice(-6).toUpperCase()}</div>
+          <div class="mp-card-date">${fmtFechaPedido(pedido.createdAt)}</div>
+        </div>
+        <span class="mp-badge mp-badge-${estado}">${ESTADO_ICON[estado] || ''} ${ESTADO_LABEL[estado] || estado}</span>
       </div>
-      <div class="mp-meta">
-        <b>${pedido.nombre || '—'}</b><br>
-        📍 ${pedido.direccion?.calle || '—'}, ${pedido.direccion?.colonia || '—'}<br>
-        <span class="mp-card-date">🗓 ${fmtFechaPedido(pedido.createdAt)}</span>
-      </div>
-      <div class="mp-items-list">
-        ${itemsHTML}
-        <div class="mp-total-row">
+      <div class="mp-products">${productosHTML}</div>
+      <div class="mp-card-foot">
+        <div class="mp-address">
+          <strong>📍 Dirección de entrega</strong>
+          ${dirStr || '—'}
+        </div>
+        <div class="mp-total-pill">
           <span class="mp-total-lbl">Total</span>
           <span class="mp-total-val">${fmtMXN(pedido.total)}</span>
         </div>
-      </div>
-      <div class="mp-status-bar">
-        <span class="mp-live-dot ${estado}${isPulsing ? ' pulsing' : ''}"></span>
-        <span class="mp-status-text">Estado actual:</span>
-        <span class="mp-status-val ${estado}">${LABEL_ESTADO[estado] || estado}</span>
       </div>`;
   }
 
