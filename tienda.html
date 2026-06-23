@@ -1197,6 +1197,178 @@ nav{
 .tienda-hero-cta-ghost:hover{
   border-color:rgba(255,255,255,.35); color:var(--blanco);
 }
+
+/* ══ MIS PEDIDOS ════════════════════════════════════════════════ */
+.nav-mispedidos-btn{
+  font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:700;
+  letter-spacing:.09em; text-transform:uppercase;
+  background:transparent; color:var(--humo);
+  border:1px solid #333; padding:.4rem .95rem; border-radius:30px;
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.nav-mispedidos-btn:hover{ color:var(--lima); border-color:rgba(214,255,0,.35); }
+
+.mp-overlay{
+  position:fixed; inset:0; z-index:700;
+  background:rgba(0,0,0,.78); backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none; transition:opacity .28s;
+}
+.mp-overlay.open{ opacity:1; pointer-events:all; }
+
+.mp-panel{
+  position:fixed; inset:0; z-index:701;
+  display:flex; align-items:flex-end; justify-content:center;
+  pointer-events:none;
+}
+@media(min-width:620px){ .mp-panel{ align-items:center; padding:1.5rem; } }
+
+.mp-box{
+  background:#111; border:1px solid rgba(214,255,0,.1);
+  width:100%; max-width:640px;
+  border-radius:24px 24px 0 0;
+  max-height:92vh; overflow-y:auto;
+  transform:translateY(60px); opacity:0;
+  transition:transform .38s cubic-bezier(.16,1,.3,1), opacity .28s;
+  pointer-events:none;
+  scrollbar-width:thin; scrollbar-color:rgba(214,255,0,.2) transparent;
+}
+@media(min-width:620px){ .mp-box{ border-radius:24px; } }
+.mp-overlay.open + .mp-panel .mp-box{
+  transform:translateY(0); opacity:1; pointer-events:all;
+}
+
+.mp-hdr{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 1.4rem .9rem;
+  position:sticky; top:0; background:#111; z-index:2;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.mp-hdr h3{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1rem; color:var(--blanco); letter-spacing:-.01em;
+}
+.mp-hdr-close{
+  background:rgba(255,255,255,.07); border:none; color:var(--blanco);
+  width:30px; height:30px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.85rem; cursor:pointer; transition:background .2s;
+}
+.mp-hdr-close:hover{ background:rgba(255,255,255,.16); }
+
+.mp-body{ padding:1rem 1.2rem 1.8rem; }
+
+.mp-loading{
+  text-align:center; padding:3rem 1rem;
+  color:var(--humo); font-size:.82rem;
+}
+.mp-empty{
+  text-align:center; padding:3.5rem 1rem;
+  color:var(--humo); font-size:.85rem; line-height:1.7;
+}
+.mp-empty-icon{ font-size:2.2rem; margin-bottom:.7rem; }
+
+.mp-card{
+  background:#1a1a1a; border:1px solid rgba(255,255,255,.07);
+  border-radius:16px; padding:1.1rem 1.2rem;
+  margin-bottom:.8rem; transition:border-color .2s;
+  border-left:3px solid #333;
+}
+.mp-card[data-estado="pendiente"]  { border-left-color:var(--lima); }
+.mp-card[data-estado="confirmado"] { border-left-color:#6ab4ff; }
+.mp-card[data-estado="en_camino"] { border-left-color:#a87aff; }
+.mp-card[data-estado="entregado"] { border-left-color:#5aff9e; }
+.mp-card[data-estado="pagado"]    { border-left-color:var(--lima); }
+.mp-card[data-estado="cancelado"] { border-left-color:#ff5a5a; }
+
+.mp-card-top{
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:.4rem; margin-bottom:.75rem;
+}
+.mp-folio{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:.82rem; color:var(--lima); letter-spacing:.06em;
+}
+.mp-badge{
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.56rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.25rem .72rem; border-radius:20px; white-space:nowrap;
+}
+.mp-badge-pendiente  { background:rgba(214,255,0,.12); color:var(--lima); border:1px solid rgba(214,255,0,.25); }
+.mp-badge-confirmado { background:rgba(106,180,255,.12); color:#6ab4ff; border:1px solid rgba(106,180,255,.25); }
+.mp-badge-en_camino  { background:rgba(168,122,255,.12); color:#a87aff; border:1px solid rgba(168,122,255,.25); }
+.mp-badge-entregado  { background:rgba(90,255,158,.1);  color:#5aff9e; border:1px solid rgba(90,255,158,.25); }
+.mp-badge-pagado     { background:rgba(214,255,0,.12); color:var(--lima); border:1px solid rgba(214,255,0,.25); }
+.mp-badge-cancelado  { background:rgba(255,90,90,.1);  color:#ff5a5a; border:1px solid rgba(255,90,90,.2); }
+
+.mp-live-dot{
+  display:inline-block; width:7px; height:7px; border-radius:50%;
+  vertical-align:middle; margin-right:.35rem; flex-shrink:0;
+}
+.mp-live-dot.pulsing{ animation:mpPulse 1.8s ease-in-out infinite; }
+@keyframes mpPulse{
+  0%,100%{ opacity:.5; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.3); }
+}
+.mp-live-dot.pendiente  { background:var(--lima); }
+.mp-live-dot.confirmado { background:#6ab4ff; }
+.mp-live-dot.en_camino  { background:#a87aff; }
+.mp-live-dot.entregado  { background:#5aff9e; }
+.mp-live-dot.pagado     { background:var(--lima); }
+.mp-live-dot.cancelado  { background:#ff5a5a; }
+
+.mp-items-list{
+  background:#141414; border-radius:10px;
+  padding:.6rem .85rem; margin-bottom:.7rem;
+}
+.mp-item-row{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:.22rem 0; border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:.75rem; color:rgba(240,240,237,.7);
+}
+.mp-item-row:last-child{ border-bottom:none; }
+.mp-item-row span:last-child{
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  color:var(--blanco);
+}
+.mp-total-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:.55rem; margin-top:.15rem;
+  border-top:1px solid rgba(255,255,255,.09);
+}
+.mp-total-lbl{
+  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+  font-family:'Montserrat',sans-serif; font-weight:700; color:var(--humo);
+}
+.mp-total-val{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.05rem; color:var(--lima);
+}
+.mp-meta{
+  font-size:.68rem; color:var(--humo); line-height:1.6;
+  margin-bottom:.6rem;
+}
+.mp-meta b{ color:rgba(240,240,237,.7); }
+
+.mp-status-bar{
+  display:flex; align-items:center; gap:.6rem;
+  background:#161616; border:1px solid rgba(255,255,255,.06);
+  border-radius:10px; padding:.65rem .9rem; margin-top:.65rem;
+}
+.mp-status-text{ font-size:.72rem; color:var(--humo); }
+.mp-status-val{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.74rem; letter-spacing:.03em;
+}
+.mp-status-val.pendiente  { color:var(--lima); }
+.mp-status-val.confirmado { color:#6ab4ff; }
+.mp-status-val.en_camino  { color:#a87aff; }
+.mp-status-val.entregado  { color:#5aff9e; }
+.mp-status-val.pagado     { color:var(--lima); }
+.mp-status-val.cancelado  { color:#ff5a5a; }
+
+.mp-card-date{
+  font-size:.63rem; color:var(--humo); letter-spacing:.04em;
+}
 </style>
 </head>
 <body>
@@ -1227,6 +1399,7 @@ nav{
     <a href="citas.html" class="nav-cta">Agendar →</a>
     <div id="navUserChipT" style="display:none;align-items:center;gap:.5rem;">
       <div id="navUserAvatarT" style="width:28px;height:28px;border-radius:50%;background:rgba(214,255,0,.12);border:1.5px solid rgba(214,255,0,.35);display:flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-weight:900;font-size:.7rem;color:var(--lima);">?</div>
+      <button id="navMisPedidosBtn" class="nav-mispedidos-btn">Mis pedidos</button>
       <button onclick="firebase.auth().signOut().then(()=>window.location.href='login.html')" style="font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--humo);border:1px solid #333;padding:.35rem .8rem;border-radius:30px;cursor:pointer;" onmouseover="this.style.color='#ff5a5a'" onmouseout="this.style.color='var(--humo)'">Salir</button>
     </div>
     <button class="nav-cart-btn" id="cartToggle" aria-label="Ver carrito">
@@ -1283,6 +1456,7 @@ nav{
   </div>
   <div class="drawer-actions">
     <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
+    <button class="nav-drawer-cart" id="drawerMisPedidosBtn">📦 Mis Pedidos</button>
     <button class="nav-drawer-cart" id="drawerCartBtn">🛒 Ver Carrito</button>
   </div>
 </div>
@@ -1762,6 +1936,20 @@ nav{
         <div class="ck-step"><div class="ck-step-n">3</div>Recibes tu pedido · pagas en efectivo al entregar</div>
       </div>
       <button class="btn-hacer-pedido" id="ckBtnCerrar" style="background:rgba(255,255,255,.09);color:var(--blanco);">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MIS PEDIDOS MODAL ════════════════════════════════════════ -->
+<div class="mp-overlay" id="mpOverlay"></div>
+<div class="mp-panel">
+  <div class="mp-box" id="mpBox">
+    <div class="mp-hdr">
+      <h3>📦 Mis Pedidos</h3>
+      <button class="mp-hdr-close" id="mpClose">✕</button>
+    </div>
+    <div class="mp-body" id="mpBody">
+      <div class="mp-loading">Cargando tus pedidos…</div>
     </div>
   </div>
 </div>
@@ -2630,6 +2818,10 @@ document.getElementById('btnVaciar').addEventListener('click', vaciarCarrito);
 document.getElementById('drawerCartBtn').addEventListener('click', () => {
   cerrarDrawer(); abrirCarrito();
 });
+document.getElementById('drawerMisPedidosBtn').addEventListener('click', () => {
+  cerrarDrawer();
+  if(window._abrirMisPedidos) window._abrirMisPedidos();
+});
 
 // ═══════════════════════════════════════════════════
 // HAMBURGUESA MÓVIL
@@ -2835,8 +3027,154 @@ initTienda();
   });
 })();
 
-/* ── AUTH GUARD ──────────────────────────────────────────────── */
+// ═══════════════════════════════════════════════════
+// MIS PEDIDOS
+// ═══════════════════════════════════════════════════
 (function(){
+  const overlay  = document.getElementById('mpOverlay');
+  const mpBox    = document.getElementById('mpBox');
+  const mpBody   = document.getElementById('mpBody');
+  const btnClose = document.getElementById('mpClose');
+  const btnNav   = document.getElementById('navMisPedidosBtn');
+
+  let pedidosListeners = {}; // key: pedidoId → unsubscribe fn
+
+  /* ── Abrir / cerrar ── */
+  function abrir(){
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    cargarPedidos();
+  }
+  function cerrar(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    limpiarListeners();
+  }
+
+  overlay.addEventListener('click', cerrar);
+  btnClose.addEventListener('click', cerrar);
+  if(btnNav) btnNav.addEventListener('click', abrir);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') cerrar(); });
+  overlay.addEventListener('click', e => { if(e.target === overlay) cerrar(); });
+
+  /* ── Limpia todos los listeners de tiempo real activos ── */
+  function limpiarListeners(){
+    Object.values(pedidosListeners).forEach(fn => fn());
+    pedidosListeners = {};
+  }
+
+  /* ── Helpers de formato ── */
+  const LABEL_ESTADO = {
+    pendiente:  '🕐 Pendiente',
+    confirmado: '✔ Confirmado',
+    en_camino:  '🛵 En camino',
+    entregado:  '📦 Entregado',
+    pagado:     '✅ Pagado',
+    cancelado:  '✕ Cancelado',
+  };
+  function fmtFechaPedido(ts){
+    if(!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}) +
+           ' · ' + d.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  }
+  function fmtMXN(n){ return '$' + Number(n).toLocaleString('es-MX'); }
+
+  /* ── Renderiza la tarjeta de un pedido y suscribe su estado en tiempo real ── */
+  function renderCard(pedido, id){
+    // Crea o reutiliza el elemento
+    let card = document.getElementById('mpCard-' + id);
+    if(!card){
+      card = document.createElement('div');
+      card.className = 'mp-card';
+      card.id = 'mpCard-' + id;
+      mpBody.appendChild(card);
+    }
+
+    const estado = pedido.estado || 'pendiente';
+    card.dataset.estado = estado;
+
+    const items = Array.isArray(pedido.items) ? pedido.items : Object.values(pedido.items || {});
+    const itemsHTML = items.map(it =>
+      `<div class="mp-item-row">
+        <span>${it.qty}× ${it.nombre}</span>
+        <span>${fmtMXN(it.subtotal)}</span>
+      </div>`
+    ).join('');
+
+    const isPulsing = ['pendiente','confirmado','en_camino'].includes(estado);
+
+    card.innerHTML = `
+      <div class="mp-card-top">
+        <span class="mp-folio">${pedido.folio || id}</span>
+        <span class="mp-badge mp-badge-${estado}">${LABEL_ESTADO[estado] || estado}</span>
+      </div>
+      <div class="mp-meta">
+        <b>${pedido.nombre || '—'}</b><br>
+        📍 ${pedido.direccion?.calle || '—'}, ${pedido.direccion?.colonia || '—'}<br>
+        <span class="mp-card-date">🗓 ${fmtFechaPedido(pedido.createdAt)}</span>
+      </div>
+      <div class="mp-items-list">
+        ${itemsHTML}
+        <div class="mp-total-row">
+          <span class="mp-total-lbl">Total</span>
+          <span class="mp-total-val">${fmtMXN(pedido.total)}</span>
+        </div>
+      </div>
+      <div class="mp-status-bar">
+        <span class="mp-live-dot ${estado}${isPulsing ? ' pulsing' : ''}"></span>
+        <span class="mp-status-text">Estado actual:</span>
+        <span class="mp-status-val ${estado}">${LABEL_ESTADO[estado] || estado}</span>
+      </div>`;
+  }
+
+  /* ── Carga pedidos del usuario actual y suscribe cada uno ── */
+  async function cargarPedidos(){
+    const user = firebase.auth().currentUser;
+    if(!user){ mpBody.innerHTML = '<div class="mp-empty"><div class="mp-empty-icon">🔒</div>Inicia sesión para ver tus pedidos.</div>'; return; }
+
+    mpBody.innerHTML = '<div class="mp-loading">Cargando tus pedidos…</div>';
+    limpiarListeners();
+
+    try{
+      const snap = await dbTienda.ref('pedidos').orderByChild('uid').equalTo(user.uid).once('value');
+      const data = snap.val();
+
+      if(!data || !Object.keys(data).length){
+        mpBody.innerHTML = '<div class="mp-empty"><div class="mp-empty-icon">📭</div>Aún no tienes pedidos.<br>¡Agrega productos al carrito y haz tu primer pedido!</div>';
+        return;
+      }
+
+      // Ordenar: más recientes primero
+      const sorted = Object.entries(data).sort(([,a],[,b]) => (b.createdAt||0) - (a.createdAt||0));
+
+      mpBody.innerHTML = '';
+
+      sorted.forEach(([id, pedido]) => {
+        renderCard(pedido, id);
+
+        // Listener en tiempo real para este pedido
+        const ref = dbTienda.ref('pedidos/' + id);
+        const handler = ref.on('value', snap => {
+          const updated = snap.val();
+          if(updated) renderCard(updated, id);
+        });
+
+        // Guardar la función de desuscripción
+        pedidosListeners[id] = () => ref.off('value', handler);
+      });
+
+    } catch(e){
+      console.error('MisPedidos error:', e);
+      mpBody.innerHTML = '<div class="mp-empty">Error al cargar pedidos. Revisa tu conexión.</div>';
+    }
+  }
+
+  // Exponer para que el auth guard también pueda mostrar el botón cuando proceda
+  window._abrirMisPedidos = abrir;
+})();
+
+/* ── AUTH GUARD ──────────────────────────────────────────────── */(function(){
   const auth = firebase.auth();
   function hideSplash(){
     const s=document.getElementById("jjSplash");
