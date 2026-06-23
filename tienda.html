@@ -3010,7 +3010,11 @@ initTienda();
     };
 
     try{
-      await dbTienda.ref('pedidos').push(pedido);
+      const pedRef = await dbTienda.ref('pedidos').push(pedido);
+      // Registrar el ID del pedido bajo el usuario para poder listarlo después
+      if(user){
+        await dbTienda.ref(`usuarios/${user.uid}/pedidos/${pedRef.key}`).set(true);
+      }
       // Mostrar confirmación
       document.getElementById('ckFolioOk').textContent = folio;
       formStep.style.display = 'none';
@@ -3137,21 +3141,32 @@ initTienda();
     limpiarListeners();
 
     try{
-      const snap = await dbTienda.ref('pedidos').orderByChild('uid').equalTo(user.uid).once('value');
-      const data = snap.val();
+      // Leer el índice de IDs del usuario (permitido por la regla $uid)
+      const idxSnap = await dbTienda.ref(`usuarios/${user.uid}/pedidos`).once('value');
+      const idx = idxSnap.val();
 
-      if(!data || !Object.keys(data).length){
+      if(!idx || !Object.keys(idx).length){
         mpBody.innerHTML = '<div class="mp-empty"><div class="mp-empty-icon">📭</div>Aún no tienes pedidos.<br>¡Agrega productos al carrito y haz tu primer pedido!</div>';
         return;
       }
 
-      // Ordenar: más recientes primero
-      const sorted = Object.entries(data).sort(([,a],[,b]) => (b.createdAt||0) - (a.createdAt||0));
+      // Leer cada pedido individualmente (permitido por la regla $ped con uid == auth.uid)
+      const ids = Object.keys(idx);
+      const snaps = await Promise.all(ids.map(id => dbTienda.ref(`pedidos/${id}`).once('value')));
+      const pedidos = snaps
+        .map((s, i) => ({ id: ids[i], data: s.val() }))
+        .filter(p => p.data !== null)
+        .sort((a, b) => (b.data.createdAt || 0) - (a.data.createdAt || 0));
+
+      if(!pedidos.length){
+        mpBody.innerHTML = '<div class="mp-empty"><div class="mp-empty-icon">📭</div>Aún no tienes pedidos.</div>';
+        return;
+      }
 
       mpBody.innerHTML = '';
 
-      sorted.forEach(([id, pedido]) => {
-        renderCard(pedido, id);
+      pedidos.forEach(({ id, data }) => {
+        renderCard(data, id);
 
         // Listener en tiempo real para este pedido
         const ref = dbTienda.ref('pedidos/' + id);
@@ -3160,7 +3175,6 @@ initTienda();
           if(updated) renderCard(updated, id);
         });
 
-        // Guardar la función de desuscripción
         pedidosListeners[id] = () => ref.off('value', handler);
       });
 
