@@ -1156,6 +1156,56 @@ nav{
 .ct-live-val.cancelado,.ct-live-val.cancelada{ color:#ff5a5a; }
 
 
+/* ══ CONFIRM DIALOG ══════════════════════════════════════════════ */
+.jj-confirm-overlay{
+  position:fixed; inset:0; z-index:1100;
+  background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  padding:1.2rem;
+  opacity:0; pointer-events:none;
+  transition:opacity .2s;
+}
+.jj-confirm-overlay.open{ opacity:1; pointer-events:all; }
+.jj-confirm-box{
+  background:#161616; border:1px solid rgba(255,255,255,.1);
+  border-radius:20px; padding:1.8rem 1.6rem 1.4rem;
+  width:100%; max-width:340px;
+  transform:scale(.96) translateY(6px);
+  transition:transform .22s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+.jj-confirm-overlay.open .jj-confirm-box{ transform:scale(1) translateY(0); }
+.jj-confirm-icon{
+  font-size:1.6rem; margin-bottom:.7rem; display:block; text-align:center;
+}
+.jj-confirm-msg{
+  font-size:.88rem; color:var(--blanco); text-align:center;
+  line-height:1.55; margin-bottom:1.4rem;
+  font-family:'Poppins',sans-serif; font-weight:400;
+}
+.jj-confirm-btns{
+  display:flex; gap:.6rem;
+}
+.jj-confirm-cancel{
+  flex:1; font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; color:var(--humo);
+  border:1px solid #333; border-radius:30px;
+  padding:.72rem 1rem; cursor:pointer; transition:all .18s;
+}
+.jj-confirm-cancel:hover{ color:var(--blanco); border-color:#555; }
+.jj-confirm-ok{
+  flex:1; font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+  background:var(--lima); color:var(--negro);
+  border:none; border-radius:30px;
+  padding:.72rem 1rem; cursor:pointer; transition:opacity .18s;
+}
+.jj-confirm-ok:hover{ opacity:.85; }
+.jj-confirm-ok.danger{
+  background:#ff5a5a; color:#fff;
+}
+
 /* ══ TOAST ═══════════════════════════════════════════════════════ */
 .toast{
   position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
@@ -2117,11 +2167,56 @@ nav{
   </div>
 </div>
 
+<!-- ══ CONFIRM DIALOG ═══════════════════════════════════════════ -->
+<div class="jj-confirm-overlay" id="jjConfirmOverlay">
+  <div class="jj-confirm-box">
+    <span class="jj-confirm-icon" id="jjConfirmIcon">⚠️</span>
+    <p class="jj-confirm-msg" id="jjConfirmMsg"></p>
+    <div class="jj-confirm-btns">
+      <button class="jj-confirm-cancel" id="jjConfirmCancel">Cancelar</button>
+      <button class="jj-confirm-ok" id="jjConfirmOk">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ TOAST ════════════════════════════════════════════════════ -->
 <div class="toast" id="toast"></div>
 
 <!-- ══ SCRIPT ═══════════════════════════════════════════════════ -->
 <script>
+/* ─── CONFIRM DIALOG (reemplaza confirm() nativo) ────────────── */
+function jjConfirm({ msg, icon='⚠️', okLabel='Confirmar', danger=false }){
+  return new Promise(resolve => {
+    const overlay  = document.getElementById('jjConfirmOverlay');
+    const msgEl    = document.getElementById('jjConfirmMsg');
+    const iconEl   = document.getElementById('jjConfirmIcon');
+    const okBtn    = document.getElementById('jjConfirmOk');
+    const cancelBtn= document.getElementById('jjConfirmCancel');
+
+    msgEl.textContent  = msg;
+    iconEl.textContent = icon;
+    okBtn.textContent  = okLabel;
+    okBtn.className    = 'jj-confirm-ok' + (danger ? ' danger' : '');
+
+    overlay.classList.add('open');
+
+    function cleanup(result){
+      overlay.classList.remove('open');
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      overlay.removeEventListener('click', onBackdrop);
+      resolve(result);
+    }
+    const onOk      = () => cleanup(true);
+    const onCancel  = () => cleanup(false);
+    const onBackdrop= e => { if(e.target === overlay) cleanup(false); };
+
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+    overlay.addEventListener('click', onBackdrop);
+  });
+}
+
 /* ─── FIREBASE CONFIG ────────────────────────────────────────── */
 const firebaseConfig = {
   apiKey: "AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
@@ -2859,7 +2954,8 @@ function renderMcCard(c,upcoming){
 }
 
 async function cancelarCita(key,codigo){
-  if(!confirm(`¿Cancelar la cita ${codigo}?\n\nEsta acción no se puede deshacer.`)) return;
+  const ok = await jjConfirm({ msg:`¿Cancelar la cita ${codigo}? Esta acción no se puede deshacer.`, icon:'✕', okLabel:'Sí, cancelar', danger:true });
+  if(!ok) return;
   try{
     await db.ref(`citas/${key}`).update({estado:"cancelada",canceladaAt:Date.now()});
     showToast("Cita cancelada. Puedes agendar una nueva cuando quieras.");
@@ -3173,7 +3269,8 @@ async function guardarProducto(){
 
 /* ─── ELIMINAR ────────────────────────────────────────────────── */
 async function eliminarProducto(key, nombre){
-  if(!confirm(`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
+  const ok = await jjConfirm({ msg:`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`, icon:'🗑️', okLabel:'Eliminar', danger:true });
+  if(!ok) return;
   try{
     await db.ref(`productos/${key}`).remove();
     showToast("Producto eliminado");
@@ -3184,7 +3281,8 @@ async function eliminarProducto(key, nombre){
 async function seedProductos(){
   const total = Object.keys(allProductos).length;
   if(total>0){
-    if(!confirm(`Ya hay ${total} productos en Firebase. ¿Agregar igualmente el catálogo por defecto?`)) return;
+    const ok = await jjConfirm({ msg:`Ya hay ${total} productos en Firebase. ¿Agregar igualmente el catálogo por defecto?`, icon:'📦', okLabel:'Agregar igual' });
+    if(!ok) return;
   }
 
   /* Cargamos PRODUCTOS_DEFAULT desde tienda.html via fetch */
@@ -3333,7 +3431,8 @@ async function guardarDest(){
 }
 
 async function eliminarDest(key){
-  if(!confirm("¿Eliminar esta imagen de los destacados?")) return;
+  const ok = await jjConfirm({ msg:'¿Eliminar esta imagen de los destacados?', icon:'🖼️', okLabel:'Eliminar', danger:true });
+  if(!ok) return;
   try{ await db.ref(`destacados/${key}`).remove(); showToast("Imagen eliminada"); }
   catch(e){ showToast("Error"); }
 }
@@ -3459,14 +3558,18 @@ async function guardarSvcs(){
 }
 
 async function eliminarSvcs(key,nombre){
-  if(!confirm(`¿Eliminar "${nombre}"?`)) return;
+  const ok = await jjConfirm({ msg:`¿Eliminar el servicio "${nombre}"?`, icon:'✂️', okLabel:'Eliminar', danger:true });
+  if(!ok) return;
   try{ await db.ref(`servicios/${key}`).remove(); showToast("Servicio eliminado"); }
   catch(e){ showToast("Error"); }
 }
 
 async function seedServicios(){
   const total=Object.keys(allSvcs).length;
-  if(total>0&&!confirm(`Ya hay ${total} servicios. ¿Agregar los predeterminados igual?`)) return;
+  if(total>0){
+    const ok = await jjConfirm({ msg:`Ya hay ${total} servicios. ¿Agregar los predeterminados igual?`, icon:'📋', okLabel:'Agregar igual' });
+    if(!ok) return;
+  }
   showToast("Importando servicios…");
   try{
     const batch={};
@@ -3581,7 +3684,8 @@ async function guardarCupon(){
 }
 
 async function eliminarCupon(key,codigo){
-  if(!confirm(`¿Eliminar cupón "${codigo}"?`)) return;
+  const ok = await jjConfirm({ msg:`¿Eliminar el cupón "${codigo}"?`, icon:'🏷️', okLabel:'Eliminar', danger:true });
+  if(!ok) return;
   try{ await db.ref(`cupones/${key}`).remove(); showToast("Cupón eliminado"); }
   catch(e){ showToast("Error"); }
 }
@@ -3645,7 +3749,8 @@ async function toggleCtc(key,esActivo){
 }
 
 async function eliminarCtc(key,nombre){
-  if(!confirm(`¿Eliminar a "${nombre}" del historial? No borrará su cuenta de Firebase Auth.`)) return;
+  const ok = await jjConfirm({ msg:`¿Eliminar a "${nombre}" del historial? No borrará su cuenta de Firebase Auth.`, icon:'👤', okLabel:'Eliminar', danger:true });
+  if(!ok) return;
   try{ await db.ref(`usuarios/${key}`).remove(); showToast("Registro eliminado"); }
   catch(e){ showToast("Error"); }
 }
@@ -3836,8 +3941,16 @@ function renderPedidos(){
       const key  = btn.dataset.key;
       const est  = btn.dataset.est;
       const prev = allPedidos[key]?.estado;
-      const labels = {confirmado:'confirmar',en_camino:'marcar en camino',entregado:'marcar como entregado',pagado:'marcar como PAGADO',cancelado:'cancelar'};
-      if(!confirm(`¿${labels[est]||est} este pedido?`)) return;
+      const MSGS = {
+        confirmado:{ msg:'¿Confirmar este pedido?',        icon:'✔',  okLabel:'Confirmar',      danger:false },
+        en_camino: { msg:'¿Marcar el pedido en camino?',   icon:'🛵', okLabel:'En camino',      danger:false },
+        entregado: { msg:'¿Marcar el pedido como entregado?', icon:'📦', okLabel:'Entregado',   danger:false },
+        pagado:    { msg:'¿Marcar el pedido como pagado?', icon:'💸', okLabel:'Marcar pagado',   danger:false },
+        cancelado: { msg:'¿Cancelar este pedido? Esta acción no se puede deshacer.', icon:'✕', okLabel:'Cancelar pedido', danger:true },
+      };
+      const cfg = MSGS[est] || { msg:`¿${est} este pedido?`, icon:'⚠️', okLabel:'Confirmar', danger:false };
+      const ok = await jjConfirm(cfg);
+      if(!ok) return;
       const upd = { estado: est };
       if(est==='confirmado') upd.confirmadoAt = Date.now();
       if(est==='en_camino')  upd.enviadoAt    = Date.now();
