@@ -2298,6 +2298,63 @@ document.getElementById("navLogoutBtn").addEventListener("click", ()=>auth.signO
 document.getElementById("navMisCitasBtn").addEventListener("click", ()=>{ showScreen("miscitas"); cargarMisCitas(); });
 document.getElementById("btnNuevaCita").addEventListener("click",   ()=>{ resetBooking(); showScreen("booking"); });
 
+/* ─── PUSH NOTIFICATIONS ─────────────────────────────────────── */
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  const out = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; i++) out[i] = rawData.charCodeAt(i);
+  return out;
+}
+
+function isInstalledPWA() {
+  return window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+}
+
+async function subscribeUserToPush(user) {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+
+  const installed = isInstalledPWA();
+
+  /* En navegador normal: solo suscribir si el permiso ya fue concedido antes.
+     En PWA instalada: pedir permiso directamente (diálogo nativo del sistema, una sola vez). */
+  if (!installed && Notification.permission !== 'granted') return;
+
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) {
+      const resp = await fetch('/api/vapid-public-key');
+      if (!resp.ok) return;
+      const { publicKey } = await resp.json();
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') return;
+      sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicKey)
+      });
+    }
+    const uid = user.email === ADMIN_EMAIL ? 'ADMIN' : user.uid;
+    await fetch('/api/save-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid, subscription: sub.toJSON() })
+    });
+  } catch(e) { console.log('Push subscription:', e.message); }
+}
+
+async function sendPushNotif(uid, title, body, url = '/citas.html') {
+  try {
+    await fetch('/api/send-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid, title, body, url })
+    });
+  } catch(e) {}
+}
+
 /* ─── AUTH STATE ─────────────────────────────────────────────── */
 function hideSplash(){
   const s=document.getElementById("jjSplash");
@@ -2310,6 +2367,7 @@ auth.onAuthStateChanged(user=>{
   if(!user){ window.location.href="login.html?redirect=citas.html"; return; }
   hideSplash();
   updateNavUser(user);
+  subscribeUserToPush(user);
   if(user.email===ADMIN_EMAIL){
     showScreen("admin");
     initAdminDashboard();
@@ -2521,6 +2579,20 @@ async function updateCita(id,estado){
       pendiente:"↩ Cita restaurada"
     };
     showToast(msgs[estado]||"Actualizado");
+    /* ── Notificar al usuario ── */
+    try{
+      const snap = await db.ref(`citas/${id}`).once('value');
+      const c = snap.val();
+      if(c && c.uid){
+        const notifMap = {
+          confirmada: { title:'✅ ¡Cita confirmada!',    body:`Tu ${c.servicio} el ${fmtFecha(c.fecha)} a las ${c.hora} hrs está confirmada. ¡Te esperamos!` },
+          cancelado:  { title:'❌ Cita cancelada',        body:`Tu cita de ${c.servicio} el ${fmtFecha(c.fecha)} fue cancelada. Puedes agendar una nueva.` },
+          atendido:   { title:'🌟 ¡Gracias por visitarnos!', body:`Esperamos haberte dado la mejor experiencia. ¡Hasta pronto en JJ Barbería!` },
+        };
+        const n = notifMap[estado];
+        if(n) sendPushNotif(c.uid, n.title, n.body, '/citas.html');
+      }
+    } catch(err){}
   } catch(e){ showToast("Error al actualizar"); console.error(e); }
 }
 
@@ -2757,6 +2829,7 @@ document.getElementById("btnConfirm").addEventListener("click", async()=>{
         updatedAt: Date.now()
       });
     }
+    sendPushNotif('ADMIN', '✂ Nueva cita agendada', `${cita.nombre} · ${cita.servicio} · ${fmtFecha(cita.fecha)} a las ${cita.hora} hrs`);
     mostrarConfirmacion(cita, codigo, wa, citaKey);
   } catch(e){
     btn.innerHTML = "Confirmar cita"; btn.disabled = false;
