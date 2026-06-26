@@ -17,7 +17,7 @@
 :root{
   --negro:#080808; --blanco:#F0F0ED; --lima:#D6FF00;
   --gris:#161616; --gris2:#1a1a1a; --gris3:#252525;
-  --humo:#777; --wa:#25D366;
+  --humo:#999; --wa:#25D366;
   --r-md:16px; --r-lg:24px; --r-xl:32px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -59,20 +59,20 @@ body{
 }
 .aside-headline em{color:var(--lima); font-style:normal;}
 .aside-desc{
-  font-size:.85rem; color:rgba(240,240,237,.45);
-  line-height:1.7; margin-top:.9rem; max-width:300px;
+  font-size:.9rem; color:rgba(240,240,237,.65);
+  line-height:1.75; margin-top:.9rem; max-width:300px;
 }
 .aside-badges{
   display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.8rem;
 }
 .aside-badge{
-  font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
   font-family:'Montserrat',sans-serif; font-weight:700;
-  border:1px solid rgba(255,255,255,.1); color:rgba(240,240,237,.45);
-  padding:.3rem .75rem; border-radius:30px;
+  border:1px solid rgba(255,255,255,.15); color:rgba(240,240,237,.6);
+  padding:.35rem .85rem; border-radius:30px;
 }
 .aside-footer{
-  font-size:.65rem; color:rgba(240,240,237,.2); line-height:1.6;
+  font-size:.75rem; color:rgba(240,240,237,.4); line-height:1.7;
 }
 
 /* ── FORM PANEL ── */
@@ -82,8 +82,8 @@ body{
   justify-content:center; padding:3rem 3.5rem;
 }
 .panel-eyebrow{
-  font-family:'Montserrat',sans-serif; font-size:.6rem;
-  font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  font-family:'Montserrat',sans-serif; font-size:.72rem;
+  font-weight:700; letter-spacing:.14em; text-transform:uppercase;
   color:var(--humo); margin-bottom:1.8rem;
   display:flex; align-items:center; gap:.6rem;
 }
@@ -96,7 +96,7 @@ body{
   margin-bottom:.4rem;
 }
 .panel-sub{
-  font-size:.78rem; color:var(--humo); line-height:1.6;
+  font-size:.88rem; color:var(--humo); line-height:1.7;
   margin-bottom:2rem;
 }
 
@@ -106,8 +106,8 @@ body{
   border-radius:30px; padding:.25rem; margin-bottom:1.8rem;
 }
 .auth-tab{
-  flex:1; font-family:'Montserrat',sans-serif; font-size:.68rem;
-  font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  flex:1; font-family:'Montserrat',sans-serif; font-size:.76rem;
+  font-weight:700; letter-spacing:.07em; text-transform:uppercase;
   background:none; border:none; color:var(--humo);
   padding:.55rem; border-radius:30px; cursor:pointer; transition:all .2s;
 }
@@ -116,8 +116,8 @@ body{
 /* ── FORM ── */
 .form-group{ margin-bottom:1.1rem; }
 .form-label{
-  display:block; font-size:.65rem; letter-spacing:.12em;
-  text-transform:uppercase; color:rgba(240,240,237,.5);
+  display:block; font-size:.75rem; letter-spacing:.08em;
+  text-transform:uppercase; color:rgba(240,240,237,.7);
   font-family:'Montserrat',sans-serif; font-weight:700;
   margin-bottom:.45rem;
 }
@@ -129,11 +129,11 @@ body{
   color:var(--blanco); transition:border-color .2s; outline:none;
 }
 .form-input:focus{ border-color:rgba(214,255,0,.5); }
-.form-input::placeholder{ color:rgba(240,240,237,.22); }
+.form-input::placeholder{ color:rgba(240,240,237,.35); }
 
 .auth-error{
-  font-size:.74rem; color:#ff5a5a; margin-bottom:.9rem;
-  min-height:1.1em; line-height:1.4;
+  font-size:.82rem; color:#ff5a5a; margin-bottom:.9rem;
+  min-height:1.1em; line-height:1.5;
   display:flex; align-items:flex-start; gap:.4rem;
 }
 .auth-error:not(:empty)::before{ content:'⚠'; flex-shrink:0; }
@@ -145,7 +145,7 @@ body{
   background:var(--lima); color:var(--negro);
   border:none; border-radius:30px;
   font-family:'Montserrat',sans-serif; font-weight:800;
-  font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+  font-size:.85rem; letter-spacing:.09em; text-transform:uppercase;
   cursor:pointer; transition:opacity .2s, transform .15s;
 }
 .btn-primary:hover{ opacity:.88; transform:translateY(-1px); }
@@ -161,8 +161,8 @@ body{
 .auth-divider{
   display:flex; align-items:center; gap:.8rem;
   margin:1.4rem 0;
-  font-size:.65rem; color:rgba(240,240,237,.2);
-  letter-spacing:.1em; text-transform:uppercase;
+  font-size:.75rem; color:rgba(240,240,237,.35);
+  letter-spacing:.08em; text-transform:uppercase;
 }
 .auth-divider::before,.auth-divider::after{
   content:''; flex:1; height:1px; background:rgba(255,255,255,.07);
@@ -170,7 +170,7 @@ body{
 
 /* ── FOOTER LINK ── */
 .panel-note{
-  text-align:center; font-size:.72rem; color:var(--humo);
+  text-align:center; font-size:.85rem; color:var(--humo);
   margin-top:1.2rem; line-height:1.6;
 }
 .panel-note a{
@@ -234,10 +234,10 @@ body{
       <h1 class="aside-headline">Tu barbería<br>de <em>confianza</em><br>en Pachuca.</h1>
       <p class="aside-desc">Más que un corte, una experiencia. Agenda tu cita, conoce tu historial y recibe la atención que mereces.</p>
       <div class="aside-badges">
-        <span class="aside-badge">✂ Corte experto</span>
-        <span class="aside-badge">⭐ 700+ clientes</span>
+        <span class="aside-badge">✂ Corte y barba</span>
         <span class="aside-badge">📍 Centro, Pachuca</span>
         <span class="aside-badge">Desde 2018</span>
+        <span class="aside-badge">Lun–Sáb 9–20h</span>
       </div>
     </div>
 
@@ -260,10 +260,6 @@ body{
       <div class="form-group">
         <label class="form-label" for="fNombre">Nombre completo</label>
         <input class="form-input" type="text" id="fNombre" placeholder="Juan Pérez" autocomplete="name">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="fTel">Teléfono WhatsApp</label>
-        <input class="form-input" type="tel" id="fTel" placeholder="771 123 4567" autocomplete="tel">
       </div>
     </div>
 
@@ -392,13 +388,11 @@ async function handleSubmit(){
       }
     } else {
       const nombre = document.getElementById("fNombre").value.trim();
-      const tel    = document.getElementById("fTel").value.trim().replace(/\D/g,"");
       if(!nombre){ errEl.textContent="El nombre es obligatorio."; resetBtn(); return; }
       cred = await auth.createUserWithEmailAndPassword(email, pass);
       await cred.user.updateProfile({displayName: nombre});
-      const wa = tel ? (tel.startsWith("52") ? tel : "52"+tel) : "";
       await db.ref(`usuarios/${cred.user.uid}`).set({
-        nombre, whatsapp: wa, email, createdAt: Date.now()
+        nombre, whatsapp: "", email, createdAt: Date.now()
       });
     }
     doRedirect(cred.user);
