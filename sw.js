@@ -1,10 +1,8 @@
-const CACHE = 'jj-barberia-v2';
+const CACHE = 'jj-barberia-v1';
 
 const SHELL = [
   '/',
   '/index.html',
-  '/app-home.html',
-  '/login.html',
   '/tienda.html',
   '/citas.html',
   '/manifest.json',
