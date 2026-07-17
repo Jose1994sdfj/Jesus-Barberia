@@ -3288,5 +3288,64 @@ initTienda();
 </script>
 <!-- Toast global -->
 <div id="jjToast" role="alert" aria-live="polite"></div>
+
+<!-- ── Bottom Nav PWA ── -->
+<style>
+.pwa-bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:500;
+  background:rgba(8,8,8,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:stretch;
+  height:calc(env(safe-area-inset-bottom,0px) + 60px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.pwa-bn-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.22rem;
+  text-decoration:none;color:#777;
+  transition:color .18s;padding:.3rem 0;
+  background:none;border:none;cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+.pwa-bn-item.active{color:#D6FF00;}
+.pwa-bn-icon{font-size:1.3rem;line-height:1;transition:transform .15s;}
+.pwa-bn-item:active .pwa-bn-icon{transform:scale(.85);}
+.pwa-bn-label{font-weight:700;font-size:.57rem;letter-spacing:.07em;text-transform:uppercase;}
+.pwa-bn-dot{width:4px;height:4px;border-radius:50%;background:#D6FF00;margin-top:1px;display:none;}
+.pwa-bn-item.active .pwa-bn-dot{display:block;}
+body.has-pwa-nav{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 60px)!important;}
+</style>
+<nav class="pwa-bottom-nav" id="pwaBotNav" style="display:none">
+  <a href="app-home.html" class="pwa-bn-item">
+    <span class="pwa-bn-icon">🏠</span>
+    <span class="pwa-bn-label">Inicio</span>
+    <span class="pwa-bn-dot"></span>
+  </a>
+  <a href="citas.html" class="pwa-bn-item">
+    <span class="pwa-bn-icon">✂</span>
+    <span class="pwa-bn-label">Citas</span>
+    <span class="pwa-bn-dot"></span>
+  </a>
+  <a href="tienda.html" class="pwa-bn-item active">
+    <span class="pwa-bn-icon">🛍</span>
+    <span class="pwa-bn-label">Tienda</span>
+    <span class="pwa-bn-dot"></span>
+  </a>
+  <a href="app-home.html#perfil" class="pwa-bn-item">
+    <span class="pwa-bn-icon">👤</span>
+    <span class="pwa-bn-label">Perfil</span>
+    <span class="pwa-bn-dot"></span>
+  </a>
+</nav>
+<script>
+(function(){
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(isStandalone){
+    document.getElementById('pwaBotNav').style.display='flex';
+    document.body.classList.add('has-pwa-nav');
+  }
+})();
+</script>
 </body>
 </html>
