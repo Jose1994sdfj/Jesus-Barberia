@@ -1975,8 +1975,9 @@ footer{
     drawer.classList.contains('open') ? closeMenu() : openMenu();
   });
 
-  // Cierra al navegar a una sección
+  // Cierra al navegar a una sección (excepto el link de Contacto, que expande los protocolos dentro del drawer)
   drawer.querySelectorAll('.nav-drawer-link').forEach(link => {
+    if (link.id === 'drawerContactoLink') return;
     link.addEventListener('click', closeMenu);
   });
 
