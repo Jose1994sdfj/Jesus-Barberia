@@ -1745,8 +1745,8 @@ nav{
       <div class="ct-addr">
         <span class="ct-addr-icon">📍</span>
         <div>
-          <div class="ct-addr-title">Av. Francisco I. Madero 400-402</div>
-          <div class="ct-addr-sub">Centro, Pachuca de Soto, Hgo. · +52 771 668 2637</div>
+          <div class="ct-addr-title">Julián Villagrán 202</div>
+          <div class="ct-addr-sub">Centro, 42000 Pachuca de Soto, Hgo. · +52 771 668 2637</div>
         </div>
       </div>
       <div class="ct-actions" id="ctActions"></div>
@@ -2218,8 +2218,8 @@ nav{
       <div class="ct-addr">
         <span class="ct-addr-icon">📍</span>
         <div>
-          <div class="ct-addr-title">Av. Francisco I. Madero 400-402</div>
-          <div class="ct-addr-sub">Centro, Pachuca de Soto, Hgo. · +52 771 668 2637</div>
+          <div class="ct-addr-title">Julián Villagrán 202</div>
+          <div class="ct-addr-sub">Centro, 42000 Pachuca de Soto, Hgo. · +52 771 668 2637</div>
         </div>
       </div>
       <div class="ct-actions" id="mdActions"></div>
@@ -2986,8 +2986,8 @@ function mostrarConfirmacion(cita, codigo, waCliente, citaKey){
   const gcUrl   = `https://calendar.google.com/calendar/render?action=TEMPLATE`
     +`&text=${encodeURIComponent("Cita JJ Barbería — "+cita.servicio)}`
     +`&dates=${gcStart}/${gcEnd}`
-    +`&details=${encodeURIComponent("Código: "+codigo+"\nBarbero: Jesús Juárez\nDirección: Av. Francisco I. Madero 400-402, Centro, Pachuca, Hgo.\nCorreo: jesusjuarezperezel10@gmail.com")}`
-    +`&location=${encodeURIComponent("Av. Francisco I. Madero 400-402, Pachuca de Soto, Hidalgo")}`;
+    +`&details=${encodeURIComponent("Código: "+codigo+"\nBarbero: Jesús Juárez\nDirección: Julián Villagrán 202, Centro, Pachuca, Hgo.\nCorreo: jesusjuarezperezel10@gmail.com")}`
+    +`&location=${encodeURIComponent("Julián Villagrán 202, Centro, 42000 Pachuca de Soto, Hidalgo")}`;
 
   const waMsg = encodeURIComponent(
     `Hola Jesús! Te confirmo mi cita:\n\n📋 Código: ${codigo}\n👤 Nombre: ${cita.nombre}\n✂️ Servicio: ${cita.servicio}\n📅 Fecha: ${fmtFecha(cita.fecha)}\n🕐 Hora: ${cita.hora} hrs\n\n¡Ahí estaré puntual!`
