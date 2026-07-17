@@ -704,7 +704,6 @@ const PROMOS = [
 auth.onAuthStateChanged(async user => {
   document.getElementById("loadingScreen").style.display = "none";
   if (!user) { window.location.replace("login.html?redirect=app-home.html"); return; }
-  if (user.email === ADMIN_EMAIL) { window.location.replace("citas.html"); return; }
   initApp(user);
 });
 
