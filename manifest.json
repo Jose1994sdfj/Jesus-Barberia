@@ -2,7 +2,7 @@
   "name": "Jesús Juárez · Barbería",
   "short_name": "JJ Barbería",
   "description": "Barbería de precisión en Pachuca, Hgo. Corte, barba y diseño.",
-  "start_url": "/",
+  "start_url": "/app-home.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",

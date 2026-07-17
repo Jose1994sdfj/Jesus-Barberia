@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JJ Barbería</title>
+<meta name="theme-color" content="#080808">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JJ Barbería">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<style>
+/* ── VARIABLES ── */
+:root{
+  --negro:#080808; --blanco:#F0F0ED; --lima:#D6FF00;
+  --gris:#161616; --gris2:#1a1a1a; --gris3:#252525; --gris4:#2e2e2e;
+  --humo:#777; --humo2:#555; --wa:#25D366;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+*,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html,body{
+  height:100%; background:var(--negro); color:var(--blanco);
+  font-family:'Poppins',sans-serif; font-weight:400;
+  overflow-x:hidden; overscroll-behavior:none;
+}
+
+/* ── LOADING ── */
+#loadingScreen{
+  position:fixed; inset:0; background:var(--negro);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:999; gap:1.4rem;
+}
+.ld-logo{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:2.6rem; color:var(--lima); letter-spacing:.05em;
+}
+.ld-dots{ display:flex; gap:.4rem; }
+.ld-dot{
+  width:7px; height:7px; border-radius:50%; background:rgba(214,255,0,.35);
+  animation:ldPulse 1.2s ease-in-out infinite;
+}
+.ld-dot:nth-child(2){ animation-delay:.18s; }
+.ld-dot:nth-child(3){ animation-delay:.36s; }
+@keyframes ldPulse{0%,100%{opacity:.25;transform:scale(.85);}50%{opacity:1;transform:scale(1.15);}}
+
+/* ── LAYOUT ── */
+#appShell{
+  display:none; flex-direction:column;
+  min-height:100vh;
+  padding-top:calc(var(--safe-top) + 56px);
+  padding-bottom:calc(var(--safe-bot) + 60px);
+}
+
+/* ── TOP BAR ── */
+.top-bar{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding-top:var(--safe-top);
+  background:var(--negro);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  height:calc(var(--safe-top) + 56px);
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding-left:1.2rem; padding-right:1.2rem; padding-bottom:10px;
+}
+.top-bar-logo{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.35rem; color:var(--lima); letter-spacing:.04em;
+  text-decoration:none;
+}
+.top-bar-avatar{
+  width:34px; height:34px; border-radius:50%;
+  background:var(--gris3); border:1.5px solid rgba(214,255,0,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.85rem; color:var(--lima); cursor:pointer;
+  transition:border-color .2s;
+}
+.top-bar-avatar:hover{ border-color:var(--lima); }
+
+/* ── SCROLL CONTENT ── */
+.content{
+  flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding:1.4rem 1.1rem 0;
+  display:flex; flex-direction:column; gap:1.2rem;
+}
+
+/* ── GREETING ── */
+.greeting-block{ padding:.2rem 0 .4rem; }
+.greeting-sub{
+  font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--humo); font-family:'Montserrat',sans-serif; font-weight:700;
+  margin-bottom:.25rem;
+}
+.greeting-title{
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.7rem; letter-spacing:-.02em; color:var(--blanco);
+  line-height:1.15;
+}
+.greeting-title span{ color:var(--lima); }
+
+/* ── QUICK ACTIONS ── */
+.quick-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:.75rem;
+}
+.quick-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.07);
+  border-radius:20px; padding:1.2rem 1rem 1rem;
+  display:flex; flex-direction:column; gap:.55rem;
+  text-decoration:none; color:var(--blanco);
+  transition:background .18s, transform .15s;
+  active:none;
+}
+.quick-card:active{ background:var(--gris3); transform:scale(.97); }
+.quick-card.accent{
+  background:var(--lima); color:var(--negro);
+  border-color:transparent;
+}
+.quick-card.accent .qc-icon,.quick-card.accent .qc-label{ color:var(--negro); }
+.quick-card.accent .qc-sub{ color:rgba(8,8,8,.6); }
+.qc-icon{ font-size:1.6rem; line-height:1; }
+.qc-label{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.88rem; letter-spacing:.03em; color:var(--blanco);
+}
+.qc-sub{ font-size:.72rem; color:var(--humo); line-height:1.4; }
+.quick-card.accent .qc-label{ color:var(--negro); }
+
+/* ── SECTION HEADER ── */
+.sec-head{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:.6rem;
+}
+.sec-title{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.82rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--humo);
+}
+.sec-link{
+  font-size:.75rem; color:var(--lima); text-decoration:none;
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase;
+}
+
+/* ── PRÓXIMA CITA ── */
+.cita-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.07);
+  border-radius:18px; overflow:hidden;
+}
+.cita-card-inner{
+  display:flex; align-items:center; gap:1rem;
+  padding:1rem 1.1rem;
+}
+.cita-badge{
+  flex-shrink:0; width:46px; height:46px; border-radius:14px;
+  background:rgba(214,255,0,.1); border:1.5px solid rgba(214,255,0,.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem;
+}
+.cita-info{ flex:1; min-width:0; }
+.cita-svc{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.92rem; color:var(--blanco);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.cita-meta{ font-size:.75rem; color:var(--humo); margin-top:.15rem; }
+.cita-btn{
+  flex-shrink:0; background:rgba(214,255,0,.1);
+  border:1px solid rgba(214,255,0,.25); border-radius:30px;
+  color:var(--lima); font-family:'Montserrat',sans-serif;
+  font-weight:700; font-size:.7rem; letter-spacing:.06em;
+  text-transform:uppercase; padding:.35rem .85rem;
+  text-decoration:none; transition:background .18s;
+}
+.cita-btn:active{ background:rgba(214,255,0,.2); }
+.no-cita-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.07);
+  border-radius:18px; padding:1rem 1.1rem;
+  display:flex; align-items:center; gap:.9rem;
+}
+.no-cita-icon{ font-size:1.4rem; flex-shrink:0; }
+.no-cita-txt{}
+.no-cita-label{
+  font-size:.85rem; color:var(--blanco);
+  font-family:'Montserrat',sans-serif; font-weight:700;
+}
+.no-cita-sub{ font-size:.75rem; color:var(--humo); margin-top:.15rem; }
+.no-cita-cta{
+  display:inline-block; margin-top:.55rem;
+  background:var(--lima); color:var(--negro);
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.75rem; letter-spacing:.07em; text-transform:uppercase;
+  padding:.45rem 1.1rem; border-radius:30px; text-decoration:none;
+}
+
+/* ── PROMOS ── */
+.promos-list{ display:flex; flex-direction:column; gap:.65rem; }
+.promo-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.07);
+  border-radius:16px; padding:.95rem 1.1rem;
+  display:flex; align-items:center; gap:.9rem;
+}
+.promo-pill{
+  flex-shrink:0; font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1rem; color:var(--lima); background:rgba(214,255,0,.08);
+  border:1.5px solid rgba(214,255,0,.2); border-radius:12px;
+  padding:.55rem .7rem; text-align:center; line-height:1.1; min-width:54px;
+}
+.promo-pill small{ display:block; font-size:.55rem; letter-spacing:.06em; text-transform:uppercase; color:rgba(214,255,0,.7); font-weight:700; margin-top:.1rem; }
+.promo-info{ flex:1; min-width:0; }
+.promo-name{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.88rem; color:var(--blanco);
+}
+.promo-desc{ font-size:.75rem; color:var(--humo); margin-top:.1rem; line-height:1.4; }
+.promo-antes{
+  font-size:.7rem; color:var(--humo2);
+  text-decoration:line-through; margin-left:.3rem;
+}
+
+/* ── INFO CARD ── */
+.info-card{
+  background:var(--gris2); border:1px solid rgba(255,255,255,.07);
+  border-radius:18px; padding:1.1rem;
+  display:flex; flex-direction:column; gap:.85rem;
+}
+.info-row{ display:flex; gap:.75rem; align-items:flex-start; }
+.info-ico{ font-size:1.1rem; flex-shrink:0; margin-top:.05rem; }
+.info-block{}
+.info-label{
+  font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--humo); font-family:'Montserrat',sans-serif; font-weight:700;
+}
+.info-val{ font-size:.85rem; color:var(--blanco); margin-top:.1rem; line-height:1.5; }
+.info-divider{ height:1px; background:rgba(255,255,255,.06); }
+.wa-btn{
+  display:flex; align-items:center; justify-content:center; gap:.5rem;
+  background:var(--wa); color:#fff; border-radius:14px;
+  padding:.8rem; text-decoration:none;
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:.85rem; letter-spacing:.04em;
+  transition:opacity .18s;
+}
+.wa-btn:active{ opacity:.85; }
+.wa-btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:rgba(8,8,8,.96); backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex; align-items:stretch;
+  height:calc(var(--safe-bot) + 60px);
+  padding-bottom:var(--safe-bot);
+}
+.bn-item{
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:.22rem;
+  text-decoration:none; color:var(--humo);
+  transition:color .18s; padding:.3rem 0;
+  -webkit-tap-highlight-color:transparent;
+}
+.bn-item.active{ color:var(--lima); }
+.bn-icon{ font-size:1.35rem; line-height:1; }
+.bn-label{
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.58rem; letter-spacing:.07em; text-transform:uppercase;
+}
+
+/* ── PERFIL OVERLAY ── */
+.perfil-overlay{
+  position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,.7); backdrop-filter:blur(4px);
+  display:none; align-items:flex-end;
+}
+.perfil-overlay.open{ display:flex; }
+.perfil-sheet{
+  width:100%; background:var(--gris);
+  border-radius:24px 24px 0 0;
+  padding:1.5rem 1.4rem calc(var(--safe-bot) + 1.5rem);
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.perfil-handle{
+  width:36px; height:4px; border-radius:2px;
+  background:rgba(255,255,255,.15); margin:0 auto 1.4rem;
+}
+.perfil-user-row{
+  display:flex; align-items:center; gap:1rem; margin-bottom:1.4rem;
+}
+.perfil-avatar{
+  width:52px; height:52px; border-radius:50%;
+  background:var(--gris3); border:2px solid rgba(214,255,0,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Montserrat',sans-serif; font-weight:900;
+  font-size:1.3rem; color:var(--lima); flex-shrink:0;
+}
+.perfil-name{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:1.1rem; color:var(--blanco);
+}
+.perfil-email{ font-size:.78rem; color:var(--humo); margin-top:.1rem; }
+.perfil-divider{ height:1px; background:rgba(255,255,255,.07); margin:.5rem 0 1rem; }
+.perfil-btn{
+  display:flex; align-items:center; gap:.75rem;
+  width:100%; background:none; border:none; cursor:pointer;
+  color:var(--blanco); font-family:'Poppins',sans-serif; font-size:.9rem;
+  padding:.65rem 0; text-decoration:none; text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.perfil-btn:last-child{ border-bottom:none; }
+.perfil-btn.danger{ color:#ff5a5a; }
+.perfil-btn-icon{ font-size:1.1rem; width:24px; text-align:center; flex-shrink:0; }
+.perfil-close-row{ margin-top:1rem; }
+.perfil-close-btn{
+  width:100%; padding:.75rem; border:1px solid rgba(255,255,255,.1);
+  background:none; border-radius:14px; color:var(--humo);
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:.8rem; letter-spacing:.07em; text-transform:uppercase;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loadingScreen">
+  <span class="ld-logo">JJ✂</span>
+  <div class="ld-dots">
+    <div class="ld-dot"></div>
+    <div class="ld-dot"></div>
+    <div class="ld-dot"></div>
+  </div>
+</div>
+
+<!-- App Shell -->
+<div id="appShell" style="display:none">
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <span class="top-bar-logo">JJ✂</span>
+    <div class="top-bar-avatar" id="topAvatar" onclick="openPerfil()">?</div>
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="content">
+
+    <!-- Saludo -->
+    <div class="greeting-block">
+      <p class="greeting-sub">Bienvenido de vuelta</p>
+      <h1 class="greeting-title" id="greetingName">Hola 👋</h1>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <div class="quick-grid">
+      <a href="citas.html" class="quick-card accent">
+        <span class="qc-icon">✂</span>
+        <span class="qc-label">Agendar Cita</span>
+        <span class="qc-sub">Elige servicio y horario</span>
+      </a>
+      <a href="tienda.html" class="quick-card">
+        <span class="qc-icon">🛍</span>
+        <span class="qc-label">Tienda</span>
+        <span class="qc-sub">Reuzel · Suavecito y más</span>
+      </a>
+    </div>
+
+    <!-- Próxima cita -->
+    <div>
+      <div class="sec-head">
+        <span class="sec-title">Tu próxima cita</span>
+        <a href="citas.html" class="sec-link">Ver todas →</a>
+      </div>
+      <div id="citaZone">
+        <!-- se llena con JS -->
+        <div class="no-cita-card">
+          <span class="no-cita-icon">📅</span>
+          <div class="no-cita-txt">
+            <div class="no-cita-label">Sin citas próximas</div>
+            <div class="no-cita-sub">Agenda la tuya en segundos</div>
+            <a href="citas.html" class="no-cita-cta">Reservar ahora</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promociones activas -->
+    <div>
+      <div class="sec-head">
+        <span class="sec-title">Promociones activas</span>
+      </div>
+      <div class="promos-list">
+        <div class="promo-card">
+          <div class="promo-pill">$170<small>MXN</small></div>
+          <div class="promo-info">
+            <div class="promo-name">Combo Clásico <span class="promo-antes">$200</span></div>
+            <div class="promo-desc">Corte + Barba con toalla caliente · Lunes a Miércoles</div>
+          </div>
+        </div>
+        <div class="promo-card">
+          <div class="promo-pill">$110<small>MXN</small></div>
+          <div class="promo-info">
+            <div class="promo-name">2×1 Infantil <span class="promo-antes">$220</span></div>
+            <div class="promo-desc">Dos cortes infantiles por el precio de uno · Sábados</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info y contacto -->
+    <div>
+      <div class="sec-head">
+        <span class="sec-title">Visítanos</span>
+      </div>
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-ico">📍</span>
+          <div class="info-block">
+            <div class="info-label">Dirección</div>
+            <div class="info-val">Julián Villagrán 202, Centro<br>42000 Pachuca de Soto, Hgo.</div>
+          </div>
+        </div>
+        <div class="info-divider"></div>
+        <div class="info-row">
+          <span class="info-ico">🕐</span>
+          <div class="info-block">
+            <div class="info-label">Horario</div>
+            <div class="info-val">Lun – Vie &nbsp; 9:00 – 20:00<br>Sábado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9:00 – 18:00</div>
+          </div>
+        </div>
+        <div class="info-divider"></div>
+        <a href="https://wa.me/527716682637?text=Hola%20Jes%C3%BAs%2C%20te%20escribo%20desde%20la%20app%20de%20JJ%20Barber%C3%ADa." class="wa-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Espacio al fondo -->
+    <div style="height:.5rem"></div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <a href="app-home.html" class="bn-item active">
+      <span class="bn-icon">🏠</span>
+      <span class="bn-label">Inicio</span>
+    </a>
+    <a href="citas.html" class="bn-item">
+      <span class="bn-icon">✂</span>
+      <span class="bn-label">Citas</span>
+    </a>
+    <a href="tienda.html" class="bn-item">
+      <span class="bn-icon">🛍</span>
+      <span class="bn-label">Tienda</span>
+    </a>
+    <button class="bn-item" onclick="openPerfil()" style="background:none;border:none;cursor:pointer;">
+      <span class="bn-icon" id="bnAvatarIcon">👤</span>
+      <span class="bn-label">Perfil</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- Perfil overlay -->
+<div class="perfil-overlay" id="perfilOverlay" onclick="closePerfil(event)">
+  <div class="perfil-sheet">
+    <div class="perfil-handle"></div>
+    <div class="perfil-user-row">
+      <div class="perfil-avatar" id="perfilAvatar">?</div>
+      <div>
+        <div class="perfil-name" id="perfilName">—</div>
+        <div class="perfil-email" id="perfilEmail">—</div>
+      </div>
+    </div>
+    <div class="perfil-divider"></div>
+    <a href="citas.html" class="perfil-btn">
+      <span class="perfil-btn-icon">📋</span>
+      Mis citas
+    </a>
+    <a href="tienda.html" class="perfil-btn">
+      <span class="perfil-btn-icon">🛍</span>
+      Tienda
+    </a>
+    <button class="perfil-btn danger" id="logoutBtn">
+      <span class="perfil-btn-icon">🚪</span>
+      Cerrar sesión
+    </button>
+    <div class="perfil-close-row">
+      <button class="perfil-close-btn" onclick="closePerfil()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const FB_CFG = {
+  apiKey:            "AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
+  authDomain:        "bdfirebase-62a1b.firebaseapp.com",
+  databaseURL:       "https://bdfirebase-62a1b-default-rtdb.firebaseio.com",
+  projectId:         "bdfirebase-62a1b",
+  storageBucket:     "bdfirebase-62a1b.firebasestorage.app",
+  messagingSenderId: "862846715518",
+  appId:             "1:862846715518:web:39d9b85b418c9dfccc3a2f"
+};
+if (!firebase.apps.length) firebase.initializeApp(FB_CFG);
+const auth = firebase.auth();
+const db   = firebase.database();
+
+const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+const MESES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+const DIAS  = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+
+/* ── AUTH GUARD ── */
+auth.onAuthStateChanged(async user => {
+  document.getElementById("loadingScreen").style.display = "none";
+
+  if (!user) {
+    window.location.replace("login.html?redirect=app-home.html");
+    return;
+  }
+
+  // Redirigir admin a citas (panel de admin)
+  if (user.email === ADMIN_EMAIL) {
+    window.location.replace("citas.html");
+    return;
+  }
+
+  initApp(user);
+});
+
+async function initApp(user) {
+  const nombre = user.displayName || user.email.split("@")[0];
+  const initial = nombre.charAt(0).toUpperCase();
+
+  // Greeting
+  document.getElementById("greetingName").innerHTML =
+    `Hola, <span>${nombre.split(" ")[0]}</span> 👋`;
+
+  // Avatar
+  ["topAvatar","perfilAvatar"].forEach(id => {
+    document.getElementById(id).textContent = initial;
+  });
+  document.getElementById("perfilName").textContent  = nombre;
+  document.getElementById("perfilEmail").textContent = user.email;
+
+  // Cargar próxima cita
+  loadNextCita(user.uid);
+
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    auth.signOut().then(() => window.location.replace("login.html"));
+  });
+
+  // Mostrar app
+  document.getElementById("appShell").style.display = "flex";
+  document.getElementById("appShell").style.flexDirection = "column";
+}
+
+/* ── PRÓXIMA CITA ── */
+async function loadNextCita(uid) {
+  try {
+    const hoy = new Date().toISOString().slice(0, 10);
+    const snap = await db.ref("citas")
+      .orderByChild("uid").equalTo(uid).once("value");
+
+    if (!snap.exists()) return;
+
+    const citas = [];
+    snap.forEach(c => {
+      const d = c.val();
+      if (d.fecha >= hoy && d.estado !== "cancelada") citas.push(d);
+    });
+
+    if (!citas.length) return;
+
+    citas.sort((a, b) => (a.fecha + a.hora) > (b.fecha + b.hora) ? 1 : -1);
+    const c = citas[0];
+
+    // Formatear fecha
+    const [y, m, d2] = c.fecha.split("-").map(Number);
+    const dateObj = new Date(y, m - 1, d2);
+    const fechaStr = `${DIAS[dateObj.getDay()]} ${d2} ${MESES[m - 1]}`;
+
+    document.getElementById("citaZone").innerHTML = `
+      <div class="cita-card">
+        <div class="cita-card-inner">
+          <div class="cita-badge">✂</div>
+          <div class="cita-info">
+            <div class="cita-svc">${c.servicio}</div>
+            <div class="cita-meta">${fechaStr} · ${c.hora} hrs · $${c.precio} MXN</div>
+          </div>
+          <a href="citas.html" class="cita-btn">Ver →</a>
+        </div>
+      </div>`;
+  } catch(e) {
+    // Si falla la carga, se queda el estado por defecto (sin citas)
+  }
+}
+
+/* ── PERFIL SHEET ── */
+function openPerfil() {
+  document.getElementById("perfilOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closePerfil(e) {
+  if (e && e.target !== document.getElementById("perfilOverlay")) return;
+  document.getElementById("perfilOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+</script>
+</body>
+</html>
