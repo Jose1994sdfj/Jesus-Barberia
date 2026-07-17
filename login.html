@@ -17,7 +17,7 @@
 :root{
   --negro:#080808; --blanco:#F0F0ED; --lima:#D6FF00;
   --gris:#161616; --gris2:#1a1a1a; --gris3:#252525;
-  --humo:#999; --wa:#25D366;
+  --humo:#9a9a9a; --wa:#25D366;
   --r-md:16px; --r-lg:24px; --r-xl:32px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -34,7 +34,8 @@ body{
   display:flex; width:100%; min-height:100vh;
 }
 .login-aside{
-  flex:1; background:var(--gris2);
+  flex:1;
+  background:var(--gris2) url('/barberia-hero.jpg') center/cover no-repeat;
   border-right:1px solid rgba(255,255,255,.05);
   display:flex; flex-direction:column;
   justify-content:space-between;
@@ -44,7 +45,9 @@ body{
 .login-aside::before{
   content:'';
   position:absolute; inset:0;
-  background:radial-gradient(ellipse 70% 50% at 30% 60%, rgba(214,255,0,.07) 0%, transparent 70%);
+  background:
+    linear-gradient(to bottom, rgba(8,8,8,.75) 0%, rgba(8,8,8,.52) 50%, rgba(8,8,8,.88) 100%),
+    radial-gradient(ellipse 70% 50% at 30% 60%, rgba(214,255,0,.1) 0%, transparent 70%);
   pointer-events:none;
 }
 .aside-logo{
@@ -55,12 +58,13 @@ body{
 .aside-headline{
   font-family:'Montserrat',sans-serif; font-weight:900;
   font-size:2.8rem; line-height:1.1; color:var(--blanco);
-  letter-spacing:-.03em;
+  letter-spacing:-.03em; text-shadow:0 2px 20px rgba(0,0,0,.6);
 }
 .aside-headline em{color:var(--lima); font-style:normal;}
 .aside-desc{
-  font-size:.9rem; color:rgba(240,240,237,.65);
+  font-size:.9rem; color:rgba(240,240,237,.85);
   line-height:1.75; margin-top:.9rem; max-width:300px;
+  text-shadow:0 1px 10px rgba(0,0,0,.5);
 }
 .aside-badges{
   display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.8rem;
@@ -68,11 +72,18 @@ body{
 .aside-badge{
   font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
   font-family:'Montserrat',sans-serif; font-weight:700;
-  border:1px solid rgba(255,255,255,.15); color:rgba(240,240,237,.6);
+  border:1px solid rgba(255,255,255,.28); color:rgba(240,240,237,.88);
+  background:rgba(8,8,8,.4); backdrop-filter:blur(6px);
   padding:.35rem .85rem; border-radius:30px;
 }
 .aside-footer{
-  font-size:.75rem; color:rgba(240,240,237,.4); line-height:1.7;
+  font-size:.75rem; color:rgba(240,240,237,.6); line-height:1.7;
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
+}
+.aside-accent-bar{
+  position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, transparent 0%, var(--lima) 40%, transparent 100%);
+  opacity:.75;
 }
 
 /* ── FORM PANEL ── */
@@ -228,7 +239,7 @@ body{
 
   <!-- Aside decorativo -->
   <div class="login-aside">
-    <a href="login.html" class="aside-logo">J✂</a>
+    <a href="login.html" class="aside-logo">JJ✂</a>
 
     <div>
       <h1 class="aside-headline">Tu barbería<br>de <em>confianza</em><br>en Pachuca.</h1>
@@ -242,6 +253,7 @@ body{
     </div>
 
     <p class="aside-footer">Av. Francisco I. Madero 400-402 · Centro, Pachuca de Soto, Hgo.<br>Lun–Vie 9–20h · Sáb 9–18h · +52 771 668 2637</p>
+    <div class="aside-accent-bar"></div>
   </div>
 
   <!-- Panel auth -->
@@ -255,6 +267,7 @@ body{
       <button class="auth-tab" id="tabReg">Crear cuenta</button>
     </div>
 
+    <form id="authForm" autocomplete="on" onsubmit="return false;">
     <!-- Campos solo en registro -->
     <div id="regFields" style="display:none">
       <div class="form-group">
@@ -274,7 +287,8 @@ body{
 
     <p class="auth-error" id="authError"></p>
 
-    <button class="btn-primary" id="submitBtn">Entrar</button>
+    <button class="btn-primary" id="submitBtn" type="submit">Entrar</button>
+    </form>
 
     <div class="auth-divider">o</div>
 
@@ -294,7 +308,8 @@ const FB_CFG = {
   projectId:         "bdfirebase-62a1b",
   storageBucket:     "bdfirebase-62a1b.firebasestorage.app",
   messagingSenderId: "862846715518",
-  appId:             "1:862846715518:web:39d9b85b418c9dfccc3a2f"
+  appId:             "1:862846715518:web:39d9b85b418c9dfccc3a2f",
+  measurementId:     "G-Y2Q5JPNQC8"
 };
 if(!firebase.apps.length) firebase.initializeApp(FB_CFG);
 const auth = firebase.auth();
