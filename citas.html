@@ -1237,7 +1237,53 @@ nav{
 }
 
 /* ══ PANELES EXTRA ADMIN (destacados, servicios, cupones, contactos, correos) ════ */
-#destPanel,#svcsPanel,#cupsPanel,#ctcsPanel,#mailPanel,#pedidosPanel{ display:none; }
+#destPanel,#svcsPanel,#cupsPanel,#ctcsPanel,#mailPanel,#pedidosPanel,#horPanel{ display:none; }
+
+/* ══ HORARIOS ADMIN ════════════════════════════════════════════════ */
+.hor-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:.8rem; margin-top:1rem;
+}
+.hor-card{
+  background:var(--gris1,#111); border:1px solid #222; border-radius:10px;
+  padding:1rem 1.1rem; display:flex; flex-direction:column; gap:.6rem;
+}
+.hor-card-head{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.hor-card-day{ font-weight:700; font-size:.95rem; color:var(--blanco,#f0f0ed); }
+.hor-toggle{
+  position:relative; width:40px; height:22px; cursor:pointer;
+}
+.hor-toggle input{ opacity:0; width:0; height:0; }
+.hor-toggle-slider{
+  position:absolute; inset:0; border-radius:22px;
+  background:#333; transition:.25s;
+}
+.hor-toggle input:checked + .hor-toggle-slider{ background:var(--lima,#d6ff00); }
+.hor-toggle-slider:before{
+  content:""; position:absolute; width:16px; height:16px;
+  border-radius:50%; background:#fff; left:3px; top:3px; transition:.25s;
+}
+.hor-toggle input:checked + .hor-toggle-slider:before{ transform:translateX(18px); }
+.hor-times{
+  display:flex; gap:.5rem; align-items:center;
+}
+.hor-times input[type="time"]{
+  background:#1a1a1a; border:1px solid #333; border-radius:6px;
+  color:var(--blanco,#f0f0ed); padding:.3rem .5rem; font-size:.82rem;
+  width:90px;
+}
+.hor-times input:disabled{ opacity:.3; }
+.hor-times-sep{ color:#555; font-size:.75rem; }
+.hor-closed-label{ font-size:.72rem; color:#555; }
+.hor-save-btn{
+  margin-top:1.2rem;
+  background:var(--lima,#d6ff00); color:#000; border:none;
+  border-radius:8px; padding:.65rem 1.4rem; font-weight:700;
+  font-size:.88rem; cursor:pointer; width:100%; max-width:220px;
+}
+.hor-save-btn:hover{ opacity:.85; }
 
 /* ══ PEDIDOS ADMIN ══════════════════════════════════════════════ */
 .ped-stats{
@@ -1772,6 +1818,7 @@ nav{
         <button class="adm-tab" data-tab="contactos">📋 Contactos</button>
         <button class="adm-tab" data-tab="correos">📧 Correos</button>
         <button class="adm-tab" data-tab="pedidos">📦 Pedidos</button>
+        <button class="adm-tab" data-tab="horarios">🗓 Horarios</button>
       </div>
       <input type="search" class="adm-search" id="admSearch"
         placeholder="Buscar nombre, servicio, código…">
@@ -1908,6 +1955,18 @@ nav{
       <button class="mail-send-btn" id="mailSendBtn">📧 Enviar a seleccionados</button>
       <div id="mailSendStatus"
         style="text-align:center;font-size:.75rem;color:var(--humo);margin-top:.8rem;min-height:1.2rem;"></div>
+    </div>
+
+    <!-- ══ HORARIOS PANEL ════════════════════════════════════════════ -->
+    <div id="horPanel">
+      <div class="gen-toolbar" style="margin-bottom:.5rem;">
+        <div>
+          <div class="gen-panel-title">Horarios de la barbería</div>
+          <div class="gen-panel-sub">Activa o desactiva cada día y ajusta el horario de apertura y cierre</div>
+        </div>
+      </div>
+      <div class="hor-grid" id="horGrid"></div>
+      <button class="hor-save-btn" id="horSaveBtn">💾 Guardar cambios</button>
     </div>
 
     <!-- ══ PEDIDOS PANEL ═══════════════════════════════════════════ -->
@@ -2246,8 +2305,8 @@ let SERVICIOS = [
   { id:"vip",        nombre:"VIP",             nota:"Ritual completo · toalla caliente",  precio:300, duracion:90 },
 ];
 
-/* Horarios por día (0=Dom … 6=Sáb) */
-const HORARIOS = {
+/* Horarios por día (0=Dom … 6=Sáb) — se sobreescriben desde Firebase */
+const HORARIOS_DEFAULT = {
   0: { open:"10:00", close:"15:00" },
   1: { open:"09:00", close:"20:00" },
   2: { open:"09:00", close:"20:00" },
@@ -2256,9 +2315,28 @@ const HORARIOS = {
   5: { open:"09:00", close:"20:00" },
   6: { open:"09:00", close:"18:00" },
 };
+let HORARIOS = { ...HORARIOS_DEFAULT };
+let DIAS_CERRADOS = [];
 
-/* Días cerrados (2=martes por ejemplo). Agrega/quita según necesites */
-const DIAS_CERRADOS = [];
+/* Carga la config de horarios desde Firebase (se llama al iniciar) */
+async function cargarConfigHorarios(){
+  try {
+    const snap = await db.ref("config/horarios").once("value");
+    const data = snap.val();
+    if(data){
+      HORARIOS = {};
+      DIAS_CERRADOS = [];
+      for(let d=0;d<7;d++){
+        const entry = data[d];
+        if(entry && !entry.cerrado){
+          HORARIOS[d] = { open: entry.open || "09:00", close: entry.close || "18:00" };
+        } else {
+          DIAS_CERRADOS.push(d);
+        }
+      }
+    }
+  } catch(e){ console.warn("No se pudo cargar config/horarios, usando defaults", e); }
+}
 
 /* ─── ESTADO ─────────────────────────────────────────────────── */
 const booking = { servicio:null, fecha:null, hora:null };
@@ -2362,12 +2440,14 @@ function hideSplash(){
   s.style.opacity="0";
   setTimeout(()=>s.remove(),350);
 }
-auth.onAuthStateChanged(user=>{
+auth.onAuthStateChanged(async user=>{
   currentUser=user;
   if(!user){ window.location.href="login.html?redirect=citas.html"; return; }
   hideSplash();
   updateNavUser(user);
   subscribeUserToPush(user);
+  // Cargar horarios desde Firebase antes de mostrar el calendario
+  await cargarConfigHorarios();
   if(user.email===ADMIN_EMAIL){
     showScreen("admin");
     initAdminDashboard();
@@ -2423,12 +2503,12 @@ function initAdminDashboard(){
     t.addEventListener("click",()=>{
       admTab=t.dataset.tab;
       document.querySelectorAll(".adm-tab").forEach(x=>x.classList.toggle("active",x===t));
-      const EXTRA_TABS = ["tienda","destacados","servicios","cupones","contactos","correos","pedidos"];
+      const EXTRA_TABS = ["tienda","destacados","servicios","cupones","contactos","correos","pedidos","horarios"];
       const PANEL_MAP  = {
         tienda:"tiendaPanel", destacados:"destPanel",
         servicios:"svcsPanel", cupones:"cupsPanel",
         contactos:"ctcsPanel", correos:"mailPanel",
-        pedidos:"pedidosPanel"
+        pedidos:"pedidosPanel", horarios:"horPanel"
       };
       const INIT_MAP = {
         tienda:    initTiendaAdmin,
@@ -2438,6 +2518,7 @@ function initAdminDashboard(){
         contactos: initCtcsAdmin,
         correos:   initMailAdmin,
         pedidos:   initPedidosAdmin,
+        horarios:  initHorariosAdmin,
       };
       if(EXTRA_TABS.includes(admTab)){
         document.getElementById("admList").style.display="none";
@@ -4078,6 +4159,86 @@ async function enviarCorreos(){
     status.style.color="#ff5a5a";
   } finally{
     btn.disabled=false; btn.textContent="📧 Enviar a seleccionados";
+  }
+}
+
+/* ─── HORARIOS ADMIN ─────────────────────────────────────────────── */
+const DIAS_NOMBRES = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+let horInitialized = false;
+
+function initHorariosAdmin(){
+  if(horInitialized) return;
+  horInitialized = true;
+  renderHorariosAdmin();
+  document.getElementById("horSaveBtn").addEventListener("click", guardarHorarios);
+}
+
+function renderHorariosAdmin(){
+  const grid = document.getElementById("horGrid");
+  grid.innerHTML = "";
+  for(let d=0;d<7;d++){
+    const abierto = !DIAS_CERRADOS.includes(d);
+    const h = HORARIOS[d] || HORARIOS_DEFAULT[d] || { open:"09:00", close:"18:00" };
+    const card = document.createElement("div");
+    card.className = "hor-card";
+    card.dataset.dow = d;
+    card.innerHTML = `
+      <div class="hor-card-head">
+        <span class="hor-card-day">${DIAS_NOMBRES[d]}</span>
+        <label class="hor-toggle" title="${abierto?'Abierto — click para cerrar':'Cerrado — click para abrir'}">
+          <input type="checkbox" class="hor-check" data-dow="${d}" ${abierto?"checked":""}>
+          <span class="hor-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="hor-times">
+        <input type="time" class="hor-open"  data-dow="${d}" value="${h.open}"  ${abierto?"":"disabled"}>
+        <span class="hor-times-sep">→</span>
+        <input type="time" class="hor-close" data-dow="${d}" value="${h.close}" ${abierto?"":"disabled"}>
+      </div>
+      <div class="hor-closed-label" id="horLbl${d}">${abierto?"":"Cerrado este día"}</div>
+    `;
+    // Toggle abierto/cerrado
+    card.querySelector(".hor-check").addEventListener("change", e=>{
+      const open = e.target.checked;
+      card.querySelector(".hor-open").disabled  = !open;
+      card.querySelector(".hor-close").disabled = !open;
+      document.getElementById("horLbl"+d).textContent = open ? "" : "Cerrado este día";
+    });
+    grid.appendChild(card);
+  }
+}
+
+async function guardarHorarios(){
+  const btn = document.getElementById("horSaveBtn");
+  btn.disabled = true;
+  btn.textContent = "Guardando…";
+  const config = {};
+  for(let d=0;d<7;d++){
+    const card   = document.querySelector(`.hor-card[data-dow="${d}"]`);
+    const abierto= card.querySelector(".hor-check").checked;
+    const open   = card.querySelector(".hor-open").value  || "09:00";
+    const close  = card.querySelector(".hor-close").value || "18:00";
+    config[d] = { cerrado: !abierto, open, close };
+  }
+  try {
+    await db.ref("config/horarios").set(config);
+    // Actualizar variables locales en memoria
+    HORARIOS = {};
+    DIAS_CERRADOS = [];
+    for(let d=0;d<7;d++){
+      if(!config[d].cerrado){
+        HORARIOS[d] = { open: config[d].open, close: config[d].close };
+      } else {
+        DIAS_CERRADOS.push(d);
+      }
+    }
+    showToast("✔ Horarios guardados");
+  } catch(e){
+    console.error(e);
+    showToast("⚠ Error al guardar");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "💾 Guardar cambios";
   }
 }
 </script>
