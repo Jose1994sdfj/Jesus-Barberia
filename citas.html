@@ -1568,6 +1568,7 @@ nav{
     <li><a href="index.html">Inicio</a></li>
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html" class="active">Citas</a></li>
+    <li><a href="escuela.html">Academia</a></li>
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
@@ -1614,6 +1615,7 @@ nav{
     <li><a href="index.html">Inicio</a></li>
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html" class="active">Citas</a></li>
+    <li><a href="escuela.html">Academia</a></li>
     <li id="drawerMisCitasItem" style="display:none"><a href="#" id="drawerMisCitasLink">Mis citas</a></li>
     <li><a href="#" id="drawerContactoLink">Contacto</a></li>
   </ul>
@@ -1813,6 +1815,7 @@ nav{
     <div class="adm-ctrl">
       <div class="adm-tabs">
         <button class="adm-tab active" data-tab="hoy">📅 Hoy</button>
+        <a href="escuela.html" style="font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;border-radius:30px;border:1px solid #2a2a2a;color:var(--humo);background:transparent;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem" onmouseover="this.style.color='var(--lima)';this.style.borderColor='rgba(214,255,0,.35)'" onmouseout="this.style.color='var(--humo)';this.style.borderColor='#2a2a2a'">🎓 Academia →</a>
         <button class="adm-tab" data-tab="pendientes">⏳ Pendientes</button>
         <button class="adm-tab" data-tab="confirmadas">✔ Confirmadas</button>
         <button class="adm-tab" data-tab="todas">📋 Todas</button>
@@ -4172,10 +4175,17 @@ const DIAS_NOMBRES = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes"
 let horInitialized = false;
 
 function initHorariosAdmin(){
-  if(horInitialized) return;
-  horInitialized = true;
-  renderHorariosAdmin();
-  document.getElementById("horSaveBtn").addEventListener("click", guardarHorarios);
+  // El listener solo se registra una vez
+  if(!horInitialized){
+    horInitialized = true;
+    document.getElementById("horSaveBtn").addEventListener("click", guardarHorarios);
+  }
+  // Siempre cargar datos frescos de Firebase antes de renderizar
+  const grid = document.getElementById("horGrid");
+  grid.innerHTML = `<div style="color:var(--humo);font-size:.8rem;padding:1rem 0;">Cargando horarios…</div>`;
+  cargarConfigHorarios()
+    .then(()=>{ renderHorariosAdmin(); })
+    .catch(()=>{ renderHorariosAdmin(); });
 }
 
 function renderHorariosAdmin(){
