@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academia · JJ Barbería · Pachuca</title>
+<meta name="description" content="Escuela de Barbería JJ · Cursos, clases y seminarios profesionales en Pachuca, Hidalgo. Aprende el arte de la barbería de precisión.">
+<meta name="theme-color" content="#D6FF00">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="prefetch" href="index.html">
+<link rel="prefetch" href="citas.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://tareas-1b62c-default-rtdb.firebaseio.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+/* ══ VARIABLES & RESET ═══════════════════════════════════════════ */
+:root{
+  --negro:#080808; --blanco:#F0F0ED; --lima:#D6FF00;
+  --gris:#161616;  --gris2:#252525; --gris3:#333;
+  --humo:#9a9a9a;  --wa:#25D366;
+  --radius-sm:12px; --radius-md:20px; --radius-lg:28px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--negro);color:var(--blanco);font-family:'Poppins',sans-serif;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit}
+img{max-width:100%;display:block}
+
+/* ══ SPLASH ══════════════════════════════════════════════════════ */
+#jjSplash{position:fixed;inset:0;background:var(--negro);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;transition:opacity .35s}
+.splash-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.8rem;color:var(--lima);letter-spacing:-1px}
+.splash-sub{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--humo)}
+.jj-dots{display:flex;gap:.5rem}
+.jj-dot{width:6px;height:6px;border-radius:50%;background:var(--lima);animation:jjPulse 1.2s infinite}
+.jj-dot:nth-child(2){animation-delay:.2s}.jj-dot:nth-child(3){animation-delay:.4s}
+@keyframes jjPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+
+/* ══ NAV ════════════════════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:center;justify-content:space-between;padding:.9rem 1.6rem;background:rgba(8,8,8,.92);backdrop-filter:blur(14px);border-bottom:1px solid #1a1a1a;gap:1rem}
+.nav-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.3rem;color:var(--lima);letter-spacing:-1px}
+.nav-links{list-style:none;display:flex;gap:.2rem;align-items:center}
+.nav-links a,.nav-links button{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--humo);padding:.5rem .9rem;border-radius:30px;transition:color .2s,background .2s;border:none;background:none}
+.nav-links a:hover,.nav-links button:hover{color:var(--blanco)}
+.nav-links a.active{color:var(--lima)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.nav-user-area{display:none;align-items:center;gap:.5rem}
+.nav-user-avatar{width:30px;height:30px;border-radius:50%;background:rgba(214,255,0,.12);border:1.5px solid rgba(214,255,0,.35);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.72rem;color:var(--lima)}
+.nav-user-name{font-size:.72rem;font-weight:600;color:var(--blanco);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-admin-chip{font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--lima);color:var(--negro);padding:.2rem .55rem;border-radius:20px;display:none}
+.nav-logout-btn{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--humo);border:1px solid #333;padding:.35rem .8rem;border-radius:30px;transition:all .2s;display:none}
+.nav-logout-btn:hover{color:#ff5a5a;border-color:rgba(255,90,90,.4)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;padding:.4rem;background:none;border:none}
+.nav-hamburger span{width:22px;height:2px;background:var(--blanco);border-radius:2px;transition:all .3s;display:block}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+}
+
+/* Nav drawer */
+.nav-drawer{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100%;background:var(--gris);z-index:850;transition:right .3s cubic-bezier(.4,0,.2,1);padding:5rem 1.5rem 2rem;display:flex;flex-direction:column;gap:1.5rem;border-left:1px solid #1d1d1d}
+.nav-drawer.open{right:0}
+.nav-drawer ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.nav-drawer a{display:block;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--humo);padding:.75rem 1rem;border-radius:var(--radius-sm);transition:all .2s}
+.nav-drawer a:hover,.nav-drawer a.active{color:var(--lima);background:rgba(214,255,0,.07)}
+.drawer-actions{margin-top:auto;display:flex;flex-direction:column;gap:.7rem}
+.nav-drawer-cta{display:block;text-align:center;background:var(--lima);color:var(--negro);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:.9rem 1.5rem;border-radius:30px;transition:opacity .2s}
+.nav-drawer-cta:hover{opacity:.88}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:840;display:none}
+.drawer-overlay.show{display:block}
+
+/* ══ MAIN LAYOUT ════════════════════════════════════════════════ */
+.page-wrap{padding-top:64px;min-height:100vh}
+
+/* ══ PUBLIC SCREEN ══════════════════════════════════════════════ */
+/* Hero */
+.esc-hero{background:linear-gradient(135deg,#0c0c0c 0%,#111 50%,#0d0d0d 100%);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid #1a1a1a}
+.esc-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(214,255,0,.06) 0%,transparent 70%);pointer-events:none}
+.esc-hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(214,255,0,.04) 0%,transparent 70%);pointer-events:none}
+.esc-hero-tag{display:inline-block;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lima);border:1px solid rgba(214,255,0,.3);padding:.35rem 1rem;border-radius:30px;margin-bottom:1.5rem}
+.esc-hero h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(2.2rem,6vw,4rem);line-height:1.05;margin-bottom:1rem;letter-spacing:-1.5px}
+.esc-hero h1 span{color:var(--lima)}
+.esc-hero-sub{font-size:clamp(.95rem,2vw,1.1rem);color:var(--humo);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300}
+.esc-hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-lima{background:var(--lima);color:var(--negro);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 1.8rem;border-radius:30px;transition:opacity .2s,transform .15s;border:none;cursor:pointer}
+.btn-lima:hover{opacity:.88;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--blanco);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 1.8rem;border-radius:30px;border:1px solid #333;transition:all .2s;cursor:pointer}
+.btn-outline:hover{border-color:#555;background:rgba(255,255,255,.04)}
+
+/* Stats strip */
+.esc-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #1a1a1a}
+.esc-stat{padding:1.8rem 1rem;text-align:center;border-right:1px solid #1a1a1a}
+.esc-stat:last-child{border-right:none}
+.esc-stat-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;color:var(--lima);line-height:1}
+.esc-stat-label{font-size:.72rem;color:var(--humo);margin-top:.3rem;letter-spacing:.04em}
+
+/* Filters */
+.esc-filters-wrap{padding:1.8rem 1.5rem 0;max-width:1100px;margin:0 auto}
+.esc-filters-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.esc-filter-btn{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.45rem 1.1rem;border-radius:30px;border:1px solid #2a2a2a;color:var(--humo);background:transparent;transition:all .2s;cursor:pointer}
+.esc-filter-btn:hover{border-color:#444;color:var(--blanco)}
+.esc-filter-btn.active{background:var(--lima);color:var(--negro);border-color:var(--lima)}
+
+/* Course grid */
+.esc-grid-wrap{padding:1.8rem 1.5rem 4rem;max-width:1100px;margin:0 auto}
+.esc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
+.esc-empty{text-align:center;padding:4rem 1rem;color:var(--humo)}
+.esc-empty-icon{font-size:3rem;margin-bottom:1rem}
+.esc-empty-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem;color:var(--blanco)}
+.esc-loading{text-align:center;padding:4rem;color:var(--humo);display:flex;align-items:center;justify-content:center;gap:.6rem}
+
+/* Course card */
+.curso-card{background:var(--gris);border:1px solid #1d1d1d;border-radius:var(--radius-md);overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer;display:flex;flex-direction:column}
+.curso-card:hover{border-color:#333;transform:translateY(-3px)}
+.curso-card-img{height:180px;background:linear-gradient(135deg,#1a1a1a,#252525);position:relative;overflow:hidden}
+.curso-card-img img{width:100%;height:100%;object-fit:cover}
+.curso-card-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.5rem}
+.curso-tipo-badge{position:absolute;top:.75rem;left:.75rem;font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .75rem;border-radius:20px}
+.badge-curso{background:rgba(214,255,0,.15);color:var(--lima);border:1px solid rgba(214,255,0,.3)}
+.badge-clase{background:rgba(90,160,255,.15);color:#5aa0ff;border:1px solid rgba(90,160,255,.3)}
+.badge-seminario{background:rgba(255,160,90,.15);color:#ffa05a;border:1px solid rgba(255,160,90,.3)}
+.badge-taller{background:rgba(160,90,255,.15);color:#a05aff;border:1px solid rgba(160,90,255,.3)}
+.curso-nivel-badge{position:absolute;top:.75rem;right:.75rem;font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .6rem;border-radius:20px;background:rgba(0,0,0,.6);color:var(--humo);border:1px solid #333}
+.curso-card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column;gap:.5rem}
+.curso-card-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;line-height:1.3;color:var(--blanco)}
+.curso-card-desc{font-size:.8rem;color:var(--humo);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.curso-card-meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.3rem}
+.curso-meta-chip{display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--humo)}
+.curso-meta-chip svg{flex-shrink:0}
+.curso-card-footer{padding:.9rem 1.25rem;border-top:1px solid #222;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.curso-precio{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.2rem;color:var(--lima)}
+.curso-precio small{font-size:.65rem;font-weight:600;color:var(--humo);margin-left:.2rem}
+.curso-cupo{font-size:.7rem;color:var(--humo)}
+.curso-cupo.lleno{color:#ff5a5a}
+.btn-ver{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--lima);color:var(--negro);padding:.45rem 1rem;border-radius:20px;border:none;cursor:pointer;transition:opacity .2s}
+.btn-ver:hover{opacity:.85}
+
+/* ══ MIS INSCRIPCIONES ══════════════════════════════════════════ */
+.mis-insc-section{padding:2rem 1.5rem;max-width:1100px;margin:0 auto}
+.section-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.4rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.7rem}
+.section-title span{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(214,255,0,.12);color:var(--lima);padding:.3rem .75rem;border-radius:20px}
+.mi-insc-list{display:flex;flex-direction:column;gap:.7rem}
+.mi-insc-card{background:var(--gris2);border:1px solid #2a2a2a;border-radius:var(--radius-sm);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.mi-insc-icon{font-size:2rem;flex-shrink:0}
+.mi-insc-info{flex:1;min-width:0}
+.mi-insc-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mi-insc-meta{font-size:.75rem;color:var(--humo)}
+.mi-insc-status{flex-shrink:0}
+.status-badge{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px}
+.status-pendiente{background:rgba(255,200,0,.12);color:#ffc800;border:1px solid rgba(255,200,0,.3)}
+.status-confirmado{background:rgba(90,255,158,.12);color:#5aff9e;border:1px solid rgba(90,255,158,.3)}
+.status-cancelado{background:rgba(255,90,90,.12);color:#ff5a5a;border:1px solid rgba(255,90,90,.3)}
+.status-completado{background:rgba(90,160,255,.12);color:#5aa0ff;border:1px solid rgba(90,160,255,.3)}
+
+/* ══ MODAL ══════════════════════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:800;display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal-overlay.open{display:flex}
+@media(min-width:600px){.modal-overlay{align-items:center;padding:1.5rem}}
+.modal{background:var(--gris);border-radius:var(--radius-lg) var(--radius-lg) 0 0;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
+@media(min-width:600px){.modal{border-radius:var(--radius-lg);animation:fadeScale .25s ease}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fadeScale{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-handle{width:40px;height:4px;background:#333;border-radius:2px;margin:.75rem auto .5rem}
+@media(min-width:600px){.modal-handle{display:none}}
+.modal-header{padding:1.2rem 1.5rem .8rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;border-bottom:1px solid #222}
+.modal-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem;line-height:1.3}
+.modal-close{width:32px;height:32px;border-radius:50%;background:#222;border:none;color:var(--humo);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s}
+.modal-close:hover{background:#333;color:var(--blanco)}
+.modal-body{padding:1.5rem}
+.modal-img{width:100%;height:200px;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:1.2rem;background:#1a1a1a}
+.modal-img-placeholder{width:100%;height:180px;background:linear-gradient(135deg,#1a1a1a,#252525);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:1.2rem}
+.modal-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.modal-desc{font-size:.9rem;color:var(--humo);line-height:1.75;margin-bottom:1.2rem}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.4rem}
+.modal-info-item{background:var(--gris2);border:1px solid #222;border-radius:var(--radius-sm);padding:.9rem 1rem}
+.modal-info-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--humo);margin-bottom:.3rem}
+.modal-info-value{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;color:var(--blanco)}
+.modal-precio-block{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem;background:rgba(214,255,0,.06);border:1px solid rgba(214,255,0,.15);border-radius:var(--radius-sm);margin-bottom:1.4rem}
+.modal-precio-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--lima)}
+.modal-precio-label{font-size:.75rem;color:var(--humo);margin-top:.1rem}
+.modal-footer{padding:1rem 1.5rem 1.5rem;display:flex;gap:.8rem;flex-direction:column}
+@media(min-width:400px){.modal-footer{flex-direction:row}}
+
+/* ══ ENROLLMENT FORM ════════════════════════════════════════════ */
+.form-field{margin-bottom:1rem}
+.form-label{display:block;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--humo);margin-bottom:.5rem}
+.form-input{width:100%;background:#1a1a1a;border:1px solid #2d2d2d;border-radius:var(--radius-sm);color:var(--blanco);font-family:'Poppins',sans-serif;font-size:.9rem;padding:.75rem 1rem;transition:border-color .2s;outline:none}
+.form-input:focus{border-color:rgba(214,255,0,.4)}
+.form-input::placeholder{color:#555}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+.form-error{font-size:.75rem;color:#ff5a5a;margin-top:.3rem;display:none}
+.form-error.show{display:block}
+.form-hint{font-size:.72rem;color:var(--humo);margin-top:.3rem}
+
+/* ══ ADMIN PANEL ════════════════════════════════════════════════ */
+#screenAdmin{padding:1.5rem;max-width:1100px;margin:0 auto}
+.adm-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.8rem;flex-wrap:wrap}
+.adm-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.6rem}
+.adm-date{font-size:.78rem;color:var(--humo)}
+.adm-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-bottom:1.8rem}
+@media(min-width:700px){.adm-stats{grid-template-columns:repeat(4,1fr)}}
+.adm-stat-card{background:var(--gris);border:1px solid #222;border-radius:var(--radius-md);padding:1.2rem}
+.adm-stat-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--lima);line-height:1}
+.adm-stat-label{font-size:.72rem;color:var(--humo);margin-top:.35rem}
+.adm-stat-sub{font-size:.65rem;color:#444;margin-top:.15rem}
+
+/* Admin tabs */
+.adm-tabs-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;border-bottom:1px solid #1d1d1d;padding-bottom:1rem}
+.adm-tab{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;border-radius:30px;border:1px solid #2a2a2a;color:var(--humo);background:transparent;cursor:pointer;transition:all .2s}
+.adm-tab:hover{color:var(--blanco);border-color:#444}
+.adm-tab.active{background:var(--lima);color:var(--negro);border-color:var(--lima)}
+
+/* Admin toolbar */
+.adm-toolbar{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-bottom:1.2rem}
+.adm-search{flex:1;min-width:200px;background:#161616;border:1px solid #2a2a2a;border-radius:var(--radius-sm);color:var(--blanco);font-size:.85rem;font-family:'Poppins',sans-serif;padding:.6rem 1rem;outline:none;transition:border-color .2s}
+.adm-search:focus{border-color:rgba(214,255,0,.3)}
+.adm-search::placeholder{color:#555}
+.adm-filter-select{background:#161616;border:1px solid #2a2a2a;border-radius:var(--radius-sm);color:var(--humo);font-size:.8rem;font-family:'Poppins',sans-serif;padding:.6rem 1rem;outline:none;cursor:pointer}
+.btn-add{background:var(--lima);color:var(--negro);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.6rem 1.2rem;border-radius:30px;border:none;cursor:pointer;white-space:nowrap;transition:opacity .2s;display:flex;align-items:center;gap:.4rem}
+.btn-add:hover{opacity:.85}
+
+/* Admin curso list */
+.adm-curso-card{background:var(--gris);border:1px solid #1d1d1d;border-radius:var(--radius-md);overflow:hidden;margin-bottom:.8rem;transition:border-color .2s}
+.adm-curso-card:hover{border-color:#2a2a2a}
+.adm-curso-header{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;flex-wrap:wrap}
+.adm-curso-icon{font-size:2rem;flex-shrink:0}
+.adm-curso-info{flex:1;min-width:0}
+.adm-curso-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.25rem}
+.adm-curso-meta{font-size:.75rem;color:var(--humo);display:flex;gap:.8rem;flex-wrap:wrap}
+.adm-curso-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;flex-wrap:wrap}
+.adm-curso-precio{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem;color:var(--lima)}
+.adm-curso-actions{padding:.75rem 1.2rem;border-top:1px solid #1d1d1d;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.adm-action-btn{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.38rem .85rem;border-radius:20px;border:1px solid #2a2a2a;color:var(--humo);background:transparent;cursor:pointer;transition:all .2s}
+.adm-action-btn:hover{color:var(--blanco);border-color:#444}
+.adm-action-btn.edit:hover{color:var(--lima);border-color:rgba(214,255,0,.4)}
+.adm-action-btn.danger:hover{color:#ff5a5a;border-color:rgba(255,90,90,.4)}
+.adm-action-btn.activate{color:#5aff9e;border-color:rgba(90,255,158,.3)}
+.adm-action-btn.deactivate{color:#ff5a5a;border-color:rgba(255,90,90,.3)}
+.adm-cupo-bar{flex:1;height:4px;background:#222;border-radius:2px;overflow:hidden;min-width:60px}
+.adm-cupo-fill{height:100%;background:var(--lima);border-radius:2px;transition:width .4s}
+.adm-cupo-fill.warning{background:#ffa05a}
+.adm-cupo-fill.full{background:#ff5a5a}
+.adm-cupo-text{font-size:.7rem;color:var(--humo);white-space:nowrap}
+
+/* Admin inscripciones */
+.adm-insc-card{background:var(--gris);border:1px solid #1d1d1d;border-radius:var(--radius-sm);padding:1rem 1.2rem;margin-bottom:.7rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color .2s}
+.adm-insc-card:hover{border-color:#2a2a2a}
+.adm-insc-avatar{width:38px;height:38px;border-radius:50%;background:rgba(214,255,0,.1);border:1.5px solid rgba(214,255,0,.2);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.9rem;color:var(--lima);flex-shrink:0}
+.adm-insc-info{flex:1;min-width:0}
+.adm-insc-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem}
+.adm-insc-curso{font-size:.75rem;color:var(--lima);font-weight:500;margin:.1rem 0}
+.adm-insc-meta{font-size:.72rem;color:var(--humo);display:flex;gap:.6rem;flex-wrap:wrap}
+.adm-insc-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;flex-wrap:wrap}
+.adm-wa-btn{display:flex;align-items:center;gap:.35rem;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.35rem .8rem;border-radius:20px;background:rgba(37,211,102,.1);color:var(--wa);border:1px solid rgba(37,211,102,.25);transition:all .2s}
+.adm-wa-btn:hover{background:rgba(37,211,102,.18)}
+.adm-pago-btn{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.35rem .8rem;border-radius:20px;border:1px solid #2a2a2a;color:var(--humo);background:transparent;cursor:pointer;transition:all .2s}
+.adm-pago-btn.pagado{color:#5aff9e;border-color:rgba(90,255,158,.3)}
+.adm-pago-btn:hover{color:var(--blanco);border-color:#444}
+
+/* Admin estudiantes */
+.adm-est-card{background:var(--gris);border:1px solid #1d1d1d;border-radius:var(--radius-sm);padding:1rem 1.2rem;margin-bottom:.7rem;transition:border-color .2s}
+.adm-est-card:hover{border-color:#2a2a2a}
+.adm-est-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.75rem;flex-wrap:wrap}
+.adm-est-avatar{width:38px;height:38px;border-radius:50%;background:rgba(214,255,0,.1);border:1.5px solid rgba(214,255,0,.2);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.9rem;color:var(--lima);flex-shrink:0}
+.adm-est-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem}
+.adm-est-email{font-size:.72rem;color:var(--humo)}
+.adm-est-cursos{display:flex;flex-wrap:wrap;gap:.4rem}
+.adm-est-curso-chip{font-size:.68rem;padding:.2rem .6rem;border-radius:20px;background:rgba(214,255,0,.07);color:var(--lima);border:1px solid rgba(214,255,0,.15)}
+
+/* Admin course editor modal */
+.adm-modal{max-width:640px}
+.adm-modal .modal-body{display:flex;flex-direction:column;gap:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+
+/* Toggle switch */
+.toggle-wrap{display:flex;align-items:center;gap:.8rem}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:#2a2a2a;border-radius:12px;cursor:pointer;transition:background .2s}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:var(--humo);top:3px;left:3px;transition:transform .2s,background .2s}
+.toggle input:checked+.toggle-slider{background:rgba(214,255,0,.2)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(20px);background:var(--lima)}
+.toggle-label{font-size:.82rem;color:var(--blanco)}
+
+/* Notes field */
+.adm-notes-input{width:100%;background:#1a1a1a;border:1px solid #2d2d2d;border-radius:var(--radius-sm);color:var(--blanco);font-family:'Poppins',sans-serif;font-size:.85rem;padding:.75rem 1rem;resize:vertical;min-height:80px;outline:none;transition:border-color .2s}
+.adm-notes-input:focus{border-color:rgba(214,255,0,.35)}
+
+/* Divider */
+.modal-divider{height:1px;background:#1d1d1d;margin:1.2rem 0}
+
+/* Empty state */
+.adm-empty{text-align:center;padding:3rem 1rem;color:var(--humo)}
+.adm-empty-icon{font-size:2.5rem;margin-bottom:.75rem}
+.adm-empty-text{font-size:.85rem}
+
+/* ══ TOAST ══════════════════════════════════════════════════════ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gris2);color:var(--blanco);font-size:.82rem;padding:.75rem 1.4rem;border-radius:30px;border:1px solid #333;z-index:1000;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══ RESPONSIVE ══════════════════════════════════════════════════ */
+@media(max-width:600px){
+  .esc-stats{grid-template-columns:1fr 1fr}
+  .esc-stat:nth-child(3){grid-column:span 2;border-right:none;border-top:1px solid #1a1a1a}
+  .modal-info-grid{grid-template-columns:1fr}
+  .adm-stats{grid-template-columns:1fr 1fr}
+  .adm-insc-card{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:400px){
+  .esc-hero h1{font-size:1.8rem}
+  .esc-hero-btns{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SPLASH ════════════════════════════════════════════════════ -->
+<div id="jjSplash">
+  <div class="splash-logo">JJ✂</div>
+  <div class="splash-sub">Academia · Cargando</div>
+  <div class="jj-dots">
+    <div class="jj-dot"></div><div class="jj-dot"></div><div class="jj-dot"></div>
+  </div>
+</div>
+
+<!-- ══ NAVBAR ════════════════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">JJ✂</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="tienda.html">Tienda</a></li>
+    <li><a href="citas.html">Citas</a></li>
+    <li><a href="escuela.html" class="active">Academia</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-user-area" id="navUserArea">
+      <div class="nav-user-avatar" id="navUserAvatar">?</div>
+      <span class="nav-user-name" id="navUserName"></span>
+      <span class="nav-admin-chip" id="navAdminChip">Admin</span>
+    </div>
+    <button class="nav-logout-btn" id="navLogoutBtn">Salir</button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Nav drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="tienda.html">Tienda</a></li>
+    <li><a href="citas.html">Citas</a></li>
+    <li><a href="escuela.html" class="active">Academia</a></li>
+  </ul>
+  <div class="drawer-actions">
+    <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
+  </div>
+</div>
+
+<!-- ══ PAGE WRAP ═════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ══ PANTALLA PÚBLICA (catálogo de cursos) ════════════════════ -->
+  <div id="screenPublic">
+
+    <!-- Hero -->
+    <section class="esc-hero">
+      <div class="esc-hero-tag">🎓 JJ Barbería · Academia</div>
+      <h1>Aprende el arte de la<br><span>barbería de precisión</span></h1>
+      <p class="esc-hero-sub">Cursos, clases y seminarios profesionales impartidos por Jesús Juárez en Pachuca, Hidalgo. Desde cero hasta nivel avanzado.</p>
+      <div class="esc-hero-btns">
+        <button class="btn-lima" onclick="document.getElementById('cursoGrid').scrollIntoView({behavior:'smooth'})">Ver cursos disponibles</button>
+        <button class="btn-outline" id="btnMisInscripciones" style="display:none" onclick="document.getElementById('misInscSection').scrollIntoView({behavior:'smooth'})">Mis inscripciones</button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="esc-stats">
+      <div class="esc-stat">
+        <div class="esc-stat-num" id="statCursos">—</div>
+        <div class="esc-stat-label">Cursos activos</div>
+      </div>
+      <div class="esc-stat">
+        <div class="esc-stat-num" id="statEstudiantes">—</div>
+        <div class="esc-stat-label">Estudiantes</div>
+      </div>
+      <div class="esc-stat">
+        <div class="esc-stat-num" id="statEgresados">—</div>
+        <div class="esc-stat-label">Egresados</div>
+      </div>
+    </div>
+
+    <!-- Mis inscripciones (visible si está logueado y tiene inscripciones) -->
+    <div id="misInscSection" style="display:none">
+      <div class="mis-insc-section">
+        <h2 class="section-title">Mis inscripciones <span id="misInscCount">0</span></h2>
+        <div class="mi-insc-list" id="misInscList"></div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="esc-filters-wrap">
+      <div class="esc-filters-row">
+        <button class="esc-filter-btn active" data-filter="todos">Todos</button>
+        <button class="esc-filter-btn" data-filter="Curso">Curso</button>
+        <button class="esc-filter-btn" data-filter="Clase">Clase</button>
+        <button class="esc-filter-btn" data-filter="Seminario">Seminario</button>
+        <button class="esc-filter-btn" data-filter="Taller">Taller</button>
+      </div>
+    </div>
+
+    <!-- Course grid -->
+    <div class="esc-grid-wrap">
+      <div id="cursoGrid" class="esc-grid">
+        <div class="esc-loading" style="grid-column:1/-1">
+          <div class="jj-dots"><div class="jj-dot"></div><div class="jj-dot"></div><div class="jj-dot"></div></div>
+          Cargando cursos…
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /screenPublic -->
+
+  <!-- ══ PANTALLA ADMIN ════════════════════════════════════════════ -->
+  <div id="screenAdmin" style="display:none">
+    <div class="adm-header">
+      <div>
+        <div class="adm-title">🎓 Panel Academia</div>
+        <div class="adm-date" id="admDate"></div>
+      </div>
+      <button class="btn-outline" onclick="showScreen('public')" style="font-size:.72rem;padding:.5rem 1.1rem">← Ver catálogo</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="adm-stats">
+      <div class="adm-stat-card">
+        <div class="adm-stat-num" id="admStatCursos">0</div>
+        <div class="adm-stat-label">Cursos activos</div>
+        <div class="adm-stat-sub" id="admStatCursosSub"></div>
+      </div>
+      <div class="adm-stat-card">
+        <div class="adm-stat-num" id="admStatInscritos">0</div>
+        <div class="adm-stat-label">Inscripciones</div>
+        <div class="adm-stat-sub" id="admStatInscritosSub">pendientes de confirmar</div>
+      </div>
+      <div class="adm-stat-card">
+        <div class="adm-stat-num" id="admStatEstudiantes">0</div>
+        <div class="adm-stat-label">Estudiantes únicos</div>
+      </div>
+      <div class="adm-stat-card">
+        <div class="adm-stat-num" id="admStatIngresos">$0</div>
+        <div class="adm-stat-label">Ingresos confirmados</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="adm-tabs-row">
+      <button class="adm-tab active" data-tab="cursos">📚 Cursos</button>
+      <button class="adm-tab" data-tab="inscripciones">📋 Inscripciones</button>
+      <button class="adm-tab" data-tab="estudiantes">🎓 Estudiantes</button>
+    </div>
+
+    <!-- Panel: Cursos -->
+    <div id="admPanelCursos">
+      <div class="adm-toolbar">
+        <input class="adm-search" id="admSearchCursos" placeholder="🔍 Buscar curso…" oninput="renderAdmCursos()">
+        <select class="adm-filter-select" id="admFilterTipo" onchange="renderAdmCursos()">
+          <option value="todos">Todos los tipos</option>
+          <option value="Curso">Curso</option>
+          <option value="Clase">Clase</option>
+          <option value="Seminario">Seminario</option>
+          <option value="Taller">Taller</option>
+        </select>
+        <button class="btn-add" onclick="openCursoEditor()">+ Nuevo curso</button>
+      </div>
+      <div id="admCursosList"></div>
+    </div>
+
+    <!-- Panel: Inscripciones -->
+    <div id="admPanelInscripciones" style="display:none">
+      <div class="adm-toolbar">
+        <input class="adm-search" id="admSearchInsc" placeholder="🔍 Buscar estudiante o curso…" oninput="renderAdmInscripciones()">
+        <select class="adm-filter-select" id="admFilterEstado" onchange="renderAdmInscripciones()">
+          <option value="todos">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="confirmado">Confirmado</option>
+          <option value="cancelado">Cancelado</option>
+          <option value="completado">Completado</option>
+        </select>
+        <select class="adm-filter-select" id="admFilterCursoInsc" onchange="renderAdmInscripciones()">
+          <option value="todos">Todos los cursos</option>
+        </select>
+      </div>
+      <div id="admInscList"></div>
+    </div>
+
+    <!-- Panel: Estudiantes -->
+    <div id="admPanelEstudiantes" style="display:none">
+      <div class="adm-toolbar">
+        <input class="adm-search" id="admSearchEst" placeholder="🔍 Buscar estudiante…" oninput="renderAdmEstudiantes()">
+      </div>
+      <div id="admEstList"></div>
+    </div>
+
+  </div><!-- /screenAdmin -->
+
+</div><!-- /page-wrap -->
+
+<!-- ══ MODAL: DETALLE DE CURSO ════════════════════════════════════ -->
+<div class="modal-overlay" id="modalDetalle">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title" id="detNombre">—</div>
+      <button class="modal-close" onclick="closeModal('modalDetalle')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="detImgWrap"></div>
+      <div class="modal-badges" id="detBadges"></div>
+      <p class="modal-desc" id="detDesc"></p>
+      <div class="modal-info-grid" id="detInfoGrid"></div>
+      <div class="modal-precio-block">
+        <div>
+          <div class="modal-precio-num" id="detPrecio"></div>
+          <div class="modal-precio-label">Costo del programa</div>
+        </div>
+        <div id="detCupoInfo" style="text-align:right"></div>
+      </div>
+    </div>
+    <div class="modal-footer" id="detFooter"></div>
+  </div>
+</div>
+
+<!-- ══ MODAL: INSCRIPCIÓN ═════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalInscripcion">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">Inscribirse al curso</div>
+      <button class="modal-close" onclick="closeModal('modalInscripcion')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.85rem;color:var(--humo);margin-bottom:1.2rem">Completa tus datos para registrarte. El administrador confirmará tu inscripción y se pondrá en contacto contigo.</p>
+      <div id="inscCursoResumen" style="background:rgba(214,255,0,.06);border:1px solid rgba(214,255,0,.15);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.2rem"></div>
+      <div class="form-field">
+        <label class="form-label">Nombre completo *</label>
+        <input class="form-input" id="inscNombre" type="text" placeholder="Tu nombre completo" autocomplete="name">
+        <div class="form-error" id="inscNombreErr">Este campo es obligatorio</div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">WhatsApp *</label>
+        <input class="form-input" id="inscWa" type="tel" placeholder="771 000 0000" autocomplete="tel">
+        <div class="form-error" id="inscWaErr">Ingresa un número válido</div>
+        <div class="form-hint">Te contactaremos para confirmar y coordinar el pago</div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Correo electrónico</label>
+        <input class="form-input" id="inscEmail" type="email" placeholder="tu@correo.com" readonly style="opacity:.6;cursor:not-allowed">
+      </div>
+      <div class="form-field">
+        <label class="form-label">¿Tienes experiencia en barbería?</label>
+        <select class="form-input form-select" id="inscExperiencia">
+          <option value="Ninguna">Sin experiencia — comienzo desde cero</option>
+          <option value="Básica">Básica — sé lo fundamental</option>
+          <option value="Intermedia">Intermedia — ya corto cabello</option>
+          <option value="Avanzada">Avanzada — trabajo como barbero</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Mensaje o preguntas (opcional)</label>
+        <textarea class="adm-notes-input" id="inscMensaje" placeholder="¿Alguna duda o comentario?"></textarea>
+      </div>
+      <div id="inscError" style="font-size:.8rem;color:#ff5a5a;display:none;margin-top:.5rem"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeModal('modalInscripcion')" style="flex:1">Cancelar</button>
+      <button class="btn-lima" id="btnEnviarInscripcion" style="flex:2" onclick="enviarInscripcion()">Confirmar inscripción</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: EDITOR DE CURSO (ADMIN) ════════════════════════════ -->
+<div class="modal-overlay" id="modalEditor">
+  <div class="modal adm-modal" style="max-width:640px">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title" id="editorTitle">Nuevo curso</div>
+      <button class="modal-close" onclick="closeModal('modalEditor')">✕</button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:0">
+      <input type="hidden" id="editorKey">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Nombre del curso *</label>
+          <input class="form-input" id="edNombre" type="text" placeholder="Corte profesional avanzado">
+          <div class="form-error" id="edNombreErr">Campo obligatorio</div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Tipo *</label>
+          <select class="form-input form-select" id="edTipo">
+            <option value="Curso">Curso</option>
+            <option value="Clase">Clase</option>
+            <option value="Seminario">Seminario</option>
+            <option value="Taller">Taller</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Descripción *</label>
+        <textarea class="adm-notes-input" id="edDesc" placeholder="Describe el contenido, qué aprenderán, metodología…" style="min-height:100px"></textarea>
+        <div class="form-error" id="edDescErr">Campo obligatorio</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Instructor</label>
+          <input class="form-input" id="edInstructor" type="text" placeholder="Jesús Juárez" value="Jesús Juárez">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Nivel</label>
+          <select class="form-input form-select" id="edNivel">
+            <option value="Básico">Básico</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+            <option value="Todos los niveles">Todos los niveles</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Fecha de inicio *</label>
+          <input class="form-input" id="edFechaInicio" type="date">
+          <div class="form-error" id="edFechaErr">Campo obligatorio</div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Fecha de fin</label>
+          <input class="form-input" id="edFechaFin" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Horario</label>
+          <input class="form-input" id="edHorario" type="text" placeholder="Sábados 10:00–14:00">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Duración (horas totales)</label>
+          <input class="form-input" id="edDuracion" type="number" min="1" placeholder="40">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Costo (MXN) *</label>
+          <input class="form-input" id="edCosto" type="number" min="0" placeholder="2500">
+          <div class="form-error" id="edCostoErr">Campo obligatorio</div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Cupo máximo</label>
+          <input class="form-input" id="edCupo" type="number" min="1" placeholder="10">
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">URL de imagen (opcional)</label>
+        <input class="form-input" id="edImagen" type="url" placeholder="https://…">
+        <div class="form-hint">Pega el enlace directo a una imagen (JPG, PNG, WebP)</div>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="form-field">
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="edActivo" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Publicar inmediatamente</span>
+        </div>
+      </div>
+      <div id="edError" style="font-size:.8rem;color:#ff5a5a;display:none;margin-top:.5rem"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeModal('modalEditor')" style="flex:1">Cancelar</button>
+      <button class="btn-lima" id="btnGuardarCurso" style="flex:2" onclick="guardarCurso()">Guardar curso</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: DETALLE INSCRIPCIÓN (ADMIN) ════════════════════════ -->
+<div class="modal-overlay" id="modalInscAdmin">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">Detalle inscripción</div>
+      <button class="modal-close" onclick="closeModal('modalInscAdmin')">✕</button>
+    </div>
+    <div class="modal-body" id="inscAdminBody"></div>
+    <div class="modal-footer" id="inscAdminFooter"></div>
+  </div>
+</div>
+
+<!-- ══ TOAST ═════════════════════════════════════════════════════ -->
+<div id="toast"></div>
+
+<script>
+/* ══ FIREBASE ════════════════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyD2_QCBCD7yteJkscUG3rDg3DQIIx-qFo0",
+  authDomain: "tareas-1b62c.firebaseapp.com",
+  databaseURL: "https://tareas-1b62c-default-rtdb.firebaseio.com",
+  projectId: "tareas-1b62c",
+  storageBucket: "tareas-1b62c.firebasestorage.app",
+  messagingSenderId: "76193799127",
+  appId: "1:76193799127:web:d7b53400278c6ab62e8992",
+  measurementId: "G-06LCDRHNLS"
+};
+firebase.initializeApp(firebaseConfig);
+const db   = firebase.database();
+const auth = firebase.auth();
+
+/* ══ CONSTANTES ══════════════════════════════════════════════════ */
+const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+const WA_NUMBER   = "527716682637";
+
+/* ══ ESTADO ══════════════════════════════════════════════════════ */
+let currentUser   = null;
+let allCursos     = {};      // { key: curso }
+let allInscrip    = {};      // { key: inscripcion }
+let filterTipo    = "todos";
+let inscCursoKey  = null;    // curso seleccionado para inscribirse
+let admTab        = "cursos";
+let cursosListener = null;
+let inscListener   = null;
+
+/* ══ HELPERS ═════════════════════════════════════════════════════ */
+function showToast(msg, dur=2800){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), dur);
+}
+function fmtDate(iso){
+  if(!iso) return "—";
+  const [y,m,d] = iso.split("-").map(Number);
+  const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  return `${d} ${meses[m-1]} ${y}`;
+}
+function fmtMoney(n){ return `$${Number(n||0).toLocaleString('es-MX')}`; }
+function tipoBadgeClass(tipo){
+  return {Curso:"badge-curso",Clase:"badge-clase",Seminario:"badge-seminario",Taller:"badge-taller"}[tipo]||"badge-curso";
+}
+function tipoIcon(tipo){
+  return {Curso:"📚",Clase:"🎓",Seminario:"🏛",Taller:"✂️"}[tipo]||"📚";
+}
+function statusBadge(estado){
+  const map={pendiente:"status-pendiente",confirmado:"status-confirmado",cancelado:"status-cancelado",completado:"status-completado"};
+  const label={pendiente:"Pendiente",confirmado:"Confirmado",cancelado:"Cancelado",completado:"Completado"};
+  return `<span class="status-badge ${map[estado]||'status-pendiente'}">${label[estado]||estado}</span>`;
+}
+function cuposDisponibles(curso){
+  if(!curso.cupoMaximo) return null;
+  const used = curso.totalInscritos||0;
+  return Math.max(0, curso.cupoMaximo - used);
+}
+function sanitize(str){ const d=document.createElement('div');d.textContent=str;return d.innerHTML; }
+
+/* ══ SPLASH ══════════════════════════════════════════════════════ */
+function hideSplash(){
+  const s = document.getElementById("jjSplash");
+  if(!s) return;
+  s.style.opacity = "0";
+  setTimeout(()=>s.remove(), 350);
+}
+
+/* ══ NAV ═════════════════════════════════════════════════════════ */
+document.getElementById("navLogoutBtn").addEventListener("click", ()=>{
+  auth.signOut().then(()=>{ window.location.href="login.html"; });
+});
+const hamburger = document.getElementById("navHamburger");
+const drawer    = document.getElementById("navDrawer");
+const overlay   = document.getElementById("drawerOverlay");
+hamburger.addEventListener("click", ()=>{
+  const open = drawer.classList.toggle("open");
+  overlay.classList.toggle("show", open);
+  hamburger.classList.toggle("open", open);
+});
+overlay.addEventListener("click", ()=>{
+  drawer.classList.remove("open");
+  overlay.classList.remove("show");
+  hamburger.classList.remove("open");
+});
+
+/* ══ SCREEN MANAGEMENT ═══════════════════════════════════════════ */
+function showScreen(name){
+  document.getElementById("screenPublic").style.display = name==="public" ? "block" : "none";
+  document.getElementById("screenAdmin").style.display  = name==="admin"  ? "block" : "none";
+}
+
+/* ══ AUTH STATE ══════════════════════════════════════════════════ */
+auth.onAuthStateChanged(user=>{
+  currentUser = user;
+  hideSplash();
+  document.getElementById("mainNav").style.display = "flex";
+
+  if(user){
+    // Nav user info
+    const name    = user.displayName || user.email.split("@")[0];
+    const initial = name[0].toUpperCase();
+    document.getElementById("navUserAvatar").textContent = initial;
+    document.getElementById("navUserName").textContent   = name.length>14?name.slice(0,14)+"…":name;
+    document.getElementById("navUserArea").style.display = "flex";
+    document.getElementById("navLogoutBtn").style.display= "inline-block";
+    const isAdmin = user.email===ADMIN_EMAIL;
+    document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
+    document.getElementById("btnMisInscripciones").style.display = isAdmin?"none":"inline-block";
+
+    if(isAdmin){
+      // Admin: show admin panel, but load catalog too for stats
+      showScreen("admin");
+      initAdmin();
+    } else {
+      showScreen("public");
+      cargarMisInscripciones(user.uid);
+    }
+  } else {
+    // No auth: show public catalog, hide personal section
+    showScreen("public");
+    document.getElementById("navLogoutBtn").style.display= "none";
+  }
+
+  // Always load public catalog
+  cargarCursosPublicos();
+  cargarStats();
+});
+
+/* ══ CATÁLOGO PÚBLICO ════════════════════════════════════════════ */
+function cargarCursosPublicos(){
+  db.ref("escuela/cursos").on("value", snap=>{
+    allCursos = snap.val()||{};
+    renderCursos();
+    updatePublicStats();
+  });
+}
+
+function updatePublicStats(){
+  const cursos = Object.values(allCursos).filter(c=>c.activo);
+  document.getElementById("statCursos").textContent = cursos.length;
+}
+
+async function cargarStats(){
+  db.ref("escuela/inscripciones").on("value", snap=>{
+    const insc = snap.val()||{};
+    const uids = new Set();
+    let egresados = 0;
+    Object.values(insc).forEach(i=>{ if(i.uid) uids.add(i.uid); if(i.estado==="completado") egresados++; });
+    document.getElementById("statEstudiantes").textContent = uids.size;
+    document.getElementById("statEgresados").textContent = egresados;
+  });
+}
+
+/* ══ RENDER CURSOS PÚBLICO ═══════════════════════════════════════ */
+function renderCursos(){
+  const grid   = document.getElementById("cursoGrid");
+  const cursos = Object.entries(allCursos)
+    .filter(([,c])=>c.activo)
+    .filter(([,c])=>filterTipo==="todos"||c.tipo===filterTipo)
+    .sort(([,a],[,b])=>(a.fechaInicio||"").localeCompare(b.fechaInicio||""));
+
+  if(!cursos.length){
+    grid.innerHTML = `<div class="esc-empty" style="grid-column:1/-1">
+      <div class="esc-empty-icon">📚</div>
+      <div class="esc-empty-title">Sin cursos disponibles</div>
+      <div style="font-size:.82rem;color:var(--humo);margin-top:.4rem">Próximamente se publicarán nuevos programas</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = cursos.map(([key,c])=>{
+    const cupos = cuposDisponibles(c);
+    const lleno = cupos===0;
+    const imgHTML = c.imagen
+      ? `<img src="${sanitize(c.imagen)}" alt="${sanitize(c.nombre)}" onerror="this.parentElement.innerHTML='<div class=\\'curso-card-img-placeholder\\'>${tipoIcon(c.tipo)}</div>'">`
+      : `<div class="curso-card-img-placeholder">${tipoIcon(c.tipo)}</div>`;
+    return `<div class="curso-card" onclick="openDetalle('${key}')">
+      <div class="curso-card-img">
+        ${imgHTML}
+        <span class="curso-tipo-badge ${tipoBadgeClass(c.tipo)}">${c.tipo||"Curso"}</span>
+        ${c.nivel?`<span class="curso-nivel-badge">${sanitize(c.nivel)}</span>`:""}
+      </div>
+      <div class="curso-card-body">
+        <div class="curso-card-name">${sanitize(c.nombre)}</div>
+        ${c.descripcion?`<div class="curso-card-desc">${sanitize(c.descripcion)}</div>`:""}
+        <div class="curso-card-meta">
+          ${c.fechaInicio?`<div class="curso-meta-chip">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3" stroke="#9a9a9a" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="#9a9a9a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            ${fmtDate(c.fechaInicio)}</div>`:""}
+          ${c.duracion?`<div class="curso-meta-chip">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#9a9a9a" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="#9a9a9a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            ${c.duracion}h</div>`:""}
+          ${c.instructor?`<div class="curso-meta-chip">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="#9a9a9a" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#9a9a9a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            ${sanitize(c.instructor)}</div>`:""}
+        </div>
+      </div>
+      <div class="curso-card-footer">
+        <div>
+          <div class="curso-precio">${fmtMoney(c.costo)}<small>MXN</small></div>
+          ${c.cupoMaximo?`<div class="curso-cupo ${lleno?'lleno':''}">${lleno?'Sin lugares':''+cupos+' lugar'+(cupos!==1?'es':'')+' disponible'+(cupos!==1?'s':'')}</div>`:""}
+        </div>
+        <button class="btn-ver" onclick="event.stopPropagation();openDetalle('${key}')">${lleno?"Ver detalle":"Ver más"}</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ══ FILTROS ═════════════════════════════════════════════════════ */
+document.querySelectorAll(".esc-filter-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".esc-filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    filterTipo = btn.dataset.filter;
+    renderCursos();
+  });
+});
+
+/* ══ MODAL DETALLE ═══════════════════════════════════════════════ */
+function openDetalle(key){
+  const c = allCursos[key];
+  if(!c) return;
+  const cupos = cuposDisponibles(c);
+  const lleno = cupos===0;
+
+  document.getElementById("detNombre").textContent = c.nombre||"—";
+
+  // Imagen
+  const imgWrap = document.getElementById("detImgWrap");
+  if(c.imagen){
+    imgWrap.innerHTML = `<img class="modal-img" src="${sanitize(c.imagen)}" alt="${sanitize(c.nombre)}" onerror="this.outerHTML='<div class=\\'modal-img-placeholder\\'>${tipoIcon(c.tipo)}</div>'">`;
+  } else {
+    imgWrap.innerHTML = `<div class="modal-img-placeholder">${tipoIcon(c.tipo)}</div>`;
+  }
+
+  // Badges
+  document.getElementById("detBadges").innerHTML =
+    `<span class="curso-tipo-badge ${tipoBadgeClass(c.tipo)}">${c.tipo||"Curso"}</span>`+
+    (c.nivel?`<span class="curso-nivel-badge" style="position:static;font-size:.6rem">${sanitize(c.nivel)}</span>`:"");
+
+  document.getElementById("detDesc").textContent = c.descripcion||"";
+
+  // Info grid
+  const items = [
+    c.fechaInicio ? {label:"Inicio",value:fmtDate(c.fechaInicio)} : null,
+    c.fechaFin    ? {label:"Fin",value:fmtDate(c.fechaFin)} : null,
+    c.horario     ? {label:"Horario",value:c.horario} : null,
+    c.duracion    ? {label:"Duración",value:c.duracion+"h totales"} : null,
+    c.instructor  ? {label:"Instructor",value:c.instructor} : null,
+    c.nivel       ? {label:"Nivel",value:c.nivel} : null,
+  ].filter(Boolean);
+  document.getElementById("detInfoGrid").innerHTML = items.map(i=>
+    `<div class="modal-info-item"><div class="modal-info-label">${i.label}</div><div class="modal-info-value">${sanitize(i.value)}</div></div>`
+  ).join("");
+
+  document.getElementById("detPrecio").textContent = fmtMoney(c.costo);
+  document.getElementById("detCupoInfo").innerHTML = c.cupoMaximo
+    ? `<div style="font-family:Montserrat,sans-serif;font-weight:900;font-size:1.2rem;color:${lleno?'#ff5a5a':'var(--blanco)'}">${lleno?"Lleno":cupos}</div>
+       <div style="font-size:.7rem;color:var(--humo)">${lleno?"Sin lugares":"lugares disponibles"}</div>`
+    : "";
+
+  // Footer actions
+  const footer = document.getElementById("detFooter");
+  if(lleno){
+    footer.innerHTML = `<div style="width:100%;text-align:center;font-size:.82rem;color:#ff5a5a;padding:.5rem">Este curso ya no tiene lugares disponibles</div>`;
+  } else if(!currentUser){
+    footer.innerHTML = `
+      <button class="btn-outline" onclick="closeModal('modalDetalle')" style="flex:1">Cerrar</button>
+      <a href="login.html?redirect=escuela.html" class="btn-lima" style="flex:2;display:flex;align-items:center;justify-content:center;gap:.4rem">Iniciar sesión para inscribirse</a>`;
+  } else if(currentUser.email===ADMIN_EMAIL){
+    footer.innerHTML = `<button class="btn-outline" onclick="closeModal('modalDetalle')" style="flex:1">Cerrar</button>`;
+  } else {
+    footer.innerHTML = `
+      <button class="btn-outline" onclick="closeModal('modalDetalle')" style="flex:1">Cerrar</button>
+      <button class="btn-lima" style="flex:2" onclick="closeModal('modalDetalle');openInscripcion('${key}')">✏ Inscribirme</button>`;
+  }
+
+  openModal("modalDetalle");
+}
+
+/* ══ MODAL INSCRIPCIÓN ═══════════════════════════════════════════ */
+async function openInscripcion(key){
+  const c = allCursos[key];
+  if(!c||!currentUser) return;
+
+  // Verificar si ya está inscrito
+  const snap = await db.ref("escuela/inscripciones")
+    .orderByChild("uid").equalTo(currentUser.uid).once("value");
+  const yaInscritos = snap.val()||{};
+  const yaInscrito  = Object.values(yaInscritos).find(i=>i.cursoId===key&&i.estado!=="cancelado");
+  if(yaInscrito){
+    showToast("Ya estás inscrito en este curso");
+    return;
+  }
+
+  inscCursoKey = key;
+  document.getElementById("inscCursoResumen").innerHTML =
+    `<div style="font-family:Montserrat,sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.3rem">${sanitize(c.nombre)}</div>
+     <div style="font-size:.78rem;color:var(--humo);display:flex;gap:.8rem;flex-wrap:wrap">
+       ${c.fechaInicio?`<span>📅 ${fmtDate(c.fechaInicio)}</span>`:""}
+       ${c.horario?`<span>🕐 ${sanitize(c.horario)}</span>`:""}
+       <span style="color:var(--lima);font-weight:700">💰 ${fmtMoney(c.costo)}</span>
+     </div>`;
+
+  // Pre-fill user data
+  const nombre = currentUser.displayName||"";
+  document.getElementById("inscNombre").value = nombre;
+  document.getElementById("inscEmail").value  = currentUser.email||"";
+
+  // Try to pre-fill WA from profile
+  db.ref(`usuarios/${currentUser.uid}`).once("value").then(s=>{
+    const p = s.val();
+    if(p&&p.whatsapp){ document.getElementById("inscWa").value = p.whatsapp.replace(/^52/,""); }
+  }).catch(()=>{});
+
+  document.getElementById("inscError").style.display = "none";
+  document.getElementById("btnEnviarInscripcion").disabled = false;
+  document.getElementById("btnEnviarInscripcion").textContent = "Confirmar inscripción";
+  openModal("modalInscripcion");
+}
+
+async function enviarInscripcion(){
+  const nombre = document.getElementById("inscNombre").value.trim();
+  const wa     = document.getElementById("inscWa").value.trim();
+  const email  = currentUser.email;
+  const exp    = document.getElementById("inscExperiencia").value;
+  const msg    = document.getElementById("inscMensaje").value.trim();
+  const curso  = allCursos[inscCursoKey];
+
+  // Validar
+  let valid = true;
+  document.getElementById("inscNombreErr").style.display = nombre?"none":"block"; if(!nombre) valid=false;
+  document.getElementById("inscWaErr").style.display = wa?"none":"block"; if(!wa) valid=false;
+  if(!valid) return;
+
+  const btn = document.getElementById("btnEnviarInscripcion");
+  btn.disabled = true;
+  btn.textContent = "Enviando…";
+  document.getElementById("inscError").style.display = "none";
+
+  try{
+    const ref = await db.ref("escuela/inscripciones").push({
+      cursoId:      inscCursoKey,
+      cursoNombre:  curso.nombre,
+      uid:          currentUser.uid,
+      nombre,
+      email,
+      whatsapp:     wa,
+      experiencia:  exp,
+      mensaje:      msg||"",
+      estado:       "pendiente",
+      pagado:       false,
+      montoPagado:  0,
+      notas:        "",
+      fechaInscripcion: Date.now()
+    });
+
+    // Incrementar totalInscritos en el curso
+    await db.ref(`escuela/cursos/${inscCursoKey}/totalInscritos`)
+      .transaction(n=>(n||0)+1);
+
+    closeModal("modalInscripcion");
+    showToast("✅ ¡Inscripción enviada! Te contactaremos pronto");
+    cargarMisInscripciones(currentUser.uid);
+  } catch(e){
+    document.getElementById("inscError").textContent = "Error al enviar: "+e.message;
+    document.getElementById("inscError").style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "Confirmar inscripción";
+  }
+}
+
+/* ══ MIS INSCRIPCIONES ═══════════════════════════════════════════ */
+async function cargarMisInscripciones(uid){
+  db.ref("escuela/inscripciones").orderByChild("uid").equalTo(uid).on("value", snap=>{
+    const insc = snap.val()||{};
+    const list = Object.entries(insc).filter(([,i])=>i.estado!=="cancelado");
+    const section = document.getElementById("misInscSection");
+    const listEl  = document.getElementById("misInscList");
+    const countEl = document.getElementById("misInscCount");
+
+    if(!list.length){ section.style.display="none"; return; }
+    section.style.display="block";
+    countEl.textContent = list.length;
+
+    listEl.innerHTML = list.map(([key,i])=>`
+      <div class="mi-insc-card">
+        <div class="mi-insc-icon">${tipoIcon(allCursos[i.cursoId]?.tipo||"Curso")}</div>
+        <div class="mi-insc-info">
+          <div class="mi-insc-name">${sanitize(i.cursoNombre||"Curso")}</div>
+          <div class="mi-insc-meta">
+            ${i.fechaInscripcion?`Inscrito el ${fmtDate(new Date(i.fechaInscripcion).toISOString().split("T")[0])}`:""}
+            ${i.pagado?` · ✅ Pago confirmado`:` · ⏳ Pago pendiente`}
+          </div>
+        </div>
+        <div class="mi-insc-status">${statusBadge(i.estado)}</div>
+      </div>`
+    ).join("");
+  });
+}
+
+/* ══ ADMIN PANEL ═════════════════════════════════════════════════ */
+function initAdmin(){
+  const now = new Date();
+  const days  = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  const months= ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  document.getElementById("admDate").textContent =
+    `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+
+  // Tab listeners
+  document.querySelectorAll(".adm-tab").forEach(t=>{
+    t.addEventListener("click",()=>{
+      admTab = t.dataset.tab;
+      document.querySelectorAll(".adm-tab").forEach(x=>x.classList.toggle("active",x===t));
+      document.getElementById("admPanelCursos").style.display       = admTab==="cursos"?"block":"none";
+      document.getElementById("admPanelInscripciones").style.display= admTab==="inscripciones"?"block":"none";
+      document.getElementById("admPanelEstudiantes").style.display  = admTab==="estudiantes"?"block":"none";
+      if(admTab==="inscripciones") populateCursoFilter();
+    });
+  });
+
+  // Realtime listeners
+  db.ref("escuela/cursos").on("value", snap=>{
+    allCursos = snap.val()||{};
+    renderAdmCursos();
+    updateAdmStats();
+  });
+  db.ref("escuela/inscripciones").on("value", snap=>{
+    allInscrip = snap.val()||{};
+    renderAdmInscripciones();
+    renderAdmEstudiantes();
+    updateAdmStats();
+    populateCursoFilter();
+  });
+}
+
+function updateAdmStats(){
+  const cursos   = Object.values(allCursos);
+  const insc     = Object.values(allInscrip);
+  const activos  = cursos.filter(c=>c.activo).length;
+  const pend     = insc.filter(i=>i.estado==="pendiente").length;
+  const uids     = new Set(insc.map(i=>i.uid).filter(Boolean));
+  const ingresos = insc.filter(i=>i.pagado).reduce((s,i)=>s+(i.montoPagado||0),0);
+
+  document.getElementById("admStatCursos").textContent     = activos;
+  document.getElementById("admStatCursosSub").textContent  = `${cursos.length-activos} inactivo(s)`;
+  document.getElementById("admStatInscritos").textContent  = insc.length;
+  document.getElementById("admStatInscritosSub").textContent = `${pend} pendiente(s)`;
+  document.getElementById("admStatEstudiantes").textContent = uids.size;
+  document.getElementById("admStatIngresos").textContent   = fmtMoney(ingresos);
+}
+
+/* ── PANEL CURSOS ────────────────────────────────────────────── */
+function renderAdmCursos(){
+  const q    = (document.getElementById("admSearchCursos")?.value||"").toLowerCase();
+  const tipo = document.getElementById("admFilterTipo")?.value||"todos";
+  const list = document.getElementById("admCursosList");
+
+  const items = Object.entries(allCursos)
+    .filter(([,c])=>tipo==="todos"||c.tipo===tipo)
+    .filter(([,c])=>!q||(c.nombre||"").toLowerCase().includes(q)||(c.descripcion||"").toLowerCase().includes(q))
+    .sort(([,a],[,b])=>(b.createdAt||0)-(a.createdAt||0));
+
+  if(!items.length){
+    list.innerHTML = `<div class="adm-empty"><div class="adm-empty-icon">📚</div><div class="adm-empty-text">No hay cursos${q?" que coincidan":""}. Crea uno nuevo.</div></div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(([key,c])=>{
+    const total  = c.totalInscritos||0;
+    const cupo   = c.cupoMaximo||0;
+    const pct    = cupo ? Math.min(100,Math.round(total/cupo*100)) : 0;
+    const fillCls= pct>=100?"full":pct>=75?"warning":"";
+    return `<div class="adm-curso-card">
+      <div class="adm-curso-header">
+        <div class="adm-curso-icon">${tipoIcon(c.tipo)}</div>
+        <div class="adm-curso-info">
+          <div class="adm-curso-name">${sanitize(c.nombre)}</div>
+          <div class="adm-curso-meta">
+            <span class="curso-tipo-badge ${tipoBadgeClass(c.tipo)}" style="position:static;font-size:.58rem">${c.tipo||"Curso"}</span>
+            ${c.nivel?`<span style="font-size:.72rem">· ${sanitize(c.nivel)}</span>`:""}
+            ${c.fechaInicio?`<span>📅 ${fmtDate(c.fechaInicio)}</span>`:""}
+            ${c.instructor?`<span>👤 ${sanitize(c.instructor)}</span>`:""}
+            <span style="color:${c.activo?"#5aff9e":"#ff5a5a"}">${c.activo?"● Publicado":"○ Oculto"}</span>
+          </div>
+        </div>
+        <div class="adm-curso-right">
+          ${cupo?`<div style="display:flex;flex-direction:column;gap:.3rem;min-width:80px">
+            <div class="adm-cupo-bar"><div class="adm-cupo-fill ${fillCls}" style="width:${pct}%"></div></div>
+            <div class="adm-cupo-text">${total}/${cupo} inscritos</div>
+          </div>`:`<div class="adm-cupo-text" style="font-size:.7rem;color:var(--humo)">${total} inscrito(s)</div>`}
+          <div class="adm-curso-precio">${fmtMoney(c.costo)}</div>
+        </div>
+      </div>
+      <div class="adm-curso-actions">
+        <button class="adm-action-btn edit" onclick="openCursoEditor('${key}')">✏ Editar</button>
+        <button class="adm-action-btn ${c.activo?'deactivate':'activate'}" onclick="toggleCursoActivo('${key}',${c.activo})">
+          ${c.activo?"◉ Ocultar":"◎ Publicar"}
+        </button>
+        <button class="adm-action-btn" onclick="verInscripcionesDelCurso('${key}')">📋 Ver inscritos (${total})</button>
+        <button class="adm-action-btn danger" onclick="eliminarCurso('${key}','${sanitize(c.nombre)}')">🗑 Eliminar</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ── PANEL INSCRIPCIONES ─────────────────────────────────────── */
+function populateCursoFilter(){
+  const sel = document.getElementById("admFilterCursoInsc");
+  if(!sel) return;
+  const current = sel.value;
+  const nombres = {};
+  Object.values(allInscrip).forEach(i=>{ if(i.cursoId&&i.cursoNombre) nombres[i.cursoId]=i.cursoNombre; });
+  sel.innerHTML = `<option value="todos">Todos los cursos</option>`+
+    Object.entries(nombres).map(([id,n])=>`<option value="${id}">${sanitize(n)}</option>`).join("");
+  if(current) sel.value = current;
+}
+
+function renderAdmInscripciones(){
+  const q      = (document.getElementById("admSearchInsc")?.value||"").toLowerCase();
+  const estado = document.getElementById("admFilterEstado")?.value||"todos";
+  const cursoF = document.getElementById("admFilterCursoInsc")?.value||"todos";
+  const list   = document.getElementById("admInscList");
+  if(!list) return;
+
+  const items = Object.entries(allInscrip)
+    .filter(([,i])=>estado==="todos"||i.estado===estado)
+    .filter(([,i])=>cursoF==="todos"||i.cursoId===cursoF)
+    .filter(([,i])=>!q||(i.nombre||"").toLowerCase().includes(q)||(i.cursoNombre||"").toLowerCase().includes(q)||(i.email||"").toLowerCase().includes(q))
+    .sort(([,a],[,b])=>(b.fechaInscripcion||0)-(a.fechaInscripcion||0));
+
+  if(!items.length){
+    list.innerHTML = `<div class="adm-empty"><div class="adm-empty-icon">📋</div><div class="adm-empty-text">No hay inscripciones que coincidan</div></div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(([key,i])=>{
+    const init = (i.nombre||"?")[0].toUpperCase();
+    const waUrl = `https://wa.me/${WA_NUMBER.replace(/\D/,'')}?text=${encodeURIComponent(`Hola ${i.nombre}, te contactamos de JJ Academia sobre tu inscripción en "${i.cursoNombre}".`)}`;
+    return `<div class="adm-insc-card">
+      <div class="adm-insc-avatar">${init}</div>
+      <div class="adm-insc-info">
+        <div class="adm-insc-name">${sanitize(i.nombre||"—")}</div>
+        <div class="adm-insc-curso">${sanitize(i.cursoNombre||"—")}</div>
+        <div class="adm-insc-meta">
+          <span>✉ ${sanitize(i.email||"—")}</span>
+          ${i.whatsapp?`<span>📱 ${sanitize(i.whatsapp)}</span>`:""}
+          ${i.fechaInscripcion?`<span>📅 ${fmtDate(new Date(i.fechaInscripcion).toISOString().split("T")[0])}</span>`:""}
+          ${i.experiencia?`<span>🎓 Exp: ${sanitize(i.experiencia)}</span>`:""}
+        </div>
+      </div>
+      <div class="adm-insc-right">
+        ${statusBadge(i.estado)}
+        <button class="adm-pago-btn ${i.pagado?'pagado':''}" onclick="togglePago('${key}',${i.pagado})">${i.pagado?"💰 Pagado":"💳 Marcar pago"}</button>
+        <a class="adm-wa-btn" href="https://wa.me/${i.whatsapp?'52'+i.whatsapp.replace(/\D/,''):WA_NUMBER}?text=${encodeURIComponent('Hola '+i.nombre+', te contactamos de JJ Academia sobre tu inscripción en "'+i.cursoNombre+'".')}" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.06L2 22l5.06-1.38A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm4.93 13.57c-.2.57-1.17 1.1-1.62 1.17-.41.06-.93.09-1.5-.09-.35-.11-.8-.26-1.37-.5-2.4-1.04-3.97-3.45-4.09-3.61-.12-.16-.96-1.28-.96-2.44 0-1.16.61-1.73.83-1.97.2-.22.44-.28.59-.28h.42c.13 0 .31-.05.48.37.18.43.61 1.49.67 1.6.06.11.1.24.02.38-.08.14-.12.23-.24.35-.12.12-.25.27-.36.36-.12.1-.24.21-.1.41.14.2.61.9 1.31 1.46.9.76 1.66 1 1.9 1.11.23.11.37.09.51-.06.14-.15.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.57-.14 1.12z"/></svg>
+          WA
+        </a>
+        <button class="adm-action-btn" onclick="openInscAdmin('${key}')">⋯ Detalle</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ── PANEL ESTUDIANTES ───────────────────────────────────────── */
+function renderAdmEstudiantes(){
+  const q    = (document.getElementById("admSearchEst")?.value||"").toLowerCase();
+  const list = document.getElementById("admEstList");
+  if(!list) return;
+
+  // Agrupar por uid
+  const byUid = {};
+  Object.entries(allInscrip).forEach(([key,i])=>{
+    if(!i.uid) return;
+    if(!byUid[i.uid]) byUid[i.uid] = { nombre:i.nombre, email:i.email, whatsapp:i.whatsapp, cursos:[] };
+    byUid[i.uid].cursos.push({ key, curso:i.cursoNombre, estado:i.estado, pagado:i.pagado });
+  });
+
+  const items = Object.entries(byUid)
+    .filter(([,s])=>!q||(s.nombre||"").toLowerCase().includes(q)||(s.email||"").toLowerCase().includes(q))
+    .sort(([,a],[,b])=>(a.nombre||"").localeCompare(b.nombre||""));
+
+  if(!items.length){
+    list.innerHTML = `<div class="adm-empty"><div class="adm-empty-icon">🎓</div><div class="adm-empty-text">Sin estudiantes registrados aún</div></div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(([uid,s])=>`
+    <div class="adm-est-card">
+      <div class="adm-est-header">
+        <div class="adm-est-avatar">${(s.nombre||"?")[0].toUpperCase()}</div>
+        <div>
+          <div class="adm-est-name">${sanitize(s.nombre||"—")}</div>
+          <div class="adm-est-email">${sanitize(s.email||"")} ${s.whatsapp?`· 📱 ${sanitize(s.whatsapp)}`:""}
+            · <span style="color:var(--lima)">${s.cursos.length} curso(s)</span></div>
+        </div>
+      </div>
+      <div class="adm-est-cursos">
+        ${s.cursos.map(c=>`<span class="adm-est-curso-chip">${sanitize(c.curso||"—")} · ${c.pagado?"💰":"⏳"} ${statusLabel(c.estado)}</span>`).join("")}
+      </div>
+    </div>`
+  ).join("");
+}
+
+function statusLabel(e){ return {pendiente:"Pendiente",confirmado:"Confirmado",cancelado:"Cancelado",completado:"Completado"}[e]||e; }
+
+/* ── DETALLE INSCRIPCIÓN ADMIN ───────────────────────────────── */
+function openInscAdmin(key){
+  const i = allInscrip[key];
+  if(!i) return;
+  const body   = document.getElementById("inscAdminBody");
+  const footer = document.getElementById("inscAdminFooter");
+
+  body.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:.9rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <div class="modal-info-item"><div class="modal-info-label">Estudiante</div><div class="modal-info-value">${sanitize(i.nombre||"—")}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Estado</div><div class="modal-info-value">${statusBadge(i.estado)}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Correo</div><div class="modal-info-value" style="font-size:.8rem;word-break:break-all">${sanitize(i.email||"—")}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">WhatsApp</div><div class="modal-info-value">${sanitize(i.whatsapp||"—")}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Curso</div><div class="modal-info-value" style="font-size:.82rem">${sanitize(i.cursoNombre||"—")}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Experiencia previa</div><div class="modal-info-value" style="font-size:.82rem">${sanitize(i.experiencia||"—")}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Inscripción</div><div class="modal-info-value" style="font-size:.82rem">${i.fechaInscripcion?fmtDate(new Date(i.fechaInscripcion).toISOString().split("T")[0]):"—"}</div></div>
+        <div class="modal-info-item"><div class="modal-info-label">Pago</div><div class="modal-info-value" style="color:${i.pagado?"#5aff9e":"var(--humo)"}">${i.pagado?`✅ ${fmtMoney(i.montoPagado||0)}`:"⏳ Pendiente"}</div></div>
+      </div>
+      ${i.mensaje?`<div class="modal-info-item"><div class="modal-info-label">Mensaje del estudiante</div><div style="font-size:.85rem;color:var(--humo);margin-top:.4rem;line-height:1.6">${sanitize(i.mensaje)}</div></div>`:""}
+      <div class="form-field" style="margin:0">
+        <label class="form-label">Cambiar estado</label>
+        <select class="form-input form-select" id="admInscEstado" onchange="cambiarEstado('${key}',this.value)">
+          <option value="pendiente" ${i.estado==="pendiente"?"selected":""}>Pendiente</option>
+          <option value="confirmado" ${i.estado==="confirmado"?"selected":""}>Confirmado</option>
+          <option value="completado" ${i.estado==="completado"?"selected":""}>Completado</option>
+          <option value="cancelado" ${i.estado==="cancelado"?"selected":""}>Cancelado</option>
+        </select>
+      </div>
+      <div class="form-field" style="margin:0">
+        <label class="form-label">Monto pagado (MXN)</label>
+        <input class="form-input" id="admMontoPago" type="number" min="0" value="${i.montoPagado||0}">
+      </div>
+      <div class="form-field" style="margin:0">
+        <label class="form-label">Notas internas (solo admin)</label>
+        <textarea class="adm-notes-input" id="admNotas">${sanitize(i.notas||"")}</textarea>
+      </div>
+    </div>`;
+
+  footer.innerHTML = `
+    <button class="btn-outline" onclick="closeModal('modalInscAdmin')" style="flex:1">Cerrar</button>
+    <button class="btn-lima" style="flex:2" onclick="guardarInscAdmin('${key}')">💾 Guardar cambios</button>`;
+
+  openModal("modalInscAdmin");
+}
+
+async function guardarInscAdmin(key){
+  const estado = document.getElementById("admInscEstado").value;
+  const monto  = parseFloat(document.getElementById("admMontoPago").value)||0;
+  const notas  = document.getElementById("admNotas").value.trim();
+  const pagado = monto>0;
+  try{
+    await db.ref(`escuela/inscripciones/${key}`).update({ estado, montoPagado:monto, pagado, notas });
+    closeModal("modalInscAdmin");
+    showToast("✅ Inscripción actualizada");
+  } catch(e){ showToast("Error: "+e.message); }
+}
+
+async function cambiarEstado(key, estado){
+  try{ await db.ref(`escuela/inscripciones/${key}`).update({ estado }); }
+  catch(e){ showToast("Error: "+e.message); }
+}
+
+async function togglePago(key, actual){
+  const nuevo = !actual;
+  const i = allInscrip[key];
+  const c = allCursos[i?.cursoId];
+  try{
+    await db.ref(`escuela/inscripciones/${key}`).update({
+      pagado: nuevo,
+      montoPagado: nuevo ? (i?.montoPagado||c?.costo||0) : 0,
+      estado: nuevo ? "confirmado" : (i?.estado||"pendiente")
+    });
+    showToast(nuevo?"✅ Pago marcado":"Pago desmarcado");
+  } catch(e){ showToast("Error: "+e.message); }
+}
+
+/* ── EDITOR DE CURSOS ────────────────────────────────────────── */
+function openCursoEditor(key=null){
+  document.getElementById("editorTitle").textContent = key ? "Editar curso" : "Nuevo curso";
+  document.getElementById("editorKey").value = key||"";
+  const c = key ? allCursos[key] : {};
+  document.getElementById("edNombre").value    = c.nombre||"";
+  document.getElementById("edTipo").value      = c.tipo||"Curso";
+  document.getElementById("edDesc").value      = c.descripcion||"";
+  document.getElementById("edInstructor").value= c.instructor||"Jesús Juárez";
+  document.getElementById("edNivel").value     = c.nivel||"Básico";
+  document.getElementById("edFechaInicio").value= c.fechaInicio||"";
+  document.getElementById("edFechaFin").value  = c.fechaFin||"";
+  document.getElementById("edHorario").value   = c.horario||"";
+  document.getElementById("edDuracion").value  = c.duracion||"";
+  document.getElementById("edCosto").value     = c.costo||"";
+  document.getElementById("edCupo").value      = c.cupoMaximo||"";
+  document.getElementById("edImagen").value    = c.imagen||"";
+  document.getElementById("edActivo").checked  = key ? (c.activo!==false) : true;
+  document.getElementById("edError").style.display="none";
+  document.getElementById("btnGuardarCurso").disabled=false;
+  document.getElementById("btnGuardarCurso").textContent="Guardar curso";
+  openModal("modalEditor");
+}
+
+async function guardarCurso(){
+  const key    = document.getElementById("editorKey").value||null;
+  const nombre = document.getElementById("edNombre").value.trim();
+  const desc   = document.getElementById("edDesc").value.trim();
+  const costo  = parseFloat(document.getElementById("edCosto").value);
+  const fi     = document.getElementById("edFechaInicio").value;
+
+  let valid = true;
+  document.getElementById("edNombreErr").style.display = nombre?"none":"block"; if(!nombre) valid=false;
+  document.getElementById("edDescErr").style.display   = desc?"none":"block";   if(!desc) valid=false;
+  document.getElementById("edCostoErr").style.display  = (!isNaN(costo)&&costo>=0)?"none":"block"; if(isNaN(costo)||costo<0) valid=false;
+  document.getElementById("edFechaErr").style.display  = fi?"none":"block"; if(!fi) valid=false;
+  if(!valid) return;
+
+  const btn = document.getElementById("btnGuardarCurso");
+  btn.disabled = true; btn.textContent = "Guardando…";
+
+  const data = {
+    nombre,
+    tipo:        document.getElementById("edTipo").value,
+    descripcion: desc,
+    instructor:  document.getElementById("edInstructor").value.trim()||"Jesús Juárez",
+    nivel:       document.getElementById("edNivel").value,
+    fechaInicio: fi,
+    fechaFin:    document.getElementById("edFechaFin").value||"",
+    horario:     document.getElementById("edHorario").value.trim(),
+    duracion:    parseInt(document.getElementById("edDuracion").value)||null,
+    costo,
+    cupoMaximo:  parseInt(document.getElementById("edCupo").value)||null,
+    imagen:      document.getElementById("edImagen").value.trim()||"",
+    activo:      document.getElementById("edActivo").checked,
+  };
+
+  try{
+    if(key){
+      await db.ref(`escuela/cursos/${key}`).update(data);
+      showToast("✅ Curso actualizado");
+    } else {
+      data.createdAt = Date.now();
+      data.totalInscritos = 0;
+      await db.ref("escuela/cursos").push(data);
+      showToast("✅ Curso creado");
+    }
+    closeModal("modalEditor");
+  } catch(e){
+    document.getElementById("edError").textContent = "Error: "+e.message;
+    document.getElementById("edError").style.display="block";
+    btn.disabled=false; btn.textContent="Guardar curso";
+  }
+}
+
+async function toggleCursoActivo(key, activo){
+  try{
+    await db.ref(`escuela/cursos/${key}`).update({ activo:!activo });
+    showToast(activo?"Curso ocultado":"✅ Curso publicado");
+  } catch(e){ showToast("Error: "+e.message); }
+}
+
+async function eliminarCurso(key, nombre){
+  if(!confirm(`¿Eliminar el curso "${nombre}"?\nEsta acción no se puede deshacer y eliminará todas sus inscripciones.`)) return;
+  try{
+    // Eliminar inscripciones asociadas
+    const snap = await db.ref("escuela/inscripciones").orderByChild("cursoId").equalTo(key).once("value");
+    const updates = {};
+    if(snap.val()) Object.keys(snap.val()).forEach(k=>{ updates[k]=null; });
+    if(Object.keys(updates).length) await db.ref("escuela/inscripciones").update(updates);
+    await db.ref(`escuela/cursos/${key}`).remove();
+    showToast("🗑 Curso eliminado");
+  } catch(e){ showToast("Error: "+e.message); }
+}
+
+function verInscripcionesDelCurso(cursoId){
+  // Cambiar al tab de inscripciones y filtrar por este curso
+  document.querySelectorAll(".adm-tab").forEach(t=>{
+    if(t.dataset.tab==="inscripciones") t.click();
+  });
+  setTimeout(()=>{
+    const sel = document.getElementById("admFilterCursoInsc");
+    if(sel){ sel.value=cursoId; renderAdmInscripciones(); }
+  }, 100);
+}
+
+/* ══ MODAL HELPERS ═══════════════════════════════════════════════ */
+function openModal(id){
+  const m = document.getElementById(id);
+  m.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove("open");
+  document.body.style.overflow="";
+}
+// Cerrar al click fuera
+document.querySelectorAll(".modal-overlay").forEach(o=>{
+  o.addEventListener("click", e=>{ if(e.target===o) closeModal(o.id); });
+});
+// ESC
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){
+    document.querySelectorAll(".modal-overlay.open").forEach(o=>closeModal(o.id));
+  }
+});
+</script>
+</body>
+</html>
