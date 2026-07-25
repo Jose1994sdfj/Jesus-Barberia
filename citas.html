@@ -26,7 +26,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 
 <style>
 /* ══ VARIABLES ══════════════════════════════════════════════════ */
@@ -2298,7 +2297,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db   = firebase.database();
 const auth = firebase.auth();
-firebase.analytics();
 
 /* ─── CONSTANTES ─────────────────────────────────────────────── */
 const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
@@ -2448,14 +2446,12 @@ function hideSplash(){
   s.style.opacity="0";
   setTimeout(()=>s.remove(),350);
 }
-auth.onAuthStateChanged(async user=>{
+auth.onAuthStateChanged(user=>{
   currentUser=user;
   if(!user){ window.location.href="login.html?redirect=citas.html"; return; }
   hideSplash();
   updateNavUser(user);
   subscribeUserToPush(user);
-  // Cargar horarios desde Firebase antes de mostrar el calendario
-  await cargarConfigHorarios();
   if(user.email===ADMIN_EMAIL){
     showScreen("admin");
     initAdminDashboard();
@@ -2464,7 +2460,8 @@ auth.onAuthStateChanged(async user=>{
     if(!calInitialized){
       calInitialized=true;
       renderServices();
-      initCal();
+      // Cargar horarios en segundo plano y re-renderizar el calendario cuando lleguen
+      cargarConfigHorarios().then(()=>{ initCal(); }).catch(()=>{ initCal(); });
       loadUserProfile(user.uid);
       applyUrlServiceParam();
     }
