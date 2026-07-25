@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reservar Cita · JJ Barbería · Pachuca</title>
+<!-- Prefetch páginas frecuentes para navegación instantánea -->
+<link rel="prefetch" href="index.html">
+<link rel="prefetch" href="tienda.html">
+<!-- Preconnect CDNs externos -->
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://tareas-1b62c-default-rtdb.firebaseio.com">
 <meta name="description" content="Reserva tu cita en JJ Barbería Pachuca. Corte, barba, diseño y ritual VIP. Elige servicio, fecha y horario en segundos.">
 <meta name="theme-color" content="#D6FF00">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Ctext x='32' y='46' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23D6FF00'%3EJJ%3C/text%3E%3C/svg%3E">
@@ -2279,15 +2286,14 @@ function jjConfirm({ msg, icon='⚠️', okLabel='Confirmar', danger=false }){
 
 /* ─── FIREBASE CONFIG ────────────────────────────────────────── */
 const firebaseConfig = {
-  apiKey: "AIzaSyB1LozSlXJhESrDoC38ZE9ukNraulgyUkU",
-  authDomain: "bdfirebase-62a1b.firebaseapp.com",
-  databaseURL: "https://bdfirebase-62a1b-default-rtdb.firebaseio.com",
-  projectId: "bdfirebase-62a1b",
-  storageBucket: "bdfirebase-62a1b.firebasestorage.app",
-  messagingSenderId: "862846715518",
-  appId: "1:862846715518:web:39d9b85b418c9dfccc3a2f",
-  measurementId: "G-Y2Q5JPNQC8",
-  measurementId: "G-Y2Q5JPNQC8"
+  apiKey: "AIzaSyD2_QCBCD7yteJkscUG3rDg3DQIIx-qFo0",
+  authDomain: "tareas-1b62c.firebaseapp.com",
+  databaseURL: "https://tareas-1b62c-default-rtdb.firebaseio.com",
+  projectId: "tareas-1b62c",
+  storageBucket: "tareas-1b62c.firebasestorage.app",
+  messagingSenderId: "76193799127",
+  appId: "1:76193799127:web:d7b53400278c6ab62e8992",
+  measurementId: "G-06LCDRHNLS"
 };
 firebase.initializeApp(firebaseConfig);
 const db   = firebase.database();
