@@ -2098,6 +2098,10 @@ nav{
       <label class="gen-lbl">Fecha de vencimiento (opcional)</label>
       <input class="gen-inp" type="date" id="cupsVence">
     </div>
+    <div class="gen-fl">
+      <label class="gen-lbl">Condiciones y especificaciones (opcional)</label>
+      <textarea class="gen-inp" id="cupsCondiciones" rows="3" placeholder="Ej: Válido solo en corte de cabello. No aplica con otras promociones. Presentar al momento del servicio." style="resize:vertical;font-family:inherit;font-size:.82rem;line-height:1.5;"></textarea>
+    </div>
     <div class="gen-fl" style="display:flex;align-items:center;gap:.7rem;">
       <input type="checkbox" id="cupsActivo" checked style="accent-color:var(--lima);width:16px;height:16px;">
       <label for="cupsActivo" class="gen-lbl" style="margin:0;">Cupón activo</label>
@@ -3807,12 +3811,14 @@ function abrirCupsModal(key){
     document.getElementById("cupsDescuento").value=c.descuento||"";
     document.getElementById("cupsTipo").value=c.tipo||"porcentaje";
     document.getElementById("cupsVence").value=c.vence||"";
+    document.getElementById("cupsCondiciones").value=c.condiciones||"";
     document.getElementById("cupsActivo").checked=c.activo!==false;
   } else {
     document.getElementById("cupsCodigo").value="";
     document.getElementById("cupsDescuento").value="";
     document.getElementById("cupsTipo").value="porcentaje";
     document.getElementById("cupsVence").value="";
+    document.getElementById("cupsCondiciones").value="";
     document.getElementById("cupsActivo").checked=true;
   }
   document.getElementById("cupsOverlay").classList.add("open");
@@ -3831,6 +3837,7 @@ async function guardarCupon(){
     codigo,descuento,
     tipo:document.getElementById("cupsTipo").value,
     vence:document.getElementById("cupsVence").value||"",
+    condiciones:document.getElementById("cupsCondiciones").value.trim()||"",
     activo:document.getElementById("cupsActivo").checked,
     usos:cupsEditKey?(allCups[cupsEditKey].usos||0):0,
   };
