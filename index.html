@@ -1572,7 +1572,7 @@ footer{
       <h2 class="sec-tit">Servicios</h2>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-      <span class="sec-note">07 opciones</span>
+      <span class="sec-note" id="svcsCount">07 opciones</span>
       <div class="carrusel-arrows" style="margin-top:0;">
         <button class="carrusel-arrow" id="prevServicio" aria-label="Anterior">‹</button>
         <button class="carrusel-arrow" id="nextServicio" aria-label="Siguiente">›</button>
@@ -1581,48 +1581,7 @@ footer{
   </div>
   <div class="servicios-carrusel-container" id="serviciosContainer">
     <div class="servicios-track" id="serviciosTrack">
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">✂️</span><span class="card-num">01</span></div>
-        <h3 class="card-title">Corte Normal</h3>
-        <p class="card-desc">Máquina o tijera · lavado incluido · acabado preciso con texturizado</p>
-        <div class="card-footer"><span class="card-price">$130</span></div>
-      </div>
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">🪒</span><span class="card-num">02</span></div>
-        <h3 class="card-title">Corte + Barba</h3>
-        <p class="card-desc">Combo completo · perfilado con navaja · toalla caliente</p>
-        <div class="card-footer"><span class="card-price">$200</span></div>
-      </div>
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">✨</span><span class="card-num">03</span></div>
-        <h3 class="card-title">Ceja</h3>
-        <p class="card-desc">Diseño y depilación con pinza y navaja · simetría perfecta</p>
-        <div class="card-footer"><span class="card-price">$50</span></div>
-      </div>
-      <div class="servicio-card vip">
-        <div class="card-header"><span class="card-icon">👑</span><span class="card-num">04</span></div>
-        <h3 class="card-title">Experiencia VIP</h3>
-        <p class="card-desc">Corte + barba + ceja + tratamiento premium + bebida</p>
-        <div class="card-footer"><span class="card-price">$300</span><span class="card-badge">TOP</span></div>
-      </div>
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">🧼</span><span class="card-num">05</span></div>
-        <h3 class="card-title">Afeitado Clásico</h3>
-        <p class="card-desc">Navaja de acero · toalla caliente · aceites esenciales</p>
-        <div class="card-footer"><span class="card-price">$150</span></div>
-      </div>
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">🧒</span><span class="card-num">06</span></div>
-        <h3 class="card-title">Corte Infantil</h3>
-        <p class="card-desc">Paciencia y estilo para pequeños (hasta 12 años)</p>
-        <div class="card-footer"><span class="card-price">$110</span></div>
-      </div>
-      <div class="servicio-card">
-        <div class="card-header"><span class="card-icon">🎨</span><span class="card-num">07</span></div>
-        <h3 class="card-title">Greca y Diseño</h3>
-        <p class="card-desc">Arte a máquina · líneas y patrones personalizados</p>
-        <div class="card-footer"><span class="card-price">$250</span></div>
-      </div>
+      <div class="svc-loading" style="color:var(--humo);padding:2rem;font-size:.9rem;">Cargando servicios…</div>
     </div>
   </div>
   <div class="carrusel-nav" id="serviciosNav"></div>
@@ -1636,40 +1595,10 @@ footer{
   </div>
   <div class="carrusel-container" id="carruselContainer">
     <div class="carrusel-track" id="carruselTrack">
-      <!-- Cupón 1 -->
-      <div class="cupon-card" data-cupon="1">
-        <span class="cupon-tag">🔥 MÁS VENDIDO</span>
-        <h3 class="cupon-titulo" aria-label="Combo Clásico">Combo<br>Clásico</h3>
-        <p class="cupon-desc">Corte + Barba completo con toalla caliente</p>
-        <div class="cupon-precio">$170<span class="cupon-antes">$200</span></div>
-        <p class="cupon-validez">Válido Lunes a Miércoles · 2026</p>
-        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="1">📥 DESCARGAR PDF</button></div>
-      </div>
-      <!-- Cupón 2 -->
-      <div class="cupon-card" data-cupon="2">
-        <span class="cupon-tag">👑 PREMIUM</span>
-        <h3 class="cupon-titulo" aria-label="Experiencia VIP">Experiencia<br>VIP</h3>
-        <p class="cupon-desc">Corte + Barba + Ceja + Tratamiento + Bebida</p>
-        <div class="cupon-precio">$260<span class="cupon-antes">$300</span></div>
-        <p class="cupon-validez">Válido todo el mes · 2026</p>
-        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="2">📥 DESCARGAR PDF</button></div>
-      </div>
-      <!-- Cupón 3 -->
-      <div class="cupon-card" data-cupon="3">
-        <span class="cupon-tag">🧒 FAMILIAR</span>
-        <h3 class="cupon-titulo" aria-label="2x1 Infantil">2x1<br>Infantil</h3>
-        <p class="cupon-desc">Dos cortes infantiles por el precio de uno</p>
-        <div class="cupon-precio">$110<span class="cupon-antes">$220</span></div>
-        <p class="cupon-validez">Válido Sábados · 2026</p>
-        <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="3">📥 DESCARGAR PDF</button></div>
-      </div>
+      <div style="color:var(--humo);padding:2rem;font-size:.9rem;">Cargando cupones…</div>
     </div>
   </div>
-  <div class="carrusel-nav" id="carruselDots">
-    <button class="carrusel-dot active" data-index="0"></button>
-    <button class="carrusel-dot" data-index="1"></button>
-    <button class="carrusel-dot" data-index="2"></button>
-  </div>
+  <div class="carrusel-nav" id="carruselDots"></div>
   <div class="carrusel-arrows">
     <button class="carrusel-arrow" id="prevCupon">←</button>
     <button class="carrusel-arrow" id="nextCupon">→</button>
@@ -2074,76 +2003,68 @@ const esMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/
 
 // ========== CARRUSEL DE CUPONES ==========
 const track = document.getElementById('carruselTrack');
-const dots = document.querySelectorAll('.carrusel-dot');
 const prevBtn = document.getElementById('prevCupon');
 const nextBtn = document.getElementById('nextCupon');
-const cards = document.querySelectorAll('.cupon-card');
+const carruselDotsContainer = document.getElementById('carruselDots');
 let currentIndex = 0;
-let startX = 0;
-let isDragging = false;
-let startScroll = 0;
+let startX = 0, isDragging = false, startScroll = 0;
+
+function getCuponCards() { return track.querySelectorAll('.cupon-card'); }
 
 function updateCarousel(index) {
+  const cards = getCuponCards();
+  if (!cards.length) return;
   if (index < 0) index = 0;
   if (index >= cards.length) index = cards.length - 1;
   currentIndex = index;
-  
   const cardWidth = cards[0].offsetWidth + 28;
   track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-  
-  dots.forEach((dot, i) => {
+  carruselDotsContainer.querySelectorAll('.carrusel-dot').forEach((dot, i) => {
     dot.classList.toggle('active', i === currentIndex);
+  });
+}
+
+function initCuponesCarousel() {
+  currentIndex = 0;
+  track.style.transform = 'translateX(0)';
+  carruselDotsContainer.innerHTML = '';
+  const cards = getCuponCards();
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carrusel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => updateCarousel(i));
+    carruselDotsContainer.appendChild(dot);
   });
 }
 
 prevBtn.addEventListener('click', () => updateCarousel(currentIndex - 1));
 nextBtn.addEventListener('click', () => updateCarousel(currentIndex + 1));
 
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => updateCarousel(i));
-});
-
 track.addEventListener('mousedown', (e) => {
   isDragging = true;
   startX = e.pageX;
-  startScroll = track.style.transform ? parseFloat(track.style.transform.replace('translateX(', '')) || 0 : 0;
+  startScroll = parseFloat(track.style.transform?.replace('translateX(', '')) || 0;
   track.style.cursor = 'grabbing';
 });
-
 track.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   e.preventDefault();
-  const diff = e.pageX - startX;
-  track.style.transform = `translateX(${startScroll + diff}px)`;
+  track.style.transform = `translateX(${startScroll + (e.pageX - startX)}px)`;
 });
-
 track.addEventListener('mouseup', () => {
   if (!isDragging) return;
   isDragging = false;
   track.style.cursor = 'grab';
-  
+  const cards = getCuponCards();
+  if (!cards.length) return;
   const cardWidth = cards[0].offsetWidth + 28;
-  const currentTranslate = parseFloat(track.style.transform.replace('translateX(', '')) || 0;
-  const newIndex = Math.round(-currentTranslate / cardWidth);
-  updateCarousel(newIndex);
+  updateCarousel(Math.round(-(parseFloat(track.style.transform.replace('translateX(', '')) || 0) / cardWidth));
 });
-
-track.addEventListener('mouseleave', () => {
-  if (isDragging) {
-    isDragging = false;
-    track.style.cursor = 'grab';
-  }
-});
+track.addEventListener('mouseleave', () => { if (isDragging) { isDragging = false; track.style.cursor = 'grab'; } });
 
 // Touch móvil — sensibilidad mejorada (sin afectar botón de descarga)
-let cTouchStartX = 0;
-let cTouchLastX = 0;
-let cTouchVelocity = 0;
-let cTouchStartScroll = 0;
-let cTouchDragging = false;
-
-let cTouchIsHorizontal = null;
-let cTouchStartY = 0;
+let cTouchStartX = 0, cTouchLastX = 0, cTouchVelocity = 0, cTouchStartScroll = 0, cTouchDragging = false;
+let cTouchIsHorizontal = null, cTouchStartY = 0;
 
 track.addEventListener('touchstart', (e) => {
   cTouchDragging = true;
@@ -2152,10 +2073,10 @@ track.addEventListener('touchstart', (e) => {
   cTouchStartY = e.touches[0].pageY;
   cTouchLastX = cTouchStartX;
   cTouchVelocity = 0;
-  cTouchStartScroll = -(currentIndex * (cards[0].offsetWidth + 28));
+  const cards = getCuponCards();
+  cTouchStartScroll = cards.length ? -(currentIndex * (cards[0].offsetWidth + 28)) : 0;
   track.style.transition = 'none';
 }, {passive:true});
-
 track.addEventListener('touchmove', (e) => {
   if (!cTouchDragging) return;
   const dx = e.touches[0].pageX - cTouchStartX;
@@ -2170,11 +2091,12 @@ track.addEventListener('touchmove', (e) => {
   cTouchLastX = e.touches[0].pageX;
   track.style.transform = `translateX(${cTouchStartScroll + dx}px)`;
 }, {passive:false});
-
 track.addEventListener('touchend', () => {
   if (!cTouchDragging || !cTouchIsHorizontal) { cTouchDragging = false; return; }
   cTouchDragging = false;
   track.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
+  const cards = getCuponCards();
+  if (!cards.length) return;
   const cardWidth = cards[0].offsetWidth + 28;
   const cur = parseFloat(track.style.transform?.replace('translateX(','')) || 0;
   const drag = cTouchStartScroll - cur;
@@ -2222,31 +2144,37 @@ function generarCuponPDF(cuponData) {
   doc.save(`cupon-jj-barberia-${cuponData.id}.pdf`);
 }
 
-const cuponesData = {
-  1: { id: 'combo-clasico', titulo: 'COMBO CLÁSICO', desc: 'Corte + Barba completo con toalla caliente', precio: '$170', antes: '$200', validez: 'Válido Lunes a Miércoles · 2026' },
-  2: { id: 'experiencia-vip', titulo: 'EXPERIENCIA VIP', desc: 'Corte + Barba + Ceja + Tratamiento + Bebida', precio: '$260', antes: '$300', validez: 'Válido todo el mes · 2026' },
-  3: { id: '2x1-infantil', titulo: '2x1 INFANTIL', desc: 'Dos cortes infantiles por el precio de uno', precio: '$110', antes: '$220', validez: 'Válido Sábados · 2026' }
-};
+// Mapa dinámico de cupones (poblado desde Firebase)
+let allCuponesFirebase = {};
 
-document.querySelectorAll('.descargar-cupon').forEach(btn => {
-  btn.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const cuponId = btn.dataset.cupon;
-    const cuponData = cuponesData[cuponId];
-    if (!cuponData) return;
-    const textoOriginal = btn.textContent;
-    btn.textContent = 'Cargando...';
-    btn.disabled = true;
-    try {
-      await cargarJsPDF();
-      generarCuponPDF(cuponData);
-    } catch {
-      alert('Error al generar el PDF. Intenta de nuevo.');
-    } finally {
-      btn.textContent = textoOriginal;
-      btn.disabled = false;
-    }
-  });
+// Descarga de cupón — delegada al track para funcionar con cards dinámicas
+document.getElementById('carruselTrack').addEventListener('click', async (e) => {
+  const btn = e.target.closest('.descargar-cupon');
+  if (!btn) return;
+  e.preventDefault();
+  const fbKey = btn.dataset.cupon;
+  const c = allCuponesFirebase[fbKey];
+  if (!c) return;
+  const descLabel = c.tipo === 'porcentaje' ? `${c.descuento}% DE DESCUENTO` : `$${c.descuento} DE DESCUENTO`;
+  const cuponData = {
+    id: c.codigo || fbKey,
+    titulo: c.codigo || 'CUPÓN',
+    desc: descLabel,
+    precio: descLabel,
+    validez: c.vence ? `Válido hasta: ${c.vence}` : 'Sin fecha límite',
+  };
+  const textoOriginal = btn.textContent;
+  btn.textContent = 'Cargando...';
+  btn.disabled = true;
+  try {
+    await cargarJsPDF();
+    generarCuponPDF(cuponData);
+  } catch {
+    alert('Error al generar el PDF. Intenta de nuevo.');
+  } finally {
+    btn.textContent = textoOriginal;
+    btn.disabled = false;
+  }
 });
 
 // ========== FORMULARIO PROMOS ==========
@@ -2347,28 +2275,33 @@ const serviciosTrack = document.getElementById('serviciosTrack');
 const serviciosNav = document.getElementById('serviciosNav');
 const prevServicio = document.getElementById('prevServicio');
 const nextServicio = document.getElementById('nextServicio');
-const servicioCards = document.querySelectorAll('.servicio-card');
 let servicioIndex = 0;
-let sStartX = 0;
-let sIsDragging = false;
-let sStartScroll = 0;
+let sStartX = 0, sIsDragging = false, sStartScroll = 0;
 
-// Crear dots dinámicamente
-servicioCards.forEach((_, i) => {
-  const dot = document.createElement('button');
-  dot.className = 'carrusel-dot' + (i === 0 ? ' active' : '');
-  dot.addEventListener('click', () => updateServiciosCarousel(i));
-  serviciosNav.appendChild(dot);
-});
-const serviciosDots = document.querySelectorAll('#serviciosNav .carrusel-dot');
+function getServicioCards() { return serviciosTrack.querySelectorAll('.servicio-card'); }
 
 function updateServiciosCarousel(index) {
+  const cards = getServicioCards();
+  if (!cards.length) return;
   if (index < 0) index = 0;
-  if (index >= servicioCards.length) index = servicioCards.length - 1;
+  if (index >= cards.length) index = cards.length - 1;
   servicioIndex = index;
-  const cardWidth = servicioCards[0].offsetWidth + 24;
+  const cardWidth = cards[0].offsetWidth + 24;
   serviciosTrack.style.transform = `translateX(-${servicioIndex * cardWidth}px)`;
-  serviciosDots.forEach((dot, i) => dot.classList.toggle('active', i === servicioIndex));
+  serviciosNav.querySelectorAll('.carrusel-dot').forEach((dot, i) => dot.classList.toggle('active', i === servicioIndex));
+}
+
+function initServiciosCarousel() {
+  servicioIndex = 0;
+  serviciosTrack.style.transform = 'translateX(0)';
+  serviciosNav.innerHTML = '';
+  const cards = getServicioCards();
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carrusel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => updateServiciosCarousel(i));
+    serviciosNav.appendChild(dot);
+  });
 }
 
 prevServicio.addEventListener('click', () => updateServiciosCarousel(servicioIndex - 1));
@@ -2377,7 +2310,7 @@ nextServicio.addEventListener('click', () => updateServiciosCarousel(servicioInd
 serviciosTrack.addEventListener('mousedown', (e) => {
   sIsDragging = true;
   sStartX = e.pageX;
-  sStartScroll = serviciosTrack.style.transform ? parseFloat(serviciosTrack.style.transform.replace('translateX(', '')) || 0 : 0;
+  sStartScroll = parseFloat(serviciosTrack.style.transform?.replace('translateX(', '')) || 0;
   serviciosTrack.style.cursor = 'grabbing';
 });
 serviciosTrack.addEventListener('mousemove', (e) => {
@@ -2389,15 +2322,15 @@ serviciosTrack.addEventListener('mouseup', () => {
   if (!sIsDragging) return;
   sIsDragging = false;
   serviciosTrack.style.cursor = 'grab';
-  const cardWidth = servicioCards[0].offsetWidth + 24;
-  const current = parseFloat(serviciosTrack.style.transform.replace('translateX(', '')) || 0;
-  updateServiciosCarousel(Math.round(-current / cardWidth));
+  const cards = getServicioCards();
+  if (!cards.length) return;
+  const cardWidth = cards[0].offsetWidth + 24;
+  updateServiciosCarousel(Math.round(-(parseFloat(serviciosTrack.style.transform.replace('translateX(', '')) || 0) / cardWidth));
 });
 serviciosTrack.addEventListener('mouseleave', () => { if (sIsDragging) { sIsDragging = false; serviciosTrack.style.cursor = 'grab'; } });
 
 // Touch para móvil — sensibilidad mejorada
-let sTouchLastX = 0;
-let sTouchVelocity = 0;
+let sTouchLastX = 0, sTouchVelocity = 0;
 serviciosTrack.addEventListener('touchstart', (e) => {
   sIsDragging = true;
   sStartX = e.touches[0].pageX;
@@ -2414,7 +2347,9 @@ serviciosTrack.addEventListener('touchmove', (e) => {
 serviciosTrack.addEventListener('touchend', () => {
   if (!sIsDragging) return;
   sIsDragging = false;
-  const cardWidth = servicioCards[0].offsetWidth + 24;
+  const cards = getServicioCards();
+  if (!cards.length) return;
+  const cardWidth = cards[0].offsetWidth + 24;
   const current = parseFloat(serviciosTrack.style.transform?.replace('translateX(','')) || 0;
   const drag = sStartScroll - current;
   const threshold = cardWidth * 0.28;
@@ -2424,8 +2359,6 @@ serviciosTrack.addEventListener('touchend', () => {
     updateServiciosCarousel(servicioIndex);
   }
 });
-
-updateServiciosCarousel(0);
 
 // ========== CARRUSEL DE PRODUCTOS REUZEL ==========
 (function () {
@@ -2590,13 +2523,97 @@ updateCarousel(0);
   if(!firebase.apps.length) firebase.initializeApp(FB);
   const auth=firebase.auth();
   const dbIdx=firebase.database();
-  // Cargar galería desde Firebase; si no hay datos usar imágenes por defecto
-  dbIdx.ref("destacados").orderByChild("orden").once("value",snap=>{
-    const data=snap.val();
-    if(data){
-      const imgs=Object.values(data).sort((a,b)=>(a.orden||0)-(b.orden||0));
-      if(imgs.length) buildGaleria(imgs);
+  // Destacados — listener en tiempo real
+  dbIdx.ref("destacados").orderByChild("orden").on("value", snap => {
+    const data = snap.val();
+    if (data) {
+      const imgs = Object.values(data).sort((a, b) => (a.orden || 0) - (b.orden || 0));
+      if (imgs.length) buildGaleria(imgs);
     }
+  });
+
+  // ── Servicios dinámicos desde Firebase ──
+  function svcsIcon(nombre) {
+    const n = (nombre || '').toLowerCase();
+    if (n.includes('vip') || n.includes('premium')) return '👑';
+    if (n.includes('barba')) return '🪒';
+    if (n.includes('ceja')) return '✨';
+    if (n.includes('afeit')) return '🧼';
+    if (n.includes('infant') || n.includes('niño')) return '🧒';
+    if (n.includes('greca') || n.includes('diseño') || n.includes('patron')) return '🎨';
+    return '✂️';
+  }
+
+  dbIdx.ref("servicios").orderByChild("orden").on("value", snap => {
+    const data = snap.val();
+    const sTrack = document.getElementById('serviciosTrack');
+    const countEl = document.getElementById('svcsCount');
+    if (!data) {
+      sTrack.innerHTML = '<div style="color:var(--humo);padding:2rem;font-size:.9rem;">Sin servicios disponibles.</div>';
+      if (countEl) countEl.textContent = '0 opciones';
+      return;
+    }
+    const activos = Object.values(data)
+      .filter(s => s.activo !== false)
+      .sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    if (!activos.length) {
+      sTrack.innerHTML = '<div style="color:var(--humo);padding:2rem;font-size:.9rem;">Sin servicios disponibles.</div>';
+      if (countEl) countEl.textContent = '0 opciones';
+      return;
+    }
+    const esVip = n => (n || '').toLowerCase().includes('vip');
+    sTrack.innerHTML = activos.map((s, i) => `
+      <div class="servicio-card${esVip(s.nombre) ? ' vip' : ''}">
+        <div class="card-header">
+          <span class="card-icon">${svcsIcon(s.nombre)}</span>
+          <span class="card-num">${String(i + 1).padStart(2, '0')}</span>
+        </div>
+        <h3 class="card-title">${s.nombre || ''}</h3>
+        <p class="card-desc">${s.nota || (s.duracion ? s.duracion + ' min' : '')}</p>
+        <div class="card-footer">
+          <span class="card-price">$${s.precio || 0}</span>
+          ${esVip(s.nombre) ? '<span class="card-badge">TOP</span>' : ''}
+        </div>
+      </div>`).join('');
+    if (countEl) countEl.textContent = String(activos.length).padStart(2, '0') + ' opciones';
+    initServiciosCarousel();
+    updateServiciosCarousel(0);
+  });
+
+  // ── Cupones dinámicos desde Firebase ──
+  dbIdx.ref("cupones").on("value", snap => {
+    const data = snap.val();
+    allCuponesFirebase = data || {};
+    const cTrack = document.getElementById('carruselTrack');
+    if (!data) {
+      cTrack.innerHTML = '<div style="color:var(--humo);padding:2rem;font-size:.9rem;">Sin cupones disponibles.</div>';
+      initCuponesCarousel();
+      return;
+    }
+    const activos = Object.entries(data)
+      .filter(([, c]) => c.activo !== false)
+      .sort((a, b) => (a[1].codigo || '').localeCompare(b[1].codigo || ''));
+    if (!activos.length) {
+      cTrack.innerHTML = '<div style="color:var(--humo);padding:2rem;font-size:.9rem;">Sin cupones disponibles.</div>';
+      initCuponesCarousel();
+      return;
+    }
+    cTrack.innerHTML = activos.map(([key, c]) => {
+      const descLabel = c.tipo === 'porcentaje' ? `${c.descuento}% de descuento` : `$${c.descuento} de descuento`;
+      const validez = c.vence ? `Válido hasta: ${c.vence}` : 'Sin fecha límite';
+      const valor = c.tipo === 'porcentaje' ? `${c.descuento}%` : `$${c.descuento}`;
+      return `
+        <div class="cupon-card" data-cupon="${key}">
+          <span class="cupon-tag">🏷️ CUPÓN ACTIVO</span>
+          <h3 class="cupon-titulo" aria-label="${c.codigo || ''}">${c.codigo || 'CUPÓN'}</h3>
+          <p class="cupon-desc">${descLabel}</p>
+          <div class="cupon-precio">${valor}</div>
+          <p class="cupon-validez">${validez}</p>
+          <div class="cupon-actions"><button class="btn-cupon descargar-cupon" data-cupon="${key}">📥 DESCARGAR PDF</button></div>
+        </div>`;
+    }).join('');
+    initCuponesCarousel();
+    updateCarousel(0);
   });
   function hideSplash(){
     const s=document.getElementById("jjSplash");
