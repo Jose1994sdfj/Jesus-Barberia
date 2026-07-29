@@ -2706,6 +2706,7 @@ function goStep(n){
 ──────────────────────────────────────────────── */
 function renderServices(){
   const g = document.getElementById("serviceGrid");
+  g.innerHTML = "";
   SERVICIOS.forEach(s=>{
     const c = document.createElement("button");
     c.className = "service-card";
@@ -3491,7 +3492,7 @@ function applyUrlServiceParam(){
 
 /* ─── Cargar servicios desde Firebase (para usuarios normales) ── */
 (function cargarServiciosFirebase(){
-  db.ref("servicios").orderByChild("orden").once("value", snap=>{
+  db.ref("servicios").orderByChild("orden").on("value", snap=>{
     const data = snap.val();
     if(!data) return;
     const activos = Object.values(data)
@@ -3499,6 +3500,7 @@ function applyUrlServiceParam(){
       .sort((a,b)=>(a.orden||0)-(b.orden||0));
     if(activos.length){
       SERVICIOS = activos;
+      renderServices();
     }
   });
 })();
