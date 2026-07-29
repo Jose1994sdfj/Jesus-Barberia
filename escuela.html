@@ -80,6 +80,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
 .drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:840;display:none}
 .drawer-overlay.show{display:block}
 
+/* Botón Contacto en nav */
+.nav-contacto-btn{background:none;border:none;color:var(--humo);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;font-family:'Montserrat',sans-serif;cursor:pointer;transition:color .2s;padding:0}
+.nav-contacto-btn:hover{color:var(--lima)}
+/* Dropdown de contacto */
+.nav-contacto-card{position:fixed;top:4rem;right:1.5rem;z-index:300;background:#111;border:1px solid rgba(214,255,0,.18);border-radius:20px;padding:1.4rem 1.2rem 1rem;width:min(340px,calc(100vw - 2rem));box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(214,255,0,.06);animation:dropIn .25s cubic-bezier(.16,1,.3,1) both}
+.nav-contacto-card[hidden]{display:none}
+@keyframes dropIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ncc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem}
+.ncc-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.04em;color:var(--blanco)}
+.ncc-close{background:none;border:none;color:var(--humo);font-size:1rem;cursor:pointer;transition:color .2s;line-height:1;padding:.2rem}
+.ncc-close:hover{color:var(--blanco)}
+.ncc-sub{font-size:.7rem;color:var(--humo);line-height:1.5;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.ncc-list{display:flex;flex-direction:column;gap:.5rem}
+.ncc-item{display:flex;align-items:center;gap:.9rem;padding:.65rem .8rem;border-radius:12px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.03);text-decoration:none;transition:all .18s}
+.ncc-item:hover{background:rgba(214,255,0,.06);border-color:rgba(214,255,0,.2)}
+.ncc-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.ncc-ico svg{width:20px;height:20px;display:block}
+.ncc-ico-mail{background:#fff1f0}
+.ncc-ico-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+.ncc-txt{display:flex;flex-direction:column;gap:.08rem;min-width:0}
+.ncc-txt strong{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--blanco);line-height:1.2}
+.ncc-txt small{font-size:.65rem;color:var(--humo);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Drawer protos */
+.drawer-protos{display:none;flex-direction:column;gap:.5rem;padding:.5rem 0}
+.drawer-protos.open{display:flex}
+.drawer-proto{display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--humo);font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;text-decoration:none;transition:all .18s}
+.drawer-proto:hover{background:rgba(214,255,0,.07);color:var(--blanco)}
+
 /* ══ MAIN LAYOUT ════════════════════════════════════════════════ */
 .page-wrap{padding-top:64px;min-height:100vh}
 
@@ -343,6 +371,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html" class="active">Academia</a></li>
+    <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
     <div class="nav-user-area" id="navUserArea">
@@ -357,6 +386,29 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
   </div>
 </nav>
 
+<!-- Dropdown de contacto -->
+<div class="nav-contacto-card" id="navContactoCard" role="dialog" aria-label="Contacto" hidden>
+  <div class="ncc-header">
+    <span class="ncc-title">Contacto directo</span>
+    <button class="ncc-close" id="navContactoClose" aria-label="Cerrar">✕</button>
+  </div>
+  <p class="ncc-sub">Cada opción abre con un mensaje listo. Tú solo confirmas.</p>
+  <div class="ncc-list">
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20%C2%B7%20JJ%20Academia&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20cursos." class="ncc-item">
+      <span class="ncc-ico ncc-ico-mail">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+      </span>
+      <div class="ncc-txt"><strong>Correo Gmail</strong><small>jesusjuarezperezel10@gmail.com</small></div>
+    </a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="ncc-item">
+      <span class="ncc-ico ncc-ico-ig">
+        <svg viewBox="0 0 24 24"><defs><linearGradient id="ncc-ig-e" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ncc-ig-e)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="ncc-txt"><strong>Instagram</strong><small>@jesus_juarez_perez_01 · Ver trabajos</small></div>
+    </a>
+  </div>
+</div>
+
 <!-- Nav drawer -->
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="nav-drawer" id="navDrawer">
@@ -365,7 +417,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html" class="active">Academia</a></li>
+    <li><a href="#" id="drawerContactoLink">Contacto</a></li>
   </ul>
+  <div class="drawer-protos" id="drawerProtos">
+    <a href="mailto:jesusjuarezperezel10@gmail.com?subject=Consulta%20%C2%B7%20JJ%20Academia&body=Hola%20Jes%C3%BAs%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20cursos." class="drawer-proto">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.382l-10 7.5L2 6.382V6z" fill="#EA4335"/><path d="M2 8.618V18a2 2 0 002 2h3V11.5L2 8.618z" fill="#4285F4"/><path d="M17 11.5V20h3a2 2 0 002-2V8.618L17 11.5z" fill="#34A853"/><path d="M7 11.5V20h10V11.5L12 15.618 7 11.5z" fill="#FBBC05"/></svg>
+      Gmail
+    </a>
+    <a href="https://www.instagram.com/jesus_juarez_perez_01" target="_blank" rel="noopener noreferrer" class="drawer-proto">
+      <svg width="18" height="18" viewBox="0 0 24 24"><defs><linearGradient id="ig-de" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FD5949"/><stop offset="50%" stop-color="#D6249F"/><stop offset="100%" stop-color="#285AEB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-de)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="white"/></svg>
+      Instagram
+    </a>
+  </div>
   <div class="drawer-actions">
     <a href="citas.html" class="nav-drawer-cta">✂ Agendar Cita</a>
   </div>
@@ -797,6 +860,30 @@ overlay.addEventListener("click", ()=>{
   overlay.classList.remove("show");
   hamburger.classList.remove("open");
 });
+drawer.querySelectorAll("a").forEach(l => l.addEventListener("click", e => {
+  if(e.target.id === "drawerContactoLink"){
+    e.preventDefault();
+    document.getElementById("drawerProtos").classList.toggle("open");
+  } else {
+    drawer.classList.remove("open");
+    overlay.classList.remove("show");
+    hamburger.classList.remove("open");
+  }
+}));
+
+// Contacto dropdown
+(function(){
+  const btn   = document.getElementById("navContactoBtn");
+  const card  = document.getElementById("navContactoCard");
+  const close = document.getElementById("navContactoClose");
+  if(!btn || !card) return;
+  function toggle(){ card.hidden = !card.hidden; btn.setAttribute("aria-expanded", !card.hidden); }
+  function hide(){ card.hidden = true; btn.setAttribute("aria-expanded","false"); }
+  btn.addEventListener("click", e => { e.stopPropagation(); toggle(); });
+  close.addEventListener("click", hide);
+  document.addEventListener("click", e => { if(!card.contains(e.target) && e.target !== btn) hide(); });
+  document.addEventListener("keydown", e => { if(e.key==="Escape") hide(); });
+})();
 
 /* ══ SCREEN MANAGEMENT ═══════════════════════════════════════════ */
 function showScreen(name){
