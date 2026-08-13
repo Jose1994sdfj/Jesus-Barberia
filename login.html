@@ -168,6 +168,17 @@ body{
 }
 .btn-primary:hover{ opacity:.88; transform:translateY(-1px); }
 .btn-primary:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+.btn-google{
+  display:flex; align-items:center; justify-content:center; gap:.65rem;
+  width:100%; padding:.78rem 1.5rem; margin-top:1rem;
+  background:#fff; color:#202124; border:1px solid #dadce0;
+  border-radius:30px; font-family:'Montserrat',sans-serif;
+  font-weight:700; font-size:.8rem; letter-spacing:.02em;
+  cursor:pointer; transition:box-shadow .2s, transform .15s;
+}
+.btn-google:hover{ box-shadow:0 3px 10px rgba(0,0,0,.25); transform:translateY(-1px); }
+.btn-google:disabled{ opacity:.55; cursor:wait; transform:none; }
+.google-icon{ width:18px; height:18px; flex-shrink:0; }
 .spinner{
   width:14px; height:14px; border:2px solid rgba(8,8,8,.3);
   border-top-color:var(--negro); border-radius:50%;
@@ -298,6 +309,16 @@ body{
     <button class="btn-primary" id="submitBtn" type="submit">Entrar</button>
     </form>
 
+    <button class="btn-google" id="googleBtn" type="button">
+      <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#4285F4" d="M21.35 12.23c0-.79-.07-1.55-.22-2.27H12v4.3h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.42z"/>
+        <path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.35l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.74 9.74 0 0 0 12 21.5z"/>
+        <path fill="#FBBC05" d="M6.54 13.59A5.86 5.86 0 0 1 6.23 12c0-.55.1-1.09.31-1.59V7.88H3.3A9.74 9.74 0 0 0 2.25 12c0 1.57.38 3.05 1.05 4.12l3.24-2.53z"/>
+        <path fill="#EA4335" d="M12 6.38c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.47 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.7 5.38l3.24 2.53C7.31 8.1 9.46 6.38 12 6.38z"/>
+      </svg>
+      Continuar con Google
+    </button>
+
     <div class="auth-divider">o</div>
 
     <p class="panel-note" id="panelNote">
@@ -322,8 +343,11 @@ const FB_CFG = {
 if(!firebase.apps.length) firebase.initializeApp(FB_CFG);
 const auth = firebase.auth();
 const db   = firebase.database();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+auth.languageCode = "es";
 
 const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+let authActionInProgress = false;
 
 /* Destino después del login */
 function getRedirect(){
@@ -337,10 +361,35 @@ function doRedirect(user){
   window.location.href = dest;
 }
 
+/* Guarda el perfil de cualquier proveedor en el mismo nodo que usa
+   Contactos del panel admin. update conserva whatsapp y preferencias. */
+async function ensureUserProfile(user, extra={}){
+  const ref = db.ref(`usuarios/${user.uid}`);
+  const snap = await ref.once("value");
+  const current = snap.val() || {};
+  const provider = (user.providerData && user.providerData[0] && user.providerData[0].providerId) || "password";
+  const email = user.email || current.email || "";
+  const nombre = extra.nombre || user.displayName || current.nombre || (email ? email.split("@")[0] : "Cliente");
+  const profile = {
+    nombre,
+    email,
+    provider,
+    photoURL: user.photoURL || current.photoURL || "",
+    emailVerified: !!user.emailVerified,
+    whatsapp: current.whatsapp || "",
+    lastLoginAt: firebase.database.ServerValue.TIMESTAMP
+  };
+  if(!current.createdAt) profile.createdAt = firebase.database.ServerValue.TIMESTAMP;
+  await ref.update(profile);
+}
+
 /* Comprobar si ya hay sesión */
-auth.onAuthStateChanged(user=>{
+auth.onAuthStateChanged(async user=>{
   document.getElementById("loadingScreen").style.display="none";
   if(user){
+    if(authActionInProgress) return;
+    try { await ensureUserProfile(user); }
+    catch(e) { console.warn("No se pudo sincronizar el contacto:", e); }
     doRedirect(user);
   } else {
     document.getElementById("loginWrap").style.display="flex";
@@ -375,6 +424,7 @@ function bindSwitch(){
 bindSwitch();
 document.getElementById("tabLogin").addEventListener("click",()=>setMode("login"));
 document.getElementById("tabReg").addEventListener("click",  ()=>setMode("reg"));
+document.getElementById("googleBtn").addEventListener("click", handleGoogleSignIn);
 
 /* ── SUBMIT ── */
 document.getElementById("submitBtn").addEventListener("click", handleSubmit);
@@ -391,32 +441,19 @@ async function handleSubmit(){
 
   btn.innerHTML=`<span class="spinner"></span> ${mode==="login"?"Entrando…":"Creando cuenta…"}`;
   btn.disabled=true;
+  authActionInProgress = true;
 
   try{
     let cred;
     if(mode==="login"){
       cred = await auth.signInWithEmailAndPassword(email, pass);
-      // Asegurar que el perfil exista en la base de datos (upsert sin sobreescribir datos)
-      const uid  = cred.user.uid;
-      const snap = await db.ref(`usuarios/${uid}`).once("value");
-      if(!snap.exists()){
-        // Primera vez que entra: crear registro con los datos disponibles
-        const nombre = cred.user.displayName || email.split("@")[0];
-        await db.ref(`usuarios/${uid}`).set({
-          nombre, email, whatsapp:"", createdAt: Date.now()
-        });
-      } else {
-        // Ya existe: actualizar solo email por si acaso
-        await db.ref(`usuarios/${uid}`).update({ email });
-      }
+      await ensureUserProfile(cred.user);
     } else {
       const nombre = document.getElementById("fNombre").value.trim();
       if(!nombre){ errEl.textContent="El nombre es obligatorio."; resetBtn(); return; }
       cred = await auth.createUserWithEmailAndPassword(email, pass);
       await cred.user.updateProfile({displayName: nombre});
-      await db.ref(`usuarios/${cred.user.uid}`).set({
-        nombre, whatsapp: "", email, createdAt: Date.now()
-      });
+      await ensureUserProfile(cred.user, { nombre });
     }
     doRedirect(cred.user);
   } catch(e){
@@ -428,9 +465,55 @@ async function handleSubmit(){
       "auth/weak-password":        "La contraseña debe tener al menos 6 caracteres",
       "auth/invalid-email":        "Formato de correo inválido",
       "auth/too-many-requests":    "Demasiados intentos. Espera unos minutos",
+      "auth/popup-closed-by-user": "Se cerró la ventana de Google antes de terminar",
+      "auth/popup-blocked":         "El navegador bloqueó la ventana. Permite ventanas emergentes para continuar",
+      "auth/operation-not-allowed": "Activa Google como proveedor en Firebase Console → Authentication → Sign-in method",
     };
-    errEl.textContent = msgs[e.code] || e.message;
+    errEl.textContent = e.code === "PERMISSION_DENIED"
+      ? "La cuenta se creó, pero Firebase bloqueó guardar el contacto. Revisa las reglas de Realtime Database."
+      : (msgs[e.code] || e.message);
+    authActionInProgress = false;
     resetBtn();
+  }
+}
+
+async function handleGoogleSignIn(){
+  const errEl = document.getElementById("authError");
+  const btn = document.getElementById("googleBtn");
+  errEl.textContent = "";
+  btn.disabled = true;
+  btn.textContent = "Conectando con Google…";
+  authActionInProgress = true;
+  try{
+    const provider = new firebase.auth.GoogleAuthProvider();
+    /* En móvil los navegadores bloquean con frecuencia los popups;
+       redirect conserva la cuenta Google activa del dispositivo. */
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if(isMobile){
+      await auth.signInWithRedirect(provider);
+      return;
+    }
+    const cred = await auth.signInWithPopup(provider);
+    await ensureUserProfile(cred.user);
+    doRedirect(cred.user);
+  } catch(e){
+    const msgs = {
+      "auth/popup-closed-by-user": "Se cerró la ventana de Google antes de terminar",
+      "auth/popup-blocked": "El navegador bloqueó la ventana. Permite ventanas emergentes para continuar",
+      "auth/account-exists-with-different-credential": "Ya existe una cuenta con ese correo. Entra con correo y contraseña.",
+      "auth/operation-not-allowed": "Activa Google como proveedor en Firebase Console → Authentication → Sign-in method"
+    };
+    errEl.textContent = e.code === "PERMISSION_DENIED"
+      ? "Google inició sesión, pero Firebase bloqueó guardar el contacto. Revisa las reglas de Realtime Database."
+      : (msgs[e.code] || e.message);
+    authActionInProgress = false;
+    btn.disabled = false;
+    btn.innerHTML = `<svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#4285F4" d="M21.35 12.23c0-.79-.07-1.55-.22-2.27H12v4.3h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.42z"/>
+      <path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.35l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.74 9.74 0 0 0 12 21.5z"/>
+      <path fill="#FBBC05" d="M6.54 13.59A5.86 5.86 0 0 1 6.23 12c0-.55.1-1.09.31-1.59V7.88H3.3A9.74 9.74 0 0 0 2.25 12c0 1.57.38 3.05 1.05 4.12l3.24-2.53z"/>
+      <path fill="#EA4335" d="M12 6.38c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.47 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.7 5.38l3.24 2.53C7.31 8.1 9.46 6.38 12 6.38z"/>
+    </svg> Continuar con Google`;
   }
 }
 

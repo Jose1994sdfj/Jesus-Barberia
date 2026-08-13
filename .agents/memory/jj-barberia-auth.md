@@ -6,9 +6,8 @@ description: Decisiones clave del sistema de auth + admin dashboard en citas.htm
 # Firebase Auth + Admin Dashboard — JJ Barbería
 
 ## Configuración Firebase
-- Proyecto: bdfirebase-62a1b
-- Realtime DB: https://bdfirebase-62a1b-default-rtdb.firebaseio.com
-- Auth: Email/Password (debe activarse en Firebase Console → Authentication → Sign-in method)
+- La configuración vigente se encuentra en las páginas HTML; verificarla antes de cambiar reglas o proveedores porque los apuntes históricos pueden quedar obsoletos.
+- Auth: Email/Password y Google deben estar activos en Firebase Console → Authentication → Sign-in method.
 
 ## Detección de admin
 - `ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com"` — comparación directa en `auth.onAuthStateChanged`
@@ -34,6 +33,5 @@ description: Decisiones clave del sistema de auth + admin dashboard en citas.htm
 **Why:** Evita que el wizard se renderice antes de saber si el usuario es admin.
 
 ## Pasos pendientes (fuera del código)
-1. Activar Email/Password en Firebase Console → Authentication → Sign-in method
-2. Crear cuenta admin con `jesusjuarezperezel10@gmail.com` en Firebase Auth
-3. Actualizar Firebase Security Rules para requerir autenticación en escritura
+1. Crear cuenta admin con `jesusjuarezperezel10@gmail.com` en Firebase Auth.
+2. Permitir que cada usuario autenticado lea/escriba solo `/usuarios/{su_uid}`; el admin puede leer y administrar ese nodo.
