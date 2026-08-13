@@ -792,6 +792,9 @@ const auth = firebase.auth();
 
 /* ══ CONSTANTES ══════════════════════════════════════════════════ */
 const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+function isAdminUser(user){
+  return String(user && user.email || "").trim().toLowerCase() === ADMIN_EMAIL;
+}
 const WA_NUMBER   = "527716682637";
 
 /* ══ ESTADO ══════════════════════════════════════════════════════ */
@@ -905,7 +908,7 @@ auth.onAuthStateChanged(user=>{
     document.getElementById("navUserName").textContent   = name.length>14?name.slice(0,14)+"…":name;
     document.getElementById("navUserArea").style.display = "flex";
     document.getElementById("navLogoutBtn").style.display= "inline-block";
-    const isAdmin = user.email===ADMIN_EMAIL;
+    const isAdmin = isAdminUser(user);
     document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
     document.getElementById("btnMisInscripciones").style.display = isAdmin?"none":"inline-block";
 
@@ -1069,7 +1072,7 @@ function openDetalle(key){
     footer.innerHTML = `
       <button class="btn-outline" onclick="closeModal('modalDetalle')" style="flex:1">Cerrar</button>
       <a href="login.html?redirect=escuela.html" class="btn-lima" style="flex:2;display:flex;align-items:center;justify-content:center;gap:.4rem">Iniciar sesión para inscribirse</a>`;
-  } else if(currentUser.email===ADMIN_EMAIL){
+  } else if(isAdminUser(currentUser)){
     footer.innerHTML = `<button class="btn-outline" onclick="closeModal('modalDetalle')" style="flex:1">Cerrar</button>`;
   } else {
     footer.innerHTML = `

@@ -348,17 +348,28 @@ auth.languageCode = "es";
 
 const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
 let authActionInProgress = false;
+let authRedirected = false;
+
+function isAdminEmail(email){
+  return String(email || "").trim().toLowerCase() === ADMIN_EMAIL;
+}
 
 /* Destino después del login */
 function getRedirect(){
   const p = new URLSearchParams(window.location.search).get("redirect");
-  const safe = ["index.html","tienda.html","citas.html"];
+  const safe = ["index.html","tienda.html","citas.html","escuela.html"];
   return safe.includes(p) ? p : "index.html";
 }
 
 function doRedirect(user){
-  const dest = getRedirect();
-  window.location.href = dest;
+  const requested = new URLSearchParams(window.location.search).get("redirect");
+  let dest = getRedirect();
+  /* Si el administrador entra directamente a login o viene de la página
+     pública, llevarlo al panel en lugar de tratarlo como cliente normal. */
+  if(isAdminEmail(user && user.email) && (!requested || requested === "index.html")){
+    dest = "citas.html";
+  }
+  window.location.replace(dest);
 }
 
 /* Guarda el perfil de cualquier proveedor en el mismo nodo que usa
@@ -383,17 +394,35 @@ async function ensureUserProfile(user, extra={}){
   await ref.update(profile);
 }
 
+async function finishExistingAuth(user){
+  if(!user || authActionInProgress || authRedirected) return;
+  try { await ensureUserProfile(user); }
+  catch(e) { console.warn("No se pudo sincronizar el contacto:", e); }
+  authRedirected = true;
+  doRedirect(user);
+}
+
 /* Comprobar si ya hay sesión */
-auth.onAuthStateChanged(async user=>{
+auth.onAuthStateChanged(user=>{
   document.getElementById("loadingScreen").style.display="none";
   if(user){
-    if(authActionInProgress) return;
-    try { await ensureUserProfile(user); }
-    catch(e) { console.warn("No se pudo sincronizar el contacto:", e); }
-    doRedirect(user);
+    finishExistingAuth(user);
   } else {
     document.getElementById("loginWrap").style.display="flex";
   }
+});
+
+/* Firebase recomienda resolver explícitamente el resultado al volver de
+   signInWithRedirect. Esto evita el bucle login → Google → login en PWA. */
+auth.getRedirectResult().then(result=>{
+  if(result && result.user) finishExistingAuth(result.user);
+}).catch(e=>{
+  const errorMessages = {
+    "auth/unauthorized-domain": "Este dominio aún no está autorizado en Firebase Authentication.",
+    "auth/operation-not-allowed": "Activa Google en Firebase Console → Authentication → Sign-in method."
+  };
+  document.getElementById("authError").textContent =
+    errorMessages[e.code] || e.message || "No se pudo completar el acceso con Google.";
 });
 
 /* ── TABS ── */
@@ -455,6 +484,7 @@ async function handleSubmit(){
       await cred.user.updateProfile({displayName: nombre});
       await ensureUserProfile(cred.user, { nombre });
     }
+    authRedirected = true;
     doRedirect(cred.user);
   } catch(e){
     const msgs = {
@@ -495,6 +525,7 @@ async function handleGoogleSignIn(){
     }
     const cred = await auth.signInWithPopup(provider);
     await ensureUserProfile(cred.user);
+    authRedirected = true;
     doRedirect(cred.user);
   } catch(e){
     const msgs = {

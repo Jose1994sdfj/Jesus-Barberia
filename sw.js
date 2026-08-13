@@ -1,4 +1,4 @@
-const CACHE = 'jj-barberia-v1';
+const CACHE = 'jj-barberia-v2';
 
 const SHELL = [
   '/',
@@ -49,6 +49,23 @@ self.addEventListener('fetch', e => {
   /* Ignorar requests no GET y llamadas externas (Firebase, fonts, CDN) */
   if (e.request.method !== 'GET') return;
   if (url.origin !== self.location.origin) return;
+
+  /* Las páginas HTML no deben quedarse congeladas en una versión vieja:
+     la PWA necesita recibir cambios de auth y de rutas al actualizarse. */
+  const isDocument = e.request.mode === 'navigate'
+    || (e.request.headers.get('accept') || '').includes('text/html');
+  if (isDocument) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
 
   e.respondWith(
     caches.match(e.request).then(cached => {

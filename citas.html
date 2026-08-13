@@ -2307,6 +2307,9 @@ const auth = firebase.auth();
 
 /* ─── CONSTANTES ─────────────────────────────────────────────── */
 const ADMIN_EMAIL = "jesusjuarezperezel10@gmail.com";
+function isAdminUser(user){
+  return String(user && user.email || "").trim().toLowerCase() === ADMIN_EMAIL;
+}
 
 const WA_NUMBER = "527716682637";
 
@@ -2427,7 +2430,7 @@ async function subscribeUserToPush(user) {
         applicationServerKey: urlBase64ToUint8Array(publicKey)
       });
     }
-    const uid = user.email === ADMIN_EMAIL ? 'ADMIN' : user.uid;
+    const uid = isAdminUser(user) ? 'ADMIN' : user.uid;
     await fetch('/api/save-subscription', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -2459,7 +2462,7 @@ auth.onAuthStateChanged(user=>{
   hideSplash();
   updateNavUser(user);
   subscribeUserToPush(user);
-  if(user.email===ADMIN_EMAIL){
+  if(isAdminUser(user)){
     showScreen("admin");
     initAdminDashboard();
   } else {
@@ -2483,7 +2486,7 @@ function updateNavUser(user){
   document.getElementById("navUserName").textContent   = name.length>14 ? name.slice(0,14)+"…" : name;
   document.getElementById("navUserArea").style.display = "flex";
   document.getElementById("navLogoutBtn").style.display= "inline-block";
-  const isAdmin = user.email===ADMIN_EMAIL;
+  const isAdmin = isAdminUser(user);
   document.getElementById("navAdminChip").style.display= isAdmin?"inline-block":"none";
   if(!isAdmin){
     document.getElementById("navMisCitasBtn").style.display="inline-block";
