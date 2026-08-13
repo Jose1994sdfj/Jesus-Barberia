@@ -1,0 +1,56 @@
+{
+  "rules": {
+    "citas": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "usuarios": {
+      ".read": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'jesusjuarezperezel10@gmail.com')",
+        ".write": "auth != null && (auth.uid == $uid || auth.token.email == 'jesusjuarezperezel10@gmail.com')"
+      }
+    },
+    "productos": {
+      ".read": true,
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+    },
+    "destacados": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+    },
+    "servicios": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+    },
+    "cupones": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+    },
+    "pedidos": {
+      ".read": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'",
+      ".indexOn": ["uid"],
+      "$ped": {
+        ".read": "auth != null && (auth.token.email == 'jesusjuarezperezel10@gmail.com' || (data.exists() && data.child('uid').val() == auth.uid))",
+        ".write": "auth != null && (auth.token.email == 'jesusjuarezperezel10@gmail.com' || !data.exists())"
+      }
+    },
+    "config": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+    },
+    "escuela": {
+      "cursos": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+      },
+      "inscripciones": {
+        ".read": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'",
+        "$ins": {
+          ".read": "auth != null && (auth.token.email == 'jesusjuarezperezel10@gmail.com' || (data.exists() && data.child('uid').val() == auth.uid))",
+          ".write": "auth != null && (auth.token.email == 'jesusjuarezperezel10@gmail.com' || !data.exists())"
+        }
+      }
+    }
+  }
+}
