@@ -516,14 +516,22 @@ async function handleGoogleSignIn(){
   authActionInProgress = true;
   try{
     const provider = new firebase.auth.GoogleAuthProvider();
-    /* En móvil los navegadores bloquean con frecuencia los popups;
-       redirect conserva la cuenta Google activa del dispositivo. */
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if(isMobile){
-      await auth.signInWithRedirect(provider);
-      return;
+    let cred;
+    try{
+      /* Popup funciona bien en la gran mayoría de navegadores móviles y
+         evita el problema de que el redirect pierda la sesión en PWAs
+         instaladas o webviews (WhatsApp, Instagram, etc). */
+      cred = await auth.signInWithPopup(provider);
+    } catch(popupErr){
+      /* Solo si el navegador bloqueó el popup, intentamos redirect como
+         respaldo. En un webview restringido esto también puede fallar;
+         en ese caso el usuario verá el error normal más abajo. */
+      if(popupErr.code === "auth/popup-blocked" || popupErr.code === "auth/operation-not-supported-in-this-environment"){
+        await auth.signInWithRedirect(provider);
+        return;
+      }
+      throw popupErr;
     }
-    const cred = await auth.signInWithPopup(provider);
     await ensureUserProfile(cred.user);
     authRedirected = true;
     doRedirect(cred.user);
