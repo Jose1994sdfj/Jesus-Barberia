@@ -404,10 +404,14 @@ async function finishExistingAuth(user){
 
 /* Comprobar si ya hay sesión */
 auth.onAuthStateChanged(user=>{
-  document.getElementById("loadingScreen").style.display="none";
   if(user){
+    /* No ocultar loadingScreen aquí: se queda visible hasta que
+       doRedirect() navegue de verdad, evitando un parpadeo a pantalla
+       negra mientras se guarda el perfil (p.ej. durante el popup de
+       Google, que dispara este mismo listener internamente). */
     finishExistingAuth(user);
   } else {
+    document.getElementById("loadingScreen").style.display="none";
     document.getElementById("loginWrap").style.display="flex";
   }
 });
@@ -518,14 +522,16 @@ async function handleGoogleSignIn(){
     const provider = new firebase.auth.GoogleAuthProvider();
     let cred;
     try{
+      /* Cubrir el formulario ANTES de abrir el popup. Firebase dispara su
+         propio listener interno de auth en cuanto el popup se cierra, lo
+         cual puede ganarle a este código si esperamos a que el popup
+         resuelva primero — eso es lo que causaba el flash del login. */
+      document.getElementById("loginWrap").style.display = "none";
+      document.getElementById("loadingScreen").style.display = "flex";
       /* Popup funciona bien en la gran mayoría de navegadores móviles y
          evita el problema de que el redirect pierda la sesión en PWAs
          instaladas o webviews (WhatsApp, Instagram, etc). */
       cred = await auth.signInWithPopup(provider);
-      /* Cubrir el formulario con la pantalla de carga mientras se guarda
-         el perfil y se redirige, para que no se vea el login "en crudo". */
-      document.getElementById("loginWrap").style.display = "none";
-      document.getElementById("loadingScreen").style.display = "flex";
     } catch(popupErr){
       /* Solo si el navegador bloqueó el popup, intentamos redirect como
          respaldo. En un webview restringido esto también puede fallar;
@@ -550,6 +556,11 @@ async function handleGoogleSignIn(){
       ? "Google inició sesión, pero Firebase bloqueó guardar el contacto. Revisa las reglas de Realtime Database."
       : (msgs[e.code] || e.message);
     authActionInProgress = false;
+    /* Restaurar el formulario: si el popup se cerró o falló, el usuario
+       debe volver a ver el login (con el error) en vez de quedarse
+       viendo la pantalla de carga sin poder hacer nada. */
+    document.getElementById("loadingScreen").style.display = "none";
+    document.getElementById("loginWrap").style.display = "flex";
     btn.disabled = false;
     btn.innerHTML = `<svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="#4285F4" d="M21.35 12.23c0-.79-.07-1.55-.22-2.27H12v4.3h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.42z"/>
