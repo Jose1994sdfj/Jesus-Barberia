@@ -522,6 +522,10 @@ async function handleGoogleSignIn(){
          evita el problema de que el redirect pierda la sesión en PWAs
          instaladas o webviews (WhatsApp, Instagram, etc). */
       cred = await auth.signInWithPopup(provider);
+      /* Cubrir el formulario con la pantalla de carga mientras se guarda
+         el perfil y se redirige, para que no se vea el login "en crudo". */
+      document.getElementById("loginWrap").style.display = "none";
+      document.getElementById("loadingScreen").style.display = "flex";
     } catch(popupErr){
       /* Solo si el navegador bloqueó el popup, intentamos redirect como
          respaldo. En un webview restringido esto también puede fallar;
