@@ -1,4 +1,4 @@
-const CACHE = 'jj-barberia-v2';
+const CACHE = 'jj-barberia-v3';
 
 const SHELL = [
   '/',

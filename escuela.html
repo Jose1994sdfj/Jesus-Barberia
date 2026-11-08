@@ -51,6 +51,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
 .nav-links a,.nav-links button{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--humo);padding:.5rem .9rem;border-radius:30px;transition:color .2s,background .2s;border:none;background:none}
 .nav-links a:hover,.nav-links button:hover{color:var(--blanco)}
 .nav-links a.active{color:var(--lima)}
+.nav-links a.nav-login-link{
+  color:var(--lima); border:1px solid rgba(214,255,0,.45);
+  border-radius:30px; background:rgba(214,255,0,.07);
+}
+.nav-links a.nav-login-link:hover{color:var(--negro);background:var(--lima)}
 .nav-right{display:flex;align-items:center;gap:.7rem}
 .nav-user-area{display:none;align-items:center;gap:.5rem}
 .nav-user-avatar{width:30px;height:30px;border-radius:50%;background:rgba(214,255,0,.12);border:1.5px solid rgba(214,255,0,.35);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.72rem;color:var(--lima)}
@@ -74,6 +79,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
 .nav-drawer ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
 .nav-drawer a{display:block;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--humo);padding:.75rem 1rem;border-radius:var(--radius-sm);transition:all .2s}
 .nav-drawer a:hover,.nav-drawer a.active{color:var(--lima);background:rgba(214,255,0,.07)}
+.nav-drawer a.nav-login-link{
+  color:var(--lima); border:1px solid rgba(214,255,0,.35);
+  border-radius:12px; background:rgba(214,255,0,.07);
+}
 .drawer-actions{margin-top:auto;display:flex;flex-direction:column;gap:.7rem}
 .nav-drawer-cta{display:block;text-align:center;background:var(--lima);color:var(--negro);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:.9rem 1.5rem;border-radius:30px;transition:opacity .2s}
 .nav-drawer-cta:hover{opacity:.88}
@@ -371,6 +380,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html" class="active">Academia</a></li>
+    <li><a href="login.html?redirect=escuela.html" class="nav-login-link" id="navLoginLinkE">Iniciar sesión</a></li>
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
@@ -417,6 +427,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:none;align-items:cen
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html" class="active">Academia</a></li>
+    <li><a href="login.html?redirect=escuela.html" class="nav-login-link" id="drawerLoginLinkE">Iniciar sesión</a></li>
     <li><a href="#" id="drawerContactoLink">Contacto</a></li>
   </ul>
   <div class="drawer-protos" id="drawerProtos">
@@ -899,6 +910,10 @@ auth.onAuthStateChanged(user=>{
   currentUser = user;
   hideSplash();
   document.getElementById("mainNav").style.display = "flex";
+  const loginLink=document.getElementById("navLoginLinkE");
+  const drawerLoginLink=document.getElementById("drawerLoginLinkE");
+  if(loginLink) loginLink.style.display=user?"none":"";
+  if(drawerLoginLink) drawerLoginLink.style.display=user?"none":"";
 
   if(user){
     // Nav user info

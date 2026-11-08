@@ -16,15 +16,15 @@
       ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
     },
     "destacados": {
-      ".read": "auth != null",
+      ".read": true,
       ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
     },
     "servicios": {
-      ".read": "auth != null",
+      ".read": true,
       ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
     },
     "cupones": {
-      ".read": "auth != null",
+      ".read": true,
       ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
     },
     "pedidos": {
@@ -37,7 +37,10 @@
     },
     "config": {
       ".read": "auth != null",
-      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'"
+      ".write": "auth != null && auth.token.email == 'jesusjuarezperezel10@gmail.com'",
+      "horarios": {
+        ".read": true
+      }
     },
     "escuela": {
       "cursos": {

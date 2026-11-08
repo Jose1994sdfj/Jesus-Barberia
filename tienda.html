@@ -137,6 +137,12 @@ nav{
   color:var(--humo); text-decoration:none; transition:color .2s; font-weight:500;
 }
 .nav-links a:hover,.nav-links a.active{color:var(--lima);}
+.nav-links a.nav-login-link{
+  color:var(--lima); font-weight:700; padding:.5rem 1rem;
+  border:1px solid rgba(214,255,0,.45); border-radius:30px;
+  background:rgba(214,255,0,.07);
+}
+.nav-links a.nav-login-link:hover{color:var(--negro);background:var(--lima);}
 .nav-contacto-btn{
   background:none; border:none; color:var(--humo);
   font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
@@ -261,6 +267,11 @@ nav{
 .nav-drawer ul li a.active{color:var(--lima);}
 .nav-drawer ul li a.active::after{content:'●'; font-size:.4rem; color:var(--lima); flex-shrink:0;}
 .nav-drawer ul li a:hover{color:var(--lima); background:rgba(214,255,0,.04); padding-left:1.9rem;}
+.nav-drawer ul li a.nav-login-link{
+  color:var(--lima); border:1px solid rgba(214,255,0,.35);
+  border-radius:12px; background:rgba(214,255,0,.07); margin:.5rem 1rem;
+  width:calc(100% - 2rem); padding:.85rem 1rem;
+}
 .drawer-protos{
   display:none; flex-wrap:wrap; gap:.5rem;
   padding:.75rem 1.5rem 1rem; border-top:1px solid rgba(255,255,255,.06);
@@ -1448,6 +1459,7 @@ nav{
     <li><a href="tienda.html" class="active">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html">Academia</a></li>
+    <li><a href="login.html?redirect=tienda.html" class="nav-login-link" id="navLoginLinkT">Iniciar sesión</a></li>
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div class="nav-right">
@@ -1498,6 +1510,7 @@ nav{
     <li><a href="tienda.html" class="active">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html">Academia</a></li>
+    <li><a href="login.html?redirect=tienda.html" class="nav-login-link" id="drawerLoginLinkT">Iniciar sesión</a></li>
     <li><a href="#" id="drawerContactoLink">Contacto</a></li>
   </ul>
   <div class="drawer-protos" id="drawerProtos">
@@ -3280,17 +3293,19 @@ initTienda();
     setTimeout(()=>s.remove(),350);
   }
   auth.onAuthStateChanged(user=>{
-    if(!user){
-      window.location.href="login.html?redirect=tienda.html";
-      return;
-    }
     hideSplash();
+    const loginLink=document.getElementById("navLoginLinkT");
+    const drawerLoginLink=document.getElementById("drawerLoginLinkT");
+    if(loginLink) loginLink.style.display=user?"none":"";
+    if(drawerLoginLink) drawerLoginLink.style.display=user?"none":"";
     const chip=document.getElementById("navUserChipT");
     const avatar=document.getElementById("navUserAvatarT");
-    if(chip && avatar){
+    if(user && chip && avatar){
       const name=user.displayName||user.email.split("@")[0];
       avatar.textContent=name[0].toUpperCase();
       chip.style.display="flex";
+    } else if(chip){
+      chip.style.display="none";
     }
   });
 })();

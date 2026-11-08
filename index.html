@@ -175,6 +175,12 @@ nav{
   font-weight:500;
 }
 .nav-links a:hover{color:var(--lima);}
+.nav-links a.nav-login-link{
+  color:var(--lima); font-weight:700;
+  padding:.55rem 1rem; border:1px solid rgba(214,255,0,.5);
+  border-radius:30px; background:rgba(214,255,0,.07);
+}
+.nav-links a.nav-login-link:hover{background:var(--lima);color:var(--negro);}
 .nav-cta{
   font-family:'Montserrat', sans-serif; font-size:.73rem; letter-spacing:.1em;
   text-transform:uppercase; background:var(--lima); color:var(--negro);
@@ -254,6 +260,11 @@ nav{
 .nav-drawer ul li a.active::after{ content:'●'; font-size:.4rem; color:var(--lima); flex-shrink:0; }
 .nav-drawer ul li a:hover,
 .nav-drawer ul li a:focus{ color:var(--lima); background:rgba(214,255,0,.04); padding-left:1.9rem; }
+.nav-drawer ul li a.nav-login-link{
+  color:var(--lima); border:1px solid rgba(214,255,0,.35);
+  border-radius:12px; background:rgba(214,255,0,.07); margin:.5rem 1rem;
+  width:calc(100% - 2rem); padding:.85rem 1rem;
+}
 .drawer-actions{
   display:flex; flex-direction:column; align-items:stretch; gap:.5rem;
   padding:.75rem 1.5rem 1rem; border-top:1px solid rgba(255,255,255,.06);
@@ -1270,6 +1281,7 @@ footer{
     <li><a href="tienda.html">Tienda</a></li>
     <li><a href="citas.html">Citas</a></li>
     <li><a href="escuela.html">Academia</a></li>
+    <li><a href="login.html?redirect=index.html" class="nav-login-link" id="navLoginLink">Iniciar sesión</a></li>
     <li><button class="nav-contacto-btn" id="navContactoBtn" aria-haspopup="true" aria-expanded="false">Contacto</button></li>
   </ul>
   <div style="display:flex;align-items:center;gap:.7rem;">
@@ -1336,6 +1348,7 @@ footer{
     <li><a href="tienda.html" class="nav-drawer-link">Tienda</a></li>
     <li><a href="citas.html" class="nav-drawer-link">Citas</a></li>
     <li><a href="escuela.html" class="nav-drawer-link">Academia</a></li>
+    <li><a href="login.html?redirect=index.html" class="nav-drawer-link nav-login-link" id="drawerLoginLink">Iniciar sesión</a></li>
     <li><a href="#drawer-contacto" class="nav-drawer-link" id="drawerContactoLink">Contacto</a></li>
   </ul>
   <!-- Protocolos en el drawer -->
@@ -2637,18 +2650,23 @@ updateCarousel(0);
     setTimeout(()=>s.remove(),350);
   }
   auth.onAuthStateChanged(user=>{
-    if(!user){
-      window.location.href="login.html?redirect=index.html";
-      return;
-    }
     hideSplash();
+    const loginLink=document.getElementById("navLoginLink");
+    const drawerLoginLink=document.getElementById("drawerLoginLink");
+    if(loginLink) loginLink.style.display=user?"none":"";
+    if(drawerLoginLink) drawerLoginLink.style.display=user?"none":"";
     const chip=document.getElementById("navUserChip");
     const avatar=document.getElementById("navUserAvatarI");
     if(chip && avatar){
-      const name=user.displayName||user.email.split("@")[0];
-      avatar.textContent=name[0].toUpperCase();
-      chip.style.display="flex";
-      document.getElementById("navCta").style.display="none";
+      if(user){
+        const name=user.displayName||user.email.split("@")[0];
+        avatar.textContent=name[0].toUpperCase();
+        chip.style.display="flex";
+        document.getElementById("navCta").style.display="none";
+      } else {
+        chip.style.display="none";
+        document.getElementById("navCta").style.display="";
+      }
     }
   });
 })();
