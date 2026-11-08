@@ -15,6 +15,14 @@ Static HTML/PWA site for JJ Barbería in Pachuca, served by the Express server i
 
 The `Start application` workflow runs `node server.js` on port 5000.
 
+Use the **Run** button to start the site. The server binds to `0.0.0.0` so it is accessible in Replit's preview. No build step is required.
+
+### External services
+
+- The pages use the existing Firebase project. Sign-in and saved data depend on its enabled authentication providers, authorized domains, and database rules. Authorize the exact preview domain in Firebase Authentication when testing sign-in from Replit.
+- Email delivery requires `RESEND_API_KEY` in Replit Secrets. Without it, the website still runs, but `/api/send-email` returns HTTP 503 with a configuration message.
+- The existing email sender uses Resend's test address; sending to customers requires a verified sender/domain and updating the sender in `server.js`.
+
 ## Authentication and contacts
 
 Firebase Authentication provides email/password and Google sign-in. After either provider signs in, `login.html` upserts the user's profile at `usuarios/{uid}` in Firebase Realtime Database. The admin Contacts and Correos tabs in `citas.html` read that same node.
