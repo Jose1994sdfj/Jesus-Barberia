@@ -17,6 +17,10 @@ The `Start application` workflow runs `node server.js` on port 5000.
 
 Use the **Run** button to start the site. The server binds to `0.0.0.0` so it is accessible in Replit's preview. No build step is required.
 
+### Public pages and sign-in
+
+The home page, product catalog, and academy catalog can be browsed without signing in. The sign-in link is in the desktop navigation and mobile menu. Booking appointments and viewing personal records still require an account. The public-read Firebase rules for home-page services, gallery highlights, coupons, and appointment hours are documented in `firebase-database.rules.json`; apply those rules in Firebase Console for the live Firebase project, since editing this file does not publish rules.
+
 ### External services
 
 - The pages use the existing Firebase project. Sign-in and saved data depend on its enabled authentication providers, authorized domains, and database rules. Authorize the exact preview domain in Firebase Authentication when testing sign-in from Replit.
