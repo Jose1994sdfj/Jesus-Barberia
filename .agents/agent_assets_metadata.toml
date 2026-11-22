@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "JejAFkHus1wSP4jBQ8QTt"
+uri = "file://firebase-database.rules.json"
+type = "unspecified"
+title = "Reglas completas de Firebase"
+description = "Conserva las reglas actuales y agrega lectura pública solo para el contenido mostrado en la web."
+logical_id = "19b524d2-7f72-4c7c-bd32-b37c27c24d9f"
+content_hash = "sha256:cccdcff88eb3f383aacd8483b9dbbf4532a99bdd1ceccefbf32fc7de7a147cdf"
+size = 2183
+mtime_ms = 1794152161655
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:1267aaa8-7ad8-44f8-be63-4271fd2f9cd2/19b524d2-7f72-4c7c-bd32-b37c27c24d9f/89d56319-5907-4eab-9a23-c23c180f8ac0"
+storage_version_token = "1795376033032580"
+content_type = "application/octet-stream"
